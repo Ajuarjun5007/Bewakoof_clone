@@ -1,8 +1,16 @@
+import { Routes,Route } from "react-router-dom";
+import NavbarMain from "./Components/NavbarMain/NavbarMain";
+import HeaderComponent from "./Components/HeaderComponent/HeaderComponent";
+
+
+
+
 function App() {
 
   return (
     <>
-      <h1 className="text-xl font-bold text-red-500">Hi world..</h1>
+    <HeaderComponent/>
+     {/* <NavbarMain/> */}
     </>
   )
 }
