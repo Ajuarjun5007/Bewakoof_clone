@@ -7,6 +7,13 @@ import { BsBag } from "react-icons/bs";
 import { RxDividerVertical } from "react-icons/rx";
 import flag from "../../assets/NavbarflagImages/india-flag.png"
 import {subCategories} from "../TypeConstants"
+import { topWearForMen } from "../HomePage/menucontent";
+import { bottomWearForMen } from "../HomePage/menucontent";
+import { winterWearForMen } from "../HomePage/menucontent";
+import { plusSizeForMen } from "../HomePage/menucontent";
+import { innerWearLoungewearForMen } from "../HomePage/menucontent";
+import { brands } from "../TypeConstants";
+import { brandimages } from "../imageconstants";
 function NavbarMain(){
 
     useEffect(() => {
@@ -31,22 +38,97 @@ function NavbarMain(){
     return(
         // b-btmclr-300
     <>
-    <div className="flex z-10 w-full fixed bg-white top-8 pt-[3px] justify-center border-b-[1px] border-[rgba(0,0,0,0.2)] solid ">
+    <div className="flex z-10 w-full  fixed bg-white top-8 pt-[3px] justify-center border-b-[1px] border-[rgba(0,0,0,0.2)] solid ">
     <div className="flex  w-85 ">
 {/* Navbar logo */}
         <div className="logocontainer px-2  py-3" >
         <img className="h-5"src={logo} alt="" />
         </div>
     {/* categories */}
-        <div className=" w-5/12 py-3 tracking-widest ml-10 lg:ml-0 lg-max:xl:w-4/12 ">
+        <div className=" w-5/12 py-3 flex relative tracking-widest ml-10 lg:ml-0 lg-max:xl:w-4/12 ">
+            <div className="">
             <span className="text-[13px] pt-4 px-3 pb-3 leading-3  hover:border-b-4 border-hoveryellow">MEN</span>
-            <span className="text-[13px] pt-2 px-3 pb-3 leading-3  hover:border-b-4 border-hoveryellow">WOMEN</span>
-            <span className="text-[13px] pt-2 px-3 pb-3 leading-3  hover:border-b-4 border-hoveryellow">MOBILE COVERS</span>
-            {/* Menu content */}
-            <div className="flex w-85">
-
+             {/* Menu content */}
+            <div className="flex w-[1140px] justify-center z-11 max-h-[550px] overflow-scroll absolute left-[-150px]
+             top-12  border-[1px] bg-white border-[rgba(0,0,0,0.2)] solid  ">
+                <div className=" p-10 flex">
+                {/* dress types */}
+             <div className=" flex w-[60%] gap-x-[40px] 
+              flex-wrap border-r-[1px] border-[rgba(0,0,0,0.2)] solid ">
+             {/* topwear for men */}
+                <div className="">
+                    <span className="  font-[450] pb-[20px] solid text-[#494949] text-[14px] ">Topwear</span>
+                    <div className="my-3">
+                    {topWearForMen.map((item)=>(
+                        <p className="text-[13px] text-[#7f7f7f] py-[3px]">{item}</p>
+                    ))}
+                    </div>
+                </div>
+                {/* bottomwear for men */}
+                <div className="mx-3">
+                    <span className=" pb-[20px]  font-[450] solid text-[#494949] text-[14px] ">Bottomwear</span>
+                    <div className="my-3">
+                    {bottomWearForMen.map((item)=>(
+                        <p className="text-[13px] text-[#7f7f7f] py-[3px]">{item}</p>
+                    ))}
+                    </div>
+                </div>
+                {/* winterwear for men */}
+                <div className="mx-3">
+                    <span className=" pb-[20px]  font-[450] solid text-[#494949] text-[14px] ">Winterwear</span>
+                    <div className="my-3">
+                    {winterWearForMen.map((item)=>(
+                        <p className="text-[13px] text-[#7f7f7f] py-[3px]">{item}</p>
+                    ))}
+                    </div>
+                </div>
+                {/* plusSize for men */}
+                <div className="">
+                    <span className="pb-[20px]  font-[450] solid text-[#494949] text-[14px] ">Plus size</span>
+                    <div className="my-3">
+                    {plusSizeForMen.map((item)=>(
+                        <p className="text-[13px] text-[#7f7f7f] py-[3px]">{item}</p>
+                    ))}
+                    </div>
+                </div>
+            {/* Lounge for men */}
+            <div className="">
+                    <span className="pb-[20px]  font-[450] solid text-[#494949] text-[14px] ">Inner wear & Lounge wear</span>
+                    <div className="my-3">
+                    {innerWearLoungewearForMen.map((item)=>(
+                        <p className="text-[13px] text-[#7f7f7f] py-[3px]">{item}</p>
+                    ))}
+                    </div>
+                </div>
+             </div>
+             {/* brand types */}
+             <div className=" pl-[70px] "> 
+             <span className="font-[450] mb-[30px] solid text-[#494949] text-[14px]">Brands</span>
+             {
+        Array(25).fill().map((_, i) => (
+            <div key={i} className="flex items-center py-[10px] gap-3  font-[400] solid text-[#7f7f7f] text-[13px]">
+                <img className="h-9 w-9" src={brandimages[i]} alt="" />
+                {brands[i]}
             </div>
+        ))
+    }
+             </div>
+                </div>
+            </div>
+            </div>
+            <div>
+            <span className="text-[13px] pt-2 px-3 pb-3 leading-3  hover:border-b-4 border-hoveryellow">WOMEN</span>
+            </div>
+            <div>
+            <span className="text-[13px] pt-2 px-3 pb-3 leading-3  hover:border-b-4 border-hoveryellow">MOBILE COVERS</span>
+            </div>
+           
         </div>
+
+
+
+
+
         {/* rightnavbar */}
         <div className="flex items-center border-[rgba(0,0,0,0.5)]">
             <div className="inputwrapper flex relative  bg-[#eaeaea] mt-1 mb-1 h-10  rounded">
@@ -71,7 +153,7 @@ function NavbarMain(){
     </div>
     </div>
     {/* scroll navbar */}
-    <div className="sub-navbar w-full  flex  bg-white fixed top-[84px] z-10 py-4 ">
+    <div className="sub-navbar w-full z-[3]  flex  bg-white fixed top-[84px]  py-4 ">
         <div className="sub-navbar-item px-1 no-scrollbar flex  overflow-scroll">
             {
                 subCategories.map((subCategory)=>(

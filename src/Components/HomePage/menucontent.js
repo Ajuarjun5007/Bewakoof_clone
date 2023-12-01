@@ -93,3 +93,6 @@ const plusSizeForWomen = [
 ];
 const innerWearLoungewearForMen = ["Vests", "Pyjamas", "Boxers"];
 const LoungewearForWomen = ["Shorts", "Pyjamas", "Lounge wear", "Boxers"];
+
+export {topWearForMen,topWearForWomen,bottomWearForMen,bottomWearForWomen,winterWearForMen,
+    winterWearForWomen,plusSizeForMen,plusSizeForWomen,innerWearLoungewearForMen,LoungewearForWomen}
