@@ -31,7 +31,7 @@ function NavbarMain(){
     return(
         // b-btmclr-300
     <>
-    <div className="flex z-20 w-full fixed bg-white top-8 py-[3px] justify-center border-b-[1px] border-black-800 ">
+    <div className="flex z-10 w-full fixed bg-white top-8 py-[3px] justify-center border-b-[1px] border-black-800 ">
     <div className="flex  w-85 ">
 {/* Navbar logo */}
         <div className="logocontainer px-2  py-3" >
@@ -71,7 +71,7 @@ function NavbarMain(){
         <div className="sub-navbar-item px-1 no-scrollbar flex  overflow-scroll">
             {
                 subCategories.map((subCategory)=>(
-                    <span className="mx-1 pr-10 py-0 text-[17px] key={`index`}">
+                    <span className="mx-1 pr-20 py-0 text-[17px] key={`index`}">
                        {subCategory.toUpperCase()} 
                     </span>
                 ))
