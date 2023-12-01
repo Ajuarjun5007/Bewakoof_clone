@@ -71,10 +71,10 @@ function HomePage() {
     <>
     {/*top carousel */}
       <div 
-      className=" relative top-[120px] py-2"
+      className=" relative top-[140px] py-2 "
       >
         <Carousel
-            className="  "
+            className=""
           swipeable={false}
           draggable={false}
         //   autoPlay={true}

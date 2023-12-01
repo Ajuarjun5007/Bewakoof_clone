@@ -42,6 +42,10 @@ function NavbarMain(){
             <span className="text-[13px] pt-4 px-3 pb-3 leading-3  hover:border-b-4 border-hoveryellow">MEN</span>
             <span className="text-[13px] pt-2 px-3 pb-3 leading-3  hover:border-b-4 border-hoveryellow">WOMEN</span>
             <span className="text-[13px] pt-2 px-3 pb-3 leading-3  hover:border-b-4 border-hoveryellow">MOBILE COVERS</span>
+            {/* Menu content */}
+            <div className="flex w-85">
+
+            </div>
         </div>
         {/* rightnavbar */}
         <div className="flex items-center border-[rgba(0,0,0,0.5)]">
@@ -78,7 +82,6 @@ function NavbarMain(){
             }
         </div>
     </div>
-    {/* top carousel */}
     </>
     )
 }
