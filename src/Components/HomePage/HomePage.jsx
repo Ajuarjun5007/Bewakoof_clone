@@ -37,6 +37,18 @@ import to_missed_img_1 from "../../assets/Toohottobemissed_images/to_missed_img_
 import to_missed_img_2 from "../../assets/Toohottobemissed_images/to_missed_img_2.webp"
 import to_missed_img_3 from "../../assets/Toohottobemissed_images/to_missed_img_3.webp"
 import to_missed_img_4 from "../../assets/Toohottobemissed_images/to_missed_img_4.jpg"
+import category_box_1 from "../../assets/Categories_to_bag_images/category-box-1.jpg"
+import category_box_2 from "../../assets/Categories_to_bag_images/category-box-2.webp"
+import category_box_3 from "../../assets/Categories_to_bag_images/category-box-3.webp"
+import category_box_4 from "../../assets/Categories_to_bag_images/category-box-4.jpg"
+import category_box_5 from "../../assets/Categories_to_bag_images/category-box-5.jpg"
+import category_box_6 from "../../assets/Categories_to_bag_images/category-box-6.jpg"
+import bestpick_1 from "../../assets/Our_best_pick_images/best_pick_1.webp"
+import bestpick_2 from "../../assets/Our_best_pick_images/best_pick_2.webp"
+import bestpick_3 from "../../assets/Our_best_pick_images/best_pick_3.webp"
+import bestpick_4 from "../../assets/Our_best_pick_images/best_pick_4.webp"
+import tribe_img_1 from "../../assets/Tribe_member_images/tribe_img_1.webp"
+import tribe_img_2 from "../../assets/Tribe_member_images/tribe_img_2.jpg"
 function HomePage() {
   const responsive = {
     desktop: {
@@ -278,8 +290,46 @@ function HomePage() {
             </div>
         </div>
         {/* categories to bag */}
-        <div className="">
-            
+        <div className="relative top-[390px] flex flex-col items-center">
+            <p className="text-[23px] font-[550] track-wider">CATEGORIES TO BAG</p>
+            <div className="flex justify-center">
+            <img className="w-[220px]"
+            src={category_box_1} alt="" />
+            <img className="w-[220px]"
+            src={category_box_2} alt="" />
+            <img className="w-[220px]"
+            src={category_box_3} alt="" />
+            <img className="w-[220px]"
+            src={category_box_4} alt="" />
+            <img className="w-[220px]"
+            src={category_box_5} alt="" />
+            <img className="w-[220px]"
+            src={category_box_6} alt="" />
+            </div>
+        </div>
+        {/* Our Best Picks */}
+        <div className="relative top-[390px] flex flex-col items-center font-[550] pb-[30px]
+         text-[23px] tracking-wider">
+            <p>OUR BEST PICKS</p>
+            <div className="flex justify-center w-full flex-wrap">
+                <img 
+                className="px-[3px] py-[3px] w-[670px]"
+                src={bestpick_1} alt="" />
+                <img 
+                className="px-[3px] py-[3px] w-[670px]"
+                src={bestpick_2} alt="" />
+                <img 
+                className="px-[3px] py-[3px] w-[670px]"
+                src={bestpick_3} alt="" />
+                <img 
+                className="px-[3px] py-[3px] w-[670px]"
+                src={bestpick_4} alt="" />
+            </div>
+        </div>
+        {/* tribe member*/}
+        <div className="relative top-[390px] pb-[30px]">
+            <img className="py-[5px]" src={tribe_img_1} alt="" />
+            <img className="py-[5px]" src={tribe_img_2} alt="" />
         </div>
     </>
   );
