@@ -37,9 +37,25 @@ export default {
   
         '2xl': '1536px',
         // => @media (min-width: 1536px) { ... }
-      }
+      },
+  
     },
   },
-  plugins: [],
+  plugins: [
+    function ({addUtilities}){
+      const newUtilites = {
+        ".no-scrollbar::-webkit-scrollbar":{
+          display:"none",
+        },
+        '.no-scrollbar':{
+          '-ms-overflow-style':'none',
+          "scrollbar-width":"none",
+        },
+      };
+
+      addUtilities(newUtilites);
+    }
+
+  ],
 }
 

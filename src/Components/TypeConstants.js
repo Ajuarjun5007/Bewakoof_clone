@@ -1,5 +1,5 @@
 
-const color=[
+const colors=[
     "CREAM",
 "ORANGE",
 "BLUE",
@@ -92,3 +92,5 @@ const typeshirts_men=[
 const typeshirts_women=[
     
 ]
+
+export {colors,brands,sellerTags,subCategories};

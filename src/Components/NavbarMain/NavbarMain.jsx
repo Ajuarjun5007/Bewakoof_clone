@@ -6,6 +6,7 @@ import { CiHeart } from "react-icons/ci";
 import { BsBag } from "react-icons/bs";
 import { RxDividerVertical } from "react-icons/rx";
 import flag from "../../assets/NavbarflagImages/india-flag.png"
+import {subCategories} from "../TypeConstants"
 function NavbarMain(){
 
     useEffect(() => {
@@ -14,8 +15,8 @@ function NavbarMain(){
             const data = await dressList();
             console.log("data",data.data);
            const type= new Set( data.data.map((item)=>{
-                if(item.description.includes("top")){
-                    return item.description;
+                if(  item.sellerTag==("top rated")){
+                    return item;
                 };
             }));
             console.log("color",type);
@@ -28,12 +29,12 @@ function NavbarMain(){
       }, []);
 
     return(
-
+        // b-btmclr-300
     <>
-    <div className="flex justify-center border-b-[1px] border-b-btmclr-300">
+    <div className="flex z-20 w-full fixed bg-white top-8 py-[3px] justify-center border-b-[1px] border-black-800 ">
     <div className="flex  w-85 ">
 {/* Navbar logo */}
-        <div className="logocontainer px-2  py-3">
+        <div className="logocontainer px-2  py-3" >
         <img className="h-5"src={logo} alt="" />
         </div>
     {/* categories */}
@@ -48,6 +49,7 @@ function NavbarMain(){
             <IoIosSearch  className="absolute left-3.5 top-2 text-[rgba(0,0,0,0.5)] text-[24px]"/>
             <input className=" pr-1.5 pl-10 text-[11px] text-[rgba(0,0,0,0.5)] w-[330px] focus:bg-white focus:border-[1px] bg-[#eaeaea] rounded" type="text" placeholder="Search by product, category or collection"/>
             </div>
+            {/* left navbar */}
             <div className="flex justify-between items-center px-2 ">
             <RxDividerVertical className="text-[40px] font-light text-[rgba(0,0,0,0.5)] "/>
                 <span className="text-[14px] leading-3 tracking-wider">Login</span>
@@ -65,11 +67,18 @@ function NavbarMain(){
     </div>
     </div>
     {/* scroll navbar */}
-    <div className="sub-navbar flex">
-        <div className="sub-navbar-item">
-
+    <div className="sub-navbar w-full   solid flex  bg-white fixed top-[80px] z-10 py-4">
+        <div className="sub-navbar-item px-1 no-scrollbar flex  overflow-scroll">
+            {
+                subCategories.map((subCategory)=>(
+                    <span className="mx-1 pr-10 py-0 text-[17px] key={`index`}">
+                       {subCategory.toUpperCase()} 
+                    </span>
+                ))
+            }
         </div>
     </div>
+    {/* top carousel */}
     </>
     )
 }
