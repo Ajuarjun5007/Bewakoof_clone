@@ -49,13 +49,11 @@ function NavbarMain(){
             <div className="">
             <span className="text-[13px] pt-4 px-3 pb-3 leading-3  hover:border-b-4 border-hoveryellow">MEN</span>
              {/* Menu content */}
-            <div className="flex w-[1140px] justify-center z-11 max-h-[550px] overflow-scroll absolute left-[-150px]
+            {/* <div className="flex w-[1140px] justify-center z-11 max-h-[550px] overflow-scroll absolute left-[-150px]
              top-12  border-[1px] bg-white border-[rgba(0,0,0,0.2)] solid  ">
                 <div className=" p-10 flex">
-                {/* dress types */}
              <div className=" flex w-[60%] gap-x-[40px] 
               flex-wrap border-r-[1px] border-[rgba(0,0,0,0.2)] solid ">
-             {/* topwear for men */}
                 <div className="">
                     <span className="  font-[450] pb-[20px] solid text-[#494949] text-[14px] ">Topwear</span>
                     <div className="my-3">
@@ -64,7 +62,6 @@ function NavbarMain(){
                     ))}
                     </div>
                 </div>
-                {/* bottomwear for men */}
                 <div className="mx-3">
                     <span className=" pb-[20px]  font-[450] solid text-[#494949] text-[14px] ">Bottomwear</span>
                     <div className="my-3">
@@ -73,7 +70,6 @@ function NavbarMain(){
                     ))}
                     </div>
                 </div>
-                {/* winterwear for men */}
                 <div className="mx-3">
                     <span className=" pb-[20px]  font-[450] solid text-[#494949] text-[14px] ">Winterwear</span>
                     <div className="my-3">
@@ -82,7 +78,6 @@ function NavbarMain(){
                     ))}
                     </div>
                 </div>
-                {/* plusSize for men */}
                 <div className="">
                     <span className="pb-[20px]  font-[450] solid text-[#494949] text-[14px] ">Plus size</span>
                     <div className="my-3">
@@ -91,7 +86,6 @@ function NavbarMain(){
                     ))}
                     </div>
                 </div>
-            {/* Lounge for men */}
             <div className="">
                     <span className="pb-[20px]  font-[450] solid text-[#494949] text-[14px] ">Inner wear & Lounge wear</span>
                     <div className="my-3">
@@ -101,7 +95,6 @@ function NavbarMain(){
                     </div>
                 </div>
              </div>
-             {/* brand types */}
              <div className=" pl-[70px] "> 
              <span className="font-[450] mb-[30px] solid text-[#494949] text-[14px]">Brands</span>
              {
@@ -114,7 +107,7 @@ function NavbarMain(){
     }
              </div>
                 </div>
-            </div>
+            </div> */}
             </div>
             <div>
             <span className="text-[13px] pt-2 px-3 pb-3 leading-3  hover:border-b-4 border-hoveryellow">WOMEN</span>

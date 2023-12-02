@@ -119,7 +119,7 @@ function HomePage() {
         </Carousel>
       </div>
       {/* image icon  */}
-      <div className="flex top-[120px] px-5 relative py-[30px]">
+      <div className="flex mt-[120px] px-5  py-[30px]">
         <div className="iconimg-item">
         <img src={iconimg_1} alt="" className="px-2"/>
         </div>  
@@ -146,12 +146,12 @@ function HomePage() {
         </div>
       </div>
       {/* poster gifs */}
-      <div className="relative top-[140px] px-2 pb-[30px]">
+      <div className=" mt-[30px] solid px-2 pb-[30px]">
         <img src={poster_gif_1} alt="" />
         <img src={poster_gif_2} alt="" />
       </div>
       {/* split banner */}
-      <div className="  relative top-[130px] pb-[30px]">
+      <div className=" mt-[30px] pb-[30px]">
         <div className="flex  justify-center text-[23px] text-black font-[550] tracking-wider">Designs of the Week</div>
            <div className="flex  mx-[8px]  overflow-hidden">
             <img src={splitbanner_1} alt="" />
@@ -159,7 +159,7 @@ function HomePage() {
            </div>
       </div>
      {/* Trending categories */}
-        <div className="relative top-[120px] flex justify-center pb-[30px] mb-[10px]">
+        <div className=" mt-[10px] flex justify-center pb-[30px] mb-[10px]">
         <div className="flex flex-col items-center justify-center  font-[550] text-[23px] tracking-wider">
             <p>TRENDING CATEGORIES</p>
             <div className="flex justify-center h-[300px] flex-wrap">
@@ -227,12 +227,12 @@ function HomePage() {
         </div>
         </div>
         {/* Bewakoof Originals */}
-        <div className="relative top-[420px] flex flex-col justify-center pb-[70px]">
+        <div className=" mt-[330px]  border-2 border-red-500 solid flex flex-col justify-center pb-[70px]">
             <div className="flex justify-center">
             <span className="text-[23px] justify-center font-[550] tracking-wider">Bewakoof Originals</span>
             </div>
             <div 
-      className="px-[10px]  "
+      className="px-[10px]"
       >
         <Carousel
             className="  "
@@ -271,7 +271,7 @@ function HomePage() {
       </div>
         </div>
         {/* Too hot to be missed */}
-        <div className="relative top-[390px] flex flex-col items-center font-[550] pb-[30px]
+        <div className="mt-[30px] flex flex-col items-center font-[550] pb-[30px]
          text-[23px] tracking-wider">
             <p>TOO HOT TO BE MISSED</p>
             <div className="flex justify-center w-full flex-wrap">
@@ -290,7 +290,7 @@ function HomePage() {
             </div>
         </div>
         {/* categories to bag */}
-        <div className="relative top-[390px] flex flex-col items-center">
+        <div className="mt-[30px] flex flex-col items-center">
             <p className="text-[23px] font-[550] track-wider">CATEGORIES TO BAG</p>
             <div className="flex justify-center">
             <img className="w-[220px]"
@@ -308,7 +308,7 @@ function HomePage() {
             </div>
         </div>
         {/* Our Best Picks */}
-        <div className="relative top-[390px] flex flex-col items-center font-[550] pb-[30px]
+        <div className="mt-[30px] flex flex-col items-center font-[550] pb-[30px]
          text-[23px] tracking-wider">
             <p>OUR BEST PICKS</p>
             <div className="flex justify-center w-full flex-wrap">
@@ -327,7 +327,7 @@ function HomePage() {
             </div>
         </div>
         {/* tribe member*/}
-        <div className="relative top-[390px] pb-[30px]">
+        <div className="mt-[30px] pb-[30px]">
             <img className="py-[5px]" src={tribe_img_1} alt="" />
             <img className="py-[5px]" src={tribe_img_2} alt="" />
         </div>
