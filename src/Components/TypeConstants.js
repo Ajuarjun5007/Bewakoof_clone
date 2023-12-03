@@ -72,6 +72,15 @@ const brands = [
 "Shopolics",
 "THE DRY STATE",
 ]
+const mobiles = [
+"Apple",
+"Realme",
+"Samsung",
+"Xiaomi",
+"Oneplus",
+"Vivo",
+"Oppo",
+]
 const typeshirts_men=[
     " printed-tshirt=14",
     "oversized t-shirt=12",
@@ -93,4 +102,4 @@ const typeshirts_women=[
     
 ]
 
-export {colors,brands,sellerTags,subCategories};
+export {colors,brands,sellerTags,subCategories,mobiles};

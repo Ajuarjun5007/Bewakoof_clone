@@ -227,7 +227,7 @@ function HomePage() {
         </div>
         </div>
         {/* Bewakoof Originals */}
-        <div className=" mt-[330px]  border-2 border-red-500 solid flex flex-col justify-center pb-[70px]">
+        <div className=" mt-[330px]   flex flex-col justify-center pb-[70px]">
             <div className="flex justify-center">
             <span className="text-[23px] justify-center font-[550] tracking-wider">Bewakoof Originals</span>
             </div>
