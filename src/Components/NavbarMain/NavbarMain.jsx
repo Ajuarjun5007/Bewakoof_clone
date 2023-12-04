@@ -14,6 +14,7 @@ import { plusSizeForMen } from "../HomePage/menucontent";
 import { innerWearLoungewearForMen } from "../HomePage/menucontent";
 import { brands } from "../TypeConstants";
 import { brandimages } from "../imageconstants";
+import { Link } from "react-router-dom";
 function NavbarMain(){
 
     useEffect(() => {
@@ -42,7 +43,9 @@ function NavbarMain(){
     <div className="flex  w-85 ">
 {/* Navbar logo */}
         <div className="logocontainer px-2  py-3" >
+            <Link to={"/"}>
         <img className="h-5"src={logo} alt="" />
+            </Link>
         </div>
     {/* categories */}
         <div className=" w-5/12 py-3 flex relative tracking-widest ml-10 lg:ml-0 lg-max:xl:w-4/12 ">
