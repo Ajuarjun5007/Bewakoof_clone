@@ -5,6 +5,7 @@ import HomePage from "./Components/HomePage/HomePage";
 import FooterComponent from "./Components/FooterComponent/FooterComponent";
 import OfferPage from "./Components/HeaderComponent/OfferPage";
 import FanbookPage from "./Components/HeaderComponent/FanbookPage";
+import DownloadAppPage from "./Components/HeaderComponent/DownloadApp";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 function App() {
@@ -24,6 +25,7 @@ function App() {
         <Route path="/" element={<HomePage/>}/>
         <Route path="/OfferPage" element={<OfferPage/>}/>
         <Route path="/FanbookPage" element={<FanbookPage/>}/>
+        <Route path="/DownloadAppPage" element={<DownloadAppPage/>}/>
       </Routes>
 
      <FooterComponent/>
