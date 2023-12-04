@@ -1,5 +1,5 @@
 import logo from "../../assets/bewakoof_logo.svg"
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { dressList } from "../ApiFetch";
 import { IoIosSearch } from "react-icons/io";
 import { CiHeart } from "react-icons/ci";
@@ -14,7 +14,7 @@ import { plusSizeForMen } from "../HomePage/menucontent";
 import { innerWearLoungewearForMen } from "../HomePage/menucontent";
 import { brands } from "../TypeConstants";
 import { brandimages } from "../imageconstants";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 function NavbarMain(){
 
     useEffect(() => {
@@ -36,8 +36,17 @@ function NavbarMain(){
         fetchData();
       }, []);
 
+      const hideScrollNavBar=["OfferPage","FanbookPage"];
+      const location = useLocation();
+      console.log(location.pathname.split("/"));
+      const [isVisible,setIsVisible] = useState(true);
+      useEffect(()=>{
+        if(hideScrollNavBar.includes(location.pathname.split("/")[1])){
+            setIsVisible(false);
+        }
+      },[location])
+
     return(
-        // b-btmclr-300
     <>
     <div className="flex z-10 w-full  fixed bg-white top-8 pt-[3px] justify-center border-b-[1px] border-[rgba(0,0,0,0.2)] solid ">
     <div className="flex  w-85 ">
@@ -149,6 +158,8 @@ function NavbarMain(){
     </div>
     </div>
     {/* scroll navbar */}
+    {
+       isVisible &&
     <div className="sub-navbar w-full z-[3]  flex  bg-white fixed top-[84px]  py-4 ">
         <div className="sub-navbar-item px-1 no-scrollbar flex  overflow-scroll">
             {
@@ -160,6 +171,7 @@ function NavbarMain(){
             }
         </div>
     </div>
+    }
     </>
     )
 }

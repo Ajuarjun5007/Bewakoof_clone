@@ -6,7 +6,7 @@ import poster_5 from  "../../assets/offer_images/offer_5.webp"
 function OfferPage(){
     return(
         <>
-        <div className="flex flex-col justify-center items-center mt-[150px] ">
+        <div className="flex flex-col justify-center items-center mt-[80px] ">
             <p className=" text-[48px] font-[900] tracking-tight">Bewakoof Offers</p>
             <p className="text-[18px] text-[rgb(0,0,0,0.9)]">Find the best offers across our platforms on this page.</p>
         </div>

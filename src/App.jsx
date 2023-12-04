@@ -4,8 +4,18 @@ import HeaderComponent from "./Components/HeaderComponent/HeaderComponent";
 import HomePage from "./Components/HomePage/HomePage";
 import FooterComponent from "./Components/FooterComponent/FooterComponent";
 import OfferPage from "./Components/HeaderComponent/OfferPage";
+import FanbookPage from "./Components/HeaderComponent/FanbookPage";
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
 function App() {
 
+  const hideScrollNavBar=["OfferPage",];
+  const location = useLocation();
+  console.log(location.pathname.split("/"));
+  useEffect(()=>{
+    if(hideScrollNavBar.includes(location.pathname.split("/")[1])){
+    }
+  },[location])
   return (
     <>
     <HeaderComponent/>
@@ -13,6 +23,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage/>}/>
         <Route path="/OfferPage" element={<OfferPage/>}/>
+        <Route path="/FanbookPage" element={<FanbookPage/>}/>
       </Routes>
 
      <FooterComponent/>

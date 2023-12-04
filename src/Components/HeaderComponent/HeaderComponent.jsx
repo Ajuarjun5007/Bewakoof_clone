@@ -10,8 +10,10 @@ function HeaderComponent() {
             <Link to="OfferPage">
             <span className="mx-2 pb-1">Offers</span>
             </Link>
-
+            <Link to="FanbookPage">
             <span className="mr-2 pb-1">Fanbook</span>
+            </Link>
+
             <div className="flex ">
               <span className=" text-sm pb-1">
                  <CiMobile2 />
