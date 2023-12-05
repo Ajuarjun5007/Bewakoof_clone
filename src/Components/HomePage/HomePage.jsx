@@ -331,6 +331,7 @@ function HomePage() {
             <img className="py-[5px]" src={tribe_img_1} alt="" />
             <img className="py-[5px]" src={tribe_img_2} alt="" />
         </div>
+    
     </>
   );
 }
