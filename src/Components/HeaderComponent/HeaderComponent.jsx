@@ -22,7 +22,9 @@ function HeaderComponent() {
             <span className="mx-1 pb-1">Download App</span>
             </div>
             </Link>
+            <Link to="TribeMembershipPage">
             <span className="mx-2 pb-1">TriBe Membership</span>
+            </Link>
           </div>
           <div className="header-right text-center text-textcolor text-basesize">
             <span className="mx-2">Contact Us</span>

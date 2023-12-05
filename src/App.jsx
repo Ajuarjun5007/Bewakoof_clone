@@ -5,27 +5,24 @@ import HomePage from "./Components/HomePage/HomePage";
 import FooterComponent from "./Components/FooterComponent/FooterComponent";
 import OfferPage from "./Components/HeaderComponent/OfferPage";
 import FanbookPage from "./Components/HeaderComponent/FanbookPage";
-import DownloadAppPage from "./Components/HeaderComponent/DownloadApp";
-import { useLocation } from "react-router-dom";
+import DownloadAppPage from "./Components/HeaderComponent/DownloadAppPage";
+import TribeMembershipPage from "./Components/HeaderComponent/TribeMembershipPage";
 import { useEffect } from "react";
 function App() {
 
-  const hideScrollNavBar=["OfferPage",];
-  const location = useLocation();
-  console.log(location.pathname.split("/"));
-  useEffect(()=>{
-    if(hideScrollNavBar.includes(location.pathname.split("/")[1])){
-    }
-  },[location])
+  // useEffect(()=>{
+  //      window.location.reload(false);
+  //    },[])
   return (
     <>
     <HeaderComponent/>
      <NavbarMain/>
       <Routes>
-        <Route path="/" element={<HomePage/>}/>
+        <Route path="/home" element={<HomePage/>}/>
         <Route path="/OfferPage" element={<OfferPage/>}/>
         <Route path="/FanbookPage" element={<FanbookPage/>}/>
         <Route path="/DownloadAppPage" element={<DownloadAppPage/>}/>
+        <Route path="/TribeMembershipPage" element={<TribeMembershipPage/>}/>
       </Routes>
 
      <FooterComponent/>

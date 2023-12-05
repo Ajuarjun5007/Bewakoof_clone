@@ -2,11 +2,18 @@ import img_1 from "../../assets/downloadapp_page/download_app_img_1.webp"
 import img_2 from "../../assets/downloadapp_page/download_app_img_2.webp"
 import android_img from "../../assets/downloadapp_page/android.webp"
 import ios_img from "../../assets/downloadapp_page/ios.webp"
+import { useEffect, useState } from "react"
+
 function DownloadAppPage(){
+
+    // useEffect(()=>{
+    //     window.location.reload(false);
+    // },[])
+
     return (
         <>
         <div className="flex justify-center pb-[200px]">
-        <div className="w-[68%] h-max flex relative pb-[100px] mt-[170px] " >  
+        <div className="w-[68%] h-max flex relative pb-[100px] mt-[120px] " >  
         {/* mt-[229px] */}
             <div className="absolute pt-[100px] pl-[00px] z-[2]  pb-[40px] ">
                 <img className=" w-[300px] h-[619px]" src={img_2} alt="" />

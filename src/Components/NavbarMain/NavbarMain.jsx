@@ -36,14 +36,15 @@ function NavbarMain(){
         fetchData();
       }, []);
 
-      const hideScrollNavBar=["OfferPage","FanbookPage"];
+      const hideScrollNavBar=["home"];
       const location = useLocation();
       console.log(location.pathname.split("/"));
-      const [isVisible,setIsVisible] = useState(true);
+      const [isVisible,setIsVisible] = useState(false);
       useEffect(()=>{
         if(hideScrollNavBar.includes(location.pathname.split("/")[1])){
-            setIsVisible(false);
+            setIsVisible(true);
         }
+        // window.location.reload(false);
       },[location])
 
     return(
@@ -52,7 +53,7 @@ function NavbarMain(){
     <div className="flex  w-85 ">
 {/* Navbar logo */}
         <div className="logocontainer px-2  py-3" >
-            <Link to={"/"}>
+            <Link to={"/home"}>
         <img className="h-5"src={logo} alt="" />
             </Link>
         </div>
@@ -129,9 +130,6 @@ function NavbarMain(){
             </div>
            
         </div>
-
-
-
 
 
         {/* rightnavbar */}

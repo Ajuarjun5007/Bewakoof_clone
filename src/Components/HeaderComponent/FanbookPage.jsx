@@ -1,4 +1,4 @@
-import cover_pic_1 from "../../assets/fanbook_page/fanbook-cover-photo-1.jpg"
+import cover_pic_1 from "../../assets/fanbook_page/fanbook-cover-photo.jpg"
 import cover_pic_2 from "../../assets/fanbook_page/fanbook-cover-photo-2.jpg"
 import img_1 from "../../assets/fanbook_page/grid-image-1.jpg"
 import img_2 from "../../assets/fanbook_page/grid-image-2.jpg"
@@ -11,6 +11,7 @@ import img_8 from "../../assets/fanbook_page/grid-image-8.jpg"
 import img_9 from "../../assets/fanbook_page/grid-image-9.jpg"
 
 function FanbookPage () {
+    
     return (
         <>
         <div className="">
