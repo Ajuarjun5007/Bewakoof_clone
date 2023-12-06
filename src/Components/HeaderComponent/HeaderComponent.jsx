@@ -27,7 +27,9 @@ function HeaderComponent() {
             </Link>
           </div>
           <div className="header-right text-center text-textcolor text-basesize">
+            <Link to="ContactusPage">
             <span className="mx-2">Contact Us</span>
+            </Link>
             <span className="mx-2">Track Order</span>
           </div>
         </div>
