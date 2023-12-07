@@ -8,6 +8,7 @@ import FanbookPage from "./Components/HeaderComponent/FanbookPage";
 import DownloadAppPage from "./Components/HeaderComponent/DownloadAppPage";
 import TribeMembershipPage from "./Components/HeaderComponent/TribeMembershipPage";
 import ContactusPage from "./Components/HeaderComponent/ContactusPage";
+import TrackOrderPage from "./Components/HeaderComponent/TrackOrderPage";
 import { useEffect } from "react";
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
         <Route path="/DownloadAppPage" element={<DownloadAppPage/>}/>
         <Route path="/TribeMembershipPage" element={<TribeMembershipPage/>}/>
         <Route path="/ContactusPage" element={<ContactusPage/>}/>
+        <Route path="/TrackOrderPage" element={<TrackOrderPage/>}/>
       </Routes>
 
      <FooterComponent/>

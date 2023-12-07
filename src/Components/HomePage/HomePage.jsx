@@ -1,9 +1,9 @@
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import "./HomePage.css"
-import img_1 from "../../assets/topcarouselhomeimages/tc_1.jpg";
+import img_1 from "../../assets/topcarouselhomeimages/rm_1.webp";
 import img_2 from "../../assets/topcarouselhomeimages/tc_2.jpg";
-import img_3 from "../../assets/topcarouselhomeimages/tc_3.webp";
+import img_3 from "../../assets/topcarouselhomeimages/NEWRM.gif";
 import img_4 from "../../assets/topcarouselhomeimages/tc_4.jpg";
 import img_5 from "../../assets/topcarouselhomeimages/tc_5.webp";
 import iconimg_1 from "../../assets/categoryiconimages/iconimg_1.jpg"

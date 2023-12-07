@@ -30,7 +30,9 @@ function HeaderComponent() {
             <Link to="ContactusPage">
             <span className="mx-2">Contact Us</span>
             </Link>
+            <Link to="TrackOrderPage">
             <span className="mx-2">Track Order</span>
+            </Link>
           </div>
         </div>
       </div>
