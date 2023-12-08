@@ -1,4 +1,4 @@
-import { Routes,Route } from "react-router-dom";
+import { Routes,Route, useLocation } from "react-router-dom";
 import NavbarMain from "./Components/NavbarMain/NavbarMain";
 import HeaderComponent from "./Components/HeaderComponent/HeaderComponent";
 import HomePage from "./Components/HomePage/HomePage";
@@ -9,12 +9,19 @@ import DownloadAppPage from "./Components/HeaderComponent/DownloadAppPage";
 import TribeMembershipPage from "./Components/HeaderComponent/TribeMembershipPage";
 import ContactusPage from "./Components/HeaderComponent/ContactusPage";
 import TrackOrderPage from "./Components/HeaderComponent/TrackOrderPage";
-import { useEffect } from "react";
+import LoginPage from "./Components/UserAuthentication/LoginPage"
+import { useEffect , useState } from "react";
 function App() {
-
-  // useEffect(()=>{
-  //      window.location.reload(false);
-  //    },[])
+  const location =  useLocation();
+  console.log("loc",location.pathname.split('/')[1]);
+  const [footerDisplay,setFooterDisplay] = useState(true);
+    useEffect(()=>{
+      if(location.pathname.split('/')[1]=='LoginPage'){
+        console.log("loginpage is on..!!");
+        setFooterDisplay(false);
+      }
+    },[])
+  
   return (
     <>
     <HeaderComponent/>
@@ -27,9 +34,12 @@ function App() {
         <Route path="/TribeMembershipPage" element={<TribeMembershipPage/>}/>
         <Route path="/ContactusPage" element={<ContactusPage/>}/>
         <Route path="/TrackOrderPage" element={<TrackOrderPage/>}/>
+        <Route path="/LoginPage" element={<LoginPage/>}/>
       </Routes>
-
+{
+  footerDisplay &&
      <FooterComponent/>
+}
      
     </>
   )

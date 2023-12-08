@@ -21,13 +21,11 @@ function NavbarMain(){
         const fetchData = async () => {
           try {
             const data = await dressList();
-            console.log("data",data.data);
            const type= new Set( data.data.map((item)=>{
                 if(  item.sellerTag==("top rated")){
                     return item;
                 };
             }));
-            console.log("color",type);
 
           } catch (error) {
             console.error("Error fetching data:", error);
@@ -141,7 +139,9 @@ function NavbarMain(){
             {/* left navbar */}
             <div className="flex justify-between items-center px-2 ">
             <RxDividerVertical className="text-[40px] font-light text-[rgba(0,0,0,0.5)] "/>
-                <span className="text-[14px] leading-3 tracking-wider">Login</span>
+            <Link to="LoginPage">
+                <span className="text-[14px] leading-3 tracking-wider">Login</span> 
+            </Link>
                 <span className="px-2 text-[30px] ">
                 <CiHeart />
                 </span>
