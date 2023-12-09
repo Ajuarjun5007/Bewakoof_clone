@@ -10,24 +10,26 @@ import TribeMembershipPage from "./Components/HeaderComponent/TribeMembershipPag
 import ContactusPage from "./Components/HeaderComponent/ContactusPage";
 import TrackOrderPage from "./Components/HeaderComponent/TrackOrderPage";
 import LoginPage from "./Components/UserAuthentication/LoginPage"
+import MailPage from "./Components/UserAuthentication/MailPage"
+import WishlistPage from "./Components/HeaderComponent/WishlistPage";
 import { useEffect , useState } from "react";
+
 function App() {
   const location =  useLocation();
-  console.log("loc",location.pathname.split('/')[1]);
   const [footerDisplay,setFooterDisplay] = useState(true);
+  const footerHidePage=['LoginPage','MailPage']
     useEffect(()=>{
-      if(location.pathname.split('/')[1]=='LoginPage'){
-        console.log("loginpage is on..!!");
+      if(footerHidePage.includes(location.pathname.split('/')[1])){
         setFooterDisplay(false);
       }
-    },[])
+    },[location])
   
   return (
     <>
     <HeaderComponent/>
      <NavbarMain/>
       <Routes>
-        <Route path="/home" element={<HomePage/>}/>
+        <Route path="/" element={<HomePage/>}/>
         <Route path="/OfferPage" element={<OfferPage/>}/>
         <Route path="/FanbookPage" element={<FanbookPage/>}/>
         <Route path="/DownloadAppPage" element={<DownloadAppPage/>}/>
@@ -35,6 +37,8 @@ function App() {
         <Route path="/ContactusPage" element={<ContactusPage/>}/>
         <Route path="/TrackOrderPage" element={<TrackOrderPage/>}/>
         <Route path="/LoginPage" element={<LoginPage/>}/>
+        <Route path="/MailPage" element={<MailPage/>}/>
+        <Route path="/WishlistPage" element={<WishlistPage/>}/>
       </Routes>
 {
   footerDisplay &&

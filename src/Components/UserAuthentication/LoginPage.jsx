@@ -13,10 +13,10 @@ import usa_img from "../../assets/NavbarflagImages/usa-flag.webp";
 import thailand_img from "../../assets/NavbarflagImages/thailand-flag.webp";
 import google_img from "../../assets/login_image/google_img.webp"
 import fb_img from  "../../assets/login_image/fb_img.webp"
-
 import { VscTriangleDown } from "react-icons/vsc";
 import { MdOutlineEmail } from "react-icons/md";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 function LoginPage() {
 
   const countryOptions = [
@@ -40,7 +40,6 @@ function LoginPage() {
   const [countryDisplay, setCountryDisplay] = useState(false);
 
   const selectCountryHandler = (item) => {
-    console.log("Selected Country", item);
     setCountryImage(item.image);
     setSelectCountry(item.label);
     setCountryDisplay(false);
@@ -53,7 +52,7 @@ function LoginPage() {
 
   return (
     <>
-      <div className="mt-[90px] flex ">
+      <div className="mt-[90px] flex text-[montserrat,sans-serif]">
         <div className="w-[50%]  flex flex-col items-center bg-[linear-gradient(0deg,#fff4c4,#fff)]">
           <div className="py-[40px] font-[900] text-[30px] tracking-wide">
             <p>Welcome to the world of Bewakoof®!</p>
@@ -64,7 +63,7 @@ function LoginPage() {
         </div>
         <div className="w-[50%] flex items-center  flex-col ">
           <div className="flex flex-col items-center content-center py-[30px]">
-            <p className="text-[24px] py-[20px] font-[500] text-[#333]">
+            <p className="text-[24px] py-[10px] font-[500] text-[#333]">
               Log in / Sign up
             </p>
             <p className="text-[18px] text-[#a0a0a0] tracking-wider">
@@ -86,7 +85,7 @@ function LoginPage() {
               </div>
 
               {countryDisplay && (
-                <div className="absolute left-[0px] z-2 top-[60px] bg-[#fff] p-[10px] flex shadow-2xl rounded-[5px">
+                <div className="absolute left-[0px] z-[2] top-[60px] bg-[#fff] p-[10px] flex shadow-2xl rounded-[5px">
                   <div className="flex flex-col  items-center gap-3 w-[100px] py-[3px] ">
                     {countryOptions.map((item) => (
                       <div
@@ -115,7 +114,7 @@ function LoginPage() {
           </div>
           {/* or container */}
           <div className="my-[20px]">
-          <div className="relative border-b-[1px] w-[380px] m-[20px] flex justify-center border-[#aeaeae] font-[300] solid text-black">
+          <div className="relative border-b-[1px] w-[380px] m-[20px] flex justify-center z-0 border-[#aeaeae] font-[300] solid text-black">
             <span className="absolute top-[-14px] bg-white">OR</span>
           </div>
           </div>
@@ -125,7 +124,9 @@ function LoginPage() {
           <div className="flex  justify-center items-center text-[16px]  py-[8px]">
             <button className="flex items-center px-[20px] text-[#5c5c5c] leading-[20px] font-[900] gap-[10px] justify-center ">
             <MdOutlineEmail className="text-[18px]"/>
+            <Link to={"/MailPage"}>
             <span>CONTINUE WITH EMAIL</span>
+            </Link>
             </button>
           </div>
           </div>
@@ -139,7 +140,10 @@ function LoginPage() {
                 <span>FACEBOOK</span>
               </button>
             </div>
-            
+            <div className="w-[400px] text-[12px] text-[#a0a0a0] mt-[30px]">
+              <p>By creating an account or logging in, you agree
+                 with Bewakoof®'s <strong className="text-[#42a2a2]">  Terms and Conditions</strong> and <strong className="text-[#42a2a2]" >  Privacy Policy.   </strong></p>
+            </div>
         </div>
       </div>
     </>

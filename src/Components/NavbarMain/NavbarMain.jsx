@@ -34,9 +34,8 @@ function NavbarMain(){
         fetchData();
       }, []);
 
-      const hideScrollNavBar=["home"];
+      const hideScrollNavBar=[""];
       const location = useLocation();
-      console.log(location.pathname.split("/"));
       const [isVisible,setIsVisible] = useState(false);
       useEffect(()=>{
         if(hideScrollNavBar.includes(location.pathname.split("/")[1])){
@@ -51,7 +50,7 @@ function NavbarMain(){
     <div className="flex  w-85 ">
 {/* Navbar logo */}
         <div className="logocontainer px-2  py-3" >
-            <Link to={"/home"}>
+            <Link to={"/"}>
         <img className="h-5"src={logo} alt="" />
             </Link>
         </div>
@@ -143,7 +142,9 @@ function NavbarMain(){
                 <span className="text-[14px] leading-3 tracking-wider">Login</span> 
             </Link>
                 <span className="px-2 text-[30px] ">
+            <Link to="WishlistPage">
                 <CiHeart />
+            </Link>   
                 </span>
                 <span className="px-2 text-[22px] ">
                 < BsBag/> 
