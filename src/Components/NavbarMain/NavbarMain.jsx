@@ -21,12 +21,7 @@ function NavbarMain(){
         const fetchData = async () => {
           try {
             const data = await dressList();
-           const type= new Set( data.data.map((item)=>{
-                if(  item.sellerTag==("top rated")){
-                    return item;
-                };
-            }));
-
+            console.log("data",data.data);
           } catch (error) {
             console.error("Error fetching data:", error);
           }
@@ -57,7 +52,9 @@ function NavbarMain(){
     {/* categories */}
         <div className=" w-5/12 py-3 flex relative tracking-widest ml-10 lg:ml-0 lg-max:xl:w-4/12 ">
             <div className="">
+                <Link to="/ProductListPage">
             <span className="text-[13px] pt-4 px-3 pb-3 leading-3  hover:border-b-4 border-hoveryellow">MEN</span>
+                </Link>
              {/* Menu content */}
             {/* <div className="flex w-[1140px] justify-center z-11 max-h-[550px] overflow-scroll absolute left-[-150px]
              top-12  border-[1px] bg-white border-[rgba(0,0,0,0.2)] solid  ">

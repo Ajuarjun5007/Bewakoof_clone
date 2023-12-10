@@ -12,6 +12,7 @@ import TrackOrderPage from "./Components/HeaderComponent/TrackOrderPage";
 import LoginPage from "./Components/UserAuthentication/LoginPage"
 import MailPage from "./Components/UserAuthentication/MailPage"
 import WishlistPage from "./Components/HeaderComponent/WishlistPage";
+import ProductListPage from "./Components/ProductComponent/ProductLIstPage";
 import { useEffect , useState } from "react";
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
         <Route path="/LoginPage" element={<LoginPage/>}/>
         <Route path="/MailPage" element={<MailPage/>}/>
         <Route path="/WishlistPage" element={<WishlistPage/>}/>
+        <Route path="/ProductListPage" element={<ProductListPage/>}/>
       </Routes>
 {
   footerDisplay &&

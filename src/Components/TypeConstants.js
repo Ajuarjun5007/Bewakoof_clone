@@ -1,23 +1,26 @@
 
-const colors=[
-    "CREAM",
-"ORANGE",
-"BLUE",
-"GREEN",
-"BROWN",
-"GREY",
-"RED", 
-"YELLOW",
-"WHITE", 
-"BLACK",
-"OLIVE",
-"MAROON",
-"PURPLE",
-"BEIGE",
-"PINK",
-"MULTICOLOR",
-"CHARCOAL",
-"SILVER",
+const colorMappings = {
+    "CREAM": "#FFFDD0",
+    "ORANGE": "#FFA500",
+    "BLUE": "#0000FF",
+    "GREEN": "#008000",
+    "BROWN": "#8B4513",
+    "GREY": "#808080",
+    "RED": "#FF0000",
+    "YELLOW": "#FFFF00",
+    "WHITE": "#FFFFFF",
+    "BLACK": "#000000",
+    "OLIVE": "#808000",
+    "MAROON": "#800000",
+    "PURPLE": "#800080",
+    "BEIGE": "#F5F5DC",
+    "PINK": "#FFC0CB",
+    "MULTICOLOR": "linear-gradient(to bottom, #33ccff 0%, #ff99cc 100%)", // Replace with the actual hex code
+    "CHARCOAL": "#36454F",
+    "SILVER": "#C0C0C0",
+  };
+const sizes =[
+    'M','S','L','XL','XXL',
 ]
 
 const subCategories= [
@@ -102,4 +105,4 @@ const typeshirts_women=[
     
 ]
 
-export {colors,brands,sellerTags,subCategories,mobiles};
+export {sizes,colorMappings,brands,sellerTags,subCategories,mobiles};
