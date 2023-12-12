@@ -11,11 +11,14 @@ import { CiHeart } from "react-icons/ci";
 import { FaStar } from "react-icons/fa6";
 import { IoChevronDown } from "react-icons/io5";
 import { useState } from "react";
+import { Link } from "react-router-dom";
+Link
 function ProductListPage() {
   
   const [sortContainerDisplay,SetSortContainerDisplay] = useState(false);
   function SortHandler(){
-    SetSortContainerDisplay(!sortContainerDisplay);
+    SetSortContainerDisplay(()=>!sortContainerDisplay);
+    console.log("sortContainerDisplay",sortContainerDisplay);
   }
 
   return (
@@ -172,18 +175,21 @@ function ProductListPage() {
                 </Accordion.Root>
               </div>
               {/* product card */}
-              <div className="pl-[5px] w-[80%] pt-[10px] flex flex-col items-center ">
-              <div className="relative flex w-[89%] pb-[15px] pr-[10px] ml-[20px] gap-[5px] flex-row-reverse" 
-              onMouseOver={SortHandler}>
+              <div className="relative pl-[5px] w-[80%] pt-[10px] flex flex-col items-center ">
+              <div className=" flex w-[89%] pb-[15px] pr-[10px] ml-[20px]  flex-row-reverse" 
+            >
+                <div className="flex flex-row-reverse gap-[5px]" onMouseOver={SortHandler} >
                   <IoChevronDown />
                   <p className="text-[#2d2d2d] text-[12px] pl-[8px] font-[300]">Popular</p>
                   <p className="text-[rgba(45,45,45,.5)] font-[900] text-[12px]">SORT BY</p>
+                </div>
                 <div className="">
+                </div>
                 </div>
                 {
                   sortContainerDisplay &&
                 <div className="absolute min-w-[145px] py-[17px] border-[1px] border-[#ccc] solid
-                 top-[25px] shadow-[0_4px_8px_0_rgba(0,0,0,.2)] bg-white pl-[10px]
+                 top-[45px] right-[40px] shadow-[0_4px_8px_0_rgba(0,0,0,.2)] bg-white pl-[10px]
                   text-[rgba(45,45,45,.7)] text-[12px]">
                           <p className="my-[5px] text-[rgb(81,204,204)] transition 300 
                           hover:bg-[#f7f7f7]">
@@ -203,10 +209,9 @@ function ProductListPage() {
                           </p> 
                   </div>
                 }
-                </div>
               <div className="flex flex-wrap  justify-center gap-[10px] ">
               
-               
+                <Link to="/ProductDetailsPage">
                 <div className="  w-[266px]">
                   <div className="relative flex overflow-hidden">
                     <img className="w-[266px] h-[330px] hover:scale-[1.01]
@@ -234,6 +239,7 @@ function ProductListPage() {
                     </p>
                   </div>
                 </div>
+                </Link>
                   
                    <div className="  w-[266px]">
                   <div className="flex justify-center items-center">
