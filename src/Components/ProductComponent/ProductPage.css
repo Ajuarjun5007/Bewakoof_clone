@@ -1,10 +1,14 @@
-.swiper {
-    height: 100%;
-  }  
-  
-  .swiper {
-    height: 500px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  
+
+.myThumbSlider .swiper-slide-visible {
+	max-height: 100px;
+	overflow: hidden;
+}
+
+.myThumbSlider .swiper-slide-thumb-active {
+	border: 2px solid #51cccc;
+}
+
+.myThumbSlider {
+	overflow: hidden !important;
+	max-height: 100% !important;
+}
