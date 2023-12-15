@@ -1,8 +1,9 @@
+import WishListCard from "./WishListCard";
 
 function WishlistPage(){
     return (
         <>
-        <div className="flex justify-center items-center mt-[120px] pb-[100px]">
+        {/* <div className="flex justify-center items-center mt-[120px] pb-[100px]">
             <div className="mx-w-[450px]  flex flex-col items-center justify-center">
             <div className="">
                 <img src="https://images.bewakoof.com/web/wishlistEmpty.svg" alt="" />
@@ -16,7 +17,8 @@ function WishlistPage(){
             </div>
             <button className="bg-[rgb(66,162,162)] w-[100%] border-[1px] border-[rgb(66,162,162)] solid rounded text-white flex justify-center p-[8px]">SHOP NOW</button>
             </div>
-        </div>
+        </div> */}
+        <WishListCard/>
         </>
     )
 }

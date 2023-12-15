@@ -11,7 +11,7 @@ import ContactusPage from "./Components/HeaderComponent/ContactusPage";
 import TrackOrderPage from "./Components/HeaderComponent/TrackOrderPage";
 import LoginPage from "./Components/UserAuthentication/LoginPage"
 import MailPage from "./Components/UserAuthentication/MailPage"
-import WishlistPage from "./Components/HeaderComponent/WishlistPage";
+import WishlistPage from "./Components/WishListComponent/WishlistPage";
 import ProductListPage from "./Components/ProductComponent/ProductLIstPage";
 import ProductDetailsPage from "./Components/ProductComponent/ProductDetailsPage";
 import { useEffect , useState } from "react";

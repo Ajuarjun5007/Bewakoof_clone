@@ -4,7 +4,6 @@ import "swiper/element/css/navigation";
 import { register } from "swiper/element/bundle";
 import React from "react";
 import classNames from "classnames";
-import { ChevronDownIcon } from "@radix-ui/react-icons";
 import img_1 from "../../assets/demo_img_1.webp";
 import img_2 from "../../assets/demo_img_2.webp";
 import img_3 from "../../assets/demo_img_3.webp";
@@ -18,6 +17,9 @@ import wishlisted_img from "../../assets/wishlist_page/wishlisted.svg";
 import bag_white_img from "../../assets/wishlist_page/bag-white.svg";
 import bag_black_img from "../../assets/wishlist_page/bag-blck.svg";
 import rupee_img from "../../assets/rupee_icon.webp";
+import globe_img from "../../assets/globe.svg"
+import easy_returns_img from "../../assets/easy-returns.svg"
+import badge_trust_img from "../../assets/badge-trust.svg"
 import { AiFillStar } from "react-icons/ai";
 import list_img from "../../assets/list-accordion.svg";
 import tofro_img from "../../assets/tofro-accordion.svg";
@@ -27,6 +29,7 @@ import { useEffect, useState } from "react";
 import "swiper/element/css/pagination";
 import "swiper/element/css/controller";
 import { useMemo, useRef } from "react";
+import Review from "./ReviewComponent/Review";
 import { SlArrowDown, SlArrowUp } from "react-icons/sl";
 import "./ProductPage.css";
 import { sizes } from "../../Components/TypeConstants";
@@ -259,17 +262,17 @@ function ProductDetailsPage() {
                       <p>70% OFF</p>
                     </div>
                   </div>
-                  <span className="text-xs my-1">inclusive of all taxes</span>
+                  <span className="text-[11px] my-1">inclusive of all taxes</span>
                 </div>
                 <div className="tags my-2 mr-4 w-max border border-[#737373]">
-                  <p className="uppercase text-xs px-2 py-1 text-[#737373] font-semibold">
+                  <p className="uppercase text-[11px] px-2 py-1 text-[#737373] font-semibold">
                     100% COTTON
                   </p>
                 </div>
               </div>
               <div className="tribeContainer py-2 mt-1">
                 <div className="h-[3px] w-[75%] bg-[#eee]"></div>
-                <div className="tribeMsg py-4 text-xs font-medium cursor-pointer">
+                <div className="tribeMsg py-4 text-[11px] font-medium cursor-pointer">
                   <span className="text-[#333] font-[400]">
                     TriBe members get an extra discount of <strong>₹20</strong>{" "}
                     and FREE shipping.{" "}
@@ -287,13 +290,13 @@ function ProductDetailsPage() {
                     >
                       <div
                         className="testColorBlock cursor-pointer rounded-lg 
-                        md:rounded-full w-10 h-10 mr-3 mb-3 border 
+                        md:rounded-full w-[35px] h-[35px] mr-3 mb-3 border 
                         border-[#ebebeb] bg-black shadoweffect"
                       ></div>
                     </div>
                   </div>
                 </div>
-                <div className="sizeName text-xs w-[75%] flex items-center justify-between font-bold text-[#333] my-2">
+                <div className="sizeName text-[11px] w-[75%] flex items-center justify-between font-bold text-[#333] my-2">
                   <p>SELECT SIZE </p>
                   <div className="font-bold cursor-pointer text-[#42a2a2]">
                     Size Guide
@@ -318,7 +321,7 @@ function ProductDetailsPage() {
                 </div>
                 {measurementShow && (
                   <div className="flex mt-2 w-[75%]">
-                    <div className="garmentDetails text-xs flex flex-wrap font-medium">
+                    <div className="garmentDetails text-[11px] flex flex-wrap font-medium">
                       <p className="w-full md:w-max">Garment: </p>
                       <div className="specification flex border-[#0000005a] md:border-r px-2">
                         <p className="specificationName text-[#878787] mr-1">
@@ -394,7 +397,7 @@ function ProductDetailsPage() {
                 <div className="h-[3px] w-[75%] bg-[#eee]"></div>
                 <div className=" w-[75%]">
                   <div className="checkPincode mt-1 mb-4">
-                    <div className="checkPincodeHeader text-[#2d2d2d] text-xs p-2 pl-0 flex items-center gap-1">
+                    <div className="checkPincodeHeader text-[#2d2d2d] text-[11px] p-2 pl-0 flex items-center gap-1">
                       <img
                         className="w-6 h-6 object-cover"
                         src={location_img}
@@ -407,7 +410,7 @@ function ProductDetailsPage() {
 
                     {/* <PincodeCheckForm /> */}
                     <div className="flex flex-col-reverse sm:flex-row justify-between">
-                      <div className="deliveryLocation font-bold py-2 text-xs flex flex-wrap items-center mb-2">
+                      <div className="deliveryLocation font-bold py-2 text-[11px] flex flex-wrap items-center mb-2">
                         <span>Delivering in</span>
                         <span className="text-[#207bb4] px-1">
                           {" "}
@@ -424,7 +427,7 @@ function ProductDetailsPage() {
                       {pincodeDetails && (
                         <button
                           onClick={resetPincodeDetails}
-                          className="checkBtn text-[#207bb4] text-xs font-bold sm:px-3 my-2 self-end sm:self-start"
+                          className="checkBtn text-[#207bb4] text-[11px] font-bold sm:px-3 my-2 self-end sm:self-start"
                         >
                           CHANGE
                         </button>
@@ -437,7 +440,7 @@ function ProductDetailsPage() {
                           src={rupee_img}
                           alt=""
                         />
-                        <p className="text-xs font-bold">
+                        <p className="text-[11px] font-bold">
                           Cash on Delivery is{" "}
                           {pincodeDetails?.DeliveryStatus === "Non-Delivery"
                             ? "not "
@@ -461,15 +464,15 @@ function ProductDetailsPage() {
                           onFocus={resetError}
                           placeholder="Enter Pincode"
                           onChange={(e) => setValue(e.target.value)}
-                          className={`flex-1 p-2 border-none outline-none text-xs font-semibold`}
+                          className={`flex-1 p-2 border-none outline-none text-[11px] font-semibold`}
                         />
-                        <button className="checkBtn text-[#207bb4] text-xs font-semibold px-3">
+                        <button className="checkBtn text-[#207bb4] text-[11px] font-semibold px-3">
                           CHECK
                         </button>
                       </form>
                     )}
                     {error && (
-                      <p className="error text-xs py-2 text-[#db3236]">
+                      <p className="error text-[11px] py-2 text-[#db3236]">
                         {error}
                       </p>
                     )}
@@ -486,11 +489,11 @@ function ProductDetailsPage() {
                       <AccordionTrigger>
                         <div className="flex gap-2">
                           <img src={list_img} alt="" />
-                          <div className="">
-                            <h2 className="font-bold text-sm">
+                          <div className=" flex flex-col items-start justify-left">
+                            <p className="font-bold text-sm">
                               Product Description
-                            </h2>
-                            <p className="text-xs text-[#878787]">
+                            </p>
+                            <p className="text-[11px] text-[#878787]">
                               Manufacture, Care and Fit
                             </p>
                           </div>
@@ -525,11 +528,11 @@ function ProductDetailsPage() {
                       <AccordionTrigger>
                         <div className="flex gap-2">
                           <img src={tofro_img} alt="" />
-                          <div className="">
-                            <h2 className="font-bold text-sm">
+                          <div className="flex flex-col items-start justify-left">
+                            <p className="font-bold text-sm">
                             15 Days Returns & Exchange
-                            </h2>
-                            <p className="text-xs text-[#878787]">
+                            </p>
+                            <p className="text-[11px] text-[#878787]">
                             Know about return & exchange policy
                             </p>
                           </div>
@@ -541,9 +544,23 @@ function ProductDetailsPage() {
                     </AccordionItem>
                   </Accordion.Root>
                 </div>
-                <div className="">
-
-                </div>
+                <div className=" py-10 flex gap-2 text-center">
+            <div className="flex flex-col gap-1 items-center">
+                <img className="w-[35px] h-[35px] object-cover" src={badge_trust_img} alt="" />
+                <span className="font-semibold text-[11px] text-[#8f98a9]">100% SECURE PAYMENTS</span>
+            </div>
+            <div className="flex flex-col gap-1 items-center">
+                <img className="w-[35px] h-[35px] object-cover" src={easy_returns_img} alt="" />
+                <span className="font-semibold text-[11px] text-[#8f98a9]">EASY RETURNS & QUICK REFUNDS</span>
+            </div>
+            <div className="flex flex-col gap-1 items-center">
+                <img className="w-[35px] h-[35px] object-contain" src={globe_img} alt="" />
+                <span className="font-semibold text-[11px] text-[#8f98a9]">SHIPPING GLOBALLY</span>
+            </div>
+            </div>
+               <div className="">
+                      <Review/>
+               </div>
               </div>
             </div>
           </div>
@@ -636,14 +653,7 @@ const AccordionTrigger = React.forwardRef(
         <div className="icons">
 
         </div>
-        {/* {
-          
-          <ChevronDownIcon
-            className="text-violet10  ease-[cubic-bezier(0.87,_0,_0.13,_1)] transition-transform duration-300 
-            group-data-[state=open]:rotate-180"
-            aria-hidden
-          />
-          } */}
+
        
       </Accordion.Trigger>
     </Accordion.Header>
