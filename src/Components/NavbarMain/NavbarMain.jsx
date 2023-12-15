@@ -144,7 +144,9 @@ function NavbarMain(){
             </Link>   
                 </span>
                 <span className="px-2 text-[22px] ">
+                <Link to="CartPage">
                 < BsBag/> 
+                </Link>
                 </span>
                 <span className="px-2  ">
                     <img className=" h-[30px] w-[40px]" src={flag} alt="" />

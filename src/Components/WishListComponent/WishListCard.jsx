@@ -5,11 +5,11 @@ import { AiFillStar } from 'react-icons/ai';
 function WishListCard(){
     return(
         <>
-          <div className='relative mt-[120px] ml-[20px]'>
-            <div className=' w-[200px] border lg:border-none rounded-sm overflow-hidden'>
+          <div className=' w-[266px] relative mt-[120px] ml-[20px] mb-[30px]'>
+            <div className=' border lg:border-none rounded-sm '>
                 {/* <Link to={`/p/${_id}`}> */}
                     <figure className="overflow-hidden relative mt">
-                        <img className='w-[200px] transition-all hover:scale-105 aspect-[5/7] object-cover object-top' 
+                        <img className='w-[266px] h-[330px] transition-all hover:scale-105 aspect-[5/7] object-cover object-top' 
                         src={img_1} alt={name} />
                         {/* {
                             !!ratings && */}
@@ -43,11 +43,11 @@ function WishListCard(){
                     </div>
                 </div>
             </div>
-            <div className="removeItem absolute top-2 right-2 cursor-pointer">
-                <img src={crossbtn_img} alt="" />
+            <div className="absolute top-2 right-2 cursor-pointer">
+                <img className="" src={crossbtn_img} alt="" />
             </div>
             {/* {!isAddedToCart && */}
-             <div className="addToBag flex items-center justify-center gap-2 cursor-pointer border border-t-0 text-[10px] text-[#207bb4] px-3 py-2 font-semibold hover:text-[#333] hover:bg-[#e6e6e6]" >
+             <div className=" flex items-center justify-center gap-2 cursor-pointer border border-t-0 text-[10px] text-[#207bb4] px-3 py-2 font-semibold hover:text-[#333] hover:bg-[#e6e6e6]" >
                 <img src={bag_img} alt="" />
                 <span className=''>ADD TO BAG</span>
             </div>

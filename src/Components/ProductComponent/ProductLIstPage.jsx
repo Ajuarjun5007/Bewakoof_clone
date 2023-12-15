@@ -214,7 +214,7 @@ function ProductListPage() {
                 <Link to="/ProductDetailsPage">
                 <div className="  w-[266px]">
                   <div className="relative flex overflow-hidden">
-                    <img className="w-[266px] h-[330px] hover:scale-[1.01]
+                    <img className="w-[266px] h-[330px] hover:scale-105
                      transition-all duration-[200ms] ease-in-out" src={img_1} alt="" />
                     <div className="flex items-center gap-[5px] py-[1px] pl-[8px] pr-[4px] absolute bottom-5 bg-white">
                     <FaStar className="text-[#ffc700] text-[9px]"/>

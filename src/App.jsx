@@ -14,6 +14,7 @@ import MailPage from "./Components/UserAuthentication/MailPage"
 import WishlistPage from "./Components/WishListComponent/WishlistPage";
 import ProductListPage from "./Components/ProductComponent/ProductLIstPage";
 import ProductDetailsPage from "./Components/ProductComponent/ProductDetailsPage";
+import CartPage from  "./Components/CartComponent/CartPage";
 import { useEffect , useState } from "react";
 
 function App() {
@@ -43,6 +44,7 @@ function App() {
         <Route path="/WishlistPage" element={<WishlistPage/>}/>
         <Route path="/ProductListPage" element={<ProductListPage/>}/>
         <Route path="/ProductDetailsPage" element={<ProductDetailsPage/>}/>
+        <Route path="/CartPage" element={<CartPage/>}/>
       </Routes>
 {
   footerDisplay &&
