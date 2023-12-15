@@ -12,3 +12,13 @@
 	overflow: hidden !important;
 	max-height: 100% !important;
 }
+
+.AccordionTrigger[data-state='open'] > .icons::before {
+	content: '-';
+	font-size: 23px;
+  }
+  .AccordionTrigger[data-state='closed'] > .icons::before {
+	content: '+';
+	font-size: 23px;
+
+  }

@@ -2,18 +2,26 @@ import "swiper/element/css/autoplay";
 import "swiper/element/css/thumbs";
 import "swiper/element/css/navigation";
 import { register } from "swiper/element/bundle";
+import React from "react";
+import classNames from "classnames";
+import { ChevronDownIcon } from "@radix-ui/react-icons";
 import img_1 from "../../assets/demo_img_1.webp";
 import img_2 from "../../assets/demo_img_2.webp";
 import img_3 from "../../assets/demo_img_3.webp";
 import img_4 from "../../assets/bw-demo-1.webp";
 import img_5 from "../../assets/bw-demo-2.webp";
 import img_6 from "../../assets/bw-demo-3.webp";
+import * as Accordion from "@radix-ui/react-accordion";
+import location_img from "../../assets/location.svg";
 import wishlist_img from "../../assets/wishlist_page/wishlist.svg";
 import wishlisted_img from "../../assets/wishlist_page/wishlisted.svg";
 import bag_white_img from "../../assets/wishlist_page/bag-white.svg";
 import bag_black_img from "../../assets/wishlist_page/bag-blck.svg";
+import rupee_img from "../../assets/rupee_icon.webp";
 import { AiFillStar } from "react-icons/ai";
-import { AiOutlineClose } from 'react-icons/ai';
+import list_img from "../../assets/list-accordion.svg";
+import tofro_img from "../../assets/tofro-accordion.svg";
+import { AiOutlineClose } from "react-icons/ai";
 import "./ProductPage.css";
 import { useEffect, useState } from "react";
 import "swiper/element/css/pagination";
@@ -67,335 +75,594 @@ function ProductDetailsPage() {
   const handleClick = (e) => {
     onClose(e);
     setAddedToBag(true);
-}
+  };
 
-const handleModalClose = (e) => {
+  const handleModalClose = (e) => {
     if (e.target === e.currentTarget) {
-        onClose(e);
+      onClose(e);
     }
-}
-const [isAddedToCart,setIsAddedToCart]=useState(false);
-const [openSizeModal,setOpenSizeModal]=useState(false);
- const handleAddedToBag = () => {
-        // if (!authenticated) {
-        //     return navigate('/login');
-        // }
-        // if (isAddedToCart) {
-        //     navigate('/cart')
-        // } else {
-            if (selectedSize === null) {
-                setOpenSizeModal(true);
-            } 
-            else {
-                setAddedToBag();
-            }
-        // }
-        setIsAddedToCart(()=>!isAddedToCart);
-    }
-    const handleWishlisted = () => {
-      if (!authenticated) {
-          return navigate('/LoginPage');
-      }
+  };
+  const [isAddedToCart, setIsAddedToCart] = useState(false);
+  const [openSizeModal, setOpenSizeModal] = useState(false);
+  const [wishListed, setWishListed] = useState(false);
+  const [value, setValue] = useState("");
+  const [error, setError] = useState();
 
-  }
+
+  const [pincodeDetails, setPincodeDetails] = useState(null);
+
+  const validateZip = (zip) => {
+    return !isNaN(zip) && zip.length === 6;
+  };
+  
+  const handleAddedToBag = () => {
+    // if (!authenticated) {
+    //     return navigate('/login');
+    // }
+    // if (isAddedToCart) {
+    //     navigate('/cart')
+    // } else {
+    if (selectedSize === null) {
+      setOpenSizeModal(true);
+    } else {
+      setAddedToBag();
+    }
+    // }
+    setIsAddedToCart(() => !isAddedToCart);
+  };
+  const handleWishlisted = () => {
+    // if (!authenticated) {
+    //     return navigate('/LoginPage');
+    // }
+    setWishListed(!wishListed);
+  };
   const onClose = (event) => {
     if (event.stopPropagation) {
       event.stopPropagation();
     }
     setOpenSizeModal(false);
   };
-  
+
+  const getPincodeDetails = (e) => {
+    e?.preventDefault && e.preventDefault();
+    if (!validateZip(value)) return;
+    fetch(`https://api.postalpincode.in/pincode/${value}`)
+      .then((res) => res.json())
+      .then((data) => {
+        const postDetails = data?.[0]?.PostOffice?.[0];
+        if (!postDetails) {
+          setError("Enter a valid pincode");
+        } else {
+          setError("");
+          setPincodeDetails(postDetails);
+          window.localStorage.setItem(
+            "bewakoof_pincode_details",
+            JSON.stringify(postDetails)
+          );
+        }
+      });
+  };
+
+  const checkErrors = (e) => {
+    const { value } = e.target;
+    setError(() => (validateZip(value) ? "" : "Enter a valid pincode"));
+  };
+
+  const resetError = () => {
+    setError("");
+  };
+
+  const resetPincodeDetails = () => {
+    setPincodeDetails(null);
+    window.localStorage.setItem("bewakoof_pincode_details", null);
+  };
+
+  useEffect(() => {
+    const pincodeDetails = JSON.parse(
+      window.localStorage.getItem("bewakoof_pincode_details")
+    );
+    setPincodeDetails(pincodeDetails);
+  }, []);
 
   return (
     <>
-    <div className="relative">
-
-    
-      <div className="flex justify-center">
-        <div className="mt-[90px] flex gap-[2%] h-[620px]  w-85 border-[1px]  border-black solid">
-          <div className="flex h-max sticky justify-center items-start w-[45%] border-[1px]  border-red-800 solid">
-            <div className="flex gap-[5px] md:h-[470px] xl:h-[575px] overflow-hidden pb-2">
-              <div className="md:w-1/5 hidden md:flex flex-col gap-2">
-                <div
-                  onClick={handlePrevClick}
-                  className=" cursor-pointer flex items-center justify-center truncate"
-                >
-                  <SlArrowUp />
+      <div className="relative">
+        <div className="flex justify-center">
+          <div className="mt-[90px] flex gap-[2%] h-[620px]  w-85 border-[1px]  border-black solid">
+            <div className="flex h-max sticky justify-center items-start w-[45%] border-[1px]  border-red-800 solid">
+              <div className="flex gap-[5px] md:h-[470px] xl:h-[575px] overflow-hidden pb-2">
+                <div className="md:w-1/5 hidden md:flex flex-col gap-2">
+                  <div
+                    onClick={handlePrevClick}
+                    className=" cursor-pointer flex items-center justify-center truncate"
+                  >
+                    <SlArrowUp />
+                  </div>
+                  <swiper-container
+                    ref={verticalSwiperRef}
+                    class="myThumbSlider my-thumbs"
+                    space-between="5"
+                    slides-per-view={images.length < 3 ? images.length : 3}
+                    loop="true"
+                    direction="vertical"
+                  >
+                    {images?.map((image, i) => (
+                      <swiper-slide class="verticalSlide" key={i}>
+                        <div className="">
+                          <img
+                            className="aspect-[4/5] object-contain md:object-cover object-center"
+                            src={image || `/assets/images/banner/1.jpg`}
+                            alt=""
+                          />
+                        </div>
+                      </swiper-slide>
+                    ))}
+                  </swiper-container>
+                  <div
+                    onClick={handleNextClick}
+                    className=" cursor-pointer flex items-center justify-center"
+                  >
+                    <SlArrowDown />
+                  </div>
                 </div>
-                <swiper-container
-                  ref={verticalSwiperRef}
-                  class="myThumbSlider my-thumbs"
-                  space-between="5"
-                  slides-per-view={images.length < 3 ? images.length : 3}
-                  loop="true"
-                  direction="vertical"
-                >
-                  {images?.map((image, i) => (
-                    <swiper-slide class="verticalSlide" key={i}>
-                      <div className="">
-                        <img
-                          className="aspect-[4/5] object-contain md:object-cover object-center"
-                          src={image || `/assets/images/banner/1.jpg`}
-                          alt=""
-                        />
-                      </div>
-                    </swiper-slide>
-                  ))}
-                </swiper-container>
-                <div
-                  onClick={handleNextClick}
-                  className=" cursor-pointer flex items-center justify-center"
-                >
-                  <SlArrowDown />
-                </div>
-              </div>
-              <div className="w-full md:w-4/5 ">
-                <swiper-container
-                  ref={horizontalSwiperRef}
-                  controller-control=".verticalSwiper"
-                  thumbs-swiper=".my-thumbs"
-                  loop="true"
-                  direction="horizontal"
-                  slides-per-view="1"
-                  {...horizontalSliderProps}
-                >
-                  {images?.map((image, i) => (
-                    <swiper-slide class="horizontalSlide" key={i}>
-                      <div className="">
-                        <img
-                          className="h-[558px] md:w-full !object-contain 
+                <div className="w-full md:w-4/5 ">
+                  <swiper-container
+                    ref={horizontalSwiperRef}
+                    controller-control=".verticalSwiper"
+                    thumbs-swiper=".my-thumbs"
+                    loop="true"
+                    direction="horizontal"
+                    slides-per-view="1"
+                    {...horizontalSliderProps}
+                  >
+                    {images?.map((image, i) => (
+                      <swiper-slide class="horizontalSlide" key={i}>
+                        <div className="">
+                          <img
+                            className="h-[558px] md:w-full !object-contain 
                                     md:object-cover object-center "
-                          src={image || `/assets/images/banner/1.jpg`}
-                          alt=""
-                        />
-                      </div>
-                    </swiper-slide>
-                  ))}
-                </swiper-container>
-              </div>
-            </div>
-          </div>
-          <div className="w-[50%] pt-[20px] overflow-scroll no-scrollbar">
-            <div className="">
-              <p className="text-[#4f5362] text-lg font-[400]">Bewakoof®</p>
-              <p className="text-[#737373] pt-2 font-[300] text-[16px]">
-                Men's Black Deku Graphic Printed Oversized Hoodies
-              </p>
-            </div>
-            <div className=" flex gap-[3px] border-[0.3px] border-[#949494] solid w-max py-[3px] px-[8px] bg-[#f7f7f7] mt-3 items-center">
-              <AiFillStar className="text-[#ffc700]" />
-              <span className="text-[14px] text-[#303030] font-[500]">4.5</span>
-            </div>
-            <div className="priceRow mt-3">
-              <div className="priceContainer items-start flex flex-col justify-center">
-                <div className="flex items-end justify-between">
-                  <div className="sellingPrice mr-1 text-2xl font-semibold text-[#0f0f0f]">
-                    <span className="rupee_icon text-base">₹</span>
-                    999
-                  </div>
-                  <div className="discPrice mr-2 text-[#949494] text-sm line-through">
-                    <span className="rupee_icon">₹</span>
-                    3399
-                  </div>
-                  <div className="offerPerc text-[#00b852] font-medium">
-                    <p>70% OFF</p>
-                  </div>
+                            src={image || `/assets/images/banner/1.jpg`}
+                            alt=""
+                          />
+                        </div>
+                      </swiper-slide>
+                    ))}
+                  </swiper-container>
                 </div>
-                <span className="text-xs my-1">inclusive of all taxes</span>
               </div>
-              <div className="tags my-2 mr-4 w-max border border-[#737373]">
-                <p className="uppercase text-xs px-2 py-1 text-[#737373] font-semibold">
-                  100% COTTON
+            </div>
+            <div className="w-[50%] pt-[20px] overflow-scroll no-scrollbar">
+              <div className="">
+                <p className="text-[#4f5362] text-lg font-[400]">Bewakoof®</p>
+                <p className="text-[#737373] pt-2 font-[300] text-[16px]">
+                  Men's Black Deku Graphic Printed Oversized Hoodies
                 </p>
               </div>
-            </div>
-            <div className="tribeContainer py-2 mt-1">
-              <div className="h-[3px] w-[75%] bg-[#eee]"></div>
-              <div className="tribeMsg py-4 text-xs font-medium cursor-pointer">
-                <span className="text-[#333] font-[400]">
-                  TriBe members get an extra discount of <strong>₹20</strong>{" "}
-                  and FREE shipping.{" "}
+              <div className=" flex gap-[3px] border-[0.3px] border-[#949494] solid w-max py-[3px] px-[8px] bg-[#f7f7f7] mt-3 items-center">
+                <AiFillStar className="text-[#ffc700]" />
+                <span className="text-[14px] text-[#303030] font-[500]">
+                  4.5
                 </span>
-                <span className="text-[#42a2a2]">Learn more</span>
               </div>
-              <div className="h-[3px] w-[75%] bg-[#eee]"></div> 
-              <div className="">
-              <div className="colorsDiv ml-[10px]">
-            <div className="colorName text-sm font-bold text-[#333] mb-3 w-max"><label>COLOUR OPTIONS: </label></div>
-            <div className={`multiColorDiv flex items-center justify-start`}>
-                        <div 
-                        className="testColorBlock cursor-pointer rounded-lg 
-                        md:rounded-full w-10 h-10 mr-3 mb-3 border 
-                        border-[#ebebeb] bg-black shadoweffect">
-                        </div>
-
-            </div>
-        </div>
-              </div>
-              <div className="sizeName text-xs w-[75%] flex items-center justify-between font-bold text-[#333] my-2">
-                <p>SELECT SIZE </p>
-                <div className="font-bold cursor-pointer text-[#42a2a2]">
-                  Size Guide
+              <div className="priceRow mt-3">
+                <div className="priceContainer items-start flex flex-col justify-center">
+                  <div className="flex items-end justify-between">
+                    <div className="sellingPrice mr-1 text-2xl font-semibold text-[#0f0f0f]">
+                      <span className="rupee_icon text-base">₹</span>
+                      999
+                    </div>
+                    <div className="discPrice mr-2 text-[#949494] text-sm line-through">
+                      <span className="rupee_icon">₹</span>
+                      3399
+                    </div>
+                    <div className="offerPerc text-[#00b852] font-medium">
+                      <p>70% OFF</p>
+                    </div>
+                  </div>
+                  <span className="text-xs my-1">inclusive of all taxes</span>
+                </div>
+                <div className="tags my-2 mr-4 w-max border border-[#737373]">
+                  <p className="uppercase text-xs px-2 py-1 text-[#737373] font-semibold">
+                    100% COTTON
+                  </p>
                 </div>
               </div>
-              <div className="flex">
-                {sizes.map((item) => (
-                  <div
-                    className={`text-sm cursor-pointer rounded-md w-[46px] h-[46px] mr-3 mb-3 px-5 border-1 
+              <div className="tribeContainer py-2 mt-1">
+                <div className="h-[3px] w-[75%] bg-[#eee]"></div>
+                <div className="tribeMsg py-4 text-xs font-medium cursor-pointer">
+                  <span className="text-[#333] font-[400]">
+                    TriBe members get an extra discount of <strong>₹20</strong>{" "}
+                    and FREE shipping.{" "}
+                  </span>
+                  <span className="text-[#42a2a2]">Learn more</span>
+                </div>
+                <div className="h-[3px] w-[75%] bg-[#eee]"></div>
+                <div className="">
+                  <div className="colorsDiv ml-[10px]">
+                    <div className="colorName text-sm font-bold text-[#333] mb-3 w-max">
+                      <label>COLOUR OPTIONS: </label>
+                    </div>
+                    <div
+                      className={`multiColorDiv flex items-center justify-start`}
+                    >
+                      <div
+                        className="testColorBlock cursor-pointer rounded-lg 
+                        md:rounded-full w-10 h-10 mr-3 mb-3 border 
+                        border-[#ebebeb] bg-black shadoweffect"
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+                <div className="sizeName text-xs w-[75%] flex items-center justify-between font-bold text-[#333] my-2">
+                  <p>SELECT SIZE </p>
+                  <div className="font-bold cursor-pointer text-[#42a2a2]">
+                    Size Guide
+                  </div>
+                </div>
+                <div className="flex">
+                  {sizes.map((item) => (
+                    <div
+                      className={`text-sm cursor-pointer rounded-md w-[46px] h-[46px] mr-3 mb-3 px-5 border-1 
       ${
         selectedSize === item
           ? "bg-black text-white border-[1px] border-[#42a2a2] solid"
           : "bg-white text-black border-[1px] border-[#000000] solid"
       } 
       solid flex items-center justify-center hover:border-[1px] hover:border-[#42a2a2] solid`}
-                    onClick={() => selectedSizeHandler(item)}
-                    key={item}
-                  >
-                    {item}
-                  </div>
-                ))}
-              </div>
-              {measurementShow && (
-                <div className="flex mt-2 w-[75%]">
-                  <div className="garmentDetails text-xs flex flex-wrap font-medium">
-                    <p className="w-full md:w-max">Garment: </p>
-                    <div className="specification flex border-[#0000005a] md:border-r px-2">
-                      <p className="specificationName text-[#878787] mr-1">
-                        Chest (in Inch):
-                      </p>
-                      <p className="text-black">
-                        {measurementOfSizes[selectedSize]?.chest.toFixed(1)}
-                      </p>
+                      onClick={() => selectedSizeHandler(item)}
+                      key={item}
+                    >
+                      {item}
                     </div>
-                    <div className="specification flex border-[#0000005a] md:border-r px-2">
-                      <p className="specificationName text-[#878787] mr-1">
-                        Front Length (in Inch):
-                      </p>
-                      <p className="text-black">
-                        {measurementOfSizes[selectedSize]?.frontLength.toFixed(
-                          1
-                        )}
-                      </p>
-                    </div>
-                    <div className="specification flex border-[#0000005a] md:px-2">
-                      <p className="specificationName text-[#878787] mr-1">
-                        Sleeve Length (in Inch):
-                      </p>
-                      <p className="text-black">
-                        {measurementOfSizes[selectedSize]?.sleeveLength.toFixed(
-                          1
-                        )}
-                      </p>
-                    </div>
-                  </div>
+                  ))}
                 </div>
-              )}
-    <div
-                className="addButtons fixed bottom-0 left-0 z-50 md:z-0
+                {measurementShow && (
+                  <div className="flex mt-2 w-[75%]">
+                    <div className="garmentDetails text-xs flex flex-wrap font-medium">
+                      <p className="w-full md:w-max">Garment: </p>
+                      <div className="specification flex border-[#0000005a] md:border-r px-2">
+                        <p className="specificationName text-[#878787] mr-1">
+                          Chest (in Inch):
+                        </p>
+                        <p className="text-black">
+                          {measurementOfSizes[selectedSize]?.chest.toFixed(1)}
+                        </p>
+                      </div>
+                      <div className="specification flex border-[#0000005a] md:border-r px-2">
+                        <p className="specificationName text-[#878787] mr-1">
+                          Front Length (in Inch):
+                        </p>
+                        <p className="text-black">
+                          {measurementOfSizes[
+                            selectedSize
+                          ]?.frontLength.toFixed(1)}
+                        </p>
+                      </div>
+                      <div className="specification flex border-[#0000005a] md:px-2">
+                        <p className="specificationName text-[#878787] mr-1">
+                          Sleeve Length (in Inch):
+                        </p>
+                        <p className="text-black">
+                          {measurementOfSizes[
+                            selectedSize
+                          ]?.sleeveLength.toFixed(1)}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                <div
+                  className="addButtons fixed bottom-0 left-0 z-50 md:z-0
  h-14 w-full md:static md:mb-5 flex shadow-md md:shadow-none rotate-180 
  md:rotate-0 gap-4 p-2 pb-[10px] md:p-0 items-center justify-between font-medium"
-              >
-                <button
-                  onClick={handleAddedToBag}
-                  className="h-11 rotate-180 md:rotate-0 flex-1 bg-[#ffd84d] 
-                  flex items-center md:rounded-none justify-center rounded-sm hover:shadow-md transition-all"
                 >
-                  {isAddedToCart ? (
-                    <img className="w-5 h-5" src={bag_black_img} alt="bag" />
-                  ) : (
-                    <img className="w-5 h-5" src={bag_white_img} alt="bag" />
-                  )}
-                  <p className="text-black text-sm pl-2">
-                    {isAddedToCart ? "GO" : "ADD"} TO BAG
-                  </p>
-
-                 
-                </button>
-                <button
-                  onClick={handleWishlisted}
-                  className={`h-11 hidden md:flex flex-1 items-center justify-center border rounded-sm hover:shadow-md transition-all ${
-                    wishlisted ? "border-black" : ""
-                  }`}
-                >
-                  {wishlisted ? (
-                    <img className="w-6 h-6" src={wishlisted_img} alt="bag" />
-                  ) : (
-                    <img className="w-6 h-6" src={wishlist_img } alt="bag" />
-                  )}
-                  <p
-                    className={`${
-                      wishlisted ? "text-black" : "text-[#949494]"
-                    } text-sm pl-2`}
+                  <button
+                    onClick={handleAddedToBag}
+                    className="h-11 rotate-180  md:rotate-0 flex-1 bg-[#ffd84d] 
+                  flex items-center md:rounded-none justify-center 
+                  rounded-sm hover:shadow-md transition-all"
                   >
-                    {wishlisted ? "WISHLISTED" : "WISHLIST"}
-                  </p>
-                </button>
+                    {isAddedToCart ? (
+                      <img className="w-5 h-5" src={bag_black_img} alt="bag" />
+                    ) : (
+                      <img className="w-5 h-5" src={bag_white_img} alt="bag" />
+                    )}
+                    <p className="text-black font-[400] text-sm pl-2">
+                      {isAddedToCart ? "GO" : "ADD"} TO BAG
+                    </p>
+                  </button>
+                  <button
+                    onClick={handleWishlisted}
+                    className={`h-11 hidden md:flex flex-1  items-center justify-center border rounded-sm hover:shadow-md transition-all ${
+                      wishListed ? "border-black" : ""
+                    }`}
+                  >
+                    {wishListed ? (
+                      <img className="w-6 h-6" src={wishlisted_img} alt="bag" />
+                    ) : (
+                      <img className="w-6 h-6" src={wishlist_img} alt="bag" />
+                    )}
+                    <p
+                      className={`${
+                        wishListed ? "text-black" : "text-[#949494]"
+                      } text-sm pl-2`}
+                    >
+                      {wishListed ? "WISHLISTED" : "WISHLIST"}
+                    </p>
+                  </button>
+                </div>
+                <div className="h-[3px] w-[75%] bg-[#eee]"></div>
+                <div className=" w-[75%]">
+                  <div className="checkPincode mt-1 mb-4">
+                    <div className="checkPincodeHeader text-[#2d2d2d] text-xs p-2 pl-0 flex items-center gap-1">
+                      <img
+                        className="w-6 h-6 object-cover"
+                        src={location_img}
+                        alt=""
+                      />
+                      <span className="font-bold">
+                        CHECK FOR DELIVERY DETAILS
+                      </span>
+                    </div>
+
+                    {/* <PincodeCheckForm /> */}
+                    <div className="flex flex-col-reverse sm:flex-row justify-between">
+                      <div className="deliveryLocation font-bold py-2 text-xs flex flex-wrap items-center mb-2">
+                        <span>Delivering in</span>
+                        <span className="text-[#207bb4] px-1">
+                          {" "}
+                          {pincodeDetails
+                            ? `${pincodeDetails?.Name}, ${pincodeDetails?.District} ${pincodeDetails?.Pincode}`
+                            : "India"}
+                        </span>
+                        <img
+                          className="w-4 h-4 m-1 mt-0 rounded-full object-cover"
+                          src="/assets/icons/india-flag.png"
+                          alt=""
+                        />
+                      </div>
+                      {pincodeDetails && (
+                        <button
+                          onClick={resetPincodeDetails}
+                          className="checkBtn text-[#207bb4] text-xs font-bold sm:px-3 my-2 self-end sm:self-start"
+                        >
+                          CHANGE
+                        </button>
+                      )}
+                    </div>
+                    {pincodeDetails ? (
+                      <div className="flex items-center gap-2">
+                        <img
+                          className="w-5 h-5 object-contain"
+                          src={rupee_img}
+                          alt=""
+                        />
+                        <p className="text-xs font-bold">
+                          Cash on Delivery is{" "}
+                          {pincodeDetails?.DeliveryStatus === "Non-Delivery"
+                            ? "not "
+                            : ""}{" "}
+                          available.
+                        </p>
+                      </div>
+                    ) : (
+                      <form
+                        onSubmit={getPincodeDetails}
+                        className={`flex items-center rounded-md 
+                    p-[2px] border focus-within:border-[#fdd835] 
+                    border-[#0000005a] ${
+                      error ? "border border-[#db3236]" : ""
+                    }`}
+                      >
+                        <input
+                          type="text"
+                          value={value}
+                          onBlur={checkErrors}
+                          onFocus={resetError}
+                          placeholder="Enter Pincode"
+                          onChange={(e) => setValue(e.target.value)}
+                          className={`flex-1 p-2 border-none outline-none text-xs font-semibold`}
+                        />
+                        <button className="checkBtn text-[#207bb4] text-xs font-semibold px-3">
+                          CHECK
+                        </button>
+                      </form>
+                    )}
+                    {error && (
+                      <p className="error text-xs py-2 text-[#db3236]">
+                        {error}
+                      </p>
+                    )}
+                  </div>
+                </div>
+                <div className="h-[3px] w-[75%] bg-[#eee]"></div>
+                <div className="productDescription">
+                  <Accordion.Root
+                    className=" rounded-md "
+                    type="single"
+                    collapsible
+                  >
+                    <AccordionItem value="item-1" >
+                      <AccordionTrigger>
+                        <div className="flex gap-2">
+                          <img src={list_img} alt="" />
+                          <div className="">
+                            <h2 className="font-bold text-sm">
+                              Product Description
+                            </h2>
+                            <p className="text-xs text-[#878787]">
+                              Manufacture, Care and Fit
+                            </p>
+                          </div>
+                        </div>
+                      </AccordionTrigger>
+                      <AccordionContent classNames="data-set=[closed]">
+                        <div className=" py-[10px]">
+                        Grab your dose of quirk with this Astronaut Men's AOP
+                        Hoodie Sweatshirt. Style this sweatshirt with a pair of
+                        pyjamas and flip-flops for a casual look. 
+                       <strong> Country of Origin - </strong> India
+                        </div>
+                        <div className="py-[10px]">
+                        <strong>  Manufactured By -</strong> Bewakoof Brands Pvt
+                        Ltd, Sairaj Logistic Hub #A5, Bmc Pipeline Road,
+                        Opposite All Saints High School, Amane, Bhiwandi, Thane,
+                        Maharashtra 421302
+                        </div>
+                        <div className="py-[10px]">
+                        <strong> Packed By -  </strong> Bewakoof Brands Pvt Ltd,
+                        Sairaj Logistic Hub #A5, Bmc Pipeline Road, Opposite All
+                        Saints High School, Amane, Bhiwandi, Thane, Maharashtra
+                        421302
+                        </div>
+                        <div className="py-[10px]">
+                        <strong>  Commodity - </strong>   Men's Hoodies
+                        </div>
+  
+                      </AccordionContent>
+                    </AccordionItem>
+                    <AccordionItem value="item-2">
+                      <AccordionTrigger>
+                        <div className="flex gap-2">
+                          <img src={tofro_img} alt="" />
+                          <div className="">
+                            <h2 className="font-bold text-sm">
+                            15 Days Returns & Exchange
+                            </h2>
+                            <p className="text-xs text-[#878787]">
+                            Know about return & exchange policy
+                            </p>
+                          </div>
+                        </div>
+                      </AccordionTrigger>
+                      <AccordionContent classNames="data-set=[closed]">
+                      Easy returns upto 15 days of delivery. Exchange available on select pincodes
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion.Root>
+                </div>
+                <div className="">
+
+                </div>
               </div>
-
-
-            
-
-
-
             </div>
           </div>
         </div>
-      </div>
-      {openSizeModal && (
-                      <div className="z-10 absolute top-[0px] flex justify-center items-center  w-full h-full left-[0px] bg-[#0000007a]">
-                        <div
-                          className=" top-[90px]l bg-[#0000007a] relative flex flex-col justify-end md:justify-center"
-                          onClick={handleModalClose}
-                        >
-                      </div>
-                      <div className="popup bg-white rounded-2xl md:rounded-xl md:overflow-hidden w-full mt-auto md:m-auto md:max-w-lg">
-                        <div className="flex flex-col items-center p-4">
-                          <div className="bar w-10 h-[2px] bg-[#4e5664] mb-3 rounded-xl"></div>
-                          <div className="titleIconContainer flex items-center justify-between w-full">
-                            <h1 className="popupTitle text-sm font-bold text-[#292d35]">
-                              Choose your perfect fit!
-                            </h1>
-                            <span className="opacity-70" onClick={onClose}>
-                              <AiOutlineClose className="w-6 h-6" />
-                            </span>
-                          </div>
-                        </div>
-                        <div className=" bg-[#f2f2f4] p-2 md:p-0">
-                          <div className="bg-white p-4">
-                          <div className="flex">
-                {sizes.map((item) => (
-                  <div
-                    className={`text-sm cursor-pointer rounded-md w-[46px] h-[46px] mr-3 mb-3 px-5 border-1 
+        {openSizeModal && (
+          <div className="z-10 absolute top-[0px] flex justify-center items-center  w-full h-full left-[0px] bg-[#0000007a]">
+            <div
+              className=" top-[90px]l bg-[#0000007a] relative flex flex-col justify-end md:justify-center"
+              onClick={handleModalClose}
+            ></div>
+            <div className="popup bg-white rounded-2xl md:rounded-xl md:overflow-hidden w-full mt-auto md:m-auto md:max-w-lg">
+              <div className="flex flex-col items-center p-4">
+                <div className="bar w-10 h-[2px] bg-[#4e5664] mb-3 rounded-xl"></div>
+                <div className="titleIconContainer flex items-center justify-between w-full">
+                  <h1 className="popupTitle text-sm font-bold text-[#292d35]">
+                    Choose your perfect fit!
+                  </h1>
+                  <span className="opacity-70" onClick={onClose}>
+                    <AiOutlineClose className="w-6 h-6" />
+                  </span>
+                </div>
+              </div>
+              <div className=" bg-[#f2f2f4] p-2 md:p-0">
+                <div className="bg-white p-4">
+                  <div className="flex">
+                    {sizes.map((item) => (
+                      <div
+                        className={`text-sm cursor-pointer rounded-md w-[46px] h-[46px] mr-3 mb-3 px-5 border-1 
       ${
         selectedSize === item
           ? "bg-black text-white border-[1px] border-[#42a2a2] solid"
           : "bg-white text-black border-[1px] border-[#000000] solid"
       } 
       solid flex items-center justify-center hover:border-[1px] hover:border-[#42a2a2] solid`}
-                    onClick={() => selectedSizeHandler(item)}
-                    key={item}
-                  >
-                    {item}
+                        onClick={() => selectedSizeHandler(item)}
+                        key={item}
+                      >
+                        {item}
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-                            <button
-                              disabled={selectedSize === null}
-                              onClick={handleClick}
-                              className={`uppercase cursor-pointer h-10 w-full font-medium 
+                  <button
+                    disabled={selectedSize === null}
+                    onClick={handleClick}
+                    className={`uppercase cursor-pointer h-10 w-full font-medium 
                               border-none outline-none flex justify-center mt-2 items-center 
                               rounded-md text-white bg-[#42a2a2] hover:bg-opacity-80`}
-                            >
-                              DONE
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-    </div>
+                  >
+                    DONE
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
     </>
   );
 }
+
+const AccordionItem = React.forwardRef(
+  ({ children, className, ...props }, forwardedRef) => (
+    <Accordion.Item
+      className={classNames(
+        "focus-within:shadow-mauve12 w-[75%] border-b-[2px] border-[#eee] solid overflow-hidden first:mt-0 first:rounded-t last:rounded-b focus-within:relative focus-within:z-1 ",
+        className
+      )}
+      {...props}
+      ref={forwardedRef}
+    >
+      {children}
+    </Accordion.Item>
+  )
+);
+
+const AccordionTrigger = React.forwardRef(
+  ({ children, className, ...props }, forwardedRef) => (
+    <Accordion.Header className="flex">
+      <Accordion.Trigger
+        className={classNames(
+        
+       "AccordionTrigger text-[#333]  font-[500] shadow-mauve6 hover:bg-mauve2 group flex h-[45px] flex-1 cursor-default items-center justify-between  px-5 text-sm leading-none  outline-none",
+          className
+        )}
+        {...props}
+        ref={forwardedRef}
+      >
+        {children}
+
+        <div className="icons">
+
+        </div>
+        {/* {
+          
+          <ChevronDownIcon
+            className="text-violet10  ease-[cubic-bezier(0.87,_0,_0.13,_1)] transition-transform duration-300 
+            group-data-[state=open]:rotate-180"
+            aria-hidden
+          />
+          } */}
+       
+      </Accordion.Trigger>
+    </Accordion.Header>
+  )
+);
+
+const AccordionContent = React.forwardRef(
+  ({ children, className, ...props }, forwardedRef) => (
+    <Accordion.Content
+      className={classNames(
+        " data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp  overflow-hidden text-[12px] text-[#333]",
+        className
+      )}
+      {...props}
+      ref={forwardedRef}
+    >
+      <div className="py-[15px] px-5">{children}</div>
+    </Accordion.Content>
+  )
+);
 
 export default ProductDetailsPage;
