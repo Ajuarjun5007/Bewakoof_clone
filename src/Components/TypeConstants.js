@@ -20,7 +20,7 @@ const colorMappings = {
     "SILVER": "#C0C0C0",
   };
 const sizes =[
-    'M','S','L','XL','XXL',
+    'S','M','L','XL','XXL',
 ]
 
 const subCategories= [
