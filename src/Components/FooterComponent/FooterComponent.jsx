@@ -15,7 +15,22 @@ import { bottomWearForMen } from "../HomePage/menucontent";
 import { topWearForWomen } from "../HomePage/menucontent";
 import { bottomWearForWomen } from "../HomePage/menucontent";
 import { mobiles } from "../TypeConstants";
+import { useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
 function FooterComponent() {
+  const location = useLocation();
+  const [bewakoofDetailsShow, setBewakoofDetailsShow] = useState(false);
+
+  useEffect(() => {
+    // Check if the current location.pathname is '/'
+    if (location.pathname === '/') {
+      setBewakoofDetailsShow(true);
+      console.log('location', location.pathname);
+    } else {
+      // If the location.pathname is not '/', hide the content
+      setBewakoofDetailsShow(false);
+    }
+  }, [location.pathname]);
   return (
     <>
       <div className=" px-[110px] pt-[72px] pb-[250px] bg-[rgb(24,24,24)] w-full left-0 text-[12px] bottom-0">
@@ -230,6 +245,8 @@ function FooterComponent() {
                 
             </div>
         </div>
+        {
+          bewakoofDetailsShow &&
         <div className="text-[hsla(0,0%,100%,.9)]">
           <div className="p-[10px]">
           <p className="text-[17px] font-[500] tracking-wide">BEWAKOOF® THE NEW AGE ONLINE SHOPPING EXPERIENCE.</p>
@@ -335,6 +352,7 @@ function FooterComponent() {
            an impact by breaking conventions and having a different perspective!
           </div>
         </div>
+        }
       </div>
     </>
   );

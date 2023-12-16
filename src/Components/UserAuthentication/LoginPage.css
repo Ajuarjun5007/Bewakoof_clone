@@ -1,10 +1,18 @@
 
 input[type=text]:focus ~ .email-text{
     @apply transform -translate-y-6 -translate-x-0 scale-[.9];
+
+}
+input[type=text]:focus ~ .name-text{
+    @apply transform -translate-y-6 -translate-x-0 scale-[.9];
 }
 input[type=password]:focus ~ .password-text{
     @apply transform -translate-y-6 -translate-x-0 scale-[.9];
+
 }
-.PasswordActive,.EmailActive{
+input[type=tel]:focus ~ .tel-text{
+    @apply transform -translate-y-6 -translate-x-0 scale-[.9];
+}
+.PasswordActive,.EmailActive,.NameActive,.TelActive{
     @apply transform -translate-y-6 -translate-x-0 scale-[.9];
 }

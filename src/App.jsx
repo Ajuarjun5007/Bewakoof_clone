@@ -16,11 +16,12 @@ import ProductListPage from "./Components/ProductComponent/ProductLIstPage";
 import ProductDetailsPage from "./Components/ProductComponent/ProductDetailsPage";
 import CartPage from  "./Components/CartComponent/CartPage";
 import { useEffect , useState } from "react";
+import SignupPage from "./Components/UserAuthentication/SignupPage";
 
 function App() {
   const location =  useLocation();
   const [footerDisplay,setFooterDisplay] = useState(true);
-  const footerHidePage=['LoginPage','MailPage','CartPage',]
+  const footerHidePage=['LoginPage','MailPage','CartPage','SignupPage']
     useEffect(()=>{
       if(footerHidePage.includes(location.pathname.split('/')[1])){
         setFooterDisplay(false);
@@ -45,6 +46,7 @@ function App() {
         <Route path="/ProductListPage" element={<ProductListPage/>}/>
         <Route path="/ProductDetailsPage" element={<ProductDetailsPage/>}/>
         <Route path="/CartPage" element={<CartPage/>}/>
+        <Route path="/SignupPage" element={<SignupPage/>}/>
       </Routes>
 {
   footerDisplay &&

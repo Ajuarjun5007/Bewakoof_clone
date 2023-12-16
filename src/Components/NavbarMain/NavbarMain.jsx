@@ -29,15 +29,17 @@ function NavbarMain(){
         fetchData();
       }, []);
 
-      const hideScrollNavBar=[""];
+      
       const location = useLocation();
       const [isVisible,setIsVisible] = useState(false);
       useEffect(()=>{
-        if(hideScrollNavBar.includes(location.pathname.split("/")[1])){
+        if(location.pathname=='/'){
             setIsVisible(true);
+        }else{
+            setIsVisible(false);
         }
-        // window.location.reload(false);
-      },[location])
+       
+      },[location.pathname])
 
     return(
     <>

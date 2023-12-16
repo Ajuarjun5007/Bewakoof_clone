@@ -110,7 +110,10 @@ function LoginPage() {
                     flex justify-center pl-[80px] w-[380px] h-[40px] py-[25px]"
               />
             </div>
-              <button className="rounded bg-[#42a2a2] text-[20px] text-[#fff] flex justify-center items-center  w-[380px] h-[40px] py-[25px]">CONTINUE</button>
+            <Link to="/SignupPage">
+              <button className="rounded bg-[#42a2a2] text-[20px] text-[#fff] flex justify-center items-center 
+               w-[380px] h-[40px] py-[25px]">CONTINUE</button>
+            </Link>
           </div>
           {/* or container */}
           <div className="my-[20px]">
@@ -119,7 +122,8 @@ function LoginPage() {
           </div>
           </div>
           {/* mail container */}
-          <div className="border-[1px] flex justify-center items-center w-[340px] mb-[10px] rounded border-[#aeaeae] solid ">
+          <div className="border-[1px] flex justify-center items-center w-[340px] mb-[10px] 
+          rounded border-[#aeaeae] solid ">
 
           <div className="flex  justify-center items-center text-[16px]  py-[8px]">
             <button className="flex items-center px-[20px] text-[#5c5c5c] leading-[20px] font-[900] gap-[10px] justify-center ">
