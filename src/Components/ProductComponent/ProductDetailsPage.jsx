@@ -171,8 +171,8 @@ function ProductDetailsPage() {
     <>
       <div className="relative">
         <div className="flex justify-center">
-          <div className="mt-[90px] flex gap-[2%] h-[620px]  w-85 border-[1px]  border-black solid">
-            <div className="flex h-max sticky justify-center items-start w-[45%] border-[1px]  border-red-800 solid">
+          <div className="mt-[90px] flex gap-[2%] h-[620px]  w-85 ">
+            <div className="flex h-max sticky justify-center items-start w-[45%] ">
               <div className="flex gap-[5px] md:h-[470px] xl:h-[575px] overflow-hidden pb-2">
                 <div className="md:w-1/5 hidden md:flex flex-col gap-2">
                   <div

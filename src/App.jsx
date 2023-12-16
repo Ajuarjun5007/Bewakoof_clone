@@ -20,7 +20,7 @@ import { useEffect , useState } from "react";
 function App() {
   const location =  useLocation();
   const [footerDisplay,setFooterDisplay] = useState(true);
-  const footerHidePage=['LoginPage','MailPage']
+  const footerHidePage=['LoginPage','MailPage','CartPage',]
     useEffect(()=>{
       if(footerHidePage.includes(location.pathname.split('/')[1])){
         setFooterDisplay(false);
