@@ -16,7 +16,9 @@ import fb_img from  "../../assets/login_image/fb_img.webp"
 import { VscTriangleDown } from "react-icons/vsc";
 import { MdOutlineEmail } from "react-icons/md";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { login } from "./LoginService";
+
 function LoginPage() {
 
   const countryOptions = [
@@ -38,18 +40,57 @@ function LoginPage() {
   const [selectCountry, setSelectCountry] = useState("+91");
   const [countryImage, setCountryImage] = useState(ind_img);
   const [countryDisplay, setCountryDisplay] = useState(false);
-
+  const navigate = useNavigate();
   const selectCountryHandler = (item) => {
     setCountryImage(item.image);
     setSelectCountry(item.label);
     setCountryDisplay(false);
   };
   
-  const countryDisplayHandler = () => {
-    setCountryDisplay(!countryDisplay);
-  };
+ 
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [errorAlert, setErrorAlert] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  let idInfo=[];
+  
+  const loginHandler=(event)=>{
+    event.preventDefault();
+    console.log("email",event.target[0].value);
+    console.log("password",event.target[1].value);
+    
+    if(event.target[0].value!='' && event.target[1].value!=''){
+      setEmail(event.target[0].value);
+      setPassword(event.target[1].value);
+    }else{
+      setErrorMessage("enter valid id or password")
+    }
+      console.log("email",email);
+      console.log("password",password);
 
 
+      login(email,password)
+      .then((response)=>{
+        idInfo.push(response.data.token);
+        idInfo.push(response.data.data);
+        localStorage.setItem("userInfo", JSON.stringify(idInfo));
+        localStorage.setItem("user", JSON.stringify(response.data.data));
+        navigate("/");
+        navigate(0);
+      })
+      .catch((error) => {
+        console.log("err", error.response.data.message);
+        setErrorMessage(error.response.data.message);
+        setErrorAlert(true);
+      });
+  }
+
+
+console.log("errorAlert", errorAlert);
+console.log("email",email);
+console.log("password",password);
   return (
     <>
       <div className="mt-[90px] flex text-[montserrat,sans-serif]">
@@ -62,7 +103,7 @@ function LoginPage() {
           </div>
         </div>
         <div className="w-[50%] flex items-center  flex-col ">
-          <div className="flex flex-col items-center content-center py-[30px]">
+          <div className="flex flex-col items-center content-center py-[20px]">
             <p className="text-[24px] py-[10px] font-[500] text-[#333]">
               Log in / Sign up
             </p>
@@ -71,50 +112,41 @@ function LoginPage() {
             </p>
           </div>
           {/* input and button */}
+  <form onSubmit={(event)=>loginHandler(event)} className="gap-2">
           <div className="flex flex-col gap-[2px] items-center justify-center">
-            <div className="relative flex   items-center p-[5px] ">
-          
+            <div className="relative flex  flex-col items-center  p-[5px] ">
 
-              <div
-                onClick={countryDisplayHandler}
-                className="absolute mx-[5px] flex items-center w-[70px] gap-1 h-[30px] bg-[#f5f5f5]"
-              >
-                <img className="h-[20px]" src={countryImage} alt="" />
-                <span className="text-[16px]"> {selectCountry} </span>
-                <VscTriangleDown className="text-[14px] text-[#7a7a7a]" />
-              </div>
+<input
+  type="tel"
+  placeholder="Email"
+  className={errorAlert
+    ? "focus:outline-none border-[1px] border-[#db3236] solid rounded flex justify-center pl-[20px] w-[380px] h-[40px] mb-[10px] py-[25px]"
+    : "focus:outline-none border-[1px] border-[#979797] solid rounded flex justify-center pl-[20px] w-[380px] h-[40px] mb-[10px] py-[25px]"
+  }
+/>
+<input
+  type="tel"
+  placeholder="password"
+  className={errorAlert
+    ? "focus:outline-none border-[1px] border-[#db3236] solid rounded flex justify-center pl-[20px] w-[380px] h-[40px] py-[25px]"
+    : "focus:outline-none border-[1px] border-[#979797] solid rounded flex justify-center pl-[20px] w-[380px] h-[40px] py-[25px]"
+  }
+/>
 
-              {countryDisplay && (
-                <div className="absolute left-[0px] z-[2] top-[60px] bg-[#fff] p-[10px] flex shadow-2xl rounded-[5px">
-                  <div className="flex flex-col  items-center gap-3 w-[100px] py-[3px] ">
-                    {countryOptions.map((item) => (
-                      <div
-                        onClick={()=>selectCountryHandler(item)}
-                        className="flex   items-center gap-3 w-[100px] py-[3px]border-black solid"
-                        key={item.index}
-                      >
-                        <img className="h-[20px]" src={item.image} alt="" />
-                        <span className="text-[16px] text-[#7a7a7a]">
-                          {item.label}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              <input
-                type="tel"
-                placeholder="Enter Mobile Number"
-                className="focus:outline-none border-[1px] border-[#979797] solid rounded 
-                    flex justify-center pl-[80px] w-[380px] h-[40px] py-[25px]"
-              />
             </div>
-            <Link to="/SignupPage">
-              <button className="rounded bg-[#42a2a2] text-[20px] text-[#fff] flex justify-center items-center 
+            {
+                errorAlert &&
+            <div className="w-[100%] px-[20px] flex justify-start ">
+              <p className="text-[#db3236] text-[12px]">{errorMessage}</p>
+            </div>
+            }
+        
+              <button type="submit"  className="rounded bg-[#42a2a2] text-[20px] text-[#fff] flex justify-center items-center 
                w-[380px] h-[40px] py-[25px]">CONTINUE</button>
-            </Link>
+         
           </div>
+</form>
+
           {/* or container */}
           <div className="my-[20px]">
           <div className="relative border-b-[1px] w-[380px] m-[20px] flex justify-center z-0 border-[#aeaeae] font-[300] solid text-black">
@@ -126,10 +158,10 @@ function LoginPage() {
           rounded border-[#aeaeae] solid ">
 
           <div className="flex  justify-center items-center text-[16px]  py-[8px]">
-            <button className="flex items-center px-[20px] text-[#5c5c5c] leading-[20px] font-[900] gap-[10px] justify-center ">
+            <button  type={"submit"} className="flex items-center px-[20px] text-[#5c5c5c] leading-[20px] font-[900] gap-[10px] justify-center ">
             <MdOutlineEmail className="text-[18px]"/>
-            <Link to={"/MailPage"}>
-            <span>CONTINUE WITH EMAIL</span>
+            <Link to={"/SignupPage"}>
+            <span>SIGN UP</span>
             </Link>
             </button>
           </div>
