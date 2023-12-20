@@ -1,4 +1,5 @@
 import axios from "axios";
+
 const url = "https://academics.newtonschool.co/api/v1/"
 export const headers = {
   "Content-Type": "application/json",

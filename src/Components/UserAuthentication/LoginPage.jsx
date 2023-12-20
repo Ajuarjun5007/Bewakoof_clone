@@ -11,8 +11,8 @@ import singapore_img from "../../assets/NavbarflagImages/singapore-flag.webp";
 import uae_img from "../../assets/NavbarflagImages/uae-flag.png";
 import usa_img from "../../assets/NavbarflagImages/usa-flag.webp";
 import thailand_img from "../../assets/NavbarflagImages/thailand-flag.webp";
-import google_img from "../../assets/login_image/google_img.webp"
-import fb_img from  "../../assets/login_image/fb_img.webp"
+import google_img from "../../assets/login_image/google_img.webp";
+import fb_img from "../../assets/login_image/fb_img.webp";
 import { VscTriangleDown } from "react-icons/vsc";
 import { MdOutlineEmail } from "react-icons/md";
 import { useState } from "react";
@@ -20,7 +20,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { login } from "./LoginService";
 
 function LoginPage() {
-
   const countryOptions = [
     { value: "91", label: "+91", image: ind_img },
     { value: "1", label: "+1", image: canada_img },
@@ -36,7 +35,6 @@ function LoginPage() {
     // Add other options with values, labels,and images as needed
   ];
 
-
   const [selectCountry, setSelectCountry] = useState("+91");
   const [countryImage, setCountryImage] = useState(ind_img);
   const [countryDisplay, setCountryDisplay] = useState(false);
@@ -46,33 +44,26 @@ function LoginPage() {
     setSelectCountry(item.label);
     setCountryDisplay(false);
   };
-  
- 
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [errorAlert, setErrorAlert] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
 
-  let idInfo=[];
-  
-  const loginHandler=(event)=>{
+  let idInfo = [];
+
+  const loginHandler = (event) => {
     event.preventDefault();
-    console.log("email",event.target[0].value);
-    console.log("password",event.target[1].value);
-    
-    if(event.target[0].value!='' && event.target[1].value!=''){
+    console.log("event",event);
+    if(event.target[0].value != "" && event.target[1].value != "") {
       setEmail(event.target[0].value);
       setPassword(event.target[1].value);
-    }else{
-      setErrorMessage("enter valid id or password")
+    } else {
+      setErrorMessage("enter valid id or password");
     }
-      console.log("email",email);
-      console.log("password",password);
-
-
-      login(email,password)
-      .then((response)=>{
+  
+    login(event.target[0].value,event.target[1].value)
+      .then((response) => {
         idInfo.push(response.data.token);
         idInfo.push(response.data.data);
         localStorage.setItem("userInfo", JSON.stringify(idInfo));
@@ -85,12 +76,8 @@ function LoginPage() {
         setErrorMessage(error.response.data.message);
         setErrorAlert(true);
       });
-  }
+  };
 
-
-console.log("errorAlert", errorAlert);
-console.log("email",email);
-console.log("password",password);
   return (
     <>
       <div className="mt-[90px] flex text-[montserrat,sans-serif]">
@@ -112,74 +99,85 @@ console.log("password",password);
             </p>
           </div>
           {/* input and button */}
-  <form onSubmit={(event)=>loginHandler(event)} className="gap-2">
-          <div className="flex flex-col gap-[2px] items-center justify-center">
-            <div className="relative flex  flex-col items-center  p-[5px] ">
 
-<input
-  type="tel"
-  placeholder="Email"
-  className={errorAlert
-    ? "focus:outline-none border-[1px] border-[#db3236] solid rounded flex justify-center pl-[20px] w-[380px] h-[40px] mb-[10px] py-[25px]"
-    : "focus:outline-none border-[1px] border-[#979797] solid rounded flex justify-center pl-[20px] w-[380px] h-[40px] mb-[10px] py-[25px]"
-  }
-/>
-<input
-  type="tel"
-  placeholder="password"
-  className={errorAlert
-    ? "focus:outline-none border-[1px] border-[#db3236] solid rounded flex justify-center pl-[20px] w-[380px] h-[40px] py-[25px]"
-    : "focus:outline-none border-[1px] border-[#979797] solid rounded flex justify-center pl-[20px] w-[380px] h-[40px] py-[25px]"
-  }
-/>
+          <form onSubmit={(event) => loginHandler(event)} className="gap-2">
+            <div className="flex flex-col gap-[2px] items-center justify-center">
+              <div className="relative flex  flex-col items-center  p-[5px] ">
+                <input
+                  type="tel"
+                  placeholder="Email"
+                  className={
+                    errorAlert
+                      ? "focus:outline-none border-[1px] border-[#db3236] solid rounded flex justify-center pl-[20px] w-[380px] h-[40px] mb-[10px] py-[25px]"
+                      : "focus:outline-none border-[1px] border-[#979797] solid rounded flex justify-center pl-[20px] w-[380px] h-[40px] mb-[10px] py-[25px]"
+                  }
+                />
+                <input
+                  type="tel"
+                  placeholder="password"
+                  className={
+                    errorAlert
+                      ? "focus:outline-none border-[1px] border-[#db3236] solid rounded flex justify-center pl-[20px] w-[380px] h-[40px] py-[25px]"
+                      : "focus:outline-none border-[1px] border-[#979797] solid rounded flex justify-center pl-[20px] w-[380px] h-[40px] py-[25px]"
+                  }
+                />
+              </div>
+              {errorAlert && (
+                <div className="w-[100%] px-[20px] flex justify-start ">
+                  <p className="text-[#db3236] text-[12px]">{errorMessage}</p>
+                </div>
+              )}
 
+              <button
+                type="submit"
+                className="rounded bg-[#42a2a2] text-[20px] text-[#fff] flex justify-center items-center 
+               w-[380px] h-[40px] py-[25px]"
+              >
+                CONTINUE
+              </button>
             </div>
-            {
-                errorAlert &&
-            <div className="w-[100%] px-[20px] flex justify-start ">
-              <p className="text-[#db3236] text-[12px]">{errorMessage}</p>
-            </div>
-            }
-        
-              <button type="submit"  className="rounded bg-[#42a2a2] text-[20px] text-[#fff] flex justify-center items-center 
-               w-[380px] h-[40px] py-[25px]">CONTINUE</button>
-         
-          </div>
-</form>
+          </form>
 
           {/* or container */}
           <div className="my-[20px]">
-          <div className="relative border-b-[1px] w-[380px] m-[20px] flex justify-center z-0 border-[#aeaeae] font-[300] solid text-black">
-            <span className="absolute top-[-14px] bg-white">OR</span>
-          </div>
+            <div className="relative border-b-[1px] w-[380px] m-[20px] flex justify-center z-0 border-[#aeaeae] font-[300] solid text-black">
+              <span className="absolute top-[-14px] bg-white">OR</span>
+            </div>
           </div>
           {/* mail container */}
-          <div className="border-[1px] flex justify-center items-center w-[340px] mb-[10px] 
-          rounded border-[#aeaeae] solid ">
-
-          <div className="flex  justify-center items-center text-[16px]  py-[8px]">
-            <button  type={"submit"} className="flex items-center px-[20px] text-[#5c5c5c] leading-[20px] font-[900] gap-[10px] justify-center ">
-            <MdOutlineEmail className="text-[18px]"/>
-            <Link to={"/SignupPage"}>
-            <span>SIGN UP</span>
-            </Link>
+          <Link to={"/SignupPage"}>
+          <div
+            className="border-[1px] flex justify-center items-center w-[340px] mb-[10px] 
+          rounded border-[#aeaeae] solid "
+          >
+            <div className="flex  justify-center items-center text-[16px]  py-[8px]">
+              <button
+                type={"submit"}
+                className="flex items-center px-[20px] text-[#5c5c5c] leading-[20px] font-[900] gap-[10px] justify-center "
+              >
+                <MdOutlineEmail className="text-[18px]" />
+                  <span>SIGN UP</span>
+              </button>
+            </div>
+          </div>
+                </Link>
+          <div className="flex w-[340px]  gap-[5px] ">
+            <button className="flex w-[50%]  text-[16px] py-[4px] rounded text-[#5c5c5c] font-[900] justify-evenly items-center border-[1px] border-[#aeaeae] solid">
+              <img className="w-[18px]" src={google_img} alt="" />
+              <span>GOOGLE</span>
+            </button>
+            <button className="flex w-[50%] py-[4px] rounded  text-[16px] text-[#5c5c5c] font-[900] justify-evenly items-center border-[1px] border-[#aeaeae] solid">
+              <img className="w-[18px]" src={fb_img} alt="" />
+              <span>FACEBOOK</span>
             </button>
           </div>
+          <div className="w-[400px] text-[12px] text-[#a0a0a0] mt-[30px]">
+            <p>
+              By creating an account or logging in, you agree with Bewakoof®'s{" "}
+              <strong className="text-[#42a2a2]"> Terms and Conditions</strong>{" "}
+              and <strong className="text-[#42a2a2]"> Privacy Policy. </strong>
+            </p>
           </div>
-            <div className="flex w-[340px]  gap-[5px] ">
-              <button className="flex w-[50%]  text-[16px] py-[4px] rounded text-[#5c5c5c] font-[900] justify-evenly items-center border-[1px] border-[#aeaeae] solid">
-                <img className="w-[18px]" src={google_img} alt="" />
-                <span>GOOGLE</span>
-              </button>
-              <button className="flex w-[50%] py-[4px] rounded  text-[16px] text-[#5c5c5c] font-[900] justify-evenly items-center border-[1px] border-[#aeaeae] solid">
-                <img className="w-[18px]" src={fb_img} alt="" />
-                <span>FACEBOOK</span>
-              </button>
-            </div>
-            <div className="w-[400px] text-[12px] text-[#a0a0a0] mt-[30px]">
-              <p>By creating an account or logging in, you agree
-                 with Bewakoof®'s <strong className="text-[#42a2a2]">  Terms and Conditions</strong> and <strong className="text-[#42a2a2]" >  Privacy Policy.   </strong></p>
-            </div>
         </div>
       </div>
     </>

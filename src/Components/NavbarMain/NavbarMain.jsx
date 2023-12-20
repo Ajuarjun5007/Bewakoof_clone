@@ -8,10 +8,15 @@ import { RxDividerVertical } from "react-icons/rx";
 import flag from "../../assets/NavbarflagImages/india-flag.png"
 import {subCategories} from "../TypeConstants"
 import { topWearForMen } from "../HomePage/menucontent";
+import { topWearForWomen } from "../HomePage/menucontent";
 import { bottomWearForMen } from "../HomePage/menucontent";
+import { bottomWearForWomen } from "../HomePage/menucontent";
 import { winterWearForMen } from "../HomePage/menucontent";
+import { winterWearForWomen } from "../HomePage/menucontent";
 import { plusSizeForMen } from "../HomePage/menucontent";
+import { plusSizeForWomen } from "../HomePage/menucontent";
 import { innerWearLoungewearForMen } from "../HomePage/menucontent";
+
 import { brands } from "../TypeConstants";
 import { brandimages } from "../imageconstants";
 import { Link, useLocation } from "react-router-dom";
@@ -29,7 +34,10 @@ function NavbarMain(){
         fetchData();
       }, []);
 
-      
+      const [userLoggedIn,setUserLoggedIn] = useState(false);
+      if(localStorage.getItem("userInfo")){
+        setUserLoggedIn(true);
+      }
       const location = useLocation();
       const [isVisible,setIsVisible] = useState(false);
       useEffect(()=>{
@@ -40,6 +48,13 @@ function NavbarMain(){
         }
        
       },[location.pathname])
+
+      const[menuContentForMen,setMenuContentForMen] = useState(false);
+      const[menuContentForWomen,setMenuContentForWomen] = useState(false);
+
+   
+      
+      console.log("menuContentForMen",menuContentForMen);
 
     return(
     <>
@@ -54,11 +69,17 @@ function NavbarMain(){
     {/* categories */}
         <div className=" w-5/12 py-3 flex relative tracking-widest ml-10 lg:ml-0 lg-max:xl:w-4/12 ">
             <div className="">
+            <div
+            onMouseOverCapture={() =>setMenuContentForMen(true)}
+            onMouseLeave={() => setMenuContentForMen(false)}
+            className="">
                 <Link to="/ProductListPage">
-            <span className="text-[13px] pt-4 px-3 pb-3 leading-3  hover:border-b-4 border-hoveryellow">MEN</span>
+            <span 
+             
+             className="text-[13px] pt-4 px-3 pb-3 leading-3  hover:border-b-4 border-hoveryellow">MEN</span>
                 </Link>
-             {/* Menu content */}
-            {/* <div className="flex w-[1140px] justify-center z-11 max-h-[550px] overflow-scroll absolute left-[-150px]
+          { menuContentForMen &&
+             <div className="flex w-[1140px] justify-center z-11 max-h-[550px] overflow-scroll absolute left-[-150px]
              top-12  border-[1px] bg-white border-[rgba(0,0,0,0.2)] solid  ">
                 <div className=" p-10 flex">
              <div className=" flex w-[60%] gap-x-[40px] 
@@ -116,15 +137,81 @@ function NavbarMain(){
     }
              </div>
                 </div>
-            </div> */}
             </div>
-            <div>
-            <span className="text-[13px] pt-2 px-3 pb-3 leading-3  hover:border-b-4 border-hoveryellow">WOMEN</span>
+          }
+            </div>
+            </div>
+            <div
+            onMouseOverCapture={() =>setMenuContentForWomen(true)}
+            onMouseLeave={() => setMenuContentForWomen(false)}
+            >
+            <span   
+             className="text-[13px] pt-2 px-3 pb-3 leading-3  hover:border-b-4 border-hoveryellow">WOMEN</span>
+               { menuContentForWomen &&
+             <div className="flex w-[1140px] justify-center z-11 max-h-[550px] overflow-scroll absolute left-[-150px]
+             top-12  border-[1px] bg-white border-[rgba(0,0,0,0.2)] solid  ">
+                <div className=" p-10 flex">
+             <div className=" flex w-[60%] gap-x-[40px] 
+              flex-wrap border-r-[1px] border-[rgba(0,0,0,0.2)] solid ">
+                <div className="">
+                    <span className="  font-[450] pb-[20px] solid text-[#494949] text-[14px] ">Topwear</span>
+                    <div className="my-3">
+                    {topWearForWomen.map((item)=>(
+                        <p className="text-[13px] text-[#7f7f7f] py-[3px]">{item}</p>
+                    ))}
+                    </div>
+                </div>
+                <div className="mx-3">
+                    <span className=" pb-[20px]  font-[450] solid text-[#494949] text-[14px] ">Bottomwear</span>
+                    <div className="my-3">
+                    {bottomWearForWomen.map((item)=>(
+                        <p className="text-[13px] text-[#7f7f7f] py-[3px]">{item}</p>
+                    ))}
+                    </div>
+                </div>
+                <div className="mx-3">
+                    <span className=" pb-[20px]  font-[450] solid text-[#494949] text-[14px] ">Winterwear</span>
+                    <div className="my-3">
+                    {winterWearForWomen.map((item)=>(
+                        <p className="text-[13px] text-[#7f7f7f] py-[3px]">{item}</p>
+                    ))}
+                    </div>
+                </div>
+                <div className="">
+                    <span className="pb-[20px]  font-[450] solid text-[#494949] text-[14px] ">Plus size</span>
+                    <div className="my-3">
+                    {plusSizeForWomen.map((item)=>(
+                        <p className="text-[13px] text-[#7f7f7f] py-[3px]">{item}</p>
+                    ))}
+                    </div>
+                </div>
+            {/* <div className="">
+                    <span className="pb-[20px]  font-[450] solid text-[#494949] text-[14px] ">Inner wear & Lounge wear</span>
+                    <div className="my-3">
+                    {innerWearLoungewearForWomen.map((item)=>(
+                        <p className="text-[13px] text-[#7f7f7f] py-[3px]">{item}</p>
+                    ))}
+                    </div>
+                </div> */}
+             </div>
+             <div className=" pl-[70px] "> 
+             <span className="font-[450] mb-[30px] solid text-[#494949] text-[14px]">Brands</span>
+             {
+        Array(25).fill().map((_, i) => (
+            <div key={i} className="flex items-center py-[10px] gap-3  font-[400] solid text-[#7f7f7f] text-[13px]">
+                <img className="h-9 w-9" src={brandimages[i]} alt="" />
+                {brands[i]}
+            </div>
+        ))
+    }
+             </div>
+                </div>
+            </div>
+          }
             </div>
             <div>
             <span className="text-[13px] pt-2 px-3 pb-3 leading-3  hover:border-b-4 border-hoveryellow">MOBILE COVERS</span>
             </div>
-           
         </div>
 
 
@@ -137,9 +224,19 @@ function NavbarMain(){
             {/* left navbar */}
             <div className="flex justify-between items-center px-2 ">
             <RxDividerVertical className="text-[40px] font-light text-[rgba(0,0,0,0.5)] "/>
+            <div className="relative">
             <Link to="LoginPage">
                 <span className="text-[14px] leading-3 tracking-wider">Login</span> 
             </Link>
+            <div className="">
+                <p className=""></p>
+                <p className=""></p>
+                <p className=""></p>
+                <p className=""></p>
+                <p className=""></p>
+            </div>
+            </div>
+
                 <span className="px-2 text-[30px] ">
             <Link to="WishlistPage">
                 <CiHeart />
