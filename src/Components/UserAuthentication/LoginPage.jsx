@@ -18,6 +18,8 @@ import { MdOutlineEmail } from "react-icons/md";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { login } from "./LoginService";
+import { IoEye } from "react-icons/io5";
+import { IoEyeOff } from "react-icons/io5";
 
 function LoginPage() {
   const countryOptions = [
@@ -35,6 +37,7 @@ function LoginPage() {
     // Add other options with values, labels,and images as needed
   ];
 
+  const [passwordVisible, setPasswordVisible] = useState(false);
   const [selectCountry, setSelectCountry] = useState("+91");
   const [countryImage, setCountryImage] = useState(ind_img);
   const [countryDisplay, setCountryDisplay] = useState(false);
@@ -77,7 +80,9 @@ function LoginPage() {
         setErrorAlert(true);
       });
   };
-
+  const passwordVisibleHandler = () => {
+    setPasswordVisible(!passwordVisible);
+  };
   return (
     <>
       <div className="mt-[90px] flex text-[montserrat,sans-serif]">
@@ -112,8 +117,9 @@ function LoginPage() {
                       : "focus:outline-none border-[1px] border-[#979797] solid rounded flex justify-center pl-[20px] w-[380px] h-[40px] mb-[10px] py-[25px]"
                   }
                 />
+                <div className="">
                 <input
-                  type="tel"
+                 type={passwordVisible?"text":"password"}
                   placeholder="password"
                   className={
                     errorAlert
@@ -121,6 +127,17 @@ function LoginPage() {
                       : "focus:outline-none border-[1px] border-[#979797] solid rounded flex justify-center pl-[20px] w-[380px] h-[40px] py-[25px]"
                   }
                 />
+                   <div
+                  className="absolute bottom-[15px] right-[15px]"
+                  onClick={passwordVisibleHandler}
+                >
+                  {passwordVisible ? (
+                    <IoEye className="w-[20px] h-[25px] text-[#181818] opacity-[.5]" />
+                  ) : (
+                    <IoEyeOff className="w-[20px] h-[25px] text-[#181818] opacity-[.5]" />
+                  )}
+                </div>
+                </div>
               </div>
               {errorAlert && (
                 <div className="w-[100%] px-[20px] flex justify-start ">

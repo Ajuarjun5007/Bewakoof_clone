@@ -1,1 +1,8 @@
-
+/* .dropdown-container{
+    display: none;
+}
+.user-detail-container:hover{
+    .dropdown-container{
+        display: block;
+    }
+} */

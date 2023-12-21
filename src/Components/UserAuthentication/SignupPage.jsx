@@ -167,7 +167,6 @@ function SignupPage() {
              border-[#979797]  solid text-black font-[900]"
                   onChange={(e) => handleLabelChange(e.target.value, "email")}
                 />
-              
                 {mailErrorAlert && (
                   <p className="text-[#db3236] text-[12px]">
                     Invalid mail address
