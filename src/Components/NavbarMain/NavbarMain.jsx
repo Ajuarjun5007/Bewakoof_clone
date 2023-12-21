@@ -25,8 +25,9 @@ import "./NavbarMain.css"
 function NavbarMain() {
   const [userLoggedIn, setUserLoggedIn] = useState(false);
   const [userDetailsDisplay, setUserDetailsDisplay] = useState(false);
-
+  const [userName,setUserName]=useState('');
   const navigate = useNavigate();
+  let storedValue=[];
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -39,8 +40,12 @@ function NavbarMain() {
     fetchData();
     if (localStorage.getItem("userInfo")) {
       setUserLoggedIn(true);
+    const storedvalue =JSON.parse(localStorage.getItem("user"));
+        setUserName(storedvalue.name);
     }
   }, []);
+
+
   const clearStorage = () => {
     localStorage.removeItem("userInfo");
     localStorage.removeItem("user");
@@ -55,12 +60,12 @@ function NavbarMain() {
     } else {
       setIsVisible(false);
     }
+
   }, [location.pathname]);
 
   const [menuContentForMen, setMenuContentForMen] = useState(false);
   const [menuContentForWomen, setMenuContentForWomen] = useState(false);
 
-  console.log("userDetails",userDetailsDisplay);
   return (
     <>
       <div className="flex z-10 w-full  fixed bg-white top-8 pt-[3px] justify-center border-b-[1px] border-[rgba(0,0,0,0.2)] solid ">
@@ -313,24 +318,30 @@ function NavbarMain() {
                      className="dropdown-container">
                       
                          <div className={`absolute w-[180px] z-2 mt-[14px] text-14 left-[-60px] cursor-pointer bg-white shadow-2px hover:shadow-md ${userDetailsDisplay ?'block':'hidden'}`}>
-                         <p className="bg-[rgba(0,0,0,.05)] text-[rgba(0,0,0,.5)] italic  px-[15px] py-[10px]">
-                           Hi , Aju
+                         <p className="bg-[rgba(0,0,0,.05)] text-[rgba(0,0,0,.5)] text-ellipsis overflow-hidden italic  px-[15px] py-[10px]">
+                           Hi ,{userName}
                          </p>
                          <p className="hover:bg-[rgba(0,0,0,.05)] px-[15px] py-[10px]">
                            My Account
                          </p>
+                         <Link to="/WishlistPage">
                          <p className="hover:bg-[rgba(0,0,0,.05)]  px-[15px] py-[10px]">
                            My Wishlist
                          </p>
+                         </Link>
+                         <Link to="/TrackOrderPage">
                          <p className="hover:bg-[rgba(0,0,0,.05)]  px-[15px] py-[10px]">
                            My Orders
                          </p>
+                         </Link>
+                         <Link to="/WalletPage">
                          <p className="hover:bg-[rgba(0,0,0,.05)]  px-[15px] py-[10px]">
                            My Wallet
                          </p>
+                         </Link>
                          <p 
                          onClick={()=>clearStorage()}
-                          className="hover:bg-[rgba(0,0,0,.05)] border-[1px]  px-[15px] py-[10px]">
+                          className="hover:bg-[rgba(0,0,0,.05)] px-[15px] py-[10px]">
                            Logout
                          </p>
                        </div>

@@ -64,11 +64,12 @@ function LoginPage() {
     } else {
       setErrorMessage("enter valid id or password");
     }
-  
+
     login(event.target[0].value,event.target[1].value)
       .then((response) => {
         idInfo.push(response.data.token);
         idInfo.push(response.data.data);
+          name=response.data.data.name;
         localStorage.setItem("userInfo", JSON.stringify(idInfo));
         localStorage.setItem("user", JSON.stringify(response.data.data));
         navigate("/");
@@ -83,6 +84,7 @@ function LoginPage() {
   const passwordVisibleHandler = () => {
     setPasswordVisible(!passwordVisible);
   };
+  
   return (
     <>
       <div className="mt-[90px] flex text-[montserrat,sans-serif]">
