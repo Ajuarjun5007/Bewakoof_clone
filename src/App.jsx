@@ -18,6 +18,9 @@ import CartPage from  "./Components/CartComponent/CartPage";
 import { useEffect , useState } from "react";
 import SignupPage from "./Components/UserAuthentication/SignupPage";
 import WalletPage from "./Components/NavbarMain/WalletPage";
+import AccountPage from "./Components/NavbarMain/AccountPage"
+import AddressPage from "./Components/NavbarMain/AddressPage"
+import ProfilePage from "./Components/NavbarMain/ProfilePage"
 
 function App() {
   const location =  useLocation();
@@ -49,7 +52,10 @@ function App() {
         <Route path="/CartPage" element={<CartPage/>}/>
         <Route path="/SignupPage" element={<SignupPage/>}/>
         <Route path="/WalletPage" element={<WalletPage/>}/>
-
+        <Route path="/AccountPage" element={<AccountPage/>}/>
+        <Route path="/AddressPage" element={<AddressPage/>}/>
+        <Route path="/ProfilePage" element={<ProfilePage/>}/>
+        
       </Routes>
 {
   footerDisplay &&

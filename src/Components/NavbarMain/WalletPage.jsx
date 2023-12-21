@@ -1,14 +1,20 @@
-import { FaChevronLeft } from "react-icons/fa6";
+import { GoChevronLeft } from "react-icons/go";
 import wallet_img from "../../assets/wallet_img.gif"
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 function WalletPage(){
+    const navigate = useNavigate();
     return(
         <>
         <div className="flex justify-center">
         <div className="w-85 mt-[120px]">
-            <div className="my-5 text-[#51cccc] flex items-center text-sm gap-2">
-                <FaChevronLeft className="text-[19px] font-[400]" />
+            <Link to="/AccountPage">
+            <div 
+            className="my-5 text-[#51cccc] flex items-center text-sm gap-2">
+                <GoChevronLeft className="text-[19px] font-[400]" />
                   <p className="text-[16px] font-[400]">Back to My Account</p>  
             </div>
+            </Link>
             <div className="pt-4 pl-[10px] w-max pb-6">
                 <p className="text-3xl font-bold text-[#2d2d2d] pb-1">My Wallet</p>
             <div className="w-9/12 h-[2px] bg-[#fbd139] mt-[6px]  ml-[2px]"></div>

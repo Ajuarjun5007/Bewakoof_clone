@@ -321,9 +321,11 @@ function NavbarMain() {
                          <p className="bg-[rgba(0,0,0,.05)] text-[rgba(0,0,0,.5)] text-ellipsis overflow-hidden italic  px-[15px] py-[10px]">
                            Hi ,{userName}
                          </p>
+                         <Link to="/AccountPage">
                          <p className="hover:bg-[rgba(0,0,0,.05)] px-[15px] py-[10px]">
                            My Account
                          </p>
+                         </Link>
                          <Link to="/WishlistPage">
                          <p className="hover:bg-[rgba(0,0,0,.05)]  px-[15px] py-[10px]">
                            My Wishlist
