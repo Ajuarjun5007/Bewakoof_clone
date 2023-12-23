@@ -21,29 +21,51 @@ import user_img from "../../assets/user_icon.png";
 import { brands } from "../TypeConstants";
 import { brandimages } from "../imageconstants";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+
 import "./NavbarMain.css"
+
 function NavbarMain() {
   const [userLoggedIn, setUserLoggedIn] = useState(false);
   const [userDetailsDisplay, setUserDetailsDisplay] = useState(false);
   const [userName,setUserName]=useState('');
+  const location = useLocation();
+  const [isVisible, setIsVisible] = useState(false);
   const navigate = useNavigate();
-  let storedValue=[];
+  let storedValue={};
+  const gender = ["Men","Women"];
+  const [proudctList,setProductList] = useState([]);
+  const [proudctListForMen,setProductListForMen] = useState([]);
+  const [proudctListForWomen,setProductListForWomen] = useState([]);
+  
+  const [menuContentForMen, setMenuContentForMen] = useState(false);
+  const [menuContentForWomen, setMenuContentForWomen] = useState(false);
+
+
+
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const data = await dressList();
-        console.log("data", data.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
+        try {
+            const data = await dressList();
+            setProductList(data.data);
+
+            const filteredProductMen = data.data.filter((product) => product.gender === "Men");
+            const filteredProductWomen = data.data.filter((product) => product.gender === "Women");
+            setProductListForMen(filteredProductMen);
+            setProductListForWomen(filteredProductWomen);
+            if (localStorage.getItem("userInfo")) {
+                setUserLoggedIn(true);
+                const storedValue = JSON.parse(localStorage.getItem("user"));
+                setUserName(storedValue.name);
+            }
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
     };
     fetchData();
-    if (localStorage.getItem("userInfo")) {
-      setUserLoggedIn(true);
-    const storedvalue =JSON.parse(localStorage.getItem("user"));
-        setUserName(storedvalue.name);
-    }
-  }, []);
+}, []);
+
+
+
 
 
   const clearStorage = () => {
@@ -52,8 +74,7 @@ function NavbarMain() {
     window.location.reload(false);
     console.log("clear");
   };
-  const location = useLocation();
-  const [isVisible, setIsVisible] = useState(false);
+ 
   useEffect(() => {
     if (location.pathname == "/") {
       setIsVisible(true);
@@ -63,8 +84,6 @@ function NavbarMain() {
 
   }, [location.pathname]);
 
-  const [menuContentForMen, setMenuContentForMen] = useState(false);
-  const [menuContentForWomen, setMenuContentForWomen] = useState(false);
 
   return (
     <>
@@ -82,7 +101,7 @@ function NavbarMain() {
               onMouseOverCapture={()=>setMenuContentForMen(true)}
               onMouseLeave={()=>setMenuContentForMen(false)}
             >
-              <Link to="/ProductListPage">
+              <Link to="/ProductListPage" state={{ data:proudctListForMen }}>
                 <span className="text-[13px] pt-4 px-3 pb-3 leading-3  hover:border-b-4 border-hoveryellow">
                   MEN
                 </span>
@@ -103,7 +122,7 @@ function NavbarMain() {
                         </span>
                         <div className="my-3">
                           {topWearForMen.map((item) => (
-                            <p className="text-[13px] text-[#7f7f7f] py-[3px]">
+                            <p className="text-[13px] text-[#7f7f7f] py-[3px] hover:underline">
                               {item}
                             </p>
                           ))}
@@ -115,7 +134,7 @@ function NavbarMain() {
                         </span>
                         <div className="my-3">
                           {bottomWearForMen.map((item) => (
-                            <p className="text-[13px] text-[#7f7f7f] py-[3px]">
+                            <p className="text-[13px] text-[#7f7f7f] py-[3px] hover:underline">
                               {item}
                             </p>
                           ))}
@@ -127,7 +146,7 @@ function NavbarMain() {
                         </span>
                         <div className="my-3">
                           {winterWearForMen.map((item) => (
-                            <p className="text-[13px] text-[#7f7f7f] py-[3px]">
+                            <p className="text-[13px] text-[#7f7f7f] py-[3px] hover:underline">
                               {item}
                             </p>
                           ))}
@@ -139,7 +158,7 @@ function NavbarMain() {
                         </span>
                         <div className="my-3">
                           {plusSizeForMen.map((item) => (
-                            <p className="text-[13px] text-[#7f7f7f] py-[3px]">
+                            <p className="text-[13px] text-[#7f7f7f] py-[3px] hover:underline">
                               {item}
                             </p>
                           ))}
@@ -151,7 +170,7 @@ function NavbarMain() {
                         </span>
                         <div className="my-3">
                           {innerWearLoungewearForMen.map((item) => (
-                            <p className="text-[13px] text-[#7f7f7f] py-[3px]">
+                            <p className="text-[13px] text-[#7f7f7f] py-[3px] hover:underline">
                               {item}
                             </p>
                           ))}
@@ -205,7 +224,7 @@ function NavbarMain() {
                         </span>
                         <div className="my-3">
                           {topWearForWomen.map((item) => (
-                            <p className="text-[13px] text-[#7f7f7f] py-[3px]">
+                            <p className="text-[13px] text-[#7f7f7f] py-[3px] hover:underline">
                               {item}
                             </p>
                           ))}
@@ -217,7 +236,7 @@ function NavbarMain() {
                         </span>
                         <div className="my-3">
                           {bottomWearForWomen.map((item) => (
-                            <p className="text-[13px] text-[#7f7f7f] py-[3px]">
+                            <p className="text-[13px] text-[#7f7f7f] py-[3px] hover:underline">
                               {item}
                             </p>
                           ))}
@@ -229,7 +248,7 @@ function NavbarMain() {
                         </span>
                         <div className="my-3">
                           {winterWearForWomen.map((item) => (
-                            <p className="text-[13px] text-[#7f7f7f] py-[3px]">
+                            <p className="text-[13px] text-[#7f7f7f] py-[3px] hover:underline">
                               {item}
                             </p>
                           ))}
@@ -241,7 +260,7 @@ function NavbarMain() {
                         </span>
                         <div className="my-3">
                           {plusSizeForWomen.map((item) => (
-                            <p className="text-[13px] text-[#7f7f7f] py-[3px]">
+                            <p className="text-[13px] text-[#7f7f7f] py-[3px] hover:underline">
                               {item}
                             </p>
                           ))}
@@ -251,7 +270,7 @@ function NavbarMain() {
                     <span className="pb-[20px]  font-[450] solid text-[#494949] text-[14px] ">Inner wear & Lounge wear</span>
                     <div className="my-3">
                     {innerWearLoungewearForWomen.map((item)=>(
-                        <p className="text-[13px] text-[#7f7f7f] py-[3px]">{item}</p>
+                        <p className="text-[13px] text-[#7f7f7f] py-[3px] hover:underline">{item}</p>
                     ))}
                     </div>
                 </div> */}

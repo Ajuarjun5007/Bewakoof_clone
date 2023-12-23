@@ -24,17 +24,19 @@ const sizes =[
 ]
 
 const subCategories= [
- "shirt",
-"jogger",
-"jeans", 
-"pyjamas", 
-"shorts",
-"trouser", 
-"hoodie", 
-"tracksuit",
-"kurta",
-"jumpsuit",
-"kurti",
+    "hoodie",
+    "jeans",
+    "jogger",
+    "jumpsuit",
+    "kurta",
+    "kurti",
+    "pyjamas",
+    "shirt",
+    "shorts",
+    "sweater",
+    "tracksuit",
+    "trouser",
+    "tshirt"
 ]
 
 const sellerTags = [
