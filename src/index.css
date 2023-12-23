@@ -26,3 +26,14 @@ body::-webkit-scrollbar-thumb:hover {
     overflow: hidden;
     box-shadow: 0 0 0 4px #fff, 0 0 4px 7px #51cccc;
 }
+
+.fog:hover {
+	animation: fogAnim 0.5s forwards ease-in;
+}
+
+@keyframes fogAnim {
+	0% {
+		opacity: 0.6;
+		/* filter: brightness(2) contrast(2); */
+	}
+}

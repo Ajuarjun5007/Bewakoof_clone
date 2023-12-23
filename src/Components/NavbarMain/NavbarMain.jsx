@@ -40,7 +40,7 @@ function NavbarMain() {
   const [menuContentForMen, setMenuContentForMen] = useState(false);
   const [menuContentForWomen, setMenuContentForWomen] = useState(false);
 
-
+  const genders = ["Men","Women"];
 
   useEffect(() => {
     const fetchData = async () => {
@@ -101,7 +101,7 @@ function NavbarMain() {
               onMouseOverCapture={()=>setMenuContentForMen(true)}
               onMouseLeave={()=>setMenuContentForMen(false)}
             >
-              <Link to="/ProductListPage" state={{ data:proudctListForMen }}>
+              <Link to={`/ProductListPage/${genders[0]}`} state={{ data:proudctListForMen }}>
                 <span className="text-[13px] pt-4 px-3 pb-3 leading-3  hover:border-b-4 border-hoveryellow">
                   MEN
                 </span>
@@ -205,9 +205,11 @@ function NavbarMain() {
               onMouseOverCapture={() => setMenuContentForWomen(true)}
               onMouseLeave={() => setMenuContentForWomen(false)}
             >
+              <Link to={`/ProductListPage/${genders[1]}`} state={{ data:proudctListForWomen }}>
               <span className="text-[13px] pt-2 px-3 pb-3 leading-3  hover:border-b-4 border-hoveryellow">
                 WOMEN
               </span>
+              </Link>
               {menuContentForWomen && (
                 <div
                   className="flex w-[1140px] justify-center z-11 max-h-[550px] overflow-scroll absolute left-[-150px]

@@ -12,10 +12,12 @@ import { FaStar } from "react-icons/fa6";
 import { IoChevronDown } from "react-icons/io5";
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-
 function ProductListPage() {
   const location = useLocation();
-  console.log("loc", location);
+  const productCategory=location.pathname.split("/")[2];
+
+  console.log("loc", location.pathname.split("/")[2]);
+
   const productList = location.state.data;
   const [sortContainerDisplay, SetSortContainerDisplay] = useState(false);
 
@@ -32,14 +34,14 @@ function ProductListPage() {
           <div className="gap-2 flex pl-[10px] text-[#333] font-[300] text-[12px]">
             <p className="">Home</p>
             <p className="">/</p>
-            <p className="">Men clothing</p>
+            <p className=""> {productCategory} clothing</p>
           </div>
 
           <div className="my-[30px] pl-[10px]  flex flex-col justify-left ">
             {/* heading wrapper */}
             <div className="text-[24px] text-[#2d2d2d] font-[900]">
-              <p className="underline decoration-[#fdd835] decoration-[2px] underline-offset-[12px]">
-                Men Clothing
+              <p className="underline w-10/12 decoration-[#fdd835] decoration-[2px] underline-offset-[12px]">
+              {productCategory} Clothing
               </p>
             </div>
 
@@ -218,7 +220,7 @@ function ProductListPage() {
                 </div>
                 {sortContainerDisplay && (
                   <div
-                    className="absolute min-w-[145px] py-[17px] border-[1px] border-[#ccc] solid
+                    className="absolute min-w-[145px] z-30 py-[17px] border-[1px] border-[#ccc] solid
                  top-[45px] right-[40px] shadow-[0_4px_8px_0_rgba(0,0,0,.2)] bg-white pl-[10px]
                   text-[rgba(45,45,45,.7)] text-[12px]"
                   >
@@ -251,12 +253,12 @@ function ProductListPage() {
                 <div className="flex flex-wrap justify-center gap-[10px]">
                   {productList &&
                     productList.length > 0 &&
-                    productList.slice(0,51).map((product) => (
+                    productList.slice(10,61).map((product) => (
                       <Link key={product._id} to="/ProductDetailsPage">
                         <div key={product._id} className="w-[266px]">
                           <div className="relative flex overflow-hidden">
                             <img
-                              className="w-[266px] h-[330px] hover:scale-105 transition-all duration-[200ms] ease-in-out"
+                              className="w-[266px] fog h-[330px] hover:scale-105 transition-all duration-[200ms] ease-in-out"
                               src={product.displayImage}
                               alt="image"
                             />
