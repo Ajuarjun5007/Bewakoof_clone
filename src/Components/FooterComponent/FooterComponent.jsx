@@ -25,7 +25,6 @@ function FooterComponent() {
     // Check if the current location.pathname is '/'
     if (location.pathname === '/') {
       setBewakoofDetailsShow(true);
-      console.log('location', location.pathname);
     } else {
       // If the location.pathname is not '/', hide the content
       setBewakoofDetailsShow(false);

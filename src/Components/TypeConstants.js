@@ -22,7 +22,7 @@ const colorMappings = {
 const sizes =[
     'S','M','L','XL','XXL',
 ]
-
+const genders = ["Men", "Women"];
 const subCategories= [
     "hoodie",
     "jeans",
@@ -37,6 +37,11 @@ const subCategories= [
     "tracksuit",
     "trouser",
     "tshirt"
+]
+const trendingCategories=[
+    'tshirt','tshirt','shorts','jogger','vests',
+    'tshirt','tshirt','tshirt','top',
+    'jogger','kurti','tshirt'  
 ]
 
 const sellerTags = [
@@ -107,4 +112,4 @@ const typeshirts_women=[
     
 ]
 
-export {sizes,colorMappings,brands,sellerTags,subCategories,mobiles};
+export {genders,sizes,trendingCategories,colorMappings,brands,sellerTags,subCategories,mobiles};

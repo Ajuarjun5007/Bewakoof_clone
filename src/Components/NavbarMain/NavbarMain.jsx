@@ -7,7 +7,7 @@ import { LuUser2 } from "react-icons/lu";
 import { BsBag } from "react-icons/bs";
 import { RxDividerVertical } from "react-icons/rx";
 import flag from "../../assets/NavbarflagImages/india-flag.png";
-import { subCategories } from "../TypeConstants";
+import { genders,subCategories } from "../TypeConstants";
 import { topWearForMen } from "../HomePage/menucontent";
 import { topWearForWomen } from "../HomePage/menucontent";
 import { bottomWearForMen } from "../HomePage/menucontent";
@@ -22,49 +22,37 @@ import { brands } from "../TypeConstants";
 import { brandimages } from "../imageconstants";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
-import "./NavbarMain.css"
+import "./NavbarMain.css";
 
 function NavbarMain() {
   const [userLoggedIn, setUserLoggedIn] = useState(false);
   const [userDetailsDisplay, setUserDetailsDisplay] = useState(false);
-  const [userName,setUserName]=useState('');
+  const [userName, setUserName] = useState("");
   const location = useLocation();
   const [isVisible, setIsVisible] = useState(false);
   const navigate = useNavigate();
-  let storedValue={};
-  const gender = ["Men","Women"];
-  const [proudctList,setProductList] = useState([]);
-  const [proudctListForMen,setProductListForMen] = useState([]);
-  const [proudctListForWomen,setProductListForWomen] = useState([]);
-  
+  const [productList, setProductList] = useState([]);
+
   const [menuContentForMen, setMenuContentForMen] = useState(false);
   const [menuContentForWomen, setMenuContentForWomen] = useState(false);
 
-  const genders = ["Men","Women"];
 
   useEffect(() => {
     const fetchData = async () => {
-        try {
-            const data = await dressList();
-            setProductList(data.data);
-
-            const filteredProductMen = data.data.filter((product) => product.gender === "Men");
-            const filteredProductWomen = data.data.filter((product) => product.gender === "Women");
-            setProductListForMen(filteredProductMen);
-            setProductListForWomen(filteredProductWomen);
-            if (localStorage.getItem("userInfo")) {
-                setUserLoggedIn(true);
-                const storedValue = JSON.parse(localStorage.getItem("user"));
-                setUserName(storedValue.name);
-            }
-        } catch (error) {
-            console.error("Error fetching data:", error);
+      try {
+        const data = await dressList();
+        setProductList(data.data);
+        if (localStorage.getItem("userInfo")) {
+          setUserLoggedIn(true);
+          const storedValue = JSON.parse(localStorage.getItem("user"));
+          setUserName(storedValue.name);
         }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
     };
     fetchData();
-}, []);
-
-
+  }, []);
 
 
 
@@ -74,16 +62,14 @@ function NavbarMain() {
     window.location.reload(false);
     console.log("clear");
   };
- 
+
   useEffect(() => {
     if (location.pathname == "/") {
       setIsVisible(true);
     } else {
       setIsVisible(false);
     }
-
   }, [location.pathname]);
-
 
   return (
     <>
@@ -98,10 +84,13 @@ function NavbarMain() {
           {/* categories */}
           <div className=" w-5/12 py-3 flex relative tracking-widest ml-10 lg:ml-0 lg-max:xl:w-4/12 ">
             <div
-              onMouseOverCapture={()=>setMenuContentForMen(true)}
-              onMouseLeave={()=>setMenuContentForMen(false)}
+              onMouseOverCapture={() => setMenuContentForMen(true)}
+              onMouseLeave={() => setMenuContentForMen(false)}
             >
-              <Link to={`/ProductListPage/${genders[0]}`} state={{ data:proudctListForMen }}>
+              <Link
+                to={`/ProductListPage/${genders[0]}`}
+                state={{ data: productList }}
+              >
                 <span className="text-[13px] pt-4 px-3 pb-3 leading-3  hover:border-b-4 border-hoveryellow">
                   MEN
                 </span>
@@ -205,10 +194,13 @@ function NavbarMain() {
               onMouseOverCapture={() => setMenuContentForWomen(true)}
               onMouseLeave={() => setMenuContentForWomen(false)}
             >
-              <Link to={`/ProductListPage/${genders[1]}`} state={{ data:proudctListForWomen }}>
-              <span className="text-[13px] pt-2 px-3 pb-3 leading-3  hover:border-b-4 border-hoveryellow">
-                WOMEN
-              </span>
+              <Link
+                to={`/ProductListPage/${genders[1]}`}
+                state={{ data: productList }}
+              >
+                <span className="text-[13px] pt-2 px-3 pb-3 leading-3  hover:border-b-4 border-hoveryellow">
+                  WOMEN
+                </span>
               </Link>
               {menuContentForWomen && (
                 <div
@@ -320,57 +312,63 @@ function NavbarMain() {
             </div>
             {/* left navbar */}
             <div
-             onMouseOverCapture={() => setUserDetailsDisplay(true)}
-             onMouseLeave={() => setUserDetailsDisplay(false)}
-            className="flex justify-between items-center px-2 ">
+              onMouseOverCapture={() => setUserDetailsDisplay(true)}
+              onMouseLeave={() => setUserDetailsDisplay(false)}
+              className="flex justify-between items-center px-2 "
+            >
               <RxDividerVertical className="text-[40px] font-light text-[rgba(0,0,0,0.5)] " />
-              
-            
+
               <div>
                 {userLoggedIn ? (
-                     <div
-                     className=" user-detail-container relative"
+                  <div
+                    className=" user-detail-container relative"
                     //  onMouseOver={() => setUserDetailsDisplay(true)}
                     //  onMouseLeave={() => setUserDetailsDisplay(false)}
-                   >
-                     <img className="w-[25px] text-[rgba(0,0,0,0.5)]" src={user_img} alt="User" />
-                     
-                     <div 
-                     className="dropdown-container">
-                      
-                         <div className={`absolute w-[180px] z-2 mt-[14px] text-14 left-[-60px] cursor-pointer bg-white shadow-2px hover:shadow-md ${userDetailsDisplay ?'block':'hidden'}`}>
-                         <p className="bg-[rgba(0,0,0,.05)] text-[rgba(0,0,0,.5)] text-ellipsis overflow-hidden italic  px-[15px] py-[10px]">
-                           Hi ,{userName}
-                         </p>
-                         <Link to="/AccountPage">
-                         <p className="hover:bg-[rgba(0,0,0,.05)] px-[15px] py-[10px]">
-                           My Account
-                         </p>
-                         </Link>
-                         <Link to="/WishlistPage">
-                         <p className="hover:bg-[rgba(0,0,0,.05)]  px-[15px] py-[10px]">
-                           My Wishlist
-                         </p>
-                         </Link>
-                         <Link to="/TrackOrderPage">
-                         <p className="hover:bg-[rgba(0,0,0,.05)]  px-[15px] py-[10px]">
-                           My Orders
-                         </p>
-                         </Link>
-                         <Link to="/WalletPage">
-                         <p className="hover:bg-[rgba(0,0,0,.05)]  px-[15px] py-[10px]">
-                           My Wallet
-                         </p>
-                         </Link>
-                         <p 
-                         onClick={()=>clearStorage()}
-                          className="hover:bg-[rgba(0,0,0,.05)] px-[15px] py-[10px]">
-                           Logout
-                         </p>
-                       </div>
-                     </div>
-                   </div>
-                   
+                  >
+                    <img
+                      className="w-[25px] text-[rgba(0,0,0,0.5)]"
+                      src={user_img}
+                      alt="User"
+                    />
+
+                    <div className="dropdown-container">
+                      <div
+                        className={`absolute w-[180px] z-2 mt-[14px] text-14 left-[-60px] cursor-pointer bg-white shadow-2px hover:shadow-md ${
+                          userDetailsDisplay ? "block" : "hidden"
+                        }`}
+                      >
+                        <p className="bg-[rgba(0,0,0,.05)] text-[rgba(0,0,0,.5)] text-ellipsis overflow-hidden italic  px-[15px] py-[10px]">
+                          Hi ,{userName}
+                        </p>
+                        <Link to="/AccountPage">
+                          <p className="hover:bg-[rgba(0,0,0,.05)] px-[15px] py-[10px]">
+                            My Account
+                          </p>
+                        </Link>
+                        <Link to="/WishlistPage">
+                          <p className="hover:bg-[rgba(0,0,0,.05)]  px-[15px] py-[10px]">
+                            My Wishlist
+                          </p>
+                        </Link>
+                        <Link to="/TrackOrderPage">
+                          <p className="hover:bg-[rgba(0,0,0,.05)]  px-[15px] py-[10px]">
+                            My Orders
+                          </p>
+                        </Link>
+                        <Link to="/WalletPage">
+                          <p className="hover:bg-[rgba(0,0,0,.05)]  px-[15px] py-[10px]">
+                            My Wallet
+                          </p>
+                        </Link>
+                        <p
+                          onClick={() => clearStorage()}
+                          className="hover:bg-[rgba(0,0,0,.05)] px-[15px] py-[10px]"
+                        >
+                          Logout
+                        </p>
+                      </div>
+                    </div>
+                  </div>
                 ) : (
                   <Link to="LoginPage">
                     <span className="text-[14px] leading-3 tracking-wider">
@@ -402,9 +400,15 @@ function NavbarMain() {
         <div className="sub-navbar w-full z-[3]  flex  bg-white fixed top-[84px]  py-4 ">
           <div className="sub-navbar-item px-1 no-scrollbar flex  overflow-scroll">
             {subCategories.map((subCategory) => (
-              <span className="mx-1 pr-20 py-0 text-[17px] key={`index`}">
+              <Link to={`/ProductListPage/${subCategory}`}
+              state={{ data:productList}}
+              >
+              <span
+                className="mx-1 pr-20 py-0 text-[17px] key={`index`}"
+              >
                 {subCategory.toUpperCase()}
               </span>
+              </Link>
             ))}
           </div>
         </div>

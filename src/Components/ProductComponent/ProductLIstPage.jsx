@@ -3,7 +3,7 @@ import * as Accordion from "@radix-ui/react-accordion";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
 import React from "react";
 import classNames from "classnames";
-import { sizes, subCategories, brands, colorMappings } from "../TypeConstants";
+import {genders,sizes, subCategories, brands, colorMappings } from "../TypeConstants";
 import img_1 from "../../assets/bw-demo-1.webp";
 import img_2 from "../../assets/bw-demo-2.webp";
 import img_3 from "../../assets/bw-demo-3.webp";
@@ -12,20 +12,46 @@ import { FaStar } from "react-icons/fa6";
 import { IoChevronDown } from "react-icons/io5";
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import SuggestionCarousel from "./SuggestionCarousel";
 function ProductListPage() {
   const location = useLocation();
-  const productCategory=location.pathname.split("/")[2];
-
-  console.log("loc", location.pathname.split("/")[2]);
-
   const productList = location.state.data;
-  const [sortContainerDisplay, SetSortContainerDisplay] = useState(false);
+  const name = location.state.name;
+  let filteredProductList = [];
 
-  function SortHandler() {
-    SetSortContainerDisplay(() => !sortContainerDisplay);
-    console.log("sortContainerDisplay", sortContainerDisplay);
-  }
+  let productCategory='';
+
+  console.log("loc",location);
+  
+
+    if(name===undefined){
+      productCategory=location.pathname.split("/")[2]
+      if(subCategories.includes(productCategory)){
+        console.log("pc",productCategory)
+       filteredProductList = productList.filter(
+          (product) => product.subCategory === productCategory
+        );
+      } else if(genders.includes(productCategory)){
+        console.log("pc",productCategory)
+        filteredProductList = productList.filter(
+           (product) => product.gender === productCategory
+         );
+      }
+    }else{
+      filteredProductList = productList.filter(
+        (product) => product.subCategory ==name.split('/')[1] && product.gender===name.split('/')[0]
+        // (product) => product.subCategory =='tshirt' && product.gender==='Women'
+
+      );
+      console.log("name", name.split('/')[0] , name.split('/')[1]);
+    }
+
+
+  const [sortContainerDisplay, setSortContainerDisplay] = useState(false);
+
   console.log("productList", productList);
+  
+  console.log("filteredproductList", filteredProductList);
 
   return (
     <>
@@ -206,7 +232,8 @@ function ProductListPage() {
                 <div className=" flex w-[89%] pb-[15px] pr-[10px] ml-[20px]  flex-row-reverse">
                   <div
                     className="flex flex-row-reverse gap-[5px]"
-                    onMouseOver={SortHandler}
+                    onMouseOver={()=>setSortContainerDisplay(true)}
+                    onMouseLeave={()=>setSortContainerDisplay(false)}
                   >
                     <IoChevronDown />
                     <p className="text-[#2d2d2d] text-[12px] pl-[8px] font-[300]">
@@ -251,9 +278,9 @@ function ProductListPage() {
                   </div>
                 )}
                 <div className="flex flex-wrap justify-center gap-[10px]">
-                  {productList &&
-                    productList.length > 0 &&
-                    productList.slice(10,61).map((product) => (
+                  {filteredProductList &&
+                    filteredProductList.length > 0 &&
+                    filteredProductList.slice(0,51).map((product) => (
                       <Link key={product._id} to="/ProductDetailsPage">
                         <div key={product._id} className="w-[266px]">
                           <div className="relative flex overflow-hidden">
@@ -271,7 +298,7 @@ function ProductListPage() {
                           </div>
 
                           <div className="relative">
-                            <div className="absolute mt-[5px] right-[4px] text-[20px]">
+                            <div className="absolute mt-[15px] right-[4px] text-[25px]">
                               <CiHeart className="text-[#4f5362]" />
                             </div>
                             <p className="mt-[5px] text-[#4f5362] text-[12px] leading-[15px] font-[550]">
@@ -287,14 +314,15 @@ function ProductListPage() {
                                 </strong>
                               </p>
                               <p className="line-through text-[#949494] text-[12px]">
-                                {product.price}
+                                {Math.round(product.price*(.5)+product.price)}
                               </p>
                             </div>
                             <p className="text-[#525252] mt-[8px] text-[10px] px-[8px] py-[2px]">
-                              ₹929 for triBE Members
+                            ₹{Math.round(product.price-product.price*(.1))}  for triBE Members
                             </p>
                             <p className="w-max border-[1px] border-[rgb(115,115,115)] my-[12px] solid text-[rgb(115,115,115)] p-[1px] text-[10px]">
-                              LUXE SOFT;LIGHTWEIGHT
+                              {product.sellerTag}
+                                                
                             </p>
                           </div>
                         </div>
@@ -304,6 +332,10 @@ function ProductListPage() {
               </div>
             </div>
           </div>
+          {/* <div className="">
+
+          <SuggestionCarousel productList={productList}/>
+          </div> */}
         </div>
       </div>
     </>

@@ -49,6 +49,11 @@ import bestpick_3 from "../../assets/Our_best_pick_images/best_pick_3.webp"
 import bestpick_4 from "../../assets/Our_best_pick_images/best_pick_4.webp"
 import tribe_img_1 from "../../assets/Tribe_member_images/tribe_img_1.webp"
 import tribe_img_2 from "../../assets/Tribe_member_images/tribe_img_2.jpg"
+import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { trendingCategories } from "../TypeConstants";
+import { dressList } from "../ApiFetch";
+
 function HomePage() {
   const responsive = {
     desktop: {
@@ -67,6 +72,26 @@ function HomePage() {
       slidesToSlide: 1,
     },
   };
+  const [productList, setProductList] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await dressList();
+        setProductList(data.data);
+        if (localStorage.getItem("userInfo")) {
+          // setUserLoggedIn(true);
+          const storedValue = JSON.parse(localStorage.getItem("user"));
+          // setUserName(storedValue.name);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchData();
+  }, []);
+
+
   return (
     <>
     {/*top carousel */}
@@ -163,66 +188,103 @@ function HomePage() {
         <div className="flex flex-col items-center justify-center  font-[550] text-[23px] tracking-wider">
             <p>TRENDING CATEGORIES</p>
             <div className="flex justify-center h-[300px] flex-wrap">
+            <Link to={`/ProductListPage/${trendingCategories[0]}`}
+              state={{ data:productList,name:`Men/${trendingCategories[0]}`}}>
             <div className="trending-item  solid h-[330px] w-[220px]">
                     <img 
                     className=" "
                     src={trendingimg_1} alt=""  />
                 </div>
+                </Link>
+                <Link to={`/ProductListPage/${trendingCategories[1]}`}
+              state={{ data:productList,name:`Men/${trendingCategories[1]}`}}>
                 <div className="trending-item  solid h-[330px] w-[220px]">
                     <img 
                       className=" h-[330px] w-[230px]"
                     src={trendingimg_2} alt="" />
                 </div>
+                </Link>
+                <Link to={`/ProductListPage/${trendingCategories[2]}`}
+              state={{ data:productList,name:`Men/${trendingCategories[2]}`}}>
                 <div className="trending-item  solid h-[330px] w-[220px]">
                     <img 
                       className=" h-[330px] w-[230px]"
                     src={trendingimg_3} alt="" />
                 </div>
+                </Link>
+                <Link to={`/ProductListPage/${trendingCategories[3]}`}
+              state={{ data:productList,name:`Men/${trendingCategories[3]}`}}>
                 <div className="trending-item  solid h-[330px] w-[220px]">
                     <img 
                       className=" h-[330px] w-[230px]"
                     src={trendingimg_4} alt="" />
                 </div>
+                </Link>
+                <Link to={`/ProductListPage/${trendingCategories[4]}`}
+              state={{ data:productList,name:`Men/${trendingCategories[4]}`}}>
                 <div className="trending-item  solid h-[330px] w-[220px]">
                     <img
                       className=" h-[330px] w-[230px]"
                      src={trendingimg_5} alt="" />
                 </div>
+                </Link>
+                <Link to={`/ProductListPage/${trendingCategories[5]}`}
+              state={{ data:productList,name:`Men/${trendingCategories[5]}`}}>
                 <div className="trending-item  solid h-[330px] w-[220px]">
                     <img 
                       className=" h-[330px] w-[230px]"
                     src={trendingimg_6} alt="" />
                 </div>
+                </Link>
+                <Link to={`/ProductListPage/${trendingCategories[6]}`}
+              state={{ data:productList,name:`Women/${trendingCategories[6]}`}}>
                 <div className="trending-item  solid h-[330px] w-[220px]">
                     <img 
                       className=" h-[330px] w-[230px]"
                     src={trendingimg_7} alt="" />
                 </div>
+                </Link>
+                <Link to={`/ProductListPage/${trendingCategories[7]}`}
+              state={{ data:productList,name:`Women/${trendingCategories[7]}`}}>
                 <div className="trending-item  solid h-[330px] w-[220px]">
                     <img 
                       className=" h-[330px] w-[230px]"
                      src={trendingimg_8} alt="" />
                 </div>
+                </Link>
+                <Link to={`/ProductListPage/${trendingCategories[8]}`}
+              state={{ data:productList,name:`Women/${trendingCategories[8]}`}}>
                 <div className="trending-item  solid h-[330px] w-[220px]">
                     <img 
                       className=" h-[330px] w-[230px]"
                     src={trendingimg_9} alt="" />
                 </div>
+                </Link>
+                <Link to={`/ProductListPage/${trendingCategories[9]}`}
+              state={{ data:productList,name:`Women/${trendingCategories[9]}`}}>
                 <div className="trending-item  solid h-[330px] w-[220px]">
                     <img 
                       className=" h-[330px] w-[230px]"
                     src={trendingimg_10} alt="" />
                 </div> 
+                </Link>
+                <Link to={`/ProductListPage/${trendingCategories[10]}`}
+              state={{ data:productList,name:`Women/${trendingCategories[10]}`}}>
                 <div className="trending-item  solid h-[330px] w-[220px]">
                     <img 
                       className=" h-[330px] w-[230px]"
                     src={trendingimg_11} alt="" />
                 </div>
+                </Link>
+                <Link to={`/ProductListPage/${trendingCategories[11]}`}
+              state={{ data:productList,name:`Women/${trendingCategories[11]}`}}>
                 <div className="trending-item  solid h-[330px] w-[220px]">
                     <img 
                       className=" h-[330px] w-[230px]"
                     src={trendingimg_12} alt="" />
                 </div>
+                </Link>
+
             </div>
         </div>
         </div>
