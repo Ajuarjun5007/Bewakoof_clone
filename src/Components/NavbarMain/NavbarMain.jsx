@@ -1,6 +1,5 @@
 import logo from "../../assets/bewakoof_logo.svg";
 import { useEffect, useState } from "react";
-import { dressList } from "../ApiFetch";
 import { IoIosSearch } from "react-icons/io";
 import { CiHeart } from "react-icons/ci";
 import { LuUser2 } from "react-icons/lu";
@@ -31,29 +30,9 @@ function NavbarMain() {
   const location = useLocation();
   const [isVisible, setIsVisible] = useState(false);
   const navigate = useNavigate();
-  const [productList, setProductList] = useState([]);
 
   const [menuContentForMen, setMenuContentForMen] = useState(false);
   const [menuContentForWomen, setMenuContentForWomen] = useState(false);
-
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await dressList();
-        setProductList(data.data);
-        if (localStorage.getItem("userInfo")) {
-          setUserLoggedIn(true);
-          const storedValue = JSON.parse(localStorage.getItem("user"));
-          setUserName(storedValue.name);
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-    fetchData();
-  }, []);
-
 
 
   const clearStorage = () => {
@@ -89,7 +68,7 @@ function NavbarMain() {
             >
               <Link
                 to={`/ProductListPage/${genders[0]}`}
-                state={{ data: productList }}
+                
               >
                 <span className="text-[13px] pt-4 px-3 pb-3 leading-3  hover:border-b-4 border-hoveryellow">
                   MEN
@@ -196,7 +175,7 @@ function NavbarMain() {
             >
               <Link
                 to={`/ProductListPage/${genders[1]}`}
-                state={{ data: productList }}
+                
               >
                 <span className="text-[13px] pt-2 px-3 pb-3 leading-3  hover:border-b-4 border-hoveryellow">
                   WOMEN
@@ -401,7 +380,6 @@ function NavbarMain() {
           <div className="sub-navbar-item px-1 no-scrollbar flex  overflow-scroll">
             {subCategories.map((subCategory) => (
               <Link to={`/ProductListPage/${subCategory}`}
-              state={{ data:productList}}
               >
               <span
                 className="mx-1 pr-20 py-0 text-[17px] key={`index`}"

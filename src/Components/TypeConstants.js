@@ -39,8 +39,8 @@ const subCategories= [
     "tshirt"
 ]
 const trendingCategories=[
-    'tshirt','tshirt','shorts','jogger','vests',
-    'tshirt','tshirt','tshirt','top',
+    'tshirt','tshirt','shorts','jogger','shirt',
+    'tshirt','tshirt','tshirt','jeans',
     'jogger','kurti','tshirt'  
 ]
 

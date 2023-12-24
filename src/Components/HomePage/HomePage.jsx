@@ -51,9 +51,10 @@ import tribe_img_1 from "../../assets/Tribe_member_images/tribe_img_1.webp"
 import tribe_img_2 from "../../assets/Tribe_member_images/tribe_img_2.jpg"
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { trendingCategories } from "../TypeConstants";
+import { trendingCategories,brands,subCategories} from "../TypeConstants";
 import { dressList } from "../ApiFetch";
-
+import Loader from "../Loader";
+// import { dressList } from "../ApiFetch";
 function HomePage() {
   const responsive = {
     desktop: {
@@ -72,28 +73,13 @@ function HomePage() {
       slidesToSlide: 1,
     },
   };
-  const [productList, setProductList] = useState([]);
+  const [userLoggedIn, setUserLoggedIn] = useState(false);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await dressList();
-        setProductList(data.data);
-        if (localStorage.getItem("userInfo")) {
-          // setUserLoggedIn(true);
-          const storedValue = JSON.parse(localStorage.getItem("user"));
-          // setUserName(storedValue.name);
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-    fetchData();
-  }, []);
-
-
+ 
   return (
     <>
+    <div className="">
+
     {/*top carousel */}
       <div 
       className=" relative top-[140px] py-2 "
@@ -115,30 +101,53 @@ function HomePage() {
           //   dotListClass="custom-dot-list-style"
             // itemClass="carousel-item-padding-40-px"
         >
+          
           <div className="w-max-content">
-            <img
-             className="solid object-cover px-1"
-             src={img_1} alt="" />
-          </div> 
+        <Link to={`/ProductListPage/${brands[0]}`}
+          state={{brand:`Men/${brands[0]}`}}
+        >
+        <img
+         className="solid object-cover px-1"
+            src={img_1} alt=""
+          />
+       </Link>
+          </div>
+
           <div className="w-max-content">
+          <Link to={`/ProductListPage/${brands[1]}`}
+          state={{brand:`Men/${brands[1]}`}}
+        >
             <img 
             className="solid object-cover px-1" 
             src={img_2} alt="" />
+       </Link>
           </div> 
           <div className="w-max-content">
+          <Link to={`/ProductListPage/${brands[2]}`}
+          state={{brand:`Men/${brands[2]}`}}
+        >
             <img 
             className="solid object-cover px-1" 
              src={img_3} alt="" />
+       </Link>
           </div> 
           <div className="w-max-content">
+          <Link to={`/ProductListPage/${brands[3]}`}
+          state={{brand:`Men/${brands[3]}`}}
+        >
             <img 
             className="solid object-cover px-1" 
              src={img_4} alt="" />
+       </Link>
           </div> 
           <div className="w-max-content">
+          <Link to={`/ProductListPage/${brands[5]}`}
+          state={{brand:`Men/${brands[5]}`}}
+        >
             <img 
              className="solid object-cover px-1"  
              src={img_5} alt="" />
+       </Link>
           </div> 
 
         </Carousel>
@@ -189,7 +198,7 @@ function HomePage() {
             <p>TRENDING CATEGORIES</p>
             <div className="flex justify-center h-[300px] flex-wrap">
             <Link to={`/ProductListPage/${trendingCategories[0]}`}
-              state={{ data:productList,name:`Men/${trendingCategories[0]}`}}>
+              state={{name:`Men/${trendingCategories[0]}`}}>
             <div className="trending-item  solid h-[330px] w-[220px]">
                     <img 
                     className=" "
@@ -197,7 +206,7 @@ function HomePage() {
                 </div>
                 </Link>
                 <Link to={`/ProductListPage/${trendingCategories[1]}`}
-              state={{ data:productList,name:`Men/${trendingCategories[1]}`}}>
+              state={{ name:`Men/${trendingCategories[1]}`}}>
                 <div className="trending-item  solid h-[330px] w-[220px]">
                     <img 
                       className=" h-[330px] w-[230px]"
@@ -205,7 +214,7 @@ function HomePage() {
                 </div>
                 </Link>
                 <Link to={`/ProductListPage/${trendingCategories[2]}`}
-              state={{ data:productList,name:`Men/${trendingCategories[2]}`}}>
+              state={{ name:`Men/${trendingCategories[2]}`}}>
                 <div className="trending-item  solid h-[330px] w-[220px]">
                     <img 
                       className=" h-[330px] w-[230px]"
@@ -213,7 +222,7 @@ function HomePage() {
                 </div>
                 </Link>
                 <Link to={`/ProductListPage/${trendingCategories[3]}`}
-              state={{ data:productList,name:`Men/${trendingCategories[3]}`}}>
+              state={{ name:`Men/${trendingCategories[3]}`}}>
                 <div className="trending-item  solid h-[330px] w-[220px]">
                     <img 
                       className=" h-[330px] w-[230px]"
@@ -221,7 +230,7 @@ function HomePage() {
                 </div>
                 </Link>
                 <Link to={`/ProductListPage/${trendingCategories[4]}`}
-              state={{ data:productList,name:`Men/${trendingCategories[4]}`}}>
+              state={{ name:`Men/${trendingCategories[4]}`}}>
                 <div className="trending-item  solid h-[330px] w-[220px]">
                     <img
                       className=" h-[330px] w-[230px]"
@@ -229,7 +238,7 @@ function HomePage() {
                 </div>
                 </Link>
                 <Link to={`/ProductListPage/${trendingCategories[5]}`}
-              state={{ data:productList,name:`Men/${trendingCategories[5]}`}}>
+              state={{ name:`Men/${trendingCategories[5]}`}}>
                 <div className="trending-item  solid h-[330px] w-[220px]">
                     <img 
                       className=" h-[330px] w-[230px]"
@@ -237,7 +246,7 @@ function HomePage() {
                 </div>
                 </Link>
                 <Link to={`/ProductListPage/${trendingCategories[6]}`}
-              state={{ data:productList,name:`Women/${trendingCategories[6]}`}}>
+              state={{ name:`Women/${trendingCategories[6]}`}}>
                 <div className="trending-item  solid h-[330px] w-[220px]">
                     <img 
                       className=" h-[330px] w-[230px]"
@@ -245,7 +254,7 @@ function HomePage() {
                 </div>
                 </Link>
                 <Link to={`/ProductListPage/${trendingCategories[7]}`}
-              state={{ data:productList,name:`Women/${trendingCategories[7]}`}}>
+              state={{ name:`Women/${trendingCategories[7]}`}}>
                 <div className="trending-item  solid h-[330px] w-[220px]">
                     <img 
                       className=" h-[330px] w-[230px]"
@@ -253,7 +262,7 @@ function HomePage() {
                 </div>
                 </Link>
                 <Link to={`/ProductListPage/${trendingCategories[8]}`}
-              state={{ data:productList,name:`Women/${trendingCategories[8]}`}}>
+              state={{ name:`Women/${trendingCategories[8]}`}}>
                 <div className="trending-item  solid h-[330px] w-[220px]">
                     <img 
                       className=" h-[330px] w-[230px]"
@@ -261,7 +270,7 @@ function HomePage() {
                 </div>
                 </Link>
                 <Link to={`/ProductListPage/${trendingCategories[9]}`}
-              state={{ data:productList,name:`Women/${trendingCategories[9]}`}}>
+              state={{ name:`Women/${trendingCategories[9]}`}}>
                 <div className="trending-item  solid h-[330px] w-[220px]">
                     <img 
                       className=" h-[330px] w-[230px]"
@@ -269,7 +278,7 @@ function HomePage() {
                 </div> 
                 </Link>
                 <Link to={`/ProductListPage/${trendingCategories[10]}`}
-              state={{ data:productList,name:`Women/${trendingCategories[10]}`}}>
+              state={{ name:`Women/${trendingCategories[10]}`}}>
                 <div className="trending-item  solid h-[330px] w-[220px]">
                     <img 
                       className=" h-[330px] w-[230px]"
@@ -277,7 +286,7 @@ function HomePage() {
                 </div>
                 </Link>
                 <Link to={`/ProductListPage/${trendingCategories[11]}`}
-              state={{ data:productList,name:`Women/${trendingCategories[11]}`}}>
+              state={{ name:`Women/${trendingCategories[11]}`}}>
                 <div className="trending-item  solid h-[330px] w-[220px]">
                     <img 
                       className=" h-[330px] w-[230px]"
@@ -315,19 +324,32 @@ function HomePage() {
             // itemClass="carousel-item-padding-40-px"
         >
           <div className="w-max-content">
+          <Link to={`/ProductListPage/${brands[6]}`}
+          state={{ brand:`Men/${brands[6]}`}}
+        >
             <img
              className="solid object-cover px-1"
              src={b_original_1} alt="" />
+             </Link>
           </div> 
           <div className="w-max-content">
+          <Link to={`/ProductListPage/${brands[7]}`}
+          state={{ brand:`Men/${brands[7]}`}}
+        >
             <img 
             className="solid object-cover px-1" 
             src={b_original_2} alt="" />
+             </Link>
+
           </div> 
           <div className="w-max-content">
+          <Link to={`/ProductListPage/${brands[8]}`}
+          state={{ brand:`Men/${brands[8]}`}}
+        >
             <img 
             className="solid object-cover px-1" 
              src={b_original_3} alt="" />
+             </Link>
           </div> 
         </Carousel>
       </div>
@@ -337,36 +359,69 @@ function HomePage() {
          text-[23px] tracking-wider">
             <p>TOO HOT TO BE MISSED</p>
             <div className="flex justify-center w-full flex-wrap">
+            <Link to={`/ProductListPage/${subCategories[9]}`}
+        
+        >
                 <img 
                 className="px-[3px] py-[3px] w-[670px]"
                 src={to_missed_img_1} alt="" />
+                </Link>
+                <Link to={`/ProductListPage/${subCategories[12]}`}
+        >
                 <img 
                 className="px-[3px] py-[3px] w-[670px]"
                 src={to_missed_img_2} alt="" />
+                </Link>
+                <Link to={`/ProductListPage/${subCategories[8]}`}
+        >
                 <img 
                 className="px-[3px] py-[3px] w-[670px]"
                 src={to_missed_img_3} alt="" />
+                </Link>
+                <Link to={`/ProductListPage/${subCategories[2]}`}
+        >
                 <img 
                 className="px-[3px] py-[3px] w-[670px]"
                 src={to_missed_img_4} alt="" />
+                </Link>
+
             </div>
         </div>
         {/* categories to bag */}
         <div className="mt-[30px] flex flex-col items-center">
             <p className="text-[23px] font-[550] track-wider">CATEGORIES TO BAG</p>
             <div className="flex justify-center">
+            <Link to={`/ProductListPage/${subCategories[7]}`}
+        >
             <img className="w-[220px]"
             src={category_box_1} alt="" />
+           </Link>
+           <Link to={`/ProductListPage/${subCategories[11]}`}
+        >
             <img className="w-[220px]"
             src={category_box_2} alt="" />
+           </Link>
+           <Link to={`/ProductListPage/${subCategories[6]}`}
+        >
             <img className="w-[220px]"
             src={category_box_3} alt="" />
+           </Link>
+           <Link to={`/ProductListPage/${subCategories[3]}`}
+        >
             <img className="w-[220px]"
             src={category_box_4} alt="" />
+           </Link>
+           <Link to={`/ProductListPage/${subCategories[6]}`}
+        >
             <img className="w-[220px]"
             src={category_box_5} alt="" />
+           </Link>
+           <Link to={`/ProductListPage/${subCategories[8]}`}
+        >
             <img className="w-[220px]"
             src={category_box_6} alt="" />
+           </Link>
+
             </div>
         </div>
         {/* Our Best Picks */}
@@ -393,7 +448,7 @@ function HomePage() {
             <img className="py-[5px]" src={tribe_img_1} alt="" />
             <img className="py-[5px]" src={tribe_img_2} alt="" />
         </div>
-    
+        </div>
     </>
   );
 }

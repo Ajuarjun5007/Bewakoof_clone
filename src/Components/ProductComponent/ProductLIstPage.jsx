@@ -1,9 +1,15 @@
 import "react-multi-carousel/lib/styles.css";
 import * as Accordion from "@radix-ui/react-accordion";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
-import React from "react";
+import React, { useEffect } from "react";
 import classNames from "classnames";
-import {genders,sizes, subCategories, brands, colorMappings } from "../TypeConstants";
+import {
+  genders,
+  sizes,
+  subCategories,
+  brands,
+  colorMappings,
+} from "../TypeConstants";
 import img_1 from "../../assets/bw-demo-1.webp";
 import img_2 from "../../assets/bw-demo-2.webp";
 import img_3 from "../../assets/bw-demo-3.webp";
@@ -13,51 +19,98 @@ import { IoChevronDown } from "react-icons/io5";
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import SuggestionCarousel from "./SuggestionCarousel";
+import Loader from "../Loader";
+import { dressList } from "../ApiFetch";
 function ProductListPage() {
   const location = useLocation();
-  const productList = location.state.data;
-  const name = location.state.name;
+  console.log("loc", location);
+  const name = location.state?.name;
+  const brand = location.state?.brand;
+
   let filteredProductList = [];
-
-  let productCategory='';
-
-  console.log("loc",location);
-  
-
-    if(name===undefined){
-      productCategory=location.pathname.split("/")[2]
-      if(subCategories.includes(productCategory)){
-        console.log("pc",productCategory)
-       filteredProductList = productList.filter(
-          (product) => product.subCategory === productCategory
-        );
-      } else if(genders.includes(productCategory)){
-        console.log("pc",productCategory)
-        filteredProductList = productList.filter(
-           (product) => product.gender === productCategory
-         );
-      }
-    }else{
-      filteredProductList = productList.filter(
-        (product) => product.subCategory ==name.split('/')[1] && product.gender===name.split('/')[0]
-        // (product) => product.subCategory =='tshirt' && product.gender==='Women'
-
-      );
-      console.log("name", name.split('/')[0] , name.split('/')[1]);
-    }
-
-
   const [sortContainerDisplay, setSortContainerDisplay] = useState(false);
+  const [productList, setProductList] = useState([]);
+  const [loading,setLoading] = useState(false);
+  let productCategory = "";
 
-  console.log("productList", productList);
-  
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await dressList();
+        setProductList(data.data);
+        if (localStorage.getItem("userInfo")) {
+          // setUserLoggedIn(true);
+          const storedValue = JSON.parse(localStorage.getItem("user"));
+          // setUserName(storedValue.name);
+        }
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    setLoading(true);
+    fetchData();
+  }, []);
+
+  if (name === undefined && brand === undefined) {
+    productCategory = location.pathname.split("/")[2];
+    if (subCategories.includes(productCategory)) {
+      console.log("pc", productCategory);
+      filteredProductList = productList.filter(
+        (product) => product.subCategory === productCategory
+      );
+    } else if (genders.includes(productCategory)) {
+      console.log("pc", productCategory);
+      filteredProductList = productList.filter(
+        (product) => product.gender === productCategory
+      );
+    }
+  } else if (brand !== undefined) {
+    filteredProductList = productList.filter(
+      (product) =>
+        product.brand == brand.split("/")[1] &&
+        product.gender === brand.split("/")[0]
+    );
+    console.log("brand", brand.split("/")[0], brand.split("/")[1]);
+  } else if (name !== undefined) {
+    filteredProductList = productList.filter(
+      (product) =>
+        product.subCategory == name.split("/")[1] &&
+        product.gender === name.split("/")[0]
+    );
+    console.log("name", name.split("/")[0], name.split("/")[1]);
+  }
+
   console.log("filteredproductList", filteredProductList);
+  // console.log("loader",loading);
+  const shuffledProductList = [...filteredProductList];
+
+  for (let i = shuffledProductList.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffledProductList[i], shuffledProductList[j]] = [
+      shuffledProductList[j],
+      shuffledProductList[i],
+    ];
+  }
+
+  const randomItems = shuffledProductList.slice(0, 60);
 
   return (
     <>
+   
+    
       <div className="flex justify-center">
         <div className="w-85 flex flex-col justify-left mt-[100px] ">
-          <div className="gap-2 flex pl-[10px] text-[#333] font-[300] text-[12px]">
+      
+      { 
+      loading?(
+        <div className="mt-[30px]">
+          <Loader/>
+        </div>
+      ):(
+        <div className="">
+           <div className="gap-2 flex pl-[10px] text-[#333] font-[300] text-[12px]">
             <p className="">Home</p>
             <p className="">/</p>
             <p className=""> {productCategory} clothing</p>
@@ -67,7 +120,7 @@ function ProductListPage() {
             {/* heading wrapper */}
             <div className="text-[24px] text-[#2d2d2d] font-[900]">
               <p className="underline w-10/12 decoration-[#fdd835] decoration-[2px] underline-offset-[12px]">
-              {productCategory} Clothing
+                {productCategory.toUpperCase()}
               </p>
             </div>
 
@@ -232,8 +285,8 @@ function ProductListPage() {
                 <div className=" flex w-[89%] pb-[15px] pr-[10px] ml-[20px]  flex-row-reverse">
                   <div
                     className="flex flex-row-reverse gap-[5px]"
-                    onMouseOver={()=>setSortContainerDisplay(true)}
-                    onMouseLeave={()=>setSortContainerDisplay(false)}
+                    onMouseOver={() => setSortContainerDisplay(true)}
+                    onMouseLeave={() => setSortContainerDisplay(false)}
                   >
                     <IoChevronDown />
                     <p className="text-[#2d2d2d] text-[12px] pl-[8px] font-[300]">
@@ -278,9 +331,9 @@ function ProductListPage() {
                   </div>
                 )}
                 <div className="flex flex-wrap justify-center gap-[10px]">
-                  {filteredProductList &&
-                    filteredProductList.length > 0 &&
-                    filteredProductList.slice(0,51).map((product) => (
+                  {randomItems &&
+                    randomItems.length > 0 &&
+                    randomItems.map((product) => (
                       <Link key={product._id} to="/ProductDetailsPage">
                         <div key={product._id} className="w-[266px]">
                           <div className="relative flex overflow-hidden">
@@ -305,24 +358,24 @@ function ProductListPage() {
                               {product.brand}
                             </p>
                             <p className="mt-[5px] w-[85%] truncate text-[#737373] text-[10px] leading-[12px] font-[550]">
-                              {product.description}
+                              {product.name}
                             </p>
                             <div className="flex gap-[5px] mt-[5px] items-center text-[16px] leading-[14px]">
                               <p>
-                                ₹<strong>
-                                {product.price}
-                                </strong>
+                                ₹<strong>{product.price}</strong>
                               </p>
                               <p className="line-through text-[#949494] text-[12px]">
-                                {Math.round(product.price*(.5)+product.price)}
+                                {Math.round(
+                                  product.price * 0.5 + product.price
+                                )}
                               </p>
                             </div>
                             <p className="text-[#525252] mt-[8px] text-[10px] px-[8px] py-[2px]">
-                            ₹{Math.round(product.price-product.price*(.1))}  for triBE Members
+                              ₹{Math.round(product.price - product.price * 0.1)}{" "}
+                              for triBE Members
                             </p>
                             <p className="w-max border-[1px] border-[rgb(115,115,115)] my-[12px] solid text-[rgb(115,115,115)] p-[1px] text-[10px]">
                               {product.sellerTag}
-                                                
                             </p>
                           </div>
                         </div>
@@ -332,16 +385,21 @@ function ProductListPage() {
               </div>
             </div>
           </div>
+        </div>
+      )
+      }  
+
+         
           {/* <div className="">
 
           <SuggestionCarousel productList={productList}/>
           </div> */}
         </div>
       </div>
+      
     </>
   );
 }
-
 const AccordionItem = React.forwardRef(
   ({ children, className, ...props }, forwardedRef) => (
     <Accordion.Item
@@ -392,5 +450,4 @@ const AccordionContent = React.forwardRef(
     </Accordion.Content>
   )
 );
-
 export default ProductListPage;
