@@ -21,7 +21,6 @@ import WalletPage from "./Components/NavbarMain/WalletPage";
 import AccountPage from "./Components/NavbarMain/AccountPage"
 import AddressPage from "./Components/NavbarMain/AddressPage"
 import ProfilePage from "./Components/NavbarMain/ProfilePage"
-
 function App() {
   const location =  useLocation();
   const [footerDisplay,setFooterDisplay] = useState(true);
@@ -48,7 +47,7 @@ function App() {
         <Route path="/MailPage" element={<MailPage/>}/>
         <Route path="/WishlistPage" element={<WishlistPage/>}/>
         <Route path="/ProductListPage/:category" element={<ProductListPage/>}/>
-        <Route path="/ProductDetailsPage" element={<ProductDetailsPage/>}/>
+        <Route path="/ProductDetailsPage/:id" element={<ProductDetailsPage/>}/>
         <Route path="/CartPage" element={<CartPage/>}/>
         <Route path="/SignupPage" element={<SignupPage/>}/>
         <Route path="/WalletPage" element={<WalletPage/>}/>

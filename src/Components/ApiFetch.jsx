@@ -24,7 +24,7 @@ const instance = axios.create({
     }
   };
 
-  const dressDetail = async (id) => {
+  const productDetail = async (id) => {
     const suffix=url+"ecommerce/product/"+id;
     try {
       const response = await instance.get(
@@ -36,5 +36,22 @@ const instance = axios.create({
       console.error("Error fetching data:", error);
     }
   };
+  const productFilterService = async (filters = {}) => {
+    console.log("filters11111",filters)
+    const size = 'size';
+    const val = 'M';
+    // const suffix=`ott/show?filter={"`+key+`":"`+value.toLowerCase()+`"}`
 
-  export  {dressList,dressDetail,instance};
+    const suffix=`ecommerce/clothes/products?filter=${JSON.stringify(filters)}`;
+    try {
+      const response = await instance.get(
+        suffix,
+      );
+  
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  export  {dressList,productDetail,productFilterService, instance};

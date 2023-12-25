@@ -4,12 +4,13 @@ import "swiper/element/css/navigation";
 import { register } from "swiper/element/bundle";
 import React from "react";
 import classNames from "classnames";
-import img_1 from "../../assets/demo_img_1.webp";
-import img_2 from "../../assets/demo_img_2.webp";
-import img_3 from "../../assets/demo_img_3.webp";
+import img_1 from "../../assets/bw-demo-1.webp";
+import img_2 from "../../assets/bw-demo-2.webp";
+import img_3 from "../../assets/bw-demo-3.webp";
 import img_4 from "../../assets/bw-demo-1.webp";
 import img_5 from "../../assets/bw-demo-2.webp";
 import img_6 from "../../assets/bw-demo-3.webp";
+import { colorMappings } from "../../Components/TypeConstants";
 import * as Accordion from "@radix-ui/react-accordion";
 import location_img from "../../assets/location.svg";
 import wishlist_img from "../../assets/wishlist_page/wishlist.svg";
@@ -17,9 +18,9 @@ import wishlisted_img from "../../assets/wishlist_page/wishlisted.svg";
 import bag_white_img from "../../assets/wishlist_page/bag-white.svg";
 import bag_black_img from "../../assets/wishlist_page/bag-blck.svg";
 import rupee_img from "../../assets/rupee_icon.webp";
-import globe_img from "../../assets/globe.svg"
-import easy_returns_img from "../../assets/easy-returns.svg"
-import badge_trust_img from "../../assets/badge-trust.svg"
+import globe_img from "../../assets/globe.svg";
+import easy_returns_img from "../../assets/easy-returns.svg";
+import badge_trust_img from "../../assets/badge-trust.svg";
 import { AiFillStar } from "react-icons/ai";
 import list_img from "../../assets/list-accordion.svg";
 import tofro_img from "../../assets/tofro-accordion.svg";
@@ -29,16 +30,21 @@ import { useEffect, useState } from "react";
 import "swiper/element/css/pagination";
 import "swiper/element/css/controller";
 import { useMemo, useRef } from "react";
+import { productDetail } from "../ApiFetch";
 import Review from "./ReviewComponent/Review";
 import { SlArrowDown, SlArrowUp } from "react-icons/sl";
 import "./ProductPage.css";
 import { sizes } from "../../Components/TypeConstants";
+import { useParams } from "react-router-dom";
+import Loader from "../Loader";
 register();
 
 function ProductDetailsPage() {
   const verticalSwiperRef = useRef();
   const horizontalSwiperRef = useRef();
-
+  const params = useParams();
+  const [images,setImages] = useState([]);
+  const[isLoading,setIsLoading]=useState(false);
   const horizontalSliderProps = useMemo(
     () =>
       innerWidth > 768
@@ -63,10 +69,11 @@ function ProductDetailsPage() {
   const handleNextClick = () => {
     horizontalSwiperRef.current.swiper.slideNext();
   };
-  const images = [img_1, img_2, img_3, img_4, img_5, img_6];
+  const demoimages = [img_1, img_2, img_3, img_4, img_5, img_6];
   const [selectedSize, setSelectedSize] = useState(null);
   const [measurementShow, setMeasurementShow] = useState(false);
   const [wishlisted, setWishlisted] = useState(false);
+  const [productInfo, setProductInfo] = useState([]);
   useEffect(() => {
     if (selectedSize != null) {
       setMeasurementShow(true);
@@ -91,13 +98,12 @@ function ProductDetailsPage() {
   const [value, setValue] = useState("");
   const [error, setError] = useState();
 
-
   const [pincodeDetails, setPincodeDetails] = useState(null);
 
   const validateZip = (zip) => {
     return !isNaN(zip) && zip.length === 6;
   };
-  
+
   const handleAddedToBag = () => {
     // if (!authenticated) {
     //     return navigate('/login');
@@ -160,6 +166,9 @@ function ProductDetailsPage() {
     window.localStorage.setItem("bewakoof_pincode_details", null);
   };
 
+  const ProductDescription = ({ description }) => {
+    return <div dangerouslySetInnerHTML={{ __html: description }} />;
+  };
   useEffect(() => {
     const pincodeDetails = JSON.parse(
       window.localStorage.getItem("bewakoof_pincode_details")
@@ -167,16 +176,29 @@ function ProductDetailsPage() {
     setPincodeDetails(pincodeDetails);
   }, []);
 
+  useEffect(() => {
+      setIsLoading(true);
+    if (params.id !== undefined) {
+      productDetail(params.id).then((res) => {
+        setProductInfo(res.data);
+        setImages(res.data.images);
+    setIsLoading(false);
+      });
+    }
+  }, [params]);
+console.log("prod",productInfo);
   return (
     <>
       <div className="relative">
         <div className="flex justify-center">
           <div className="mt-[90px] flex gap-[2%] h-[620px]  w-85 ">
             <div className="flex h-max sticky justify-center items-start w-[45%] ">
+              {
+                (!isLoading)?(
               <div className="flex gap-[5px] md:h-[470px] xl:h-[575px] overflow-hidden pb-2">
                 <div className="md:w-1/5 hidden md:flex flex-col gap-2">
                   <div
-                    onClick={handlePrevClick}
+                    onClick={()=>handlePrevClick()}
                     className=" cursor-pointer flex items-center justify-center truncate"
                   >
                     <SlArrowUp />
@@ -194,7 +216,7 @@ function ProductDetailsPage() {
                         <div className="">
                           <img
                             className="aspect-[4/5] object-contain md:object-cover object-center"
-                            src={image || `/assets/images/banner/1.jpg`}
+                            src={image}
                             alt=""
                           />
                         </div>
@@ -202,7 +224,7 @@ function ProductDetailsPage() {
                     ))}
                   </swiper-container>
                   <div
-                    onClick={handleNextClick}
+                    onClick={()=>handleNextClick()}
                     className=" cursor-pointer flex items-center justify-center"
                   >
                     <SlArrowDown />
@@ -224,7 +246,7 @@ function ProductDetailsPage() {
                           <img
                             className="h-[558px] md:w-full !object-contain 
                                     md:object-cover object-center "
-                            src={image || `/assets/images/banner/1.jpg`}
+                            src={image}
                             alt=""
                           />
                         </div>
@@ -233,18 +255,24 @@ function ProductDetailsPage() {
                   </swiper-container>
                 </div>
               </div>
+                ):(
+                  <Loader/>
+                )
+              }
             </div>
             <div className="w-[50%] pt-[20px] overflow-scroll no-scrollbar">
               <div className="">
-                <p className="text-[#4f5362] text-lg font-[400]">Bewakoof®</p>
+                <p className="text-[#4f5362] text-lg font-[400]">
+                  {productInfo.brand}
+                </p>
                 <p className="text-[#737373] pt-2 font-[300] text-[16px]">
-                  Men's Black Deku Graphic Printed Oversized Hoodies
+                  {productInfo.name}
                 </p>
               </div>
               <div className=" flex gap-[3px] border-[0.3px] border-[#949494] solid w-max py-[3px] px-[8px] bg-[#f7f7f7] mt-3 items-center">
                 <AiFillStar className="text-[#ffc700]" />
                 <span className="text-[14px] text-[#303030] font-[500]">
-                  4.5
+                  {productInfo.ratings?.toFixed(1)}
                 </span>
               </div>
               <div className="priceRow mt-3">
@@ -252,17 +280,28 @@ function ProductDetailsPage() {
                   <div className="flex items-end justify-between">
                     <div className="sellingPrice mr-1 text-2xl font-semibold text-[#0f0f0f]">
                       <span className="rupee_icon text-base">₹</span>
-                      999
+                      {productInfo.price}
                     </div>
                     <div className="discPrice mr-2 text-[#949494] text-sm line-through">
                       <span className="rupee_icon">₹</span>
-                      3399
+                      {Math.round(productInfo.price * 0.5 + productInfo.price)}
                     </div>
                     <div className="offerPerc text-[#00b852] font-medium">
-                      <p>70% OFF</p>
+                      <p>
+                        {Math.round(
+                          ((productInfo.price * 0.5 +
+                            productInfo.price -
+                            productInfo.price) /
+                            (productInfo.price * 0.5 + productInfo.price)) *
+                            100
+                        )}
+                        % OFF
+                      </p>
                     </div>
                   </div>
-                  <span className="text-[11px] my-1">inclusive of all taxes</span>
+                  <span className="text-[11px] my-1">
+                    inclusive of all taxes
+                  </span>
                 </div>
                 <div className="tags my-2 mr-4 w-max border border-[#737373]">
                   <p className="uppercase text-[11px] px-2 py-1 text-[#737373] font-semibold">
@@ -289,21 +328,21 @@ function ProductDetailsPage() {
                       className={`multiColorDiv flex items-center justify-start`}
                     >
                       <div
-                        className="testColorBlock cursor-pointer rounded-lg 
-                        md:rounded-full w-[35px] h-[35px] mr-3 mb-3 border 
-                        border-[#ebebeb] bg-black shadoweffect"
+                      style={{backgroundColor:colorMappings[productInfo.color]}}
+                        className="testColorBlock cursor-pointer rounded-lg  md:rounded-full w-[35px] h-[35px] 
+  mr-3 mb-3 border border-[#ebebeb]  shadoweffect"
                       ></div>
                     </div>
                   </div>
                 </div>
                 <div className="sizeName text-[11px] w-[75%] flex items-center justify-between font-bold text-[#333] my-2">
                   <p>SELECT SIZE </p>
-                  <div className="font-bold cursor-pointer text-[#42a2a2]">
+                  <div className="font-bold cursor-pointer  text-[#42a2a2]">
                     Size Guide
                   </div>
                 </div>
                 <div className="flex">
-                  {sizes.map((item) => (
+                  {productInfo.size?.map((item) => (
                     <div
                       className={`text-sm cursor-pointer rounded-md w-[46px] h-[46px] mr-3 mb-3 px-5 border-1 
       ${
@@ -485,7 +524,7 @@ function ProductDetailsPage() {
                     type="single"
                     collapsible
                   >
-                    <AccordionItem value="item-1" >
+                    <AccordionItem value="item-1">
                       <AccordionTrigger>
                         <div className="flex gap-2">
                           <img src={list_img} alt="" />
@@ -499,29 +538,15 @@ function ProductDetailsPage() {
                           </div>
                         </div>
                       </AccordionTrigger>
+                      {/* {productInfo?.description} */}
+
                       <AccordionContent classNames="data-set=[closed]">
                         <div className=" py-[10px]">
-                        Grab your dose of quirk with this Astronaut Men's AOP
-                        Hoodie Sweatshirt. Style this sweatshirt with a pair of
-                        pyjamas and flip-flops for a casual look. 
-                       <strong> Country of Origin - </strong> India
+                          <ProductDescription
+                            description={productInfo?.description}
+                          />
+                          <strong> Country of Origin - </strong> India
                         </div>
-                        <div className="py-[10px]">
-                        <strong>  Manufactured By -</strong> Bewakoof Brands Pvt
-                        Ltd, Sairaj Logistic Hub #A5, Bmc Pipeline Road,
-                        Opposite All Saints High School, Amane, Bhiwandi, Thane,
-                        Maharashtra 421302
-                        </div>
-                        <div className="py-[10px]">
-                        <strong> Packed By -  </strong> Bewakoof Brands Pvt Ltd,
-                        Sairaj Logistic Hub #A5, Bmc Pipeline Road, Opposite All
-                        Saints High School, Amane, Bhiwandi, Thane, Maharashtra
-                        421302
-                        </div>
-                        <div className="py-[10px]">
-                        <strong>  Commodity - </strong>   Men's Hoodies
-                        </div>
-  
                       </AccordionContent>
                     </AccordionItem>
                     <AccordionItem value="item-2">
@@ -530,37 +555,56 @@ function ProductDetailsPage() {
                           <img src={tofro_img} alt="" />
                           <div className="flex flex-col items-start justify-left">
                             <p className="font-bold text-sm">
-                            15 Days Returns & Exchange
+                              15 Days Returns & Exchange
                             </p>
                             <p className="text-[11px] text-[#878787]">
-                            Know about return & exchange policy
+                              Know about return & exchange policy
                             </p>
                           </div>
                         </div>
                       </AccordionTrigger>
                       <AccordionContent classNames="data-set=[closed]">
-                      Easy returns upto 15 days of delivery. Exchange available on select pincodes
+                        Easy returns upto 15 days of delivery. Exchange
+                        available on select pincodes
                       </AccordionContent>
                     </AccordionItem>
                   </Accordion.Root>
                 </div>
                 <div className=" py-10 flex gap-2 text-center">
-            <div className="flex flex-col gap-1 items-center">
-                <img className="w-[35px] h-[35px] object-cover" src={badge_trust_img} alt="" />
-                <span className="font-semibold text-[11px] text-[#8f98a9]">100% SECURE PAYMENTS</span>
-            </div>
-            <div className="flex flex-col gap-1 items-center">
-                <img className="w-[35px] h-[35px] object-cover" src={easy_returns_img} alt="" />
-                <span className="font-semibold text-[11px] text-[#8f98a9]">EASY RETURNS & QUICK REFUNDS</span>
-            </div>
-            <div className="flex flex-col gap-1 items-center">
-                <img className="w-[35px] h-[35px] object-contain" src={globe_img} alt="" />
-                <span className="font-semibold text-[11px] text-[#8f98a9]">SHIPPING GLOBALLY</span>
-            </div>
-            </div>
-               <div className="">
-                      <Review/>
-               </div>
+                  <div className="flex flex-col gap-1 items-center">
+                    <img
+                      className="w-[35px] h-[35px] object-cover"
+                      src={badge_trust_img}
+                      alt=""
+                    />
+                    <span className="font-semibold text-[11px] text-[#8f98a9]">
+                      100% SECURE PAYMENTS
+                    </span>
+                  </div>
+                  <div className="flex flex-col gap-1 items-center">
+                    <img
+                      className="w-[35px] h-[35px] object-cover"
+                      src={easy_returns_img}
+                      alt=""
+                    />
+                    <span className="font-semibold text-[11px] text-[#8f98a9]">
+                      EASY RETURNS & QUICK REFUNDS
+                    </span>
+                  </div>
+                  <div className="flex flex-col gap-1 items-center">
+                    <img
+                      className="w-[35px] h-[35px] object-contain"
+                      src={globe_img}
+                      alt=""
+                    />
+                    <span className="font-semibold text-[11px] text-[#8f98a9]">
+                      SHIPPING GLOBALLY
+                    </span>
+                  </div>
+                </div>
+                <div className="">
+                  <Review />
+                </div>
               </div>
             </div>
           </div>
@@ -586,7 +630,7 @@ function ProductDetailsPage() {
               <div className=" bg-[#f2f2f4] p-2 md:p-0">
                 <div className="bg-white p-4">
                   <div className="flex">
-                    {sizes.map((item) => (
+                    {productInfo.size.map((item) => (
                       <div
                         className={`text-sm cursor-pointer rounded-md w-[46px] h-[46px] mr-3 mb-3 px-5 border-1 
       ${
@@ -641,8 +685,7 @@ const AccordionTrigger = React.forwardRef(
     <Accordion.Header className="flex">
       <Accordion.Trigger
         className={classNames(
-        
-       "AccordionTrigger text-[#333]  font-[500] shadow-mauve6 hover:bg-mauve2 group flex h-[45px] flex-1 cursor-default items-center justify-between  px-5 text-sm leading-none  outline-none",
+          "AccordionTrigger text-[#333]  font-[500] shadow-mauve6 hover:bg-mauve2 group flex h-[45px] flex-1 cursor-default items-center justify-between  px-5 text-sm leading-none  outline-none",
           className
         )}
         {...props}
@@ -650,11 +693,7 @@ const AccordionTrigger = React.forwardRef(
       >
         {children}
 
-        <div className="icons">
-
-        </div>
-
-       
+        <div className="icons"></div>
       </Accordion.Trigger>
     </Accordion.Header>
   )

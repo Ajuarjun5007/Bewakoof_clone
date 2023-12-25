@@ -21,18 +21,26 @@ import { Link, useLocation } from "react-router-dom";
 import SuggestionCarousel from "./SuggestionCarousel";
 import Loader from "../Loader";
 import { dressList } from "../ApiFetch";
+// import { useAppDispatch } from '../../Store'
+import { useSelector, useDispatch } from 'react-redux'
+import { applyFilters, selectProductsByFilter } from "./Slices/FilterSlice";
+import FilterComponent from "./FilterComponent";
+
 function ProductListPage() {
   const location = useLocation();
-  console.log("loc", location);
   const name = location.state?.name;
   const brand = location.state?.brand;
+  const dispatch = useDispatch();
 
+  const [filterQuery,updateFilterQuery] = useState({})
+  const filteredProducts = useSelector((state) =>
+  selectProductsByFilter(state, {})
+)
   let filteredProductList = [];
   const [sortContainerDisplay, setSortContainerDisplay] = useState(false);
   const [productList, setProductList] = useState([]);
   const [loading,setLoading] = useState(false);
   let productCategory = "";
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -53,15 +61,33 @@ function ProductListPage() {
     fetchData();
   }, []);
 
+
+  useEffect(()=> {
+    console.log("filteredProducts",filteredProducts)
+if(filteredProducts && filteredProducts !== 'pending' && filteredProducts !=='rejected'){
+      setProductList(filteredProducts);
+}
+  },[filteredProducts])
+
+  useEffect(()=>{
+    dispatch(applyFilters(filterQuery));
+  
+  },[filterQuery])
+
+  function handleFilter(filter){
+    console.log("filter",filter);
+    
+    updateFilterQuery(filter)
+  }
+
+
   if (name === undefined && brand === undefined) {
     productCategory = location.pathname.split("/")[2];
     if (subCategories.includes(productCategory)) {
-      console.log("pc", productCategory);
       filteredProductList = productList.filter(
         (product) => product.subCategory === productCategory
       );
     } else if (genders.includes(productCategory)) {
-      console.log("pc", productCategory);
       filteredProductList = productList.filter(
         (product) => product.gender === productCategory
       );
@@ -72,7 +98,6 @@ function ProductListPage() {
         product.brand == brand.split("/")[1] &&
         product.gender === brand.split("/")[0]
     );
-    console.log("brand", brand.split("/")[0], brand.split("/")[1]);
   } else if (name !== undefined) {
     filteredProductList = productList.filter(
       (product) =>
@@ -82,7 +107,6 @@ function ProductListPage() {
     console.log("name", name.split("/")[0], name.split("/")[1]);
   }
 
-  console.log("filteredproductList", filteredProductList);
   // console.log("loader",loading);
   const shuffledProductList = [...filteredProductList];
 
@@ -94,6 +118,10 @@ function ProductListPage() {
     ];
   }
 
+  function applyFilter(type,value){
+
+  }
+   
   const randomItems = shuffledProductList.slice(0, 60);
 
   return (
@@ -130,162 +158,15 @@ function ProductListPage() {
                 <p className="text-[rgba(45,45,45,.5)] text-[12px] font-[900] pl-[20px] py-[10px]">
                   FILTERS
                 </p>
-                <Accordion.Root
-                  className=" rounded-md "
-                  type="single"
-                  //   defaultValue="item-1"
-                  collapsible
-                >
-                  <AccordionItem value="item-1">
-                    <AccordionTrigger>sub Category</AccordionTrigger>
-                    <AccordionContent>
-                      <div className="pl-[10px]">
-                        {subCategories.map((item) => (
-                          <p
-                            className="py-[5px] text-[rgba(45,45,45,.7] text-[12px] hover:text-[black] transition 300 
-                          hover:bg-[#f7f7f7]"
-                          >
-                            {item}
-                          </p>
-                        ))}
-                      </div>
-                    </AccordionContent>
-                  </AccordionItem>
-                  <AccordionItem value="item-2">
-                    <AccordionTrigger>Size</AccordionTrigger>
-                    <AccordionContent>
-                      {sizes.map((item, index) => (
-                        <div
-                          key={index}
-                          className="pl-[30px] text-[rgba(45,45,45,.7)] text-[12px] hover:text-[black] transition 300 
-                          hover:bg-[#f7f7f7]"
-                        >
-                          <p className="my-[5px]">
-                            {item.charAt(0).toUpperCase() + item.slice(1)}
-                          </p>
-                        </div>
-                      ))}
-                    </AccordionContent>
-                  </AccordionItem>
-                  <AccordionItem value="item-3">
-                    <AccordionTrigger>Brand</AccordionTrigger>
-                    <AccordionContent>
-                      {brands.map((item, index) => (
-                        <div
-                          key={index}
-                          className="pl-[30px] text-[rgba(45,45,45,.7)] text-[12px] hover:text-[black] transition 300 
-                          hover:bg-[#f7f7f7]"
-                        >
-                          <p className="my-[5px]">
-                            {item.charAt(0).toUpperCase() + item.slice(1)}
-                          </p>
-                        </div>
-                      ))}
-                    </AccordionContent>
-                  </AccordionItem>
-                  <AccordionItem value="item-4">
-                    <AccordionTrigger>color</AccordionTrigger>
-                    <AccordionContent>
-                      <div className="flex justify-left gap-2 flex-wrap ">
-                        {Object.entries(colorMappings).map(
-                          ([name, code], index) => (
-                            <div
-                              key={index}
-                              className={`border-[1px] rounded-[4px] border-[#e6e6e6] solid w-[30px] h-[30px] bg-[${code}]`}
-                            ></div>
-                          )
-                        )}
-                      </div>
-                    </AccordionContent>
-                  </AccordionItem>
-                  <AccordionItem value="item-5">
-                    <AccordionTrigger>Ratings</AccordionTrigger>
-                    <AccordionContent>
-                      <div className="pl-[30px] text-[rgba(45,45,45,.7)] text-[12px]">
-                        <p
-                          className="my-[5px] hover:text-[black] transition 300 
-                          hover:bg-[#f7f7f7]"
-                        >
-                          4.5 and above
-                        </p>
-                        <p
-                          className="my-[5px] hover:text-[black] transition 300 
-                          hover:bg-[#f7f7f7]"
-                        >
-                          4 and above
-                        </p>
-                        <p
-                          className="my-[5px] hover:text-[black] transition 300 
-                          hover:bg-[#f7f7f7]"
-                        >
-                          3.5 and above
-                        </p>{" "}
-                        <p
-                          className="my-[5px] hover:text-[black] transition 300 
-                          hover:bg-[#f7f7f7]"
-                        >
-                          3 and above
-                        </p>
-                        <p
-                          className="my-[5px] hover:text-[black] transition 300 
-                          hover:bg-[#f7f7f7]"
-                        >
-                          2.5 and above
-                        </p>
-                        <p
-                          className="my-[5px] hover:text-[black] transition 300 
-                          hover:bg-[#f7f7f7]"
-                        >
-                          2 and above
-                        </p>
-                        <p
-                          className="my-[5px] hover:text-[black] transition 300 
-                          hover:bg-[#f7f7f7]"
-                        >
-                          1.5 and above
-                        </p>
-                      </div>
-                    </AccordionContent>
-                  </AccordionItem>
-                  <AccordionItem value="item-6">
-                    <AccordionTrigger>Sort By</AccordionTrigger>
-                    <AccordionContent>
-                      <div className="pl-[30px] text-[rgba(45,45,45,.7)] text-[12px]">
-                        <p
-                          className="my-[5px] text-[rgb(81,204,204)] transition 300 
-                          hover:bg-[#f7f7f7]"
-                        >
-                          Popular
-                        </p>
-                        <p
-                          className="my-[5px] hover:text-[black] transition 300 
-                          hover:bg-[#f7f7f7]"
-                        >
-                          New
-                        </p>
-                        <p
-                          className="my-[5px] hover:text-[black] transition 300 
-                          hover:bg-[#f7f7f7]"
-                        >
-                          Price : High to Low
-                        </p>
-                        <p
-                          className="my-[5px] hover:text-[black] transition 300 
-                          hover:bg-[#f7f7f7]"
-                        >
-                          Price : Low to High
-                        </p>
-                      </div>
-                    </AccordionContent>
-                  </AccordionItem>
-                </Accordion.Root>
+             <FilterComponent onFilterChange={handleFilter}/>
               </div>
               {/* product card */}
               <div className="relative pl-[5px] w-[80%] pt-[10px] flex flex-col items-center ">
                 <div className=" flex w-[89%] pb-[15px] pr-[10px] ml-[20px]  flex-row-reverse">
+                 
                   <div
                     className="flex flex-row-reverse gap-[5px]"
-                    onMouseOver={() => setSortContainerDisplay(true)}
+                    onMouseEnter={() => setSortContainerDisplay(true)}
                     onMouseLeave={() => setSortContainerDisplay(false)}
                   >
                     <IoChevronDown />
@@ -295,10 +176,7 @@ function ProductListPage() {
                     <p className="text-[rgba(45,45,45,.5)] font-[900] text-[12px]">
                       SORT BY
                     </p>
-                  </div>
-                  <div className=""></div>
-                </div>
-                {sortContainerDisplay && (
+                  {sortContainerDisplay && (
                   <div
                     className="absolute min-w-[145px] z-30 py-[17px] border-[1px] border-[#ccc] solid
                  top-[45px] right-[40px] shadow-[0_4px_8px_0_rgba(0,0,0,.2)] bg-white pl-[10px]
@@ -330,11 +208,15 @@ function ProductListPage() {
                     </p>
                   </div>
                 )}
+                  </div>
+                  </div>
+              
                 <div className="flex flex-wrap justify-center gap-[10px]">
                   {randomItems &&
                     randomItems.length > 0 &&
                     randomItems.map((product) => (
-                      <Link key={product._id} to="/ProductDetailsPage">
+                      <Link key={product._id} to={{pathname:`/ProductDetailsPage/${product._id}`}}>
+                      {/* // "/ProductDetailsPage/:id" */}
                         <div key={product._id} className="w-[266px]">
                           <div className="relative flex overflow-hidden">
                             <img
@@ -389,9 +271,7 @@ function ProductListPage() {
       )
       }  
 
-         
           {/* <div className="">
-
           <SuggestionCarousel productList={productList}/>
           </div> */}
         </div>
@@ -400,54 +280,5 @@ function ProductListPage() {
     </>
   );
 }
-const AccordionItem = React.forwardRef(
-  ({ children, className, ...props }, forwardedRef) => (
-    <Accordion.Item
-      className={classNames(
-        "focus-within:shadow-mauve12  border-b-[1px] border-b-[#e6e6e6]   overflow-hidden first:mt-0 first:rounded-t last:rounded-b focus-within:relative focus-within:z-1 ",
-        className
-      )}
-      {...props}
-      ref={forwardedRef}
-    >
-      {children}
-    </Accordion.Item>
-  )
-);
 
-const AccordionTrigger = React.forwardRef(
-  ({ children, className, ...props }, forwardedRef) => (
-    <Accordion.Header className="flex">
-      <Accordion.Trigger
-        className={classNames(
-          "text-[#333]  font-[500] shadow-mauve6 hover:bg-mauve2 group flex h-[45px] flex-1 cursor-default items-center justify-between  px-5 text-[12px] leading-none  outline-none",
-          className
-        )}
-        {...props}
-        ref={forwardedRef}
-      >
-        {children}
-        <ChevronDownIcon
-          className="text-violet10  ease-[cubic-bezier(0.87,_0,_0.13,_1)] transition-transform duration-300 group-data-[state=open]:rotate-180"
-          aria-hidden
-        />
-      </Accordion.Trigger>
-    </Accordion.Header>
-  )
-);
-
-const AccordionContent = React.forwardRef(
-  ({ children, className, ...props }, forwardedRef) => (
-    <Accordion.Content
-      className={classNames(
-        " data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp overflow-hidden text-[12px] text-[#333]",
-        className
-      )}
-      {...props}
-      ref={forwardedRef}
-    >
-      <div className="py-[15px] px-5">{children}</div>
-    </Accordion.Content>
-  )
-);
 export default ProductListPage;

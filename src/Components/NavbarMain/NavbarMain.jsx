@@ -34,7 +34,11 @@ function NavbarMain() {
   const [menuContentForMen, setMenuContentForMen] = useState(false);
   const [menuContentForWomen, setMenuContentForWomen] = useState(false);
 
-
+useEffect(()=>{
+ if(localStorage.getItem("userInfo")){
+  setUserLoggedIn(true);
+ }
+},[])
   const clearStorage = () => {
     localStorage.removeItem("userInfo");
     localStorage.removeItem("user");
