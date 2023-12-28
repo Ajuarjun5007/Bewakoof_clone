@@ -13,39 +13,45 @@ import { IoChevronDown } from "react-icons/io5";
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from 'react-redux'
 import { applyFilters, selectProductsByFilter } from "./Slices/FilterSlice";
-
+import "./ProductPage.css"
 function FilterComponent({onFilterChange}){
 
     const dispatch = useDispatch();
+    const [activeFilter,setActiveFilter] = useState(false);
     const [filterTags,updateFilterTags] = useState({
-        size:[],
-        // subCategory:[],
+         size:[],
+        subCategory:[],
         color:[],
-        // brand:[],
-        // ratings:[],
+        brand:[],
+        ratings:[],
     })
     const status = useSelector((state) =>
     selectProductsByFilter(state, {})
   )
+  
     useEffect(()=>{
-        console.log("filtertags",filterTags);
         onFilterChange(filterTags);
     },[filterTags])
 
   function updateFilters(filterType,value){
-    let tempFilterTags  = filterTags;
+    let tempFilterTags = filterTags;
     const existingValue = tempFilterTags[filterType];
     const valueLocation  = existingValue.indexOf(value)
         if(valueLocation!==-1){
-            existingValue.splice(valueLocation,1)
+            existingValue.splice(valueLocation,1);
+     setActiveFilter(false);
         }else{
             existingValue.push(value);
+     setActiveFilter(true);
+          console.log("added")
         }
         tempFilterTags[filterType]=existingValue
      updateFilterTags({...tempFilterTags})
   }
 
 
+  console.log("filtertags",filterTags);
+  console.log("filterstyle",activeFilter);
     return(
         <>
            <Accordion.Root
@@ -60,8 +66,8 @@ function FilterComponent({onFilterChange}){
                       <div className="pl-[10px]">
                         {subCategories.map((item) => (
                           <p
-                            className="py-[5px] text-[rgba(45,45,45,.7] text-[12px] hover:text-[black] transition 300 
-                          hover:bg-[#f7f7f7]"
+                            className="py-[5px]  text-[rgba(45,45,45,.7] hover:bg-slate-100  text-[12px] hover:text-[black] transition 300 
+                          "
                           >
                             {item}
                           </p>
@@ -76,10 +82,10 @@ function FilterComponent({onFilterChange}){
                         <div
                         onClick={()=>updateFilters("size",item)}
                           key={index}
-                          className="pl-[30px] text-[rgba(45,45,45,.7)] text-[12px] hover:text-[black] transition 300 
-                          hover:bg-[#f7f7f7]"
+                          className={`pl-[30px] text-[rgba(45,45,45,.7)] text-[12px] hover:text-[black] transition 300 
+                          hover:bg-slate-100 `}
                         >
-                          <p className="my-[5px]">
+                          <p className={`my-[5px]${activeFilter ?'activeStyle':''}`}>
                             {item.charAt(0).toUpperCase() + item.slice(1)}
                           </p>
                         </div>
@@ -93,7 +99,7 @@ function FilterComponent({onFilterChange}){
                         <div
                           key={index}
                           className="pl-[30px] text-[rgba(45,45,45,.7)] text-[12px] hover:text-[black] transition 300 
-                          hover:bg-[#f7f7f7]"
+                          hover:bg-slate-100"
                         >
                           <p className="my-[5px]">
                             {item.charAt(0).toUpperCase() + item.slice(1)}
@@ -126,43 +132,43 @@ function FilterComponent({onFilterChange}){
                       <div className="pl-[30px] text-[rgba(45,45,45,.7)] text-[12px]">
                         <p
                           className="my-[5px] hover:text-[black] transition 300 
-                          hover:bg-[#f7f7f7]"
+                          hover:bg-slate-100"
                         >
                           4.5 and above
                         </p>
                         <p
                           className="my-[5px] hover:text-[black] transition 300 
-                          hover:bg-[#f7f7f7]"
+                          hover:bg-slate-100"
                         >
                           4 and above
                         </p>
                         <p
                           className="my-[5px] hover:text-[black] transition 300 
-                          hover:bg-[#f7f7f7]"
+                          hover:bg-slate-100"
                         >
                           3.5 and above
                         </p>{" "}
                         <p
                           className="my-[5px] hover:text-[black] transition 300 
-                          hover:bg-[#f7f7f7]"
+                          hover:bg-slate-100"
                         >
                           3 and above
                         </p>
                         <p
                           className="my-[5px] hover:text-[black] transition 300 
-                          hover:bg-[#f7f7f7]"
+                          hover:bg-slate-100"
                         >
                           2.5 and above
                         </p>
                         <p
                           className="my-[5px] hover:text-[black] transition 300 
-                          hover:bg-[#f7f7f7]"
+                          hover:bg-slate-100"
                         >
                           2 and above
                         </p>
                         <p
                           className="my-[5px] hover:text-[black] transition 300 
-                          hover:bg-[#f7f7f7]"
+                          hover:bg-slate-100"
                         >
                           1.5 and above
                         </p>
@@ -175,25 +181,25 @@ function FilterComponent({onFilterChange}){
                       <div className="pl-[30px] text-[rgba(45,45,45,.7)] text-[12px]">
                         <p
                           className="my-[5px] text-[rgb(81,204,204)] transition 300 
-                          hover:bg-[#f7f7f7]"
+                          hover:bg-slate-100"
                         >
                           Popular
                         </p>
                         <p
                           className="my-[5px] hover:text-[black] transition 300 
-                          hover:bg-[#f7f7f7]"
+                          hover:bg-slate-100"
                         >
                           New
                         </p>
                         <p
                           className="my-[5px] hover:text-[black] transition 300 
-                          hover:bg-[#f7f7f7]"
+                          hover:bg-slate-100"
                         >
                           Price : High to Low
                         </p>
                         <p
                           className="my-[5px] hover:text-[black] transition 300 
-                          hover:bg-[#f7f7f7]"
+                          hover:bg-slate-100"
                         >
                           Price : Low to High
                         </p>

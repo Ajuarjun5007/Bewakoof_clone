@@ -33,6 +33,7 @@ function ProductListPage() {
   const dispatch = useDispatch();
 
   const [filterQuery,updateFilterQuery] = useState({})
+  const [counter,setCounter] = useState(1);
   const filteredProducts = useSelector((state) =>
   selectProductsByFilter(state, {})
 )
@@ -63,66 +64,68 @@ function ProductListPage() {
 
 
   useEffect(()=> {
-    console.log("filteredProducts",filteredProducts)
 if(filteredProducts && filteredProducts !== 'pending' && filteredProducts !=='rejected'){
       setProductList(filteredProducts);
 }
   },[filteredProducts])
 
   useEffect(()=>{
-    dispatch(applyFilters(filterQuery));
-  
+    if(counter!=1){
+      dispatch(applyFilters(filterQuery));
+    }
+    
   },[filterQuery])
 
   function handleFilter(filter){
-    console.log("filter",filter);
-    
+    const nonEmptyArrays = Object.fromEntries(
+      Object.entries(filter).filter(([key, value]) => value.length > 0)
+    );
+    console.log("obj",nonEmptyArrays);
     updateFilterQuery(filter)
+    setCounter(2);
   }
 
 
-  if (name === undefined && brand === undefined) {
-    productCategory = location.pathname.split("/")[2];
-    if (subCategories.includes(productCategory)) {
-      filteredProductList = productList.filter(
-        (product) => product.subCategory === productCategory
-      );
-    } else if (genders.includes(productCategory)) {
-      filteredProductList = productList.filter(
-        (product) => product.gender === productCategory
-      );
-    }
-  } else if (brand !== undefined) {
-    filteredProductList = productList.filter(
-      (product) =>
-        product.brand == brand.split("/")[1] &&
-        product.gender === brand.split("/")[0]
-    );
-  } else if (name !== undefined) {
-    filteredProductList = productList.filter(
-      (product) =>
-        product.subCategory == name.split("/")[1] &&
-        product.gender === name.split("/")[0]
-    );
-    console.log("name", name.split("/")[0], name.split("/")[1]);
-  }
+  console.log("counter",counter);
+
+  // if (name === undefined && brand === undefined) {
+  //   productCategory = location.pathname.split("/")[2];
+  //   if (subCategories.includes(productCategory)) {
+  //     filteredProductList = productList.filter(
+  //       (product) => product.subCategory === productCategory
+  //     );
+  //   } else if (genders.includes(productCategory)) {
+  //     filteredProductList = productList.filter(
+  //       (product) => product.gender === productCategory
+  //     );
+  //   }
+  // } else if (brand !== undefined) {
+  //   filteredProductList = productList.filter(
+  //     (product) =>
+  //       product.brand == brand.split("/")[1] &&
+  //       product.gender === brand.split("/")[0]
+  //   );
+  // } else if (name !== undefined) {
+  //   filteredProductList = productList.filter(
+  //     (product) =>
+  //       product.subCategory == name.split("/")[1] &&
+  //       product.gender === name.split("/")[0]
+  //   );
+  // }
 
   // console.log("loader",loading);
-  const shuffledProductList = [...filteredProductList];
+  // const shuffledProductList = [...filteredProductList];
 
-  for (let i = shuffledProductList.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffledProductList[i], shuffledProductList[j]] = [
-      shuffledProductList[j],
-      shuffledProductList[i],
-    ];
-  }
+  // for (let i = shuffledProductList.length - 1; i > 0; i--) {
+  //   const j = Math.floor(Math.random() * (i + 1));
+  //   [shuffledProductList[i], shuffledProductList[j]] = [
+  //     shuffledProductList[j],
+  //     shuffledProductList[i],
+  //   ];
+  // }
 
-  function applyFilter(type,value){
-
-  }
    
-  const randomItems = shuffledProductList.slice(0, 60);
+  // const randomItems = shuffledProductList.slice(0, 60);
 
   return (
     <>
@@ -212,9 +215,9 @@ if(filteredProducts && filteredProducts !== 'pending' && filteredProducts !=='re
                   </div>
               
                 <div className="flex flex-wrap justify-center gap-[10px]">
-                  {randomItems &&
-                    randomItems.length > 0 &&
-                    randomItems.map((product) => (
+                  {productList &&
+                    productList.length > 0 &&
+                    productList.map((product) => (
                       <Link key={product._id} to={{pathname:`/ProductDetailsPage/${product._id}`}}>
                       {/* // "/ProductDetailsPage/:id" */}
                         <div key={product._id} className="w-[266px]">

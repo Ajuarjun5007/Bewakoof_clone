@@ -5,10 +5,10 @@ export const applyFilters =
 createAsyncThunk('url',
      async (filters={}) => {
        const response = await productFilterService(filters)
-       console.log("response",response)
        const data = await response.data
        if (response.status < 200 || response.status >= 300) {
-         return data
+          console.log("fetchfilter",data, filters);
+        return data
        }
        return data
      }
@@ -29,7 +29,6 @@ export const productFilterSlice = createSlice({
     })
    
     builder.addCase(applyFilters.fulfilled, (state, action) => {
-        console.log("action",action, state)
 
       state.getProductByFilters[action.meta.arg] = action.payload
     })

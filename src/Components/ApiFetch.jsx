@@ -37,7 +37,6 @@ const instance = axios.create({
     }
   };
   const productFilterService = async (filters = {}) => {
-    console.log("filters11111",filters)
     const size = 'size';
     const val = 'M';
     // const suffix=`ott/show?filter={"`+key+`":"`+value.toLowerCase()+`"}`

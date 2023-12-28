@@ -41,3 +41,9 @@
 	background-color:white;
   }
   
+  .activeStyle {
+	border: none;
+	overflow: hidden;
+	box-shadow: 0 0 0 4px #fff, 0 0 4px 7px #51cccc;
+	background-color:red;
+}
