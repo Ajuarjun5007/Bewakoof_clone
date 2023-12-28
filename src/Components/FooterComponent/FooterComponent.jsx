@@ -185,8 +185,8 @@ function FooterComponent() {
                 <div className=" py-[10px] pt-[30px]">
                     <p className="text-[hsla(0,0%,100%,.9)] tracking-[1px]">Top Wear</p>
                 {
-                    topWearForMen.map((item)=>(
-                        <p className="text-[hsla(0,0%,100%,.9)] tracking-[1px]">{item}</p>
+                    topWearForMen.map((item, index)=>(
+                        <p key={index} className="text-[hsla(0,0%,100%,.9)] tracking-[1px]">{item}</p>
                     ))
                 }
                 </div>

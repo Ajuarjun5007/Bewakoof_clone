@@ -1,6 +1,11 @@
 import { createAsyncThunk,createSlice } from "@reduxjs/toolkit";
 import { productFilterService } from "../../ApiFetch";
 
+const initailState = {
+  wishList: 0,
+  
+}
+
 export const applyFilters = 
 createAsyncThunk('url',
      async (filters={}) => {
@@ -21,7 +26,11 @@ export const productFilterSlice = createSlice({
   initialState: {
     getProductByFilters: {} 
   },
-  reducers: {},
+  reducers: {
+    wishList: (state, action) => {
+
+    }
+  },
   extraReducers: (builder) => {
    
     builder.addCase(applyFilters.pending, (state, action) => {

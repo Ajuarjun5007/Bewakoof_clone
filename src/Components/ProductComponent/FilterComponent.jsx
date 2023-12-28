@@ -18,7 +18,7 @@ function FilterComponent({onFilterChange}){
 
     const dispatch = useDispatch();
     const [activeFilter,setActiveFilter] = useState(false);
-    const [filterTags,updateFilterTags] = useState({
+    const [filterTags,setFilterTags] = useState({
          size:[],
         subCategory:[],
         color:[],
@@ -29,9 +29,9 @@ function FilterComponent({onFilterChange}){
     selectProductsByFilter(state, {})
   )
   
-    useEffect(()=>{
-        onFilterChange(filterTags);
-    },[filterTags])
+    // useEffect(()=>{
+    //     onFilterChange(filterTags);
+    // },[filterTags])
 
   function updateFilters(filterType,value){
     let tempFilterTags = filterTags;
@@ -46,7 +46,8 @@ function FilterComponent({onFilterChange}){
           console.log("added")
         }
         tempFilterTags[filterType]=existingValue
-     updateFilterTags({...tempFilterTags})
+     setFilterTags({...tempFilterTags})
+        onFilterChange({...tempFilterTags})
   }
 
 
@@ -65,7 +66,7 @@ function FilterComponent({onFilterChange}){
                     <AccordionContent>
                       <div className="pl-[10px]">
                         {subCategories.map((item) => (
-                          <p
+                          <p key={item._id}
                             className="py-[5px]  text-[rgba(45,45,45,.7] hover:bg-slate-100  text-[12px] hover:text-[black] transition 300 
                           "
                           >
@@ -85,7 +86,9 @@ function FilterComponent({onFilterChange}){
                           className={`pl-[30px] text-[rgba(45,45,45,.7)] text-[12px] hover:text-[black] transition 300 
                           hover:bg-slate-100 `}
                         >
-                          <p className={`my-[5px]${activeFilter ?'activeStyle':''}`}>
+                          <p
+                          key={item._id}
+                           className={`my-[5px]${activeFilter ?'activeStyle':''}`}>
                             {item.charAt(0).toUpperCase() + item.slice(1)}
                           </p>
                         </div>
@@ -131,6 +134,7 @@ function FilterComponent({onFilterChange}){
                     <AccordionContent>
                       <div className="pl-[30px] text-[rgba(45,45,45,.7)] text-[12px]">
                         <p
+                          
                           className="my-[5px] hover:text-[black] transition 300 
                           hover:bg-slate-100"
                         >

@@ -34,10 +34,14 @@ function ProductListPage() {
 
   const [filterQuery,updateFilterQuery] = useState({})
   const [counter,setCounter] = useState(1);
+  const [tempArr, setTempArr] = useState([]);
+  
   const filteredProducts = useSelector((state) =>
   selectProductsByFilter(state, {})
 )
-  let filteredProductList = [];
+console.log("fil",filteredProducts);
+let filteredByTagsId = [];
+
   const [sortContainerDisplay, setSortContainerDisplay] = useState(false);
   const [productList, setProductList] = useState([]);
   const [loading,setLoading] = useState(false);
@@ -60,14 +64,7 @@ function ProductListPage() {
     };
     setLoading(true);
     fetchData();
-  }, []);
-
-
-  useEffect(()=> {
-if(filteredProducts && filteredProducts !== 'pending' && filteredProducts !=='rejected'){
-      setProductList(filteredProducts);
-}
-  },[filteredProducts])
+  }, []);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
 
   useEffect(()=>{
     if(counter!=1){
@@ -76,56 +73,75 @@ if(filteredProducts && filteredProducts !== 'pending' && filteredProducts !=='re
     
   },[filterQuery])
 
+  if(filteredProducts!=undefined){
+    for(const obj of filteredProducts){
+      // filteredByTagsId.push(obj._id);
+    }
+}else{
+  filteredByTagsId.length=0;
+}
+console.log("ids",filteredByTagsId);
+
   function handleFilter(filter){
     const nonEmptyArrays = Object.fromEntries(
       Object.entries(filter).filter(([key, value]) => value.length > 0)
     );
     console.log("obj",nonEmptyArrays);
-    updateFilterQuery(filter)
+    updateFilterQuery(nonEmptyArrays);
     setCounter(2);
   }
 
 
-  console.log("counter",counter);
+  let filteredProductList = [];
+  function filterSet() {
+    if (name === undefined && brand === undefined) {
+      productCategory = location.pathname.split("/")[2];
+      if (subCategories.includes(productCategory)) {
+        filteredProductList = productList.filter(
+          (product) => product.subCategory === productCategory 
+        );
+        setTempArr(filteredProductList);
+      } else if (genders.includes(productCategory)) {
+        filteredProductList = productList.filter(
+          (product) => product.gender === productCategory 
+        );
+        setTempArr(filteredProductList);
+      }
+    } else if (brand !== undefined) {
+      filteredProductList = productList.filter(
+        (product) =>
+          product.brand == brand.split("/")[1] &&
+          product.gender === brand.split("/")[0] 
+      );
+      setTempArr(filteredProductList);
+    } else if (name !== undefined) {
+      filteredProductList = productList.filter(
+        (product) =>
+          product.subCategory == name.split("/")[1] &&
+          product.gender === name.split("/")[0] 
+      );
+      setTempArr(filteredProductList);
+    }
 
-  // if (name === undefined && brand === undefined) {
-  //   productCategory = location.pathname.split("/")[2];
-  //   if (subCategories.includes(productCategory)) {
-  //     filteredProductList = productList.filter(
-  //       (product) => product.subCategory === productCategory
-  //     );
-  //   } else if (genders.includes(productCategory)) {
-  //     filteredProductList = productList.filter(
-  //       (product) => product.gender === productCategory
-  //     );
-  //   }
-  // } else if (brand !== undefined) {
-  //   filteredProductList = productList.filter(
-  //     (product) =>
-  //       product.brand == brand.split("/")[1] &&
-  //       product.gender === brand.split("/")[0]
-  //   );
-  // } else if (name !== undefined) {
-  //   filteredProductList = productList.filter(
-  //     (product) =>
-  //       product.subCategory == name.split("/")[1] &&
-  //       product.gender === name.split("/")[0]
-  //   );
-  // }
+    // if(filteredProducts!=undefined){
+    //   const result = filteredProductList.filter(
+    //      (product) =>filteredByTagsId?.includes(product._id)
+    //    );
+    //    setTempArr(result);
+    //       console.log("checked");
+    //  }
+  }
 
-  // console.log("loader",loading);
-  // const shuffledProductList = [...filteredProductList];
+  
+  useEffect(()=> {
+    filterSet();
+      
+  }, [filterQuery, productList, location.pathname])
 
-  // for (let i = shuffledProductList.length - 1; i > 0; i--) {
-  //   const j = Math.floor(Math.random() * (i + 1));
-  //   [shuffledProductList[i], shuffledProductList[j]] = [
-  //     shuffledProductList[j],
-  //     shuffledProductList[i],
-  //   ];
-  // }
+  console.log("tempArray",tempArr);
+  // console.log("tempArray",tempArr);
 
-   
-  // const randomItems = shuffledProductList.slice(0, 60);
+    
 
   return (
     <>
@@ -163,7 +179,6 @@ if(filteredProducts && filteredProducts !== 'pending' && filteredProducts !=='re
                 </p>
              <FilterComponent onFilterChange={handleFilter}/>
               </div>
-              {/* product card */}
               <div className="relative pl-[5px] w-[80%] pt-[10px] flex flex-col items-center ">
                 <div className=" flex w-[89%] pb-[15px] pr-[10px] ml-[20px]  flex-row-reverse">
                  
@@ -213,11 +228,12 @@ if(filteredProducts && filteredProducts !== 'pending' && filteredProducts !=='re
                 )}
                   </div>
                   </div>
+              {/* product card */}
               
                 <div className="flex flex-wrap justify-center gap-[10px]">
-                  {productList &&
-                    productList.length > 0 &&
-                    productList.map((product) => (
+                  {tempArr &&
+                    tempArr.length > 0 &&
+                    tempArr.slice(0,30).map((product) => (
                       <Link key={product._id} to={{pathname:`/ProductDetailsPage/${product._id}`}}>
                       {/* // "/ProductDetailsPage/:id" */}
                         <div key={product._id} className="w-[266px]">
