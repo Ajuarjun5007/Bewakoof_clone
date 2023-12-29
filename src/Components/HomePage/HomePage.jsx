@@ -206,7 +206,8 @@ function HomePage() {
                 </div>
                 </Link>
                 <Link to={`/ProductListPage/${trendingCategories[1]}`}
-              state={{ name:`Men/${trendingCategories[1]}`}}>
+              state={{ name:`Men/${trendingCategories[1]}`}}
+              >
                 <div className="trending-item  solid h-[330px] w-[220px]">
                     <img 
                       className=" h-[330px] w-[230px]"

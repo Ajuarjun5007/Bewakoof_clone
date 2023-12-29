@@ -7,7 +7,7 @@ import {
   } from "../TypeConstants";
 import classNames from "classnames";
 
-  import * as Accordion from "@radix-ui/react-accordion";
+import * as Accordion from "@radix-ui/react-accordion";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
 import { IoChevronDown } from "react-icons/io5";
 import React, { useEffect, useState } from "react";
@@ -17,7 +17,14 @@ import "./ProductPage.css"
 function FilterComponent({onFilterChange}){
 
     const dispatch = useDispatch();
-    const [activeFilter,setActiveFilter] = useState(false);
+    // const [activeFilter,setActiveFilter] = useState(false);
+    const [activeFilters, setActiveFilters] = useState({
+      size: false,
+      subCategory: false,
+      color: false,
+      brand: false,
+      ratings: false,
+    });
     const [filterTags,setFilterTags] = useState({
          size:[],
         subCategory:[],
@@ -28,31 +35,53 @@ function FilterComponent({onFilterChange}){
     const status = useSelector((state) =>
     selectProductsByFilter(state, {})
   )
-  
+
     // useEffect(()=>{
     //     onFilterChange(filterTags);
     // },[filterTags])
 
-  function updateFilters(filterType,value){
-    let tempFilterTags = filterTags;
-    const existingValue = tempFilterTags[filterType];
-    const valueLocation  = existingValue.indexOf(value)
-        if(valueLocation!==-1){
-            existingValue.splice(valueLocation,1);
-     setActiveFilter(false);
-        }else{
-            existingValue.push(value);
-     setActiveFilter(true);
-          console.log("added")
-        }
-        tempFilterTags[filterType]=existingValue
-     setFilterTags({...tempFilterTags})
-        onFilterChange({...tempFilterTags})
+    let activeTags  = [];
+  // function updateFilters(filterType,value,index){
+  //   const tempFilterTags ={...filterTags};
+  
+  //   const existingValue = tempFilterTags[filterType];
+  //   const valueLocation  = existingValue.indexOf(value)
+  //       if(valueLocation!==-1){
+  //           existingValue.splice(valueLocation,1);
+  //       }else{
+  //           existingValue.push(value);
+  //         // console.log("added")
+  //       }
+  //       tempFilterTags[filterType]=existingValue
+  //       setFilterTags(tempFilterTags)
+  //       onFilterChange(tempFilterTags)
+  //       console.log("existingvalue",existingValue);
+  // }
+  // useEffect(()=>{
+
+   
+
+  // },[filterTags])
+
+  function updateFilters(filterType, value) {
+    setFilterTags((prev) => {
+      // Check if the value already exists in the array
+      if (!prev[filterType].includes(value)) {
+        return {
+          ...prev,
+          [filterType]: [...prev[filterType], value], // Adding a new value to the array
+        };
+      }
+      // If the value already exists, return the current state without changes
+      return prev;
+    });
   }
+  
+  
+  
 
-
+console.log("activefilter",activeFilters);
   console.log("filtertags",filterTags);
-  console.log("filterstyle",activeFilter);
     return(
         <>
            <Accordion.Root
@@ -65,9 +94,9 @@ function FilterComponent({onFilterChange}){
                     <AccordionTrigger>sub Category</AccordionTrigger>
                     <AccordionContent>
                       <div className="pl-[10px]">
-                        {subCategories.map((item) => (
-                          <p key={item._id}
-                            className="py-[5px]  text-[rgba(45,45,45,.7] hover:bg-slate-100  text-[12px] hover:text-[black] transition 300 
+                        {subCategories.map((item,index) => (
+                          <p key={index}
+                            className="py-[5px] text-[rgba(45,45,45,.7] hover:bg-slate-100  text-[12px] hover:text-[black] transition 300 
                           "
                           >
                             {item}
@@ -81,16 +110,18 @@ function FilterComponent({onFilterChange}){
                     <AccordionContent>
                       {sizes.map((item, index) => (
                         <div
-                        onClick={()=>updateFilters("size",item)}
                           key={index}
                           className={`pl-[30px] text-[rgba(45,45,45,.7)] text-[12px] hover:text-[black] transition 300 
-                          hover:bg-slate-100 `}
-                        >
+                          hover:bg-slate-100 
+                          `}
+                        onClick={()=>updateFilters("size",item,index)} >
                           <p
-                          key={item._id}
-                           className={`my-[5px]${activeFilter ?'activeStyle':''}`}>
-                            {item.charAt(0).toUpperCase() + item.slice(1)}
-                          </p>
+                              key={index}
+                              className={`my-[5px] ${filterTags.size.includes(item) ? 'bg-red-400' : 'bg-yellow-400'}`}
+                              onClick={() => updateFilters('size', item, index)}
+                            >
+                              {item.charAt(0).toUpperCase() + item.slice(1)}
+                            </p>
                         </div>
                       ))}
                     </AccordionContent>
@@ -104,7 +135,9 @@ function FilterComponent({onFilterChange}){
                           className="pl-[30px] text-[rgba(45,45,45,.7)] text-[12px] hover:text-[black] transition 300 
                           hover:bg-slate-100"
                         >
-                          <p className="my-[5px]">
+                          <p
+                            key={index}
+                           className="my-[5px]">
                             {item.charAt(0).toUpperCase() + item.slice(1)}
                           </p>
                         </div>
@@ -134,7 +167,7 @@ function FilterComponent({onFilterChange}){
                     <AccordionContent>
                       <div className="pl-[30px] text-[rgba(45,45,45,.7)] text-[12px]">
                         <p
-                          
+
                           className="my-[5px] hover:text-[black] transition 300 
                           hover:bg-slate-100"
                         >

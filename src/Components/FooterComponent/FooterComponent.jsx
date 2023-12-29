@@ -185,7 +185,7 @@ function FooterComponent() {
                 <div className=" py-[10px] pt-[30px]">
                     <p className="text-[hsla(0,0%,100%,.9)] tracking-[1px]">Top Wear</p>
                 {
-                    topWearForMen.map((item, index)=>(
+                    topWearForMen.map((item,index)=>(
                         <p key={index} className="text-[hsla(0,0%,100%,.9)] tracking-[1px]">{item}</p>
                     ))
                 }
@@ -194,8 +194,8 @@ function FooterComponent() {
                   <div className=" py-[10px]">
                     <p className="text-[hsla(0,0%,100%,.9)] tracking-[1px]">Bottom Wear</p>
                 {
-                    bottomWearForMen.map((item)=>(
-                        <p className="text-[hsla(0,0%,100%,.9)] tracking-[1px]">{item}</p>
+                    bottomWearForMen.map((item,index)=>(
+                        <p key={index} className="text-[hsla(0,0%,100%,.9)] tracking-[1px]">{item}</p>
                     ))
                 }
                 </div>
@@ -216,8 +216,8 @@ function FooterComponent() {
                   <div className=" py-[10px]">
                     <p className="text-[hsla(0,0%,100%,.9)] tracking-[1px]">Bottom Wear</p>
                 {
-                    bottomWearForWomen.map((item)=>(
-                        <p className="text-[hsla(0,0%,100%,.9)] tracking-[1px]">{item}</p>
+                    bottomWearForWomen.map((item,index)=>(
+                        <p key={index} className="text-[hsla(0,0%,100%,.9)] tracking-[1px]">{item}</p>
                     ))
                 }
                 </div>
@@ -229,8 +229,8 @@ function FooterComponent() {
                 <div className=" py-[10px] pt-[30px]">
                     <p className="text-[hsla(0,0%,100%,.9)] tracking-[1px]">Brands</p>
                 {
-                    mobiles.map((item)=>(
-                        <p className="text-[hsla(0,0%,100%,.9)] tracking-[1px]">{item}</p>
+                    mobiles.map((item,index)=>(
+                        <p key={index} className="text-[hsla(0,0%,100%,.9)] tracking-[1px]">{item}</p>
                     ))
                 }
                 </div>

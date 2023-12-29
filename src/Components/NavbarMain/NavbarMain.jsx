@@ -382,8 +382,8 @@ useEffect(()=>{
       {isVisible && (
         <div className="sub-navbar w-full z-[3]  flex  bg-white fixed top-[84px]  py-4 ">
           <div className="sub-navbar-item px-1 no-scrollbar flex  overflow-scroll">
-            {subCategories.map((subCategory) => (
-              <Link to={`/ProductListPage/${subCategory}`}
+            {subCategories.map((subCategory, index) => (
+              <Link key={index*Math.random()} to={`/ProductListPage/${subCategory}`}
               >
               <span
                 className="mx-1 pr-20 py-0 text-[17px] key={`index`}"
