@@ -1,6 +1,11 @@
 import axios from "axios";
 
 const url = "https://academics.newtonschool.co/api/v1/"
+// let key = JSON.parse(localStorage.getItem("userInfo")) || [];
+
+// const token = "Bearer " + key[0];
+// headers["Authorization"] = token;
+
 export const headers = {
   "Content-Type": "application/json",
   projectId: "gams07bkd3di",
@@ -53,4 +58,6 @@ const instance = axios.create({
     }
   };
 
-  export  {dressList,productDetail,productFilterService, instance};
+ 
+
+  export  {dressList,productDetail,productFilterService,instance};

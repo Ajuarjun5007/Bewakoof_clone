@@ -115,8 +115,8 @@ function LoginPage() {
                   placeholder="Email"
                   className={
                     errorAlert
-                      ? "focus:outline-none border-[1px] border-[#db3236] solid rounded flex justify-center pl-[20px] w-[380px] h-[40px] mb-[10px] py-[25px]"
-                      : "focus:outline-none border-[1px] border-[#979797] solid rounded flex justify-center pl-[20px] w-[380px] h-[40px] mb-[10px] py-[25px]"
+                      ? "focus:outline-none border-[1px] border-[#db3236] solid rounded text-black font-[900] flex justify-center pl-[20px] w-[380px] h-[40px] mb-[10px] py-[25px]"
+                      : "focus:outline-none border-[1px] border-[#979797] solid rounded text-black font-[900] flex justify-center pl-[20px] w-[380px] h-[40px] mb-[10px] py-[25px]"
                   }
                 />
                 <div className="">
@@ -125,8 +125,8 @@ function LoginPage() {
                   placeholder="password"
                   className={
                     errorAlert
-                      ? "focus:outline-none border-[1px] border-[#db3236] solid rounded flex justify-center pl-[20px] w-[380px] h-[40px] py-[25px]"
-                      : "focus:outline-none border-[1px] border-[#979797] solid rounded flex justify-center pl-[20px] w-[380px] h-[40px] py-[25px]"
+                      ? "focus:outline-none border-[1px] border-[#db3236] solid rounded text-black font-[900] flex justify-center pl-[20px] w-[380px] h-[40px] py-[25px]"
+                      : "focus:outline-none border-[1px] border-[#979797] solid rounded text-black font-[900] flex justify-center pl-[20px] w-[380px] h-[40px] py-[25px]"
                   }
                 />
                    <div

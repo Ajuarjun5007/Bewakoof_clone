@@ -105,18 +105,12 @@ function ProductDetailsPage() {
   };
 
   const handleAddedToBag = () => {
-    // if (!authenticated) {
-    //     return navigate('/login');
-    // }
-    // if (isAddedToCart) {
-    //     navigate('/cart')
-    // } else {
+    
     if (selectedSize === null) {
       setOpenSizeModal(true);
     } else {
       setAddedToBag();
     }
-    // }
     setIsAddedToCart(() => !isAddedToCart);
   };
   const handleWishlisted = () => {

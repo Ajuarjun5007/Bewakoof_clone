@@ -80,8 +80,8 @@ function FilterComponent({onFilterChange}){
   
   
 
-console.log("activefilter",activeFilters);
-  console.log("filtertags",filterTags);
+// console.log("activefilter",activeFilters);
+//   console.log("filtertags",filterTags);
     return(
         <>
            <Accordion.Root
