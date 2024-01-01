@@ -1,0 +1,32 @@
+import { instance, headers } from "../ApiFetch";
+
+const productDetail = async (id) => {
+    const suffix=instance.baseURL+"ecommerce/product/"+id;
+    try {
+      const response = await instance.get(
+        suffix,
+      );
+  
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+  const productFilterService = async (filters = {}) => {
+    const size = 'size';
+    const val = 'M';
+    // const suffix=`ott/show?filter={"`+key+`":"`+value.toLowerCase()+`"}`
+
+    const suffix=`ecommerce/clothes/products?filter=${JSON.stringify(filters)}`;
+    
+    try {
+      const response = await instance.get(
+        suffix,
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+export {productDetail,productFilterService};

@@ -21,6 +21,8 @@ import WalletPage from "./Components/NavbarMain/WalletPage";
 import AccountPage from "./Components/NavbarMain/AccountPage"
 import AddressPage from "./Components/NavbarMain/AddressPage"
 import ProfilePage from "./Components/NavbarMain/ProfilePage"
+import ReviewEditPage from "./Components/ProductComponent/ReviewComponent/ReviewEditPage"
+
 function App() {
   const location =  useLocation();
   const [footerDisplay,setFooterDisplay] = useState(true);
@@ -54,7 +56,8 @@ function App() {
         <Route path="/AccountPage" element={<AccountPage/>}/>
         <Route path="/AddressPage" element={<AddressPage/>}/>
         <Route path="/ProfilePage" element={<ProfilePage/>}/>
-        
+        <Route path="/ReviewEditPage/:id" element={<ReviewEditPage/>}/>
+
       </Routes>
 {
   footerDisplay &&

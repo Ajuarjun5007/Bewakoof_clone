@@ -30,19 +30,20 @@ import { useEffect, useState } from "react";
 import "swiper/element/css/pagination";
 import "swiper/element/css/controller";
 import { useMemo, useRef } from "react";
-import { productDetail } from "../ApiFetch";
-import Review from "./ReviewComponent/Review";
+import { productDetail } from "./ProductService";
 import { SlArrowDown, SlArrowUp } from "react-icons/sl";
 import "./ProductPage.css";
 import { sizes } from "../../Components/TypeConstants";
-import { useParams } from "react-router-dom";
+import { useParams,useNavigate } from "react-router-dom";
 import Loader from "../Loader";
+import ReviewWrapper from "./ReviewComponent/ReviewWrapper";
 register();
 
 function ProductDetailsPage() {
   const verticalSwiperRef = useRef();
   const horizontalSwiperRef = useRef();
   const params = useParams();
+  const navigate = useNavigate();
   const [images,setImages] = useState([]);
   const[isLoading,setIsLoading]=useState(false);
   const horizontalSliderProps = useMemo(
@@ -105,12 +106,17 @@ function ProductDetailsPage() {
   };
 
   const handleAddedToBag = () => {
-    
+    if(!localStorage.getItem("userInfo")){
+      navigate("/LoginPage");
+    }
     if (selectedSize === null) {
       setOpenSizeModal(true);
     } else {
       setAddedToBag();
     }
+    // if(isAddedToCart){
+    //   navigate("/CartPage");
+    // }
     setIsAddedToCart(() => !isAddedToCart);
   };
   const handleWishlisted = () => {
@@ -597,7 +603,7 @@ console.log("prod",productInfo);
                   </div>
                 </div>
                 <div className="">
-                  <Review />
+                  <ReviewWrapper  productId={productInfo._id}/>
                 </div>
               </div>
             </div>

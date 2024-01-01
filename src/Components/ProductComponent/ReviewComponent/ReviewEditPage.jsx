@@ -1,8 +1,8 @@
 import { useLoaderData, useNavigate } from 'react-router-dom';
-import StarsRating from '../components/detailsEssentials/StarsRating';
+// import StarsRating from '../components/detailsEssentials/StarsRating';
 import { useEffect, useState } from 'react';
-import GifLoader from '../components/Loaders/GifLoader';
-import useApi from '../Hooks/useApi';
+// import GifLoader from '../components/Loaders/GifLoader';
+// import useApi from '../Hooks/useApi';
 
 const reviewTextareaPlacehoder = [
     `We are extremely sorry for this, let us know what went wrong`,
@@ -11,7 +11,7 @@ const reviewTextareaPlacehoder = [
     `Arghh! 1 star short, tell us what went right and how to make it better.`,
     `Yayy! That's how we roll. Tell us what you liked the most.`
 ]
-function ReviewEdit(){
+function ReviewEditPage(){
     const { _id, name, brand, displayImage } = useLoaderData();
     const [shake, setShake] = useState(false);
     const [ratings, setRatings] = useState(0);
@@ -28,7 +28,7 @@ function ReviewEdit(){
             }, 1000);
             return;
         }
-        post(`/ecommerce/review/${_id}`, { ratings, text: text.trim() });
+        // post(`/ecommerce/review/${_id}`, { ratings, text: text.trim() });
 
     }
 
@@ -40,7 +40,7 @@ function ReviewEdit(){
     
     return(
         <>
-                  <div className='tateReviewWrpr my-5 pb-6 w-full md:w-[50%] max-w-2xl m-auto px-4'>
+                  {/* <div className='tateReviewWrpr my-5 pb-6 w-full md:w-[50%] max-w-2xl m-auto px-4'>
                 <div className="prodDetailsWrpr flex justify-start mt-14">
                     <img className={`w-16 md:w-24 aspect-auto object-cover rounded-sm`} src={displayImage} alt={name} />
                     <div className="prodDetail pl-3 text-xs truncate">
@@ -69,7 +69,8 @@ function ReviewEdit(){
                         <button onClick={handleClick} className={`cursor-pointer h-10 w-full my-5 m-auto font-medium border-none outline-none flex justify-center items-center rounded-md text-white bg-[#42a2a2] hover:bg-opacity-95`}>Submit</button>
                     </div>
                 }
-            </div>
+            </div> */}
         </>
     )
 }
+export default ReviewEditPage;

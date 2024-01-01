@@ -30,7 +30,7 @@ function CartPagePresent(){
                 <p className="ml-2 text-xs font-medium">Yay! You get FREE delivery on this order</p>
             </div>
             <Cartcard/>
-
+           
         </div>
         {/* right section */}
         <div className="w-[45%] ">

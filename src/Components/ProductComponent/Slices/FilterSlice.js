@@ -1,5 +1,5 @@
 import { createAsyncThunk,createSlice } from "@reduxjs/toolkit";
-import { productFilterService } from "../../ApiFetch";
+import { productFilterService } from "../ProductService";
 
 const initailState = {
   wishList: 0,

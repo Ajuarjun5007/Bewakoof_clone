@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 // import { useSelector } from 'react-redux';
 // import useApi from '../../Hooks/useApi';
 
-function Review(){
+function ReviewWrapper(props){
     // const { user } = useSelector(state => state.auth);
     const [selectedProdTab, setSelectedProdTab] = useState(true);
 
@@ -13,14 +13,10 @@ function Review(){
     const navigate = useNavigate();
 
     const openWriteReview = () => {
-        navigate(`/write-review/${productId}`);
+        navigate(`/ReviewEditPage/${productId}`);
     }
-
-    // const { data, get } = useApi();
-
-    // useEffect(() => {
-    //     get(`/ecommerce/review/${productId}?limit=1`);
-    // }, []);
+    const {productId} = props;
+   
 
     const handleViewAllReviews = () => {
         navigate(`/review/${productId}`, { state: data?.data });
@@ -61,4 +57,4 @@ function Review(){
         </>
     )
 }
-export default Review;
+export default ReviewWrapper;
