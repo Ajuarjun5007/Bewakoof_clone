@@ -186,7 +186,7 @@ function ProductDetailsPage() {
       });
     }
   }, [params]);
-console.log("prod",productInfo);
+  console.log("productInfo",productInfo);
   return (
     <>
       <div className="relative">
@@ -603,7 +603,7 @@ console.log("prod",productInfo);
                   </div>
                 </div>
                 <div className="">
-                  <ReviewWrapper  productId={productInfo._id}/>
+                  <ReviewWrapper  productId={params.id}/>
                 </div>
               </div>
             </div>

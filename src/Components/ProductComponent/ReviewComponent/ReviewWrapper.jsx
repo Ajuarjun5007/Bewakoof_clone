@@ -1,28 +1,36 @@
 import { memo, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import { productReview } from '../ProductService';
+import ReviewContainer from './ReviewContiner';
 // import { useSelector } from 'react-redux';
 // import useApi from '../../Hooks/useApi';
 
 function ReviewWrapper(props){
-    // const { user } = useSelector(state => state.auth);
     const [selectedProdTab, setSelectedProdTab] = useState(true);
-
+    const [productReviews,setProductReviews] = useState([]);
     const selectProdReview = () => setSelectedProdTab(true);
     const selectBrandReview = () => setSelectedProdTab(false);
-
+    const user  =JSON.parse(localStorage.getItem("user"));
     const navigate = useNavigate();
 
-    const openWriteReview = () => {
-        navigate(`/ReviewEditPage/${productId}`);
+   
+    
+    useEffect(() => {
+        productReview(productId).then((res) => {
+          setProductReviews(res.data);
+        });
+      }, []);
+      const openWriteReview = () => {
+        navigate(`/ReviewEditPage/${productId}`, {state: productReviews });
     }
     const {productId} = props;
-   
-
     const handleViewAllReviews = () => {
-        navigate(`/review/${productId}`, { state: data?.data });
+        navigate(`/ReviewPage/${productId}`, { state: productReviews });
     }
+       
+    const alreadyReviewed = productReviews.some((review) => user?._id === review._id);
 
-    // const alreadyReviewed = data?.data?.some(({ user: u }) => u === user?._id);
+            
     return(
         <>
           <div className=''>
@@ -36,23 +44,23 @@ function ReviewWrapper(props){
                     <h2 className=''>BRAND REVIEWS</h2>
                 </button>
             </div>
-            {/* <div className="ratingsWrapper w-full">
+            <div className="ratingsWrapper w-full">
                 {!alreadyReviewed &&
                     (<div className="noRevsWrpr border-b flex items-center justify-between gap-3 py-2">
-                        <p className='text-[#000000b3] text-xs'>{data?.data?.length === 0 ? `Be the first one to review this product.` : 'Review the product'}</p>
+                        <p className='text-[#000000b3] text-xs'>{productReviews.length === 0 ? `Be the first one to review this product.` : 'Review the product'}</p>
                         <button onClick={openWriteReview} className='font-semibold px-4 py-2 rounded-md border text-sm text-[#42a2a2] hover:shadow-md transition-all'>RATE</button>
                     </div>)}
                 {
-                    data?.data?.length > 0 &&
+                    productReviews.length > 0 &&
                     <div className='reviewsWrapper'>
-                        <Reviews reviews={data?.data?.slice(0, 2)} />
+                        <ReviewContainer reviews={productReviews.slice(0, 2)} />
                         <button onClick={handleViewAllReviews} className='border my-4 border-[#207bb4] flex rounded-md w-4/5 m-auto'>
                             <div className='text-[#207bb4] text-sm font-semibold px-5 py-3 m-auto'>View All Reviews</div>
                         </button>
                     </div>
                 }
 
-            </div> */}
+            </div>
         </div>
         </>
     )
