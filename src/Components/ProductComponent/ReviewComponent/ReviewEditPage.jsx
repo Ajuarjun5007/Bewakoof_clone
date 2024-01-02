@@ -13,10 +13,10 @@ const reviewTextareaPlacehoder = [
   `Yayy! That's how we roll. Tell us what you liked the most.`,
 ];
 function ReviewEditPage() {
-  const [shake, setShake] = useState(false);
   const [ratings, setRatings] = useState(0);
   const [text, setText] = useState("");
   const [productInfo, setProductInfo] = useState([]);
+  const [reviewStatus,setReviewStatus] = useState('');
   const params = useParams();
   const navigate = useNavigate();
   useEffect(() => {
@@ -27,28 +27,31 @@ function ReviewEditPage() {
     }
   }, [params]);
 
-  const handleClick = (ratings, text) => {
-    if (text.length < 10) {
-      setShake("shake");
-      setTimeout(() => {
-        setShake("");
-      }, 1000);
-      return;
-    }
-    if (params.id !== undefined) {
+  const handleClick = () => {
+    console.log("handleclick",ratings,text);
+    console.log("checked",params.id,ratings,text);
+    if (params.id !== undefined && text?.length>10 && ratings!=0) {
       addReview(params.id, ratings, text).then((res) => {
-        setProductInfo(res?.data);
+                console.log("res",res);
+                setReviewStatus(res);
       });
     }
   };
 
-  //   useEffect(() => {
-  //     if (data?.data?.status === "success") {
-  //       navigate(-1);
-  //     }
-  //   }, [data]);
+//   useEffect(()=>{
+//     if (params.id !== undefined && text?.length>10 && ratings!=0) {
+//         handleClick(ratings,text);
+//     }
+//   },[ratings,text])
 
-  console.log("rating", ratings);
+    useEffect(() => {
+      if (reviewStatus?.data?.status === "success") {
+        navigate(-1);
+      }
+    }, [reviewStatus]);
+
+  console.log("rating", ratings,text,text.length);
+
   return (
     <>
       <div className="tateReviewWrpr mt-[120px] pb-6 w-full md:w-[50%] max-w-2xl m-auto px-4">
@@ -72,7 +75,7 @@ function ReviewEditPage() {
         </div>
         {!!ratings &&
                     <div className="reviewWrapper w-full mt-5">
-                        <textarea value={text} onChange={(e) => { setText(e.target.value) }} className={`${shake} outline-none !h-24 w-full rounded-sm shadow-inner p-3 text-xs text-black border focus:border-[#929292] transition-all`} placeholder={reviewTextareaPlacehoder[ratings - 1]} ></textarea>
+                        <textarea value={text} onChange={(e) => { setText(e.target.value) }} className="outline-none !h-24 w-full rounded-sm shadow-inner p-3 text-xs text-black border focus:border-[#929292] transition-all" placeholder={reviewTextareaPlacehoder[ratings - 1]} ></textarea>
                         {
                             text.length < 10 &&
                             <p className={`inputWrong text-xs mb-5 opacity-60 ${text.length > 0 ? 'text-red-500' : ''}`}>Minimum 10 Characters</p>

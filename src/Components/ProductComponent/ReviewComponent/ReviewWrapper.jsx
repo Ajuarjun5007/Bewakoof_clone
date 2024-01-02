@@ -13,24 +13,29 @@ function ReviewWrapper(props){
     const user  =JSON.parse(localStorage.getItem("user"));
     const navigate = useNavigate();
 
-   
-    
+
     useEffect(() => {
         productReview(productId).then((res) => {
-          setProductReviews(res.data);
+          setProductReviews(res?.data);
         });
       }, []);
       const openWriteReview = () => {
-        navigate(`/ReviewEditPage/${productId}`, {state: productReviews });
+        if(localStorage.getItem("userInfo")){
+            navigate(`/ReviewEditPage/${productId}`, {state: productReviews });
+        }else{
+            navigate("/LoginPage");
+        }
     }
     const {productId} = props;
     const handleViewAllReviews = () => {
         navigate(`/ReviewPage/${productId}`, { state: productReviews });
     }
        
-    const alreadyReviewed = productReviews.some((review) => user?._id === review._id);
+    const alreadyReviewed = productReviews.some((review) => user?._id === review?.user);
 
-            
+    console.log("log",localStorage.getItem("userInfo"));
+
+      
     return(
         <>
           <div className=''>

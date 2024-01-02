@@ -50,7 +50,7 @@ const productDetail = async (id) => {
     }
   };
 
-  const addReview = async (itemId) => {
+  const addReview = async (itemId,ratings,text) => {
     const suffix = "ecommerce/review/" + itemId;
     try {
       const response = await instance.post(
