@@ -413,6 +413,11 @@ function ProductDetailsPage() {
                       {isAddedToCart ? "GO" : "ADD"} TO BAG
                     </p>
                   </button>
+
+
+                  
+                {/* wishlist */}
+
                   <button
                     onClick={handleWishlisted}
                     className={`h-11 hidden md:flex flex-1  items-center justify-center border rounded-sm hover:shadow-md transition-all ${

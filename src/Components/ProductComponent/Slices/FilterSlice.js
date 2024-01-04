@@ -1,56 +1,170 @@
-import { createAsyncThunk,createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { productFilterService } from "../ProductService";
+import { json } from "react-router-dom";
 
 const initailState = {
-  wishList: 0,
-  
-}
+  wishList: [],
+  isLoading: false,
+  error: "",
+  dressList:[],
+};
 
-export const applyFilters = 
-createAsyncThunk('url',
-     async (filters={}) => {
-       const response = await productFilterService(filters)
-    
-       const data = await response.data
-       if (response.status < 200 || response.status >= 300) {
-        return data
-       }
-       return data
-     }
-   )
+export const applyFilters = createAsyncThunk("url", async (filters = {}) => {
+  const response = await productFilterService(filters);
+  const data = await response.data;
+  if (response.status < 200 || response.status >= 300) {
+    return data;
+  }
+  return data;
+});
 
 
+const BASE_URL = "https://academics.newtonschool.co/api/v1/ecommerce/";
+const projectID = "gams07bkd3di";
+const ContentType = 'application/json';
 
-export const productFilterSlice = createSlice({
-  name: 'productFilter',
-  initialState: {
-    getProductByFilters: {} 
-  },
-  reducers: {
-    wishList: (state, action) => {
+export const getWishListOperations = createAsyncThunk(
+  "movieList/getWishListOperations",
+  async ({id,type,tokenValue,suffix}, {rejectWithValue }) => {
+    let myHeaders = new Headers();
+    myHeaders.append("projectID", "gams07bkd3di");
+    myHeaders.append("Authorization", `Bearer ${tokenValue}`);
+    myHeaders.append('Content-Type', 'application/json');
+    myHeaders.append('accept', 'application/json');
 
+    let requestOptions;
+    if (type === "PATCH" || type === "DELETE") {
+        let raw = JSON.stringify({
+            productId: id,
+          })
+          requestOptions = {
+              method: type,
+              headers: myHeaders,
+              body: raw,
+              redirect: 'follow'
+            };
+        } else if (type === "GET") {
+        requestOptions = {
+            method: type,
+            headers: myHeaders,
+            redirect: 'follow'
+        };
     }
+    let url = BASE_URL +"wishlist/"+ suffix
+    try {
+      const response = await fetch(url,requestOptions);
+      console.log("slice", response);
+      if(response.ok){
+        const result = await response.json();
+        return result;
+      }else{
+        return rejectWithValue({error:"fetching failed"})
+      }
+    } catch (error) {
+      return rejectWithValue({ error: "An error occurred during the fetch" });
+    }
+  }
+);
+
+export const getProductList = createAsyncThunk(
+  "movieList/getProductList",
+  async ({id,type,tokenValue,suffix}, {rejectWithValue }) => {
+    let myHeaders = new Headers();
+    myHeaders.append("projectID", "gams07bkd3di");
+    myHeaders.append("Authorization", `Bearer ${tokenValue}`);
+    myHeaders.append('Content-Type', 'application/json');
+    myHeaders.append('accept', 'application/json');
+
+    let requestOptions;
+    // if (type === "PATCH" || type === "DELETE") {
+    //     let raw = JSON.stringify({
+    //         productId: id,
+    //       })
+    //       requestOptions = {
+    //           method: type,
+    //           headers: myHeaders,
+    //           body: raw,
+    //           redirect: 'follow'
+    //         };
+    //     } else if (type === "GET") {
+        requestOptions = {
+            method: "GET",
+            headers: myHeaders,
+            redirect: 'follow'
+        };
+    // }
+    let url = BASE_URL +"wishlist/"+ suffix
+    console.log(id,type,tokenValue,url)
+    try {
+      const response = await fetch(url,requestOptions);
+      console.log("slice", response);
+      if(response.ok){
+        const result = await response.json();
+        return result;
+      }else{
+        return rejectWithValue({error:"fetching failed"})
+      }
+    } catch (error) {
+      return rejectWithValue({ error: "An error occurred during the fetch" });
+    }
+  }
+);
+
+
+
+export const productSlice = createSlice({
+  name: "productReducer",
+  initialState: {
+    getProductByFilters: {},
   },
+  reducers: {},
   extraReducers: (builder) => {
-   
-    builder.addCase(applyFilters.pending, (state, action) => {
-      // state.getProductByFilters[action.meta.arg] = 'pending'
-      state.getProductByFilters = 'pending'
-    })
-   
-    builder.addCase(applyFilters.fulfilled, (state, action) => {
+    builder
+      .addCase(applyFilters.pending, (state, action) => {
+        // state.getProductByFilters[action.meta.arg] = 'pending'
+        state.getProductByFilters = "pending";
+      })
 
-      // state.getProductByFilters[action.meta.arg] = action.payload
-      state.getProductByFilters = action.payload
-    })
-  
-    builder.addCase(applyFilters.rejected, (state, action) => {
-      // state.getProductByFilters[ac//tion.meta.arg] = 'rejected'
-      state.getProductByFilters = 'rejected'
-    })
+      .addCase(applyFilters.fulfilled, (state, action) => {
+        // state.getProductByFilters[action.meta.arg] = action.payload
+        state.getProductByFilters = action.payload;
+      })
+
+      .addCase(applyFilters.rejected, (state, action) => {
+        // state.getProductByFilters[ac//tion.meta.arg] = 'rejected'
+        state.getProductByFilters = "rejected";
+      })
+
+      .addCase(getWishListOperations.pending, (state, action) => {
+        state.isLoading = true;
+      })
+
+      .addCase(getWishListOperations.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.wishList = action.payload;
+        state.error = "";
+      })
+
+      .addCase(getWishListOperations.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload.error;
+      });
+      // .addCase(getProductList.pending, (state, action) => {
+      //   state.isLoading = true;
+      // })
+
+      // .addCase(getProductList.fulfilled, (state, action) => {
+      //   state.isLoading = false;
+      //   state.wishList = action.payload;
+      //   state.error = "";
+      // })
+
+      // .addCase(getProductList.rejected, (state, action) => {
+      //   state.isLoading = false;
+      //   state.error = action.payload.error;
+      // });
   },
-})
+});
 
-
-export const selectProductsByFilter = (state ,filters) =>
-  state.productFilter.getProductByFilters[filters]
+export const {} = productSlice.actions;
+export default productSlice.reducer;

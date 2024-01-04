@@ -22,11 +22,10 @@ import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import SuggestionCarousel from "./SuggestionCarousel";
 import Loader from "../Loader";
-import { dressList} from "../ApiFetch";
-import { addtoWishlist, getWishlist, removefromWishlist } from "../WishListComponent/WishListService";
+import { dressList } from "../ApiFetch";
 // import { useAppDispatch } from '../../Store'
 import { useSelector, useDispatch } from "react-redux";
-import { applyFilters, selectProductsByFilter } from "./Slices/FilterSlice";
+import { applyFilters, getWishListOperations} from "./Slices/FilterSlice";
 import FilterComponent from "./FilterComponent";
 function ProductListPage() {
   const location = useLocation();
@@ -38,18 +37,17 @@ function ProductListPage() {
   const [counter, setCounter] = useState(1);
   const [tempArr, setTempArr] = useState([]);
   const [productCategory, setProductCategory] = useState("");
-  // const filteredProducts = useSelector((state) => selectProductsByFilter(state, {}))
 
-  const { getProductByFilters } = useSelector((state) => state.productFilter);
+  const { getProductByFilters,wishList } = useSelector((state) => state.productReducer);
 
-  // console.log("fil", getProductByFilters);
 
   let filteredByTagsId = [];
 
   const [sortContainerDisplay, setSortContainerDisplay] = useState(false);
   const [productList, setProductList] = useState([]);
   const [isWishListClicked, setIsWishListClicked] = useState(false);
-  const [isWishListAdded,setIsWishListAdded] = useState([]);
+
+  const [isWishListAdded, setIsWishListAdded] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -63,32 +61,15 @@ function ProductListPage() {
       }
     };
 
-    
-
-
     setLoading(true);
     fetchData();
-    wishListItemUpdate();
   }, []);
 
+  useEffect(() => {
 
-  const wishListItemUpdate  = async () =>{
-    try{
-      let wishListItems = await getWishlist();
-      setIsWishListAdded(wishListItems.data.data.items.map((item)=>{
-        return item.products._id;
-      }));
-      // setIsWishListAdded(wishListItems.data.data.items.map((item)=>{
-      //   return item;
-      // }));
-    }catch (error){
-      console.error("Error fetching data:", error);
-    }
-  }
+    console.log('isWishListAdded', isWishListAdded);
+  },[wishList]);
 
-  useEffect(()=>{
-      wishListItemUpdate();
-  },[isWishListClicked])
   // useEffect(()=>{
   //   if(counter!=1){
   //     dispatch(applyFilters(filterQuery));
@@ -139,23 +120,25 @@ function ProductListPage() {
     // }
   }
 
-  function wishListHandler(event,Id){
+  function wishListHandler(event, Id) {
     event.stopPropagation();
     event.preventDefault();
-    console.log("ide",Id);
-    if (localStorage.getItem("userInfo")) {
-      setIsWishListClicked((prevIsWatchListClicked) => !prevIsWatchListClicked);
-      if(isWishListAdded.includes(Id)){
-        removefromWishlist(Id).then((response)=>{
-          console.log("respnse",response.data.message,response.data);
-          console.log("remve");
-        })
+    if (localStorage.getItem("userInfo")){
+      if (isWishListAdded.includes(Id)) {
+        dispatch(getWishListOperations({
+          id:Id,
+          type:"DELETE",
+          tokenValue :JSON.parse(localStorage.getItem("userInfo"))[0],
+          suffix:Id,
+        }))
         setIsWishListClicked(true);
-      }else{ 
-         addtoWishlist(Id).then((response)=>{
-          console.log("respnse",response.data.message,response.data);
-        })
-        console.log("add");
+      } else {
+        dispatch(getWishListOperations({
+          id:Id,
+          type:"PATCH",
+          tokenValue :JSON.parse(localStorage.getItem("userInfo"))[0],
+          suffix:Id,
+        }))
         setIsWishListClicked(false);
       }
     } else {
@@ -171,12 +154,8 @@ function ProductListPage() {
     filterSet();
   }, [productList, location.pathname]);
 
-  // console.log("wishlist",isWishListClicked);
-  // console.log("tempArray",tempArr);
-  // useEffect(()=>{
+ 
 
- console.log("wishlistClicked",isWishListClicked);
- console.log("wishlistAdded",isWishListAdded);
 
   return (
     <>

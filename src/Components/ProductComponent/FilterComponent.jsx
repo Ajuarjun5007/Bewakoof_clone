@@ -12,7 +12,7 @@ import { ChevronDownIcon } from "@radix-ui/react-icons";
 import { IoChevronDown } from "react-icons/io5";
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from 'react-redux'
-import { applyFilters, selectProductsByFilter } from "./Slices/FilterSlice";
+// import { applyFilters, selectProductsByFilter } from "./Slices/FilterSlice";
 import "./ProductPage.css"
 function FilterComponent({onFilterChange}){
 
@@ -32,9 +32,9 @@ function FilterComponent({onFilterChange}){
         brand:[],
         ratings:[],
     })
-    const status = useSelector((state) =>
-    selectProductsByFilter(state, {})
-  )
+  //   const status = useSelector((state) =>
+  //   selectProductsByFilter(state, {})
+  // )
 
     // useEffect(()=>{
     //     onFilterChange(filterTags);

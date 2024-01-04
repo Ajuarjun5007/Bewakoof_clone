@@ -54,6 +54,8 @@ import { useEffect, useState } from "react";
 import { trendingCategories,brands,subCategories} from "../TypeConstants";
 import { dressList } from "../ApiFetch";
 import Loader from "../Loader";
+import { useDispatch } from "react-redux";
+import { getWishListOperations } from "../ProductComponent/Slices/FilterSlice";
 // import { dressList } from "../ApiFetch";
 function HomePage() {
   const responsive = {
@@ -74,7 +76,17 @@ function HomePage() {
     },
   };
   const [userLoggedIn, setUserLoggedIn] = useState(false);
+  const dispatch = useDispatch();
+  useEffect(()=>{
 
+    dispatch(getWishListOperations({
+      id:"",
+      type:"GET",
+      tokenValue :JSON.parse(localStorage.getItem("userInfo"))[0],
+      suffix:'',
+    }))
+    
+  },[])
  
   return (
     <>

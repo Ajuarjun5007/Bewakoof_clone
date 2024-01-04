@@ -28,7 +28,19 @@ const instance = axios.create({
       console.error("Error fetching data:", error);
     }
   };
-
+  const Address = async (id) => {
+    const suffix=url+`ecommerce/order/`+id;
+    try {
+      const response = await instance.post(
+        suffix,
+      );
+  
+      return response.data;
+    } catch (error) {
+      // Handle errors
+      console.error("Error fetching data:", error);
+    }
+  };
  
 
  
