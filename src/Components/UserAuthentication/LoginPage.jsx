@@ -58,18 +58,17 @@ function LoginPage() {
   const loginHandler = (event) => {
     event.preventDefault();
     console.log("event",event);
-    if(event.target[0].value != "" && event.target[1].value != "") {
-      setEmail(event.target[0].value);
-      setPassword(event.target[1].value);
-    } else {
-      setErrorMessage("enter valid id or password");
-    }
+    // if(event.target[0].value != "" && event.target[1].value != "") {
+    //   setEmail(event.target[0].value);
+    //   setPassword(event.target[1].value);
+    // } else {
+    //   setErrorMessage("enter valid id or password");
+    // }
 
-    login(event.target[0].value,event.target[1].value)
+    login(email,password)
       .then((response) => {
         idInfo.push(response.data.token);
         idInfo.push(response.data.data);
-          name=response.data.data.name;
         localStorage.setItem("userInfo", JSON.stringify(idInfo));
         localStorage.setItem("user", JSON.stringify(response.data.data));
         navigate("/");
@@ -107,12 +106,15 @@ function LoginPage() {
           </div>
           {/* input and button */}
 
-          <form onSubmit={(event) => loginHandler(event)} className="gap-2">
+          <form 
+          // onSubmit={(event) => loginHandler(event)} 
+          className="gap-2">
             <div className="flex flex-col gap-[2px] items-center justify-center">
               <div className="relative flex  flex-col items-center  p-[5px] ">
                 <input
                   type="tel"
                   placeholder="Email"
+                  onChange={(event)=>setEmail(event.target.value)}
                   className={
                     errorAlert
                       ? "focus:outline-none border-[1px] border-[#db3236] solid rounded text-black font-[900] flex justify-center pl-[20px] w-[380px] h-[40px] mb-[10px] py-[25px]"
@@ -123,6 +125,7 @@ function LoginPage() {
                 <input
                  type={passwordVisible?"text":"password"}
                   placeholder="password"
+                  onChange={(event)=>setPassword(event.target.value)}
                   className={
                     errorAlert
                       ? "focus:outline-none border-[1px] border-[#db3236] solid rounded text-black font-[900] flex justify-center pl-[20px] w-[380px] h-[40px] py-[25px]"
@@ -149,6 +152,7 @@ function LoginPage() {
 
               <button
                 type="submit"
+                onClick={(email,password)=>loginHandler(email,password)}
                 className="rounded bg-[#42a2a2] text-[20px] text-[#fff] flex justify-center items-center 
                w-[380px] h-[40px] py-[25px]"
               >

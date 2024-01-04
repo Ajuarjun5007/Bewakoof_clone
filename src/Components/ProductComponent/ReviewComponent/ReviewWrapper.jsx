@@ -33,7 +33,6 @@ function ReviewWrapper(props){
        
     const alreadyReviewed = productReviews.some((review) => user?._id === review?.user);
 
-    console.log("log",localStorage.getItem("userInfo"));
 
       
     return(

@@ -21,12 +21,13 @@ import WalletPage from "./Components/NavbarMain/WalletPage";
 import AccountPage from "./Components/NavbarMain/AccountPage"
 import AddressPage from "./Components/NavbarMain/AddressPage"
 import ProfilePage from "./Components/NavbarMain/ProfilePage"
+import PaymentPage from "./Components/PaymentComponent/PaymentPage";
 import ReviewEditPage from "./Components/ProductComponent/ReviewComponent/ReviewEditPage"
 import ReviewPage from "./Components/ProductComponent/ReviewComponent/ReviewPage";
 function App() {
   const location =  useLocation();
   const [footerDisplay,setFooterDisplay] = useState(true);
-  const footerHidePage=['LoginPage','MailPage','CartPage','SignupPage','ReviewEditPage']
+  const footerHidePage=['LoginPage','MailPage','CartPage','SignupPage','ReviewEditPage','PaymentPage']
     useEffect(()=>{
       if(footerHidePage.includes(location.pathname.split('/')[1])){
         setFooterDisplay(false);
@@ -56,6 +57,7 @@ function App() {
         <Route path="/AccountPage" element={<AccountPage/>}/>
         <Route path="/AddressPage" element={<AddressPage/>}/>
         <Route path="/ProfilePage" element={<ProfilePage/>}/>
+        <Route path="/PaymentPage" element={<PaymentPage/>}/>
         <Route path="/ReviewEditPage/:id" element={<ReviewEditPage/>}/>
         <Route path="/ReviewPage/:id" element={<ReviewPage/>}/>
 

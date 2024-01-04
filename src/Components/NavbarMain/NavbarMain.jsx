@@ -33,10 +33,11 @@ function NavbarMain() {
 
   const [menuContentForMen, setMenuContentForMen] = useState(false);
   const [menuContentForWomen, setMenuContentForWomen] = useState(false);
-
+  let userInfo = JSON.parse(localStorage.getItem("userInfo")) || '';
 useEffect(()=>{
  if(localStorage.getItem("userInfo")){
   setUserLoggedIn(true);
+  setUserName(userInfo[1].name);
  }
 },[])
   const clearStorage = () => {
@@ -54,6 +55,7 @@ useEffect(()=>{
     }
   }, [location.pathname]);
 
+  // console.log("user",userInfo);
   return (
     <>
       <div className="flex z-10 w-full  fixed bg-white top-8 pt-[3px] justify-center border-b-[1px] border-[rgba(0,0,0,0.2)] solid ">

@@ -28,59 +28,40 @@ function SignupPage() {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-   
-  }, [isPasswordActive,isEmailActive,isNameActive]);
+  useEffect(() => {}, [isPasswordActive, isEmailActive, isNameActive]);
 
-  function checking(){
-    if (
-      nameErrorAlert ||
-      mailErrorAlert ||
-      passwordErrorAlert
-    ) {
-      setErrorAlert('true');
-    }else{
-      setErrorAlert('false');
+  function checking() {
+    if (nameErrorAlert || mailErrorAlert || passwordErrorAlert) {
+      setErrorAlert("true");
+    } else {
+      setErrorAlert("false");
     }
-    console.log(nameErrorAlert, mailErrorAlert , passwordErrorAlert);
+    console.log(nameErrorAlert, mailErrorAlert, passwordErrorAlert);
   }
 
-
-
-
-
-
-
-
   const handleLabelChange = (text, type) => {
-    if (type === "password" ) {
-      // && isPasswordActive !== (text !== "")
+    if (type === "password") {
       setIsPasswordActive(text !== "");
-      console.log("paswrd",text.length);
-      if (text.length<6) {
+      console.log("paswrd", text.length);
+      if (text.length < 6) {
         setPasswordErrorAlert(true);
       } else {
         setPasswordErrorAlert(false);
-        checking()
+        checking();
       }
-    } else if (type === "name" ) {
-      // && isNameActive !== (text !== "")
-      // setIsNameActive(text !== "");
+    } else if (type === "name") {
+     
       if (!text.match(NAME_EXPRESSION)) {
         setNameErrorAlert(true);
       } else {
         setNameErrorAlert(false);
       }
-    } else if(type === "email") {
-      // && isNameActive !== (text !== "")
-      // setIsEmailActive(text !== "");
+    } else if (type === "email") {
       if (!text.match(EMAIL_EXPRESSION)) {
         setMailErrorAlert(true);
       } else {
         setMailErrorAlert(false);
       }
-
-      
     }
 
     if (!isCheckboxChecked) {
@@ -89,7 +70,6 @@ function SignupPage() {
       setcheckboxErrorAlert(false);
     }
   };
-
 
   const [isCheckboxChecked, setIsCheckboxChecked] = useState(true);
 
@@ -104,25 +84,29 @@ function SignupPage() {
     const email = event.target[1].value;
     const password = event.target[2].value;
 
-      console.log(event.target[0].value, event.target[1].value, event.target[2].value,)
-   
-      const signupRequest = {
-        name: name,
-        email: email,
-        password: password,
-        appType: "ecommerce",
-      };
-      signup(signupRequest)
-        .then((response) => {
-          navigate("/LoginPage");
-        })
-        .catch((error) => {
-          if (error.response) {
-            console.log([error.response?.data?.message]);
-          }
-        });
-      console.log("login success");
-    } 
+    console.log(
+      event.target[0].value,
+      event.target[1].value,
+      event.target[2].value
+    );
+
+    const signupRequest = {
+      name: name,
+      email: email,
+      password: password,
+      appType: "ecommerce",
+    };
+    signup(signupRequest)
+      .then((response) => {
+        navigate("/LoginPage");
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log([error.response?.data?.message]);
+        }
+      });
+    console.log("login success");
+  }
 
   // console.log("errorAlert", errorAlert);
   // console.log("nameErrorAlert", nameErrorAlert);
@@ -152,7 +136,7 @@ function SignupPage() {
              border-[#979797]  solid text-black font-[900]"
                   onChange={(e) => handleLabelChange(e.target.value, "name")}
                 />
-              
+
                 {nameErrorAlert && (
                   <p className="text-[#db3236] text-[12px]">
                     Invalid user name
@@ -184,7 +168,7 @@ function SignupPage() {
                     handleLabelChange(e.target.value, "password")
                   }
                 />
-           
+
                 <div
                   className="absolute right-[0px]"
                   onClick={passwordVisibleHandler}
@@ -218,7 +202,7 @@ function SignupPage() {
               <div className="py-[10px]">
                 <button
                   className={`${
-                    errorAlert == "true" || errorAlert== ""
+                    errorAlert == "true" || errorAlert == ""
                       ? "bg-[rgb(152,152,152)]"
                       : "bg-[#42a2a2]"
                   } w-full h-14 text-base text-white rounded-md`}

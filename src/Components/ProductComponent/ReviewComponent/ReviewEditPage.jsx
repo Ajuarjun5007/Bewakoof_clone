@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { productDetail, addReview } from "../ProductService";
 import StarsRating from "../ReviewComponent/Starsrating";
 import { addListener } from "@reduxjs/toolkit";
-import camera from "../../../assets/camera.webp"
+import camera from "../../../assets/camera.webp";
 
 const reviewTextareaPlacehoder = [
   `We are extremely sorry for this, let us know what went wrong`,
@@ -16,7 +16,7 @@ function ReviewEditPage() {
   const [ratings, setRatings] = useState(0);
   const [text, setText] = useState("");
   const [productInfo, setProductInfo] = useState([]);
-  const [reviewStatus,setReviewStatus] = useState('');
+  const [reviewStatus, setReviewStatus] = useState("");
   const params = useParams();
   const navigate = useNavigate();
   useEffect(() => {
@@ -28,29 +28,34 @@ function ReviewEditPage() {
   }, [params]);
 
   const handleClick = () => {
-    console.log("handleclick",ratings,text);
-    console.log("checked",params.id,ratings,text);
-    if (params.id !== undefined && text?.length>10 && ratings!=0) {
+    console.log("handleclick", ratings, text);
+    console.log("checked", params.id, ratings, text);
+    // let msg  = text.trim();
+    if (
+      params.id !== undefined &&
+      text.length > 10 &&
+      ratings != 0
+    ) {
       addReview(params.id, ratings, text).then((res) => {
-                console.log("res",res);
-                setReviewStatus(res);
+        console.log("res", res);
+        setReviewStatus(res);
       });
     }
   };
 
-//   useEffect(()=>{
-//     if (params.id !== undefined && text?.length>10 && ratings!=0) {
-//         handleClick(ratings,text);
-//     }
-//   },[ratings,text])
+  //   useEffect(()=>{
+  //     if (params.id !== undefined && text?.length>10 && ratings!=0) {
+  //         handleClick(ratings,text);
+  //     }
+  //   },[ratings,text])
 
-    useEffect(() => {
-      if (reviewStatus?.data?.status === "success") {
-        navigate(-1);
-      }
-    }, [reviewStatus]);
+  useEffect(() => {
+    if (reviewStatus?.data?.status === "success") {
+      navigate(-1);
+    }
+  }, [reviewStatus]);
 
-  console.log("rating", ratings,text,text.length);
+  console.log("rating", ratings, text, text.length);
 
   return (
     <>
@@ -73,26 +78,49 @@ function ReviewEditPage() {
             />
           </div>
         </div>
-        {!!ratings &&
-                    <div className="reviewWrapper w-full mt-5">
-                        <textarea value={text} onChange={(e) => { setText(e.target.value) }} className="outline-none !h-24 w-full rounded-sm shadow-inner p-3 text-xs text-black border focus:border-[#929292] transition-all" placeholder={reviewTextareaPlacehoder[ratings - 1]} ></textarea>
-                        {
-                            text.length < 10 &&
-                            <p className={`inputWrong text-xs mb-5 opacity-60 ${text.length > 0 ? 'text-red-500' : ''}`}>Minimum 10 Characters</p>
-                        }
-                        <div className="imgUploadWrapper mt-6 mb-3 px-2 py-7 border flex justify-around items-center">
-                            <img className='w-10 h-7 object-contain' src={camera} alt="" />
-                            <div className="flex flex-col justify-center text-xs font-medium">
-                                <span className='text-[#333]'>Add a few shots & show off your style.</span>
-                                <span className='text-[#929292]'>Maximum File Size: 10 Mb</span>
-                            </div>
-                        </div>
-                        <div className="creditMsg text-xs text-[#333] font-medium mb-5">
-                            <p>Get featured and stand a chance to <b>win upto 50 shopping credits</b> when you upload images using the product.</p>
-                        </div>
-                        <button onClick={handleClick} className={`cursor-pointer h-10 w-full my-5 m-auto font-medium border-none outline-none flex justify-center items-center rounded-md text-white bg-[#42a2a2] hover:bg-opacity-95`}>Submit</button>
-                    </div>
-                }
+        {!!ratings && (
+          <div className="reviewWrapper w-full mt-5">
+            <textarea
+              value={text}
+              onChange={(e) => {
+                setText(e.target.value);
+              }}
+              className="outline-none !h-24 w-full rounded-sm shadow-inner p-3 text-xs text-black border focus:border-[#929292] transition-all"
+              placeholder={reviewTextareaPlacehoder[ratings - 1]}
+            ></textarea>
+            {text.length < 10 && (
+              <p
+                className={`inputWrong text-xs mb-5 opacity-60 ${
+                  text.length > 0 ? "text-red-500" : ""
+                }`}
+              >
+                Minimum 10 Characters
+              </p>
+            )}
+            <div className="imgUploadWrapper mt-6 mb-3 px-2 py-7 border flex justify-around items-center">
+              <img className="w-10 h-7 object-contain" src={camera} alt="" />
+              <div className="flex flex-col justify-center text-xs font-medium">
+                <span className="text-[#333]">
+                  Add a few shots & show off your style.
+                </span>
+                <span className="text-[#929292]">Maximum File Size: 10 Mb</span>
+              </div>
+            </div>
+            <div className="creditMsg text-xs text-[#333] font-medium mb-5">
+              <p>
+                Get featured and stand a chance to{" "}
+                <b>win upto 50 shopping credits</b> when you upload images using
+                the product.
+              </p>
+            </div>
+            <button
+              onClick={handleClick}
+              className={`cursor-pointer h-10 w-full my-5 m-auto font-medium border-none outline-none flex justify-center items-center rounded-md text-white bg-[#42a2a2] hover:bg-opacity-95`}
+            >
+              Submit
+            </button>
+          </div>
+        )}
       </div>
     </>
   );

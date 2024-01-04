@@ -114,9 +114,9 @@ function ProductDetailsPage() {
     } else {
       setAddedToBag();
     }
-    // if(isAddedToCart){
-    //   navigate("/CartPage");
-    // }
+    if(isAddedToCart){
+      navigate("/CartPage");
+    }
     setIsAddedToCart(() => !isAddedToCart);
   };
   const handleWishlisted = () => {
