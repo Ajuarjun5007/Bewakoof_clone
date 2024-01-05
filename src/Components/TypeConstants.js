@@ -22,7 +22,7 @@ const colorMappings = {
 const sizes =[
     'S','M','L','XL','XXL',
 ]
-const genders = ["Men", "Women"];
+const genders = ["Men","Women"];
 const subCategories= [
     "hoodie",
     "jeans",

@@ -2,7 +2,6 @@ import "react-multi-carousel/lib/styles.css";
 import * as Accordion from "@radix-ui/react-accordion";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
 import React, { useEffect } from "react";
-import classNames from "classnames";
 import {
   genders,
   sizes,
@@ -10,10 +9,7 @@ import {
   brands,
   colorMappings,
 } from "../TypeConstants";
-import img_1 from "../../assets/bw-demo-1.webp";
-import img_2 from "../../assets/bw-demo-2.webp";
-import img_3 from "../../assets/bw-demo-3.webp";
-import { CiHeart } from "react-icons/ci";
+
 import empty_heart from "../../assets/wishlist_page/wishlist.svg";
 import red_heart from "../../assets/wishlist_page/wishlisted.svg";
 import { FaStar } from "react-icons/fa6";
@@ -25,7 +21,11 @@ import Loader from "../Loader";
 import { dressList } from "../ApiFetch";
 // import { useAppDispatch } from '../../Store'
 import { useSelector, useDispatch } from "react-redux";
-import { applyFilters, getProductList, getWishListOperations} from "./Slices/FilterSlice";
+import {
+  applyFilters,
+  getProductList,
+  getWishListOperations,
+} from "./Slices/FilterSlice";
 import FilterComponent from "./FilterComponent";
 function ProductListPage() {
   const location = useLocation();
@@ -38,9 +38,13 @@ function ProductListPage() {
   const [tempArr, setTempArr] = useState([]);
   const [productCategory, setProductCategory] = useState("");
 
-  const { getProductByFilters,wishList} = useSelector((state) => state.productReducer);
-  
-  const productListResult = useSelector((state) => state.productReducer.dressList);
+  const { getProductByFilters, wishList } = useSelector(
+    (state) => state.productReducer
+  );
+
+  const productListResult = useSelector(
+    (state) => state.productReducer.dressList
+  );
 
   let filteredByTagsId = [];
 
@@ -51,43 +55,12 @@ function ProductListPage() {
   const [isWishListAdded, setIsWishListAdded] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  // const fetchData = async () => {
-  //   try {
-  //     const data = await dressList();
-  //     setProductList(data.data);
-  //     setLoading(false);
-  //   } catch (error) {
-  //     console.error("Error fetching data:", error);
-  //   }
-  // };
-    // fetchData();
+  const productList = productListResult?.data;
+  // console.log('Product List Result:', productListResult);
 
   useEffect(() => {
-  // dispatch(getProductList({
-  //   id:'',
-  //   type:"GET",
-  //   tokenValue :JSON.parse(localStorage.getItem("userInfo"))[0],
-  //   suffix:'?limit=1200',
-  // }))
-  
-  }, []);
-  // useEffect(() => {
-  //   console.log('Product List Result:', productListResult);
-  // }, [productListResult]);
-  const productList  = productListResult?.data;
-  console.log('Product List Result:', productListResult);
-
-  useEffect(() => {
-
-    console.log('isWishListAdded', isWishListAdded);
-  },[wishList]);
-
-  // useEffect(()=>{
-  //   if(counter!=1){
-  //     dispatch(applyFilters(filterQuery));
-  //   }
-
-  // },[filterQuery])
+    console.log("isWishListAdded", isWishListAdded);
+  }, [wishList]);
 
   function handleFilter(filter) {
     const nonEmptyArrays = Object.fromEntries(
@@ -135,22 +108,26 @@ function ProductListPage() {
   function wishListHandler(event, Id) {
     event.stopPropagation();
     event.preventDefault();
-    if (localStorage.getItem("userInfo")){
+    if (localStorage.getItem("userInfo")) {
       if (isWishListAdded.includes(Id)) {
-        dispatch(getWishListOperations({
-          id:Id,
-          type:"DELETE",
-          tokenValue :JSON.parse(localStorage.getItem("userInfo"))[0],
-          suffix:Id,
-        }))
+        dispatch(
+          getWishListOperations({
+            id: Id,
+            type: "DELETE",
+            tokenValue: JSON.parse(localStorage.getItem("userInfo"))[0],
+            suffix: Id,
+          })
+        );
         setIsWishListClicked(true);
       } else {
-        dispatch(getWishListOperations({
-          id:Id,
-          type:"PATCH",
-          tokenValue :JSON.parse(localStorage.getItem("userInfo"))[0],
-          suffix:Id,
-        }))
+        dispatch(
+          getWishListOperations({
+            id: Id,
+            type: "PATCH",
+            tokenValue: JSON.parse(localStorage.getItem("userInfo"))[0],
+            suffix: Id,
+          })
+        );
         setIsWishListClicked(false);
       }
     } else {
@@ -166,9 +143,6 @@ function ProductListPage() {
     filterSet();
   }, [productList, location.pathname]);
 
- 
-
-
   return (
     <>
       <div className="flex justify-center">
@@ -179,12 +153,6 @@ function ProductListPage() {
             </div>
           ) : (
             <div className="">
-              {/* <div className="gap-2 flex pl-[10px] text-[#333] font-[300] text-[12px]">
-            <p className="">Home</p>
-            <p className="">/</p>
-            <p className=""> {productCategory}</p>
-          </div> */}
-
               <div className="my-[30px] pl-[10px]  flex flex-col justify-left ">
                 {/* heading wrapper */}
                 <div className="text-[24px] text-[#2d2d2d] font-[900]">
@@ -200,7 +168,10 @@ function ProductListPage() {
                     <p className="text-[rgba(45,45,45,.5)] text-[12px] font-[900] pl-[20px] py-[10px]">
                       FILTERS
                     </p>
-                    <FilterComponent onFilterChange={handleFilter} />
+                    <FilterComponent 
+                    filteredProducts={tempArr} 
+                    onFilterChange={handleFilter}
+                     />
                   </div>
                   <div className="relative pl-[5px] w-[80%] pt-[10px] flex flex-col items-center ">
                     <div className=" flex w-[89%] pb-[15px] pr-[10px] ml-[20px]  flex-row-reverse">
