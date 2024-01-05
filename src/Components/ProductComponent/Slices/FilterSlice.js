@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { productFilterService } from "../ProductService";
 import { json } from "react-router-dom";
 
-const initailState = {
+const initialState = {
   wishList: [],
   isLoading: false,
   error: "",
@@ -53,7 +53,7 @@ export const getWishListOperations = createAsyncThunk(
     let url = BASE_URL +"wishlist/"+ suffix
     try {
       const response = await fetch(url,requestOptions);
-      console.log("slice", response);
+      // console.log("slice",response);
       if(response.ok){
         const result = await response.json();
         return result;
@@ -68,38 +68,26 @@ export const getWishListOperations = createAsyncThunk(
 
 export const getProductList = createAsyncThunk(
   "movieList/getProductList",
-  async ({id,type,tokenValue,suffix}, {rejectWithValue }) => {
+  async ({id,type,tokenValue,suffix},{rejectWithValue }) => {
     let myHeaders = new Headers();
     myHeaders.append("projectID", "gams07bkd3di");
     myHeaders.append("Authorization", `Bearer ${tokenValue}`);
-    myHeaders.append('Content-Type', 'application/json');
-    myHeaders.append('accept', 'application/json');
+    myHeaders.append('Content-Type', "application/json");
+    myHeaders.append('accept', "application/json");
 
-    let requestOptions;
-    // if (type === "PATCH" || type === "DELETE") {
-    //     let raw = JSON.stringify({
-    //         productId: id,
-    //       })
-    //       requestOptions = {
-    //           method: type,
-    //           headers: myHeaders,
-    //           body: raw,
-    //           redirect: 'follow'
-    //         };
-    //     } else if (type === "GET") {
-        requestOptions = {
-            method: "GET",
+     let  requestOptions = {
+            method: type,
             headers: myHeaders,
             redirect: 'follow'
         };
-    // }
-    let url = BASE_URL +"wishlist/"+ suffix
-    console.log(id,type,tokenValue,url)
+    let url = BASE_URL +"clothes/products"+suffix
+    // console.log(id,type,url)
     try {
       const response = await fetch(url,requestOptions);
-      console.log("slice", response);
+      console.log("product",response);
       if(response.ok){
         const result = await response.json();
+        // console.log("productResult",result.data);
         return result;
       }else{
         return rejectWithValue({error:"fetching failed"})
@@ -114,9 +102,7 @@ export const getProductList = createAsyncThunk(
 
 export const productSlice = createSlice({
   name: "productReducer",
-  initialState: {
-    getProductByFilters: {},
-  },
+  initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
@@ -148,21 +134,19 @@ export const productSlice = createSlice({
       .addCase(getWishListOperations.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload.error;
+      })
+      .addCase(getProductList.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(getProductList.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.dressList = action.payload;
+        state.error = "";
+      })
+      .addCase(getProductList.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload.error;
       });
-      // .addCase(getProductList.pending, (state, action) => {
-      //   state.isLoading = true;
-      // })
-
-      // .addCase(getProductList.fulfilled, (state, action) => {
-      //   state.isLoading = false;
-      //   state.wishList = action.payload;
-      //   state.error = "";
-      // })
-
-      // .addCase(getProductList.rejected, (state, action) => {
-      //   state.isLoading = false;
-      //   state.error = action.payload.error;
-      // });
   },
 });
 

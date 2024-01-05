@@ -55,7 +55,7 @@ import { trendingCategories,brands,subCategories} from "../TypeConstants";
 import { dressList } from "../ApiFetch";
 import Loader from "../Loader";
 import { useDispatch } from "react-redux";
-import { getWishListOperations } from "../ProductComponent/Slices/FilterSlice";
+import { getWishListOperations,getProductList } from "../ProductComponent/Slices/FilterSlice";
 // import { dressList } from "../ApiFetch";
 function HomePage() {
   const responsive = {
@@ -79,13 +79,19 @@ function HomePage() {
   const dispatch = useDispatch();
   useEffect(()=>{
 
-    dispatch(getWishListOperations({
+   const info =  dispatch(getWishListOperations({
       id:"",
       type:"GET",
       tokenValue :JSON.parse(localStorage.getItem("userInfo"))[0],
       suffix:'',
     }))
-    
+
+    dispatch(getProductList({
+      id:'',
+      type:"GET",
+      tokenValue :JSON.parse(localStorage.getItem("userInfo"))[0],
+      suffix:'?limit=1200',
+    }))
   },[])
  
   return (

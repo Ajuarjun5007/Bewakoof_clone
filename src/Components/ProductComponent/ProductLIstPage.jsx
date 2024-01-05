@@ -25,7 +25,7 @@ import Loader from "../Loader";
 import { dressList } from "../ApiFetch";
 // import { useAppDispatch } from '../../Store'
 import { useSelector, useDispatch } from "react-redux";
-import { applyFilters, getWishListOperations} from "./Slices/FilterSlice";
+import { applyFilters, getProductList, getWishListOperations} from "./Slices/FilterSlice";
 import FilterComponent from "./FilterComponent";
 function ProductListPage() {
   const location = useLocation();
@@ -38,32 +38,44 @@ function ProductListPage() {
   const [tempArr, setTempArr] = useState([]);
   const [productCategory, setProductCategory] = useState("");
 
-  const { getProductByFilters,wishList } = useSelector((state) => state.productReducer);
-
+  const { getProductByFilters,wishList} = useSelector((state) => state.productReducer);
+  
+  const productListResult = useSelector((state) => state.productReducer.dressList);
 
   let filteredByTagsId = [];
 
   const [sortContainerDisplay, setSortContainerDisplay] = useState(false);
-  const [productList, setProductList] = useState([]);
+  // const [productList, setProductList] = useState([]);
   const [isWishListClicked, setIsWishListClicked] = useState(false);
 
   const [isWishListAdded, setIsWishListAdded] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await dressList();
-        setProductList(data.data);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
+  // const fetchData = async () => {
+  //   try {
+  //     const data = await dressList();
+  //     setProductList(data.data);
+  //     setLoading(false);
+  //   } catch (error) {
+  //     console.error("Error fetching data:", error);
+  //   }
+  // };
+    // fetchData();
 
-    setLoading(true);
-    fetchData();
+  useEffect(() => {
+  // dispatch(getProductList({
+  //   id:'',
+  //   type:"GET",
+  //   tokenValue :JSON.parse(localStorage.getItem("userInfo"))[0],
+  //   suffix:'?limit=1200',
+  // }))
+  
   }, []);
+  // useEffect(() => {
+  //   console.log('Product List Result:', productListResult);
+  // }, [productListResult]);
+  const productList  = productListResult?.data;
+  console.log('Product List Result:', productListResult);
 
   useEffect(() => {
 
