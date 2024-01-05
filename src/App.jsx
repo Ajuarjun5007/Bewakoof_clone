@@ -15,7 +15,7 @@ import WishlistPage from "./Components/WishListComponent/WishlistPage";
 import ProductListPage from "./Components/ProductComponent/ProductLIstPage";
 import ProductDetailsPage from "./Components/ProductComponent/ProductDetailsPage";
 import CartPage from  "./Components/CartComponent/CartPage";
-import { useEffect , useState } from "react";
+import { useEffect,useState} from "react";
 import SignupPage from "./Components/UserAuthentication/SignupPage";
 import WalletPage from "./Components/NavbarMain/WalletPage";
 import AccountPage from "./Components/NavbarMain/AccountPage"
@@ -24,6 +24,8 @@ import ProfilePage from "./Components/NavbarMain/ProfilePage"
 import PaymentPage from "./Components/PaymentComponent/PaymentPage";
 import ReviewEditPage from "./Components/ProductComponent/ReviewComponent/ReviewEditPage"
 import ReviewPage from "./Components/ProductComponent/ReviewComponent/ReviewPage";
+import MobileNavBar from "./Components/MobileComponent/MobileNavBar";
+import {useScreenSize} from "./Components/MobileComponent/useScreenSize"
 function App() {
   const location =  useLocation();
   const [footerDisplay,setFooterDisplay] = useState(true);
@@ -33,39 +35,52 @@ function App() {
         setFooterDisplay(false);
       }
     },[location])
+
+  const screenSize = useScreenSize();
+    let isMobile = screenSize < 880;
   
   return (
     <>
+    {
+      !isMobile &&
     <HeaderComponent/>
+    }
+     {
+      !isMobile &&
      <NavbarMain/>
-      <Routes>
-        <Route path="/" element={<HomePage/>}/>
-        <Route path="/OfferPage" element={<OfferPage/>}/>
-        <Route path="/FanbookPage" element={<FanbookPage/>}/>
-        <Route path="/DownloadAppPage" element={<DownloadAppPage/>}/>
-        <Route path="/TribeMembershipPage" element={<TribeMembershipPage/>}/>
-        <Route path="/ContactusPage" element={<ContactusPage/>}/>
-        <Route path="/TrackOrderPage" element={<TrackOrderPage/>}/>
-        <Route path="/LoginPage" element={<LoginPage/>}/>
-        <Route path="/MailPage" element={<MailPage/>}/>
-        <Route path="/WishlistPage" element={<WishlistPage/>}/>
-        <Route path="/ProductListPage/:category" element={<ProductListPage/>}/>
-        <Route path="/ProductDetailsPage/:id" element={<ProductDetailsPage/>}/>
-        <Route path="/CartPage" element={<CartPage/>}/>
-        <Route path="/SignupPage" element={<SignupPage/>}/>
-        <Route path="/WalletPage" element={<WalletPage/>}/>
-        <Route path="/AccountPage" element={<AccountPage/>}/>
-        <Route path="/AddressPage" element={<AddressPage/>}/>
-        <Route path="/ProfilePage" element={<ProfilePage/>}/>
-        <Route path="/PaymentPage" element={<PaymentPage/>}/>
-        <Route path="/ReviewEditPage/:id" element={<ReviewEditPage/>}/>
-        <Route path="/ReviewPage/:id" element={<ReviewPage/>}/>
+    }
+     {
+      isMobile &&
+      <MobileNavBar/>
+     }
+        <Routes>
+          <Route path="/" element={<HomePage/>}/>
+          <Route path="/OfferPage" element={<OfferPage/>}/>
+          <Route path="/FanbookPage" element={<FanbookPage/>}/>
+          <Route path="/DownloadAppPage" element={<DownloadAppPage/>}/>
+          <Route path="/TribeMembershipPage" element={<TribeMembershipPage/>}/>
+          <Route path="/ContactusPage" element={<ContactusPage/>}/>
+          <Route path="/TrackOrderPage" element={<TrackOrderPage/>}/>
+          <Route path="/LoginPage" element={<LoginPage/>}/>
+          <Route path="/MailPage" element={<MailPage/>}/>
+          <Route path="/WishlistPage" element={<WishlistPage/>}/>
+          <Route path="/ProductListPage/:category" element={<ProductListPage/>}/>
+          <Route path="/ProductDetailsPage/:id" element={<ProductDetailsPage/>}/>
+          <Route path="/CartPage" element={<CartPage/>}/>
+          <Route path="/SignupPage" element={<SignupPage/>}/>
+          <Route path="/WalletPage" element={<WalletPage/>}/>
+          <Route path="/AccountPage" element={<AccountPage/>}/>
+          <Route path="/AddressPage" element={<AddressPage/>}/>
+          <Route path="/ProfilePage" element={<ProfilePage/>}/>
+          <Route path="/PaymentPage" element={<PaymentPage/>}/>
+          <Route path="/ReviewEditPage/:id" element={<ReviewEditPage/>}/>
+          <Route path="/ReviewPage/:id" element={<ReviewPage/>}/>
 
-      </Routes>
-{
+        </Routes>
+{/* {
   footerDisplay &&
      <FooterComponent/>
-}
+} */}
      
     </>
   )

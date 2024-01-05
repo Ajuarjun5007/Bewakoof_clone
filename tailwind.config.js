@@ -26,7 +26,7 @@ export default {
         'sm': '360px',
         // => @media (min-width: 640px) { ... }
   
-        'md': '768px',
+        'md': '881px',
         // => @media (min-width: 768px) { ... }
   
         'lg': '1024px',
@@ -53,6 +53,18 @@ export default {
         slideUp: 'slideUp 300ms cubic-bezier(0.87, 0, 0.13, 1)',
       },
     },
+  },
+  screens: {
+    'sm': '640px',
+
+    'md': '768px',
+
+    'lg': '1000px',
+
+    'xl': '1170px',
+
+    // '2xl': '1536px',
+    // => @media (min-width: 1536px) { ... }
   },
   plugins: [
     function ({addUtilities}){

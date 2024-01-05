@@ -9,25 +9,18 @@ import classNames from "classnames";
 
 import * as Accordion from "@radix-ui/react-accordion";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
-import { IoChevronDown } from "react-icons/io5";
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-// import { applyFilters, selectProductsByFilter } from "./Slices/FilterSlice";
 import "./ProductPage.css";
 function FilterComponent({ onFilterChange, filteredProducts }) {
-  console.log(filteredProducts);
-  // const filteredSubCategories,filteredColors,filteredSizes,filteredBrand,filteredRatings=[];
   let filteredSubCategories = [
     ...new Set(filteredProducts.map((item) => item.subCategory)),
   ];
-  let filteredSizes = [filteredProducts.map((item) => [...new Set(item.size)])];
   let filteredBrands = [...new Set(filteredProducts.map((item) => item.brand))];
   let filteredColors = [...new Set(filteredProducts.map((item) => item.color))];
+  // let filteredSizes = filteredProducts.map((item) => [...new Set(item.size)]);
+  let filteredSizes = [...new Set(filteredProducts.flatMap(item => item.size))];
 
-  console.log("filteredsubcategories", filteredSubCategories);
-  console.log("filteredsubcategories", filteredColors);
-
-  const dispatch = useDispatch();
   const [activeFilters, setActiveFilters] = useState({
     size: false,
     subCategory: false,
@@ -35,36 +28,62 @@ function FilterComponent({ onFilterChange, filteredProducts }) {
     brand: false,
     ratings: false,
   });
-  const [filterTags, setFilterTags] = useState({
-    size: [],
-    subCategory: [],
-    color: [],
-    brand: [],
-    ratings: [],
-  });
 
-  let activeTags = [];
-
-  function updateFilters(filterType, value) {
-    setFilterTags((prev) => {
-      if (!prev[filterType].includes(value)) {
-        return {
-          ...prev,
-          [filterType]: [...prev[filterType], value],
-        };
-      }
-      return prev;
-    });
-  }
+  const [sizeFilter, setSizeFilter] = useState([]);
+  const [categoryFilter, setCategoryFilter] = useState([]);
+  const [colorFilter, setColorFilter] = useState([]);
+  const [brandFilter, setBrandFilter] = useState([]);
+  const [ratingsFilter, setRatingsFilter] = useState([]);
+  
+  // function updateFilters(filterType, value) {
+  //   switch (filterType) {
+  //     case 'size':
+  //       setSizeFilter((prev) => {
+  //         const updatedSizes = prev.includes(value) ? prev.filter(item => item !== value) : [...prev, value];
+  //         return [...new Set(updatedSizes)]; // Use Set to filter out duplicates
+  //       });
+  //       break;
+  //     case 'category':
+  //       setCategoryFilter((prev) => {
+  //         const updatedCategories = prev.includes(value) ? prev.filter(item => item !== value) : [...prev, value];
+  //         return [...new Set(updatedCategories)]; // Use Set to filter out duplicates
+  //       });
+  //       break;
+  //     case 'color':
+  //       setColorFilter((prev) => {
+  //         const updatedColors = prev.includes(value) ? prev.filter(item => item !== value) : [...prev, value];
+  //         return [...new Set(updatedColors)]; // Use Set to filter out duplicates
+  //       });
+  //       break;
+  //     case 'brand':
+  //       setBrandFilter((prev) => {
+  //         const updatedBrands = prev.includes(value) ? prev.filter(item => item !== value) : [...prev, value];
+  //         return [...new Set(updatedBrands)]; // Use Set to filter out duplicates
+  //       });
+  //       break;
+  //     case 'ratings':
+  //       setRatingsFilter((prev) => {
+  //         const updatedRatings = prev.includes(value) ? prev.filter(item => item !== value) : [...prev, value];
+  //         return [...new Set(updatedRatings)]; // Use Set to filter out duplicates
+  //       });
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  // }
+  
+  console.log("fS",filteredSizes);
+  console.log("fp",filteredProducts);
+  
+  
+  useEffect(() => {
+    console.log("filtertags", colorFilter, sizeFilter);
+  }, [colorFilter, sizeFilter]);
+  
 
   return (
     <>
-      <Accordion.Root
-        className=" rounded-md "
-        type="single"
-        //   defaultValue="item-1"
-        collapsible
-      >
+      <Accordion.Root className=" rounded-md " type="single" collapsible>
         <AccordionItem value="item-1">
           <AccordionTrigger>sub Category</AccordionTrigger>
           <AccordionContent>
@@ -84,7 +103,7 @@ function FilterComponent({ onFilterChange, filteredProducts }) {
         <AccordionItem value="item-2">
           <AccordionTrigger>Size</AccordionTrigger>
           <AccordionContent>
-            {sizes.map((item, index) => (
+            {filteredSizes.map((item, index) => (
               <div
                 key={index}
                 className={`pl-[30px] text-[rgba(45,45,45,.7)] text-[12px] hover:text-[black] transition 300 
@@ -94,11 +113,11 @@ function FilterComponent({ onFilterChange, filteredProducts }) {
               >
                 <p
                   key={index}
-                  className={`my-[5px]   ${
-                    filterTags.size.includes(item)
-                      ? "bg-red-400"
-                      : "bg-yellow-400"
-                  }`}
+                  // className={`my-[5px]   ${
+                  //   filterTags.size.includes(item)
+                  //     ? "bg-red-400"
+                  //     : "bg-yellow-400"
+                  // }`}
                   onClick={() => updateFilters("size", item, index)}
                 >
                   {item}
@@ -129,7 +148,7 @@ function FilterComponent({ onFilterChange, filteredProducts }) {
             <div className="flex justify-left gap-2 flex-wrap ">
               {filteredColors.map((item, index) => (
                 <div
-                  // onClick={() => updateFilters("color", name)}
+                  onClick={() => updateFilters("color", name)}
                   key={index}
                   style={{ backgroundColor: colorMappings[item] }}
                   className="border-[1px] rounded-[4px] border-[#e6e6e6] solid w-[30px] h-[30px]"

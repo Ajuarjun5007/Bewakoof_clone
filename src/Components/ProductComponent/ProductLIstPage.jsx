@@ -56,8 +56,6 @@ function ProductListPage() {
   const [loading, setLoading] = useState(false);
 
   const productList = productListResult?.data;
-  // console.log('Product List Result:', productListResult);
-
   useEffect(() => {
     console.log("isWishListAdded", isWishListAdded);
   }, [wishList]);
@@ -66,9 +64,8 @@ function ProductListPage() {
     const nonEmptyArrays = Object.fromEntries(
       Object.entries(filter).filter(([key, value]) => value.length > 0)
     );
-    dispatch(applyFilters(nonEmptyArrays));
+    console.log("non",nonEmptyArrays);
     updateFilterQuery(nonEmptyArrays);
-    setCounter(2);
   }
 
   let filteredProductList = [];
@@ -77,6 +74,7 @@ function ProductListPage() {
     if (name === undefined && brand === undefined) {
       setProductCategory(location.pathname.split("/")[2]);
       if (subCategories.includes(location.pathname.split("/")[2])) {
+        console.log("sc");
         filteredProductList = productList.filter(
           (product) => product.subCategory === location.pathname.split("/")[2]
         );
@@ -102,7 +100,6 @@ function ProductListPage() {
       );
       setTempArr(filteredProductList);
     }
-    // }
   }
 
   function wishListHandler(event, Id) {
@@ -143,6 +140,7 @@ function ProductListPage() {
     filterSet();
   }, [productList, location.pathname]);
 
+  console.log("temp",tempArr);
   return (
     <>
       <div className="flex justify-center">

@@ -59,9 +59,9 @@ useEffect(()=>{
   return (
     <>
       <div className="flex z-10 w-full  fixed bg-white top-8 pt-[3px] justify-center border-b-[1px] border-[rgba(0,0,0,0.2)] solid ">
-        <div className="flex  w-85 ">
+        <div className="flex w-85 border-[2px] border-black ">
           {/* Navbar logo */}
-          <div className="logocontainer px-2  py-3">
+          <div className="logocontainer px-2  py-3 ">
             <Link to={"/"}>
               <img className="h-5" src={logo} alt="" />
             </Link>
@@ -74,9 +74,8 @@ useEffect(()=>{
             >
               <Link
                 to={`/ProductListPage/${genders[0]}`}
-                
               >
-                <span className="text-[13px] pt-4 px-3 pb-3 leading-3  hover:border-b-4 border-hoveryellow">
+                <span className="text-[13px] pt-4 px-3 pb-3 leading-3   hover:border-b-4 border-hoveryellow">
                   MEN
                 </span>
               </Link>

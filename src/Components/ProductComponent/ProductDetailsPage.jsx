@@ -34,7 +34,7 @@ import { productDetail } from "./ProductService";
 import { SlArrowDown, SlArrowUp } from "react-icons/sl";
 import "./ProductPage.css";
 import { sizes } from "../../Components/TypeConstants";
-import { useParams,useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Loader from "../Loader";
 import ReviewWrapper from "./ReviewComponent/ReviewWrapper";
 register();
@@ -44,8 +44,8 @@ function ProductDetailsPage() {
   const horizontalSwiperRef = useRef();
   const params = useParams();
   const navigate = useNavigate();
-  const [images,setImages] = useState([]);
-  const[isLoading,setIsLoading]=useState(false);
+  const [images, setImages] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const horizontalSliderProps = useMemo(
     () =>
       innerWidth > 768
@@ -106,7 +106,7 @@ function ProductDetailsPage() {
   };
 
   const handleAddedToBag = () => {
-    if(!localStorage.getItem("userInfo")){
+    if (!localStorage.getItem("userInfo")) {
       navigate("/LoginPage");
     }
     if (selectedSize === null) {
@@ -114,7 +114,7 @@ function ProductDetailsPage() {
     } else {
       setAddedToBag();
     }
-    if(isAddedToCart){
+    if (isAddedToCart) {
       navigate("/CartPage");
     }
     setIsAddedToCart(() => !isAddedToCart);
@@ -177,88 +177,86 @@ function ProductDetailsPage() {
   }, []);
 
   useEffect(() => {
-      setIsLoading(true);
+    setIsLoading(true);
     if (params.id !== undefined) {
       productDetail(params.id).then((res) => {
         setProductInfo(res.data);
         setImages(res.data.images);
-    setIsLoading(false);
+        setIsLoading(false);
       });
     }
   }, [params]);
-  console.log("productInfo",productInfo);
+  console.log("productInfo", productInfo);
   return (
     <>
       <div className="relative">
         <div className="flex justify-center">
           <div className="mt-[90px] flex gap-[2%] h-[620px]  w-85 ">
             <div className="flex h-max sticky justify-center items-start w-[45%] ">
-              {
-                (!isLoading)?(
-              <div className="flex gap-[5px] md:h-[470px] xl:h-[575px] overflow-hidden pb-2">
-                <div className="md:w-1/5 hidden md:flex flex-col gap-2">
-                  <div
-                    onClick={()=>handlePrevClick()}
-                    className=" cursor-pointer flex items-center justify-center truncate"
-                  >
-                    <SlArrowUp />
+              {!isLoading ? (
+                <div className="flex gap-[5px] md:h-[470px] xl:h-[575px] overflow-hidden pb-2">
+                  <div className="md:w-1/5 hidden md:flex flex-col gap-2">
+                    <div
+                      onClick={() => handlePrevClick()}
+                      className=" cursor-pointer flex items-center justify-center truncate"
+                    >
+                      <SlArrowUp />
+                    </div>
+                    <swiper-container
+                      ref={verticalSwiperRef}
+                      class="myThumbSlider my-thumbs"
+                      space-between="5"
+                      slides-per-view={images.length < 3 ? images.length : 3}
+                      loop="true"
+                      direction="vertical"
+                    >
+                      {images?.map((image, i) => (
+                        <swiper-slide class="verticalSlide" key={i}>
+                          <div className="">
+                            <img
+                              className="aspect-[4/5] object-contain md:object-cover object-center"
+                              src={image}
+                              alt=""
+                            />
+                          </div>
+                        </swiper-slide>
+                      ))}
+                    </swiper-container>
+                    <div
+                      onClick={() => handleNextClick()}
+                      className=" cursor-pointer flex items-center justify-center"
+                    >
+                      <SlArrowDown />
+                    </div>
                   </div>
-                  <swiper-container
-                    ref={verticalSwiperRef}
-                    class="myThumbSlider my-thumbs"
-                    space-between="5"
-                    slides-per-view={images.length < 3 ? images.length : 3}
-                    loop="true"
-                    direction="vertical"
-                  >
-                    {images?.map((image, i) => (
-                      <swiper-slide class="verticalSlide" key={i}>
-                        <div className="">
-                          <img
-                            className="aspect-[4/5] object-contain md:object-cover object-center"
-                            src={image}
-                            alt=""
-                          />
-                        </div>
-                      </swiper-slide>
-                    ))}
-                  </swiper-container>
-                  <div
-                    onClick={()=>handleNextClick()}
-                    className=" cursor-pointer flex items-center justify-center"
-                  >
-                    <SlArrowDown />
-                  </div>
-                </div>
-                <div className="w-full md:w-4/5 ">
-                  <swiper-container
-                    ref={horizontalSwiperRef}
-                    controller-control=".verticalSwiper"
-                    thumbs-swiper=".my-thumbs"
-                    loop="true"
-                    direction="horizontal"
-                    slides-per-view="1"
-                    {...horizontalSliderProps}
-                  >
-                    {images?.map((image, i) => (
-                      <swiper-slide class="horizontalSlide" key={i}>
-                        <div className="">
-                          <img
-                            className="h-[558px] md:w-full !object-contain 
+                  <div className="w-full md:w-4/5 ">
+                    <swiper-container
+                      ref={horizontalSwiperRef}
+                      controller-control=".verticalSwiper"
+                      thumbs-swiper=".my-thumbs"
+                      loop="true"
+                      direction="horizontal"
+                      slides-per-view="1"
+                      {...horizontalSliderProps}
+                    >
+                      {images?.map((image, i) => (
+                        <swiper-slide class="horizontalSlide" key={i}>
+                          <div className="">
+                            <img
+                              className="h-[558px] md:w-full !object-contain 
                                     md:object-cover object-center "
-                            src={image}
-                            alt=""
-                          />
-                        </div>
-                      </swiper-slide>
-                    ))}
-                  </swiper-container>
+                              src={image}
+                              alt=""
+                            />
+                          </div>
+                        </swiper-slide>
+                      ))}
+                    </swiper-container>
+                  </div>
                 </div>
-              </div>
-                ):(
-                  <Loader/>
-                )
-              }
+              ) : (
+                <Loader />
+              )}
             </div>
             <div className="w-[50%] pt-[20px] overflow-scroll no-scrollbar">
               <div className="">
@@ -328,7 +326,9 @@ function ProductDetailsPage() {
                       className={`multiColorDiv flex items-center justify-start`}
                     >
                       <div
-                      style={{backgroundColor:colorMappings[productInfo.color]}}
+                        style={{
+                          backgroundColor: colorMappings[productInfo.color],
+                        }}
                         className="testColorBlock cursor-pointer rounded-lg  md:rounded-full w-[35px] h-[35px] 
   mr-3 mb-3 border border-[#ebebeb]  shadoweffect"
                       ></div>
@@ -414,9 +414,7 @@ function ProductDetailsPage() {
                     </p>
                   </button>
 
-
-                  
-                {/* wishlist */}
+                  {/* wishlist */}
 
                   <button
                     onClick={handleWishlisted}
@@ -608,7 +606,7 @@ function ProductDetailsPage() {
                   </div>
                 </div>
                 <div className="">
-                  <ReviewWrapper  productId={params.id}/>
+                  <ReviewWrapper productId={params.id} />
                 </div>
               </div>
             </div>
