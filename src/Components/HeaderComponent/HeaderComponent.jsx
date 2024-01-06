@@ -4,8 +4,8 @@ function HeaderComponent() {
   return (
     <>
       <div className="bg-headerbg w-full fixed z-10  flex  top-0 justify-center">
-        <div className="flex w-85  justify-between font-medium font-cmnstyle py-2 leading-2 tracking-wider 
-        lg:max-xl:w-full">
+        <div className="flex w-85  md:max-xl:w-full justify-between font-medium font-cmnstyle py-2 leading-2 tracking-wider 
+       ">
           <div className="flex header-left text-center text-textcolor text-basesize justify-between " >
           
             <Link to="OfferPage">
@@ -41,3 +41,4 @@ function HeaderComponent() {
   );
 }
 export default HeaderComponent;
+// lg:max-xl:w-full

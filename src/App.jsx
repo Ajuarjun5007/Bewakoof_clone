@@ -37,7 +37,7 @@ function App() {
     },[location])
 
   const screenSize = useScreenSize();
-    let isMobile = screenSize < 880;
+    let isMobile = screenSize < 1000;
   
   return (
     <>

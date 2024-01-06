@@ -6,7 +6,7 @@ import { LuUser2 } from "react-icons/lu";
 import { BsBag } from "react-icons/bs";
 import { RxDividerVertical } from "react-icons/rx";
 import flag from "../../assets/NavbarflagImages/india-flag.png";
-import { genders,subCategories } from "../TypeConstants";
+import { genders, subCategories } from "../TypeConstants";
 import { topWearForMen } from "../HomePage/menucontent";
 import { topWearForWomen } from "../HomePage/menucontent";
 import { bottomWearForMen } from "../HomePage/menucontent";
@@ -22,7 +22,6 @@ import { brandimages } from "../imageconstants";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import "./NavbarMain.css";
-
 function NavbarMain() {
   const [userLoggedIn, setUserLoggedIn] = useState(false);
   const [userDetailsDisplay, setUserDetailsDisplay] = useState(false);
@@ -33,13 +32,13 @@ function NavbarMain() {
 
   const [menuContentForMen, setMenuContentForMen] = useState(false);
   const [menuContentForWomen, setMenuContentForWomen] = useState(false);
-  let userInfo = JSON.parse(localStorage.getItem("userInfo")) || '';
-useEffect(()=>{
- if(localStorage.getItem("userInfo")){
-  setUserLoggedIn(true);
-  setUserName(userInfo[1].name);
- }
-},[])
+  let userInfo = JSON.parse(localStorage.getItem("userInfo")) || "";
+  useEffect(() => {
+    if (localStorage.getItem("userInfo")) {
+      setUserLoggedIn(true);
+      setUserName(userInfo[1].name);
+    }
+  }, []);
   const clearStorage = () => {
     localStorage.removeItem("userInfo");
     localStorage.removeItem("user");
@@ -59,7 +58,7 @@ useEffect(()=>{
   return (
     <>
       <div className="flex z-10 w-full  fixed bg-white top-8 pt-[3px] justify-center border-b-[1px] border-[rgba(0,0,0,0.2)] solid ">
-        <div className="flex w-85 border-[2px] border-black ">
+        <div className="flex w-85  md:max-xl:w-full  ">
           {/* Navbar logo */}
           <div className="logocontainer px-2  py-3 ">
             <Link to={"/"}>
@@ -67,14 +66,14 @@ useEffect(()=>{
             </Link>
           </div>
           {/* categories */}
-          <div className=" w-5/12 py-3 flex relative tracking-widest ml-10 lg:ml-0 lg-max:xl:w-4/12 ">
+          <div className=" w-5/12 py-3 flex relative
+            tracking-widest ml-10 lg:ml-0 md:max-xl:w-6/12">
+              {/* lg:ml-0 lg-max:xl:w-4/12 */}
             <div
               onMouseOverCapture={() => setMenuContentForMen(true)}
               onMouseLeave={() => setMenuContentForMen(false)}
             >
-              <Link
-                to={`/ProductListPage/${genders[0]}`}
-              >
+              <Link to={`/ProductListPage/${genders[0]}`}>
                 <span className="text-[13px] pt-4 px-3 pb-3 leading-3   hover:border-b-4 border-hoveryellow">
                   MEN
                 </span>
@@ -178,10 +177,7 @@ useEffect(()=>{
               onMouseOverCapture={() => setMenuContentForWomen(true)}
               onMouseLeave={() => setMenuContentForWomen(false)}
             >
-              <Link
-                to={`/ProductListPage/${genders[1]}`}
-                
-              >
+              <Link to={`/ProductListPage/${genders[1]}`}>
                 <span className="text-[13px] pt-2 px-3 pb-3 leading-3  hover:border-b-4 border-hoveryellow">
                   WOMEN
                 </span>
@@ -284,8 +280,8 @@ useEffect(()=>{
             </div>
           </div>
 
-          {/* rightnavbar */}
-          <div className="flex items-center border-[rgba(0,0,0,0.5)]">
+          {/* lefttnavbar */}
+          <div className="flex items-center border-[rgba(0,0,0,0.5)] md:max-xl:mr-2 ">
             <div className="inputwrapper flex relative  bg-[#eaeaea] mt-1 mb-1 h-10  rounded">
               <IoIosSearch className="absolute left-3.5 top-2 text-[rgba(0,0,0,0.5)] text-[24px]" />
               <input
@@ -294,7 +290,7 @@ useEffect(()=>{
                 placeholder="Search by product, category or collection"
               />
             </div>
-            {/* left navbar */}
+            {/* right navbar */}
             <div
               onMouseOverCapture={() => setUserDetailsDisplay(true)}
               onMouseLeave={() => setUserDetailsDisplay(false)}
@@ -309,12 +305,8 @@ useEffect(()=>{
                     //  onMouseOver={() => setUserDetailsDisplay(true)}
                     //  onMouseLeave={() => setUserDetailsDisplay(false)}
                   >
-                    <img
-                      className="w-[25px] text-[rgba(0,0,0,0.5)]"
-                      src={user_img}
-                      alt="User"
-                    />
-
+                   
+                      <LuUser2 className="text-[27px]"/>
                     <div className="dropdown-container">
                       <div
                         className={`absolute w-[180px] z-2 mt-[14px] text-14 left-[-60px] cursor-pointer bg-white shadow-2px hover:shadow-md ${
@@ -372,8 +364,8 @@ useEffect(()=>{
                   <BsBag />
                 </Link>
               </span>
-              <span className="px-2  ">
-                <img className=" h-[30px] w-[40px]" src={flag} alt="" />
+              <span className="pl-1 ">
+                <img className=" h-[30px] w-[40px] " src={flag} alt="" />
               </span>
             </div>
           </div>
