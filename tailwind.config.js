@@ -54,18 +54,18 @@ export default {
       },
     },
   },
-  screens: {
-    'sm': '640px',
+  // screens: {
+  //   'sm': '640px',
 
-    'md': '768px',
+  //   'md': '768px',
 
-    'lg': '1000px',
+  //   'lg': '1000px',
 
-    'xl': '1170px',
+  //   'xl': '1170px',
 
-    // '2xl': '1536px',
-    // => @media (min-width: 1536px) { ... }
-  },
+  //   // '2xl': '1536px',
+  //   // => @media (min-width: 1536px) { ... }
+  // },
   plugins: [
     function ({addUtilities}){
       const newUtilites = {

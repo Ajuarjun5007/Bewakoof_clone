@@ -57,7 +57,7 @@ function NavbarMain() {
   // console.log("user",userInfo);
   return (
     <>
-      <div className="flex z-10 w-full  fixed bg-white top-8 pt-[3px] justify-center border-b-[1px] border-[rgba(0,0,0,0.2)] solid ">
+      <div className="flex  w-full  fixed z-10 bg-white top-8 pt-[3px] justify-center border-b-[1px] border-[rgba(0,0,0,0.2)] solid ">
         <div className="flex w-85  md:max-xl:w-full  ">
           {/* Navbar logo */}
           <div className="logocontainer px-2  py-3 ">
@@ -373,7 +373,7 @@ function NavbarMain() {
       </div>
       {/* scroll navbar */}
       {isVisible && (
-        <div className="sub-navbar w-full z-[3]  flex  bg-white fixed top-[84px]  py-4 ">
+        <div className="sub-navbar w-full z-10 flex  bg-white fixed top-[84px]  py-4 ">
           <div className="sub-navbar-item px-1 no-scrollbar flex  overflow-scroll">
             {subCategories.map((subCategory, index) => (
               <Link key={index*Math.random()} to={`/ProductListPage/${subCategory}`}

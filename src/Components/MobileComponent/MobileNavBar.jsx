@@ -36,9 +36,8 @@ function MobileNavBar() {
   };
   return (
     <>
-      <div className="top-0 left-0 right-0 fixed">
         <div className="mainHeaderWrapper bg-[rgb(255,210,50)] lg:bg-white h-14 px-4 lg:px-0 lg:border-b
-         lg:border-[rgba(0,0,0,0.2)] shadow-sm lg:shadow-none relative">
+         lg:border-[rgba(0,0,0,0.2)] shadow-sm lg:shadow-none top-0 left-0 right-0 fixed z-10">
             {/* Mobile Navbar & sideNavbar */}
           <div className="mainHeader lg:container flex items-center justify-between">
             <div className="flex items-center gap-2">
@@ -69,7 +68,6 @@ function MobileNavBar() {
           </div>
           
         </div>
-      </div>
     </>
   );
 }

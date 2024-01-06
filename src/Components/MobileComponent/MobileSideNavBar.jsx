@@ -27,21 +27,24 @@ function MobileSideNavBar({ onClose }) {
     window.location.reload(false);
     console.log("clear");
   };
-
+  console.log(userName);
   console.log(localStorage.getItem("userInfo"));
   return (
     <>
       <div onClick={handleClose} className="w-full h-full bg-[#0000007f]">
-        <div className="w-72  bg-white h-full text-black  overflow-y-auto">
+        <div className="w-72  max-sm:w-[80%] bg-white h-full text-black  overflow-y-auto">
           <div className="menuHeading border-b px-5 sticky top-0 bg-white">
-            <h1 className="font-bold py-4">Hello </h1>
+            <h1 className="font-bold py-4">Hello {userName} </h1>
           </div>
           <div className="">
             <div
               // onClick={onClose}
               className="currentCountry hover:bg-[#f3f3f383] mt-3 flex items-center justify-between px-5 cursor-pointer"
             >
-              <div className="flex items-center justify-center h-12 gap-2">
+              <Link to="/">
+              <div 
+              onClick={handleClose}
+               className="flex items-center justify-center h-12 gap-2">
                 <img
                   className="rounded-full w-8 h-8 object-cover"
                   src={flag}
@@ -49,12 +52,13 @@ function MobileSideNavBar({ onClose }) {
                 />
                 <div className="font-bold text-xs">India</div>
               </div>
+              </Link>
               <span className="">
                 <BsChevronRight />
               </span>
             </div>
             <div className="menuListWrapper">
-              <p className="menuHeading pt-3 px-5 text-[#0000004d] text-xs font-bold">
+              <p className="menuHeading  pt-3 px-5 text-[#0000004d] text-xs font-bold">
                 SHOP IN
               </p>
               <ul className="menuList pt-1 text-xs font-bold">
