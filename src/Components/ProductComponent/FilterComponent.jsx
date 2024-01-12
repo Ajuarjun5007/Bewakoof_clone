@@ -72,8 +72,6 @@ function FilterComponent({ onFilterChange, filteredProducts }) {
   //   }
   // }
   
-  console.log("fS",filteredSizes);
-  console.log("fp",filteredProducts);
   
   
   useEffect(() => {
@@ -131,14 +129,14 @@ function FilterComponent({ onFilterChange, filteredProducts }) {
           <AccordionContent>
             {filteredBrands.map((item, index) => (
               <div
-                key={index}
-                className="pl-[30px] text-[rgba(45,45,45,.7)] text-[12px] hover:text-[black] transition 300 
-                          hover:bg-slate-100"
-              >
-                <p key={index} className="my-[5px]">
-                  {item.charAt(0).toUpperCase() + item.slice(1)}
-                </p>
-              </div>
+              key={index}
+              className="pl-[30px] text-[rgba(45,45,45,.7)] text-[12px] hover:text-[black] transition 300 hover:bg-slate-100"
+            >
+              <p key={index} className="my-[5px]">
+                {item?.charAt(0).toUpperCase()+item?.slice(1)}
+              </p>
+            </div>
+            
             ))}
           </AccordionContent>
         </AccordionItem>

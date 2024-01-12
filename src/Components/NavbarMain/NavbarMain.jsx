@@ -373,8 +373,8 @@ function NavbarMain() {
       </div>
       {/* scroll navbar */}
       {isVisible && (
-        <div className="sub-navbar w-full z-10 flex  bg-white fixed top-[84px]  py-4 ">
-          <div className="sub-navbar-item px-1 no-scrollbar flex  overflow-scroll">
+        <div className=" w-full z-[1] flex justify-center bg-white fixed top-[84px]  py-4 ">
+          <div className=" px-1  flex w-[90%]   overflow-scroll">
             {subCategories.map((subCategory, index) => (
               <Link key={index*Math.random()} to={`/ProductListPage/${subCategory}`}
               >

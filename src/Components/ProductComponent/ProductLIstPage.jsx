@@ -16,10 +16,7 @@ import { FaStar } from "react-icons/fa6";
 import { IoChevronDown } from "react-icons/io5";
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import SuggestionCarousel from "./SuggestionCarousel";
 import Loader from "../Loader";
-import { dressList } from "../ApiFetch";
-// import { useAppDispatch } from '../../Store'
 import { useSelector, useDispatch } from "react-redux";
 import {
   applyFilters,
@@ -34,7 +31,6 @@ function ProductListPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [filterQuery, updateFilterQuery] = useState({});
-  const [counter, setCounter] = useState(1);
   const [tempArr, setTempArr] = useState([]);
   const [productCategory, setProductCategory] = useState("");
 
@@ -64,7 +60,7 @@ function ProductListPage() {
     const nonEmptyArrays = Object.fromEntries(
       Object.entries(filter).filter(([key, value]) => value.length > 0)
     );
-    console.log("non",nonEmptyArrays);
+    console.log("non", nonEmptyArrays);
     updateFilterQuery(nonEmptyArrays);
   }
 
@@ -139,8 +135,41 @@ function ProductListPage() {
   useEffect(() => {
     filterSet();
   }, [productList, location.pathname]);
+  let keyword = "Printed T-shirts";
+  let keywordArray = keyword.split(" ");
+  let dressType = {};
+  const MenuProducts = {};
+  MenuProducts["Printed T-shirt_Women"] = productList.filter(
+    (item) => item.name.includes("Printed T-shirt") && item.gender === "Women"
+  );
+  MenuProducts["Printed T-shirt_Men"] = productList.filter(
+    (item) => item.name.includes("Printed T-shirt") && item.gender === "Men"
+  );
+  MenuProducts["Oversized T-shirt_Men"] = productList.filter(
+    (item) => item.name.includes("Oversized T-shirt") && item.gender === "Men"
+  );
+  MenuProducts["Oversized T-shirt_Women"] = productList.filter(
+    (item) => item.name.includes("Oversized T-shirt") && item.gender === "Women"
+  );
+  MenuProducts["Oversized T-shirt_Women"] = productList.filter(
+    (item) => item.name.includes("Oversized T-shirt") && item.gender === "Women"
+  );
+  MenuProducts["Full Sleeve T-Shirt_Men"] = productList.filter(
+    (item) => item.name.includes("Full Sleeve T-Shirt") && item.gender === "Men"
+  );
+  MenuProducts["Half Sleeve T-Shirt_Men"] = productList.filter(
+    (item) => item.name.includes("Half Sleeve T-Shirt") && item.gender === "Men"
+  );
+  
+  if ("Half Sleeve T-shirt_Women" in MenuProducts && MenuProducts["Half Sleeve T-shirt_Women"].length > 0) {
+    console.log("Printed T-shirt_Women is present with items.");
+  } else {
+    console.log("Printed T-shirt_Women is either not present or has no items.");
+  }
 
-  console.log("temp",tempArr);
+  console.log("MenuProducts", MenuProducts);
+
+  // console.log("temp", tempArr);
   return (
     <>
       <div className="flex justify-center">
@@ -166,10 +195,10 @@ function ProductListPage() {
                     <p className="text-[rgba(45,45,45,.5)] text-[12px] font-[900] pl-[20px] py-[10px]">
                       FILTERS
                     </p>
-                    <FilterComponent 
-                    filteredProducts={tempArr} 
-                    onFilterChange={handleFilter}
-                     />
+                    <FilterComponent
+                      filteredProducts={tempArr}
+                      onFilterChange={handleFilter}
+                    />
                   </div>
                   <div className="relative pl-[5px] w-[80%] pt-[10px] flex flex-col items-center ">
                     <div className=" flex w-[89%] pb-[15px] pr-[10px] ml-[20px]  flex-row-reverse">
@@ -300,10 +329,6 @@ function ProductListPage() {
               </div>
             </div>
           )}
-
-          {/* <div className="">
-          <SuggestionCarousel productList={productList}/>
-          </div> */}
         </div>
       </div>
     </>

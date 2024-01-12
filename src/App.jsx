@@ -77,10 +77,10 @@ function App() {
           <Route path="/ReviewPage/:id" element={<ReviewPage/>}/>
 
         </Routes>
-{/* {
-  footerDisplay &&
-     <FooterComponent/>
-} */}
+  {/* {
+    footerDisplay &&
+      <FooterComponent/>
+  } */}
      
     </>
   )

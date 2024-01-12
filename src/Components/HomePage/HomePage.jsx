@@ -104,7 +104,7 @@ function HomePage() {
     <>
       <div className="">
         {/*top carousel */}
-        <div className=" relative mt-[130px] max-[768px]:mt-[50px] max-[1000px]:mt-[50px]  py-2 ">
+        <div className=" relative mt-[150px] max-[768px]:mt-[50px] max-[1000px]:mt-[50px]  py-2 ">
           <Carousel
             className=""
             swipeable={true}

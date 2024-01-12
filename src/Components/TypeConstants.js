@@ -111,5 +111,4 @@ const typeshirts_men=[
 const typeshirts_women=[
     
 ]
-
 export {genders,sizes,trendingCategories,colorMappings,brands,sellerTags,subCategories,mobiles};
