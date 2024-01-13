@@ -26,6 +26,7 @@ import {
 import FilterComponent from "./FilterComponent";
 function ProductListPage() {
   const location = useLocation();
+  console.log("location",location);
   const name = location.state?.name;
   const brand = location.state?.brand;
   const dispatch = useDispatch();
@@ -71,25 +72,25 @@ function ProductListPage() {
       setProductCategory(location.pathname.split("/")[2]);
       if (subCategories.includes(location.pathname.split("/")[2])) {
         console.log("sc");
-        filteredProductList = productList.filter(
+        filteredProductList = productList?.filter(
           (product) => product.subCategory === location.pathname.split("/")[2]
         );
         setTempArr(filteredProductList);
       } else if (genders.includes(location.pathname.split("/")[2])) {
-        filteredProductList = productList.filter(
+        filteredProductList = productList?.filter(
           (product) => product.gender === location.pathname.split("/")[2]
         );
         setTempArr(filteredProductList);
       }
     } else if (brand !== undefined) {
-      filteredProductList = productList.filter(
+      filteredProductList = productList?.filter(
         (product) =>
           product.brand == brand.split("/")[1] &&
           product.gender === brand.split("/")[0]
       );
       setTempArr(filteredProductList);
     } else if (name !== undefined) {
-      filteredProductList = productList.filter(
+      filteredProductList = productList?.filter(
         (product) =>
           product.subCategory == name.split("/")[1] &&
           product.gender === name.split("/")[0]
@@ -139,37 +140,48 @@ function ProductListPage() {
   let keywordArray = keyword.split(" ");
   let dressType = {};
   const MenuProducts = {};
-  MenuProducts["Printed T-shirt_Women"] = productList.filter(
+  MenuProducts["Printed T-shirt_Women"] = productList?.filter(
     (item) => item.name.includes("Printed T-shirt") && item.gender === "Women"
   );
-  MenuProducts["Printed T-shirt_Men"] = productList.filter(
+  MenuProducts["Printed T-shirt_Men"] = productList?.filter(
     (item) => item.name.includes("Printed T-shirt") && item.gender === "Men"
   );
-  MenuProducts["Oversized T-shirt_Men"] = productList.filter(
+  MenuProducts["Oversized T-shirt_Men"] = productList?.filter(
     (item) => item.name.includes("Oversized T-shirt") && item.gender === "Men"
   );
-  MenuProducts["Oversized T-shirt_Women"] = productList.filter(
+  MenuProducts["Oversized T-shirt_Women"] = productList?.filter(
     (item) => item.name.includes("Oversized T-shirt") && item.gender === "Women"
   );
-  MenuProducts["Oversized T-shirt_Women"] = productList.filter(
+  MenuProducts["Oversized T-shirt_Women"] = productList?.filter(
     (item) => item.name.includes("Oversized T-shirt") && item.gender === "Women"
   );
-  MenuProducts["Full Sleeve T-Shirt_Men"] = productList.filter(
+  MenuProducts["Full Sleeve T-Shirt_Men"] = productList?.filter(
     (item) => item.name.includes("Full Sleeve T-Shirt") && item.gender === "Men"
   );
-  MenuProducts["Half Sleeve T-Shirt_Men"] = productList.filter(
+  MenuProducts["Half Sleeve T-Shirt_Men"] = productList?.filter(
     (item) => item.name.includes("Half Sleeve T-Shirt") && item.gender === "Men"
   );
-  
-  if ("Half Sleeve T-shirt_Women" in MenuProducts && MenuProducts["Half Sleeve T-shirt_Women"].length > 0) {
-    console.log("Printed T-shirt_Women is present with items.");
-  } else {
-    console.log("Printed T-shirt_Women is either not present or has no items.");
-  }
+  MenuProducts["Polo T-Shirt_Men"] = productList?.filter(
+    (item) => item.name.includes("polo") || item.description.includes("polo")  
+    && item.gender === "Men"
+  );
+  // MenuProducts["Chimpaaanzee"] = productList?.filter(
+  //   (item) =>item.name.includes("Chimpaaanzee") || item.description.includes("Chimpaaanzee") && item.gender === "Women"
+  // );
+  MenuProducts["Sweater_Men"] = productList?.filter(
+    (item) => (item.name.includes("Sweater") || item.description.includes("Sweater")) && item.gender === "Men"
+  );
+  // if ("Half Sleeve T-shirt_Women" in MenuProducts && MenuProducts["Half Sleeve T-shirt_Women"].length > 0) {
+  //   console.log("Printed T-shirt_Women is present with items.");
+  // } else {
+  //   console.log("Printed T-shirt_Women is either not present or has no items.");
+  // }
 
-  console.log("MenuProducts", MenuProducts);
+  // console.log("MenuProducts", MenuProducts);
+  console.log("productList",productList);
+  console.log("temp", tempArr);
 
-  // console.log("temp", tempArr);
+
   return (
     <>
       <div className="flex justify-center">

@@ -55,6 +55,7 @@ function NavbarMain() {
   }, [location.pathname]);
 
   // console.log("user",userInfo);
+ 
   return (
     <>
       <div className="flex  w-full  fixed z-10 bg-white top-8 pt-[3px] justify-center border-b-[1px] border-[rgba(0,0,0,0.2)] solid ">
@@ -66,15 +67,21 @@ function NavbarMain() {
             </Link>
           </div>
           {/* categories */}
-          <div className=" w-5/12 py-3 flex relative
-            tracking-widest ml-10 lg:ml-0 md:max-xl:w-6/12">
-              {/* lg:ml-0 lg-max:xl:w-4/12 */}
+          <div
+            className=" w-5/12 py-3 flex relative
+            tracking-widest ml-10 lg:ml-0 md:max-xl:w-6/12 "
+          >
+            {/* lg:ml-0 lg-max:xl:w-4/12 */}
             <div
               onMouseOverCapture={() => setMenuContentForMen(true)}
               onMouseLeave={() => setMenuContentForMen(false)}
             >
               <Link to={`/ProductListPage/${genders[0]}`}>
-                <span className="text-[13px] pt-4 px-3 pb-3 leading-3   hover:border-b-4 border-hoveryellow">
+                <span
+                  className={`text-sm pt-4 px-3 pb-3 leading-3 ${
+                    menuContentForMen ? "border-b-4 border-hoveryellow" : ""
+                  }`}
+                >
                   MEN
                 </span>
               </Link>
@@ -150,23 +157,28 @@ function NavbarMain() {
                       </div>
                     </div>
                     <div className=" pl-[70px] ">
-                      <span className="font-[450] mb-[30px] solid text-[#494949] text-[14px]">
+                      <span className="font-[450] mb-[30px] solid  text-[#494949] text-[14px]">
                         Brands
                       </span>
                       {Array(25)
                         .fill()
                         .map((_, i) => (
-                          <div
-                            key={i}
-                            className="flex items-center py-[10px] gap-3  font-[400] solid text-[#7f7f7f] text-[13px]"
+                          <Link
+                            to={`/ProductListPage/${brands[i]}`}
+                            state={{ brand: `Men/${brands[i]}` }}
                           >
-                            <img
-                              className="h-9 w-9"
-                              src={brandimages[i]}
-                              alt=""
-                            />
-                            {brands[i]}
-                          </div>
+                            <div
+                              key={i}
+                              className="flex items-center py-[10px] gap-3  font-[400] solid text-[#7f7f7f] text-[13px]"
+                            >
+                              <img
+                                className="h-9 w-9"
+                                src={brandimages[i]}
+                                alt=""
+                              />
+                              {brands[i]}
+                            </div>
+                          </Link>
                         ))}
                     </div>
                   </div>
@@ -178,7 +190,13 @@ function NavbarMain() {
               onMouseLeave={() => setMenuContentForWomen(false)}
             >
               <Link to={`/ProductListPage/${genders[1]}`}>
-                <span className="text-[13px] pt-2 px-3 pb-3 leading-3  hover:border-b-4 border-hoveryellow">
+                <span
+                  className={`text-sm pt-4 px-3 pb-3 leading-3 ${
+                    menuContentForWomen
+                      ? "border-b-[10px] border-hoveryellow"
+                      : ""
+                  }`}
+                >
                   WOMEN
                 </span>
               </Link>
@@ -256,6 +274,10 @@ function NavbarMain() {
                       {Array(25)
                         .fill()
                         .map((_, i) => (
+                          <Link
+                          to={`/ProductListPage/${brands[i]}`}
+                          state={{ brand: `Women/${brands[i]}` }}
+                        >
                           <div
                             key={i}
                             className="flex items-center py-[10px] gap-3  font-[400] solid text-[#7f7f7f] text-[13px]"
@@ -267,6 +289,7 @@ function NavbarMain() {
                             />
                             {brands[i]}
                           </div>
+                          </Link>
                         ))}
                     </div>
                   </div>
@@ -274,7 +297,7 @@ function NavbarMain() {
               )}
             </div>
             <div>
-              <span className="text-[13px] pt-2 px-3 pb-3 leading-3  hover:border-b-4 border-hoveryellow">
+              <span className="text-sm pt-4 px-3 pb-3 leading-3  hover:border-b-[4px] border-hoveryellow">
                 MOBILE COVERS
               </span>
             </div>
@@ -305,8 +328,7 @@ function NavbarMain() {
                     //  onMouseOver={() => setUserDetailsDisplay(true)}
                     //  onMouseLeave={() => setUserDetailsDisplay(false)}
                   >
-                   
-                      <LuUser2 className="text-[27px]"/>
+                    <LuUser2 className="text-[27px]" />
                     <div className="dropdown-container">
                       <div
                         className={`absolute w-[180px] z-2 mt-[14px] text-14 left-[-60px] cursor-pointer bg-white shadow-2px hover:shadow-md ${
@@ -376,13 +398,13 @@ function NavbarMain() {
         <div className=" w-full z-[1] flex justify-center bg-white fixed top-[84px]  py-4 ">
           <div className=" px-1  flex w-[90%]   overflow-scroll">
             {subCategories.map((subCategory, index) => (
-              <Link key={index*Math.random()} to={`/ProductListPage/${subCategory}`}
+              <Link
+                key={index * Math.random()}
+                to={`/ProductListPage/${subCategory}`}
               >
-              <span
-                className="mx-1 pr-20 py-0 text-[17px] key={`index`}"
-              >
-                {subCategory.toUpperCase()}
-              </span>
+                <span className="mx-1 pr-20 py-0 text-[17px] key={`index`}">
+                  {subCategory.toUpperCase()}
+                </span>
               </Link>
             ))}
           </div>

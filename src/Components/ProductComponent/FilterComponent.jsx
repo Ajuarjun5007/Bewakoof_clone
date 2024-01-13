@@ -14,12 +14,12 @@ import { useSelector, useDispatch } from "react-redux";
 import "./ProductPage.css";
 function FilterComponent({ onFilterChange, filteredProducts }) {
   let filteredSubCategories = [
-    ...new Set(filteredProducts.map((item) => item.subCategory)),
+    ...new Set(filteredProducts?.map((item) => item.subCategory)),
   ];
-  let filteredBrands = [...new Set(filteredProducts.map((item) => item.brand))];
-  let filteredColors = [...new Set(filteredProducts.map((item) => item.color))];
-  // let filteredSizes = filteredProducts.map((item) => [...new Set(item.size)]);
-  let filteredSizes = [...new Set(filteredProducts.flatMap(item => item.size))];
+  let filteredBrands = [...new Set(filteredProducts?.map((item) => item.brand))];
+  let filteredColors = [...new Set(filteredProducts?.map((item) => item.color))];
+  // let filteredSizes = filteredProducts?.map((item) => [...new Set(item.size)]);
+  let filteredSizes = [...new Set(filteredProducts?.flatMap(item => item.size))];
 
   const [activeFilters, setActiveFilters] = useState({
     size: false,
@@ -75,7 +75,7 @@ function FilterComponent({ onFilterChange, filteredProducts }) {
   
   
   useEffect(() => {
-    console.log("filtertags", colorFilter, sizeFilter);
+    // console.log("filtertags", colorFilter, sizeFilter);
   }, [colorFilter, sizeFilter]);
   
 

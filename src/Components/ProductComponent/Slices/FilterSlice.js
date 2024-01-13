@@ -84,7 +84,7 @@ export const getProductList = createAsyncThunk(
     // console.log(id,type,url)
     try {
       const response = await fetch(url,requestOptions);
-      console.log("product",response);
+      // console.log("product",response);
       if(response.ok){
         const result = await response.json();
         // console.log("productResult",result.data);
