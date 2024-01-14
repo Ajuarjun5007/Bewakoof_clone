@@ -24,11 +24,16 @@ import {
   getWishListOperations,
 } from "./Slices/FilterSlice";
 import FilterComponent from "./FilterComponent";
+import ComingSoon from "../ComingSoon";
 function ProductListPage() {
   const location = useLocation();
-  console.log("location",location);
+  console.log("location", decodeURIComponent(location.pathname.split("/")[2]));
+  // console.log("location", location);
   const name = location.state?.name;
   const brand = location.state?.brand;
+  const MenuContent = location.state?.MenuContent;
+  console.log("MenuContent", MenuContent);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [filterQuery, updateFilterQuery] = useState({});
@@ -54,7 +59,7 @@ function ProductListPage() {
 
   const productList = productListResult?.data;
   useEffect(() => {
-    console.log("isWishListAdded", isWishListAdded);
+    // console.log("isWishListAdded", isWishListAdded);
   }, [wishList]);
 
   function handleFilter(filter) {
@@ -68,8 +73,8 @@ function ProductListPage() {
   let filteredProductList = [];
   function filterSet() {
     // if(filteredProducts==undefined){
-    if (name === undefined && brand === undefined) {
-      setProductCategory(location.pathname.split("/")[2]);
+    if (name === undefined && brand === undefined && MenuContent === undefined) {
+      setProductCategory(decodeURIComponent(location.pathname.split("/")[2]));
       if (subCategories.includes(location.pathname.split("/")[2])) {
         console.log("sc");
         filteredProductList = productList?.filter(
@@ -89,6 +94,8 @@ function ProductListPage() {
           product.gender === brand.split("/")[0]
       );
       setTempArr(filteredProductList);
+      console.log("brand Clicked")
+
     } else if (name !== undefined) {
       filteredProductList = productList?.filter(
         (product) =>
@@ -96,6 +103,18 @@ function ProductListPage() {
           product.gender === name.split("/")[0]
       );
       setTempArr(filteredProductList);
+      console.log("subcategory Clicked")
+    } else if (MenuContent !== undefined) {
+      filteredProductList = productList?.filter(
+        (product) =>
+          (product.name.includes(MenuContent.split("/")[1]) ||
+            product.description.includes(MenuContent.split("/")[1])) &&
+          product.gender === MenuContent.split("/")[0]
+      );
+      setTempArr(filteredProductList);
+      setProductCategory(MenuContent.split("/")[1])
+  console.log("Menu_Type",MenuContent.split("/")[1] );
+
     }
   }
 
@@ -141,35 +160,54 @@ function ProductListPage() {
   let dressType = {};
   const MenuProducts = {};
   MenuProducts["Printed T-shirt_Women"] = productList?.filter(
-    (item) => item.name.includes("Printed T-shirt") && item.gender === "Women"
+    (item) =>
+      (item.name.includes("Printed T-shirt") ||
+        item.description.includes("Printed T-shirt")) &&
+      item.gender === "Women"
   );
   MenuProducts["Printed T-shirt_Men"] = productList?.filter(
-    (item) => item.name.includes("Printed T-shirt") && item.gender === "Men"
+    (item) =>
+      (item.name.includes("Printed T-shirt") ||
+        item.description.includes("Printed T-shirt")) &&
+      item.gender === "Men"
   );
   MenuProducts["Oversized T-shirt_Men"] = productList?.filter(
-    (item) => item.name.includes("Oversized T-shirt") && item.gender === "Men"
+    (item) =>
+      (item.name.includes("Oversized T-shirt") ||
+        item.description.includes("Oversized T-shirt")) &&
+      item.gender === "Men"
   );
   MenuProducts["Oversized T-shirt_Women"] = productList?.filter(
-    (item) => item.name.includes("Oversized T-shirt") && item.gender === "Women"
-  );
-  MenuProducts["Oversized T-shirt_Women"] = productList?.filter(
-    (item) => item.name.includes("Oversized T-shirt") && item.gender === "Women"
+    (item) =>
+      (item.name.includes("Oversized T-shirt") ||
+        item.description.includes("Oversized T-shirt")) &&
+      item.gender === "Women"
   );
   MenuProducts["Full Sleeve T-Shirt_Men"] = productList?.filter(
-    (item) => item.name.includes("Full Sleeve T-Shirt") && item.gender === "Men"
+    (item) =>
+      (item.name.includes("Full Sleeve T-Shirt") ||
+        item.description.includes("Full Sleeve T-Shirt")) &&
+      item.gender === "Men"
   );
   MenuProducts["Half Sleeve T-Shirt_Men"] = productList?.filter(
-    (item) => item.name.includes("Half Sleeve T-Shirt") && item.gender === "Men"
+    (item) =>
+      (item.name.includes("Half Sleeve T-Shirt") ||
+        item.description.includes("Half Sleeve T-Shirt")) &&
+      item.gender === "Men"
   );
-  MenuProducts["Polo T-Shirt_Men"] = productList?.filter(
-    (item) => item.name.includes("polo") || item.description.includes("polo")  
-    && item.gender === "Men"
+  MenuProducts["polo t-Shirt_Men"] = productList?.filter(
+    (item) =>
+      (item.name.includes("polo t-shirt") ||
+        item.description.includes("polo t-shirt")) &&
+      item.gender === "Men"
   );
   // MenuProducts["Chimpaaanzee"] = productList?.filter(
   //   (item) =>item.name.includes("Chimpaaanzee") || item.description.includes("Chimpaaanzee") && item.gender === "Women"
   // );
   MenuProducts["Sweater_Men"] = productList?.filter(
-    (item) => (item.name.includes("Sweater") || item.description.includes("Sweater")) && item.gender === "Men"
+    (item) =>
+      (item.name.includes("Sweater") || item.description.includes("Sweater")) &&
+      item.gender === "Men"
   );
   // if ("Half Sleeve T-shirt_Women" in MenuProducts && MenuProducts["Half Sleeve T-shirt_Women"].length > 0) {
   //   console.log("Printed T-shirt_Women is present with items.");
@@ -177,15 +215,14 @@ function ProductListPage() {
   //   console.log("Printed T-shirt_Women is either not present or has no items.");
   // }
 
-  // console.log("MenuProducts", MenuProducts);
-  console.log("productList",productList);
+  console.log("MenuProducts", MenuProducts);
+  console.log("productList", productList);
   console.log("temp", tempArr);
-
 
   return (
     <>
       <div className="flex justify-center">
-        <div className="w-85 flex flex-col justify-left mt-[100px] ">
+        <div className="w-85 flex flex-col justify-left mt-[70px] ">
           {loading ? (
             <div className="mt-[30px]">
               <Loader />
@@ -202,7 +239,8 @@ function ProductListPage() {
                 </div>
 
                 {/* accordion and prouduct card */}
-                <div className="flex mt-[40px] ">
+                <div className="flex mt-[40px] justify-center ">
+                  {tempArr.length>0 &&
                   <div className="w-[25%] ">
                     <p className="text-[rgba(45,45,45,.5)] text-[12px] font-[900] pl-[20px] py-[10px]">
                       FILTERS
@@ -212,7 +250,9 @@ function ProductListPage() {
                       onFilterChange={handleFilter}
                     />
                   </div>
-                  <div className="relative pl-[5px] w-[80%] pt-[10px] flex flex-col items-center ">
+                  }
+                  <div className="relative pl-[5px] w-[80%]  flex flex-col items-center ">
+                 { tempArr.length>0 &&
                     <div className=" flex w-[89%] pb-[15px] pr-[10px] ml-[20px]  flex-row-reverse">
                       <div
                         className="flex flex-row-reverse gap-[5px]"
@@ -260,6 +300,7 @@ function ProductListPage() {
                         )}
                       </div>
                     </div>
+                 }
                     {/* product card */}
 
                     <div className="flex flex-wrap justify-center gap-[10px]">
@@ -331,8 +372,8 @@ function ProductListPage() {
                             </Link>
                           ))
                         ) : (
-                          // <p>Loading.....</p>
-                          <Loader />
+                          // <Loader />
+                          <ComingSoon/>
                         )
                       ) : null}
                     </div>

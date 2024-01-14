@@ -54,7 +54,6 @@ function NavbarMain() {
     }
   }, [location.pathname]);
 
-  // console.log("user",userInfo);
  
   return (
     <>
@@ -101,9 +100,14 @@ function NavbarMain() {
                         </span>
                         <div className="my-3">
                           {topWearForMen.map((item) => (
+                           <Link
+                            to={`/ProductListPage/${decodeURIComponent(item)}_Men`}
+                            state={{ MenuContent:`Men/${decodeURIComponent(item)}`}}
+                            >
                             <p className="text-[13px] text-[#7f7f7f] py-[3px] hover:underline">
                               {item}
                             </p>
+                            </Link>
                           ))}
                         </div>
                       </div>
@@ -113,9 +117,14 @@ function NavbarMain() {
                         </span>
                         <div className="my-3">
                           {bottomWearForMen.map((item) => (
+                              <Link
+                              to={`/ProductListPage/${decodeURIComponent(item)}_Men`}
+                              state={{ MenuContent:`Men/${decodeURIComponent(item)}`}}
+                              >
                             <p className="text-[13px] text-[#7f7f7f] py-[3px] hover:underline">
                               {item}
                             </p>
+                            </Link>
                           ))}
                         </div>
                       </div>
@@ -125,9 +134,14 @@ function NavbarMain() {
                         </span>
                         <div className="my-3">
                           {winterWearForMen.map((item) => (
+                              <Link
+                              to={`/ProductListPage/${decodeURIComponent(item)}_Men`}
+                              state={{ MenuContent:`Men/${decodeURIComponent(item)}`}}
+                              >
                             <p className="text-[13px] text-[#7f7f7f] py-[3px] hover:underline">
                               {item}
                             </p>
+                            </Link>
                           ))}
                         </div>
                       </div>
@@ -137,9 +151,14 @@ function NavbarMain() {
                         </span>
                         <div className="my-3">
                           {plusSizeForMen.map((item) => (
+                              <Link
+                              to={`/ProductListPage/${decodeURIComponent(item)}_Men`}
+                              state={{ MenuContent:`Men/${decodeURIComponent(item)}`}}
+                              >
                             <p className="text-[13px] text-[#7f7f7f] py-[3px] hover:underline">
                               {item}
                             </p>
+                            </Link>
                           ))}
                         </div>
                       </div>
@@ -216,9 +235,14 @@ function NavbarMain() {
                         </span>
                         <div className="my-3">
                           {topWearForWomen.map((item) => (
+                              <Link
+                              to={`/ProductListPage/${decodeURIComponent(item)}_Women`}
+                              state={{ MenuContent:`Women/${decodeURIComponent(item)}`}}
+                              >
                             <p className="text-[13px] text-[#7f7f7f] py-[3px] hover:underline">
                               {item}
                             </p>
+                            </Link>
                           ))}
                         </div>
                       </div>
@@ -228,9 +252,14 @@ function NavbarMain() {
                         </span>
                         <div className="my-3">
                           {bottomWearForWomen.map((item) => (
+                              <Link
+                              to={`/ProductListPage/${decodeURIComponent(item)}_Women`}
+                              state={{ MenuContent:`Women/${decodeURIComponent(item)}`}}
+                              >
                             <p className="text-[13px] text-[#7f7f7f] py-[3px] hover:underline">
                               {item}
                             </p>
+                            </Link>
                           ))}
                         </div>
                       </div>
@@ -240,9 +269,14 @@ function NavbarMain() {
                         </span>
                         <div className="my-3">
                           {winterWearForWomen.map((item) => (
+                              <Link
+                              to={`/ProductListPage/${decodeURIComponent(item)}_Women`}
+                              state={{ MenuContent:`Women/${decodeURIComponent(item)}`}}
+                              >
                             <p className="text-[13px] text-[#7f7f7f] py-[3px] hover:underline">
                               {item}
                             </p>
+                            </Link>
                           ))}
                         </div>
                       </div>
@@ -252,9 +286,14 @@ function NavbarMain() {
                         </span>
                         <div className="my-3">
                           {plusSizeForWomen.map((item) => (
+                            <Link
+                            to={`/ProductListPage/${decodeURIComponent(item)}_Women`}
+                            state={{ MenuContent:`Women/${decodeURIComponent(item)}`}}
+                            >
                             <p className="text-[13px] text-[#7f7f7f] py-[3px] hover:underline">
                               {item}
                             </p>
+                            </Link>
                           ))}
                         </div>
                       </div>

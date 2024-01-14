@@ -139,3 +139,7 @@ body::-webkit-scrollbar-thumb:hover {
   .delay-3 {
 	animation-delay: 0.8s;
   }
+
+  .animate__animated.animate__bounce {
+	--animate-duration: 2s;
+  }
