@@ -80,7 +80,6 @@ function ProductListPage() {
     ) {
       setProductCategory(decodeURIComponent(location.pathname.split("/")[2]));
       if (subCategories.includes(location.pathname.split("/")[2])) {
-        console.log("sc");
         filteredProductList = productList?.filter(
           (product) => product.subCategory === location.pathname.split("/")[2]
         );
@@ -155,20 +154,42 @@ function ProductListPage() {
   }, [productList, location.pathname]);
 
   useEffect(() => {
-    if(selectedFilters['size']) {
-    const resultByFilter = tempArr.filter((item) => {
-        return selectedFilters['size'].every((element) => item.size.includes(element))
+    if (selectedFilters["size"]) {
+      const resultByFilter = tempArr.filter((item) => {
+        return selectedFilters["size"].every((element) =>
+          item.size.includes(element)
+        );
       });
       setTempArr(resultByFilter);
-    };
-    if(selectedFilters['subCategory']){
+      console.log("filter", resultByFilter);
+    }
+    if (selectedFilters["subCategory"]) {
       const resultByFilter = tempArr.filter((item) => {
-          return selectedFilters['subCategory'].every((element) => item.subCategory.includes(element))
-        });
-        setTempArr(resultByFilter);
-        console.log("filter", resultByFilter);
-      };
-
+        return selectedFilters["subCategory"].every((element) =>
+          item.subCategory.includes(element)
+        );
+      });
+      setTempArr(resultByFilter);
+      console.log("filter", resultByFilter);
+    }
+    if (selectedFilters["color"]) {
+      const resultByFilter = tempArr.filter((item) => {
+        return selectedFilters["color"].every((element) =>
+          item.color.includes(element)
+        );
+      });
+      setTempArr(resultByFilter);
+      console.log("filter", resultByFilter);
+    }
+    if (selectedFilters["brand"]) {
+      const resultByFilter = tempArr.filter((item) => {
+        return selectedFilters["brand"].every((element) =>
+          item.brand.includes(element)
+        );
+      });
+      setTempArr(resultByFilter);
+      console.log("filter", resultByFilter);
+    }
   }, [selectedFilters]);
 
   return (

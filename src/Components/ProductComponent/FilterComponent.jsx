@@ -15,22 +15,31 @@ import { useSelector, useDispatch } from "react-redux";
 import "./ProductPage.css";
 function FilterComponent({onFilterChange,filteredProducts}) {
 
-  let filteredSubCategories = [
+    let filteredItems=[];
+    // let filteredSubCategories,filteredBrands,filteredColors,filteredSizes=[];
+    const [filteredSubCategories,setFilteredSubCategories]=useState([]);
+    const [filteredBrands,setFilteredBrands]=useState([]);
+    const [filteredColors,setFilteredColors]=useState([]);
+    const [filteredSizes,setFilteredSizes]=useState([]);
+    
+  useEffect(()=>{
+filteredItems = [...filteredProducts];
+setFilteredSubCategories([
     ...new Set(filteredProducts?.map((item) => item.subCategory)),
-  ];
-  let filteredBrands = [
-    ...new Set(filteredProducts?.map((item) => item.brand)),
-  ];
-  let filteredColors = [
-    ...new Set(filteredProducts?.map((item) => item.color)),
-  ];
-  // let filteredSizes = filteredProducts?.map((item) => [...new Set(item.size)]);
-  let filteredSizes = [
-    ...new Set(filteredProducts?.flatMap((item) => item.size)),
-  ];
-  let filteredRatings = [
-    ...new Set(filteredProducts?.flatMap((item) => item?.ratings?.toFixed(1))),
-  ];
+  ]);
+  setFilteredBrands([
+    ...new Set(filteredItems?.map((item) => item.brand)),
+  ]);
+  setFilteredColors([
+    ...new Set(filteredItems?.map((item) => item.color)),
+  ]);
+  setFilteredSizes([
+    ...new Set(filteredItems?.flatMap((item) => item.size)),
+  ]);
+  //  filteredRatings = [
+  //   ...new Set(filteredItems?.flatMap((item) => item?.ratings?.toFixed(1))),
+  // ];
+},[])
   const [activeFilters, setActiveFilters] = useState({
     size: false,
     subCategory: false,
@@ -102,7 +111,6 @@ function FilterComponent({onFilterChange,filteredProducts}) {
 
   useEffect(()=>{
     onFilterChange(updatedValues);
-    // console.log("updatedvalues",updatedValues);
   },[updatedValues])
 
  
@@ -115,11 +123,11 @@ function FilterComponent({onFilterChange,filteredProducts}) {
           <AccordionTrigger>sub Category</AccordionTrigger>
           <AccordionContent>
             <div className="pl-[10px]">
-              {filteredSubCategories.map((item, index) => (
+              {filteredSubCategories?.map((item, index) => (
                 <p
                   key={index}
-                  className="py-[5px] text-[rgba(45,45,45,.7] hover:bg-slate-100  text-[12px] hover:text-[black] transition 300 
-                          "
+                  className={`py-[5px] text-[rgba(45,45,45,.7] hover:bg-slate-100  text-[12px] hover:text-[black] transition 300 
+                  ${updatedValues['subCategory']?.includes(item)?'bg-slate-100 text-[#3d9999]':''}`}
                    onClick={() => updateFilters("subCategory",item)}    
                 >
                   {item}
@@ -131,7 +139,7 @@ function FilterComponent({onFilterChange,filteredProducts}) {
         <AccordionItem value="item-2">
           <AccordionTrigger>Size</AccordionTrigger>
           <AccordionContent>
-            {filteredSizes.map((item, index) => (
+            {filteredSizes?.map((item, index) => (
               <div
                 key={index}
                 className={`pl-[30px] text-[rgba(45,45,45,.7)] text-[12px] hover:text-[black] transition 300 
@@ -141,11 +149,8 @@ function FilterComponent({onFilterChange,filteredProducts}) {
               >
                 <p
                   key={index}
-                  // className={`my-[5px]   ${
-                  //   filterTags.size.includes(item)
-                  //     ? "bg-red-400"
-                  //     : "bg-yellow-400"
-                  // }`}
+                  className={`py-[5px] text-[rgba(45,45,45,.7] hover:bg-slate-100  text-[12px] hover:text-[black] transition 300 
+                    ${updatedValues['size']?.includes(item)?'bg-slate-100 text-[#3d9999]':''}`}
                   onClick={() => updateFilters("size",item)}
                 >
                   {item}
@@ -157,13 +162,14 @@ function FilterComponent({onFilterChange,filteredProducts}) {
         <AccordionItem value="item-3">
           <AccordionTrigger>Brand</AccordionTrigger>
           <AccordionContent>
-            {filteredBrands.map((item, index) => (
+            {filteredBrands?.map((item, index) => (
               <div
                 key={index}
                 className="pl-[30px] text-[rgba(45,45,45,.7)] text-[12px] hover:text-[black] transition 300 hover:bg-slate-100"
               >
                 <p key={index} 
-                className="my-[5px]"
+              className={`py-[5px] text-[rgba(45,45,45,.7] hover:bg-slate-100  text-[12px] hover:text-[black] transition 300 
+                ${updatedValues['brand']?.includes(item)?'bg-slate-100 text-[#3d9999]':''}`}
                 onClick={() => updateFilters("brand",item)}
                 >
                   {item?.charAt(0).toUpperCase() + item?.slice(1)}
@@ -176,12 +182,15 @@ function FilterComponent({onFilterChange,filteredProducts}) {
           <AccordionTrigger>color</AccordionTrigger>
           <AccordionContent>
             <div className="flex justify-left gap-2 flex-wrap ">
-              {filteredColors.map((item, index) => (
+              {filteredColors?.map((item, index) => (
                 <div
-                  onClick={() => updateFilters("color",item)}    
+                 
                   key={index}
                   style={{ backgroundColor: colorMappings[item] }}
-                  className="border-[1px] rounded-[4px] border-[#e6e6e6] solid w-[30px] h-[30px]"
+                  className={`border-[1px] rounded-[4px] border-[#e6e6e6] solid w-[30px] h-[30px]
+                  ${updatedValues['color']?.includes(item)?' border-[2px] scale-125 border-[#3d9999] solid':''}
+                  `}
+                  onClick={() => updateFilters("color",item)}    
                 ></div>
               ))}
             </div>
