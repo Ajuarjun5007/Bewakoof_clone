@@ -9,7 +9,6 @@ import {
   brands,
   colorMappings,
 } from "../TypeConstants";
-
 import empty_heart from "../../assets/wishlist_page/wishlist.svg";
 import red_heart from "../../assets/wishlist_page/wishlisted.svg";
 import { FaStar } from "react-icons/fa6";
@@ -27,12 +26,10 @@ import FilterComponent from "./FilterComponent";
 import ComingSoon from "../ComingSoon";
 function ProductListPage() {
   const location = useLocation();
-  console.log("location", decodeURIComponent(location.pathname.split("/")[2]));
-  // console.log("location", location);
+
   const name = location.state?.name;
   const brand = location.state?.brand;
   const MenuContent = location.state?.MenuContent;
-  console.log("MenuContent", MenuContent);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -47,8 +44,13 @@ function ProductListPage() {
   const productListResult = useSelector(
     (state) => state.productReducer.dressList
   );
-
-  let filteredByTagsId = [];
+  const [selectedFilters, setSelectedFilters] = useState({
+    size: [],
+    subCategory: [],
+    color: [],
+    brand: [],
+    ratings: [],
+  });
 
   const [sortContainerDisplay, setSortContainerDisplay] = useState(false);
   // const [productList, setProductList] = useState([]);
@@ -62,18 +64,23 @@ function ProductListPage() {
     // console.log("isWishListAdded", isWishListAdded);
   }, [wishList]);
 
-  function handleFilter(filter) {
-    const nonEmptyArrays = Object.fromEntries(
-      Object.entries(filter).filter(([key, value]) => value.length > 0)
-    );
-    console.log("non", nonEmptyArrays);
-    updateFilterQuery(nonEmptyArrays);
-  }
-
+  const handleFilterChange = (updatedValues) => {
+    console.log("pl", updatedValues);
+    setSelectedFilters((prevFilters) => ({
+      size: updatedValues.size || prevFilters.size,
+      subCategory: updatedValues.subCategory || prevFilters.subCategory,
+      color: updatedValues.color || prevFilters.color,
+      brand: updatedValues.brand || prevFilters.brand,
+      ratings: updatedValues.ratings || prevFilters.ratings,
+    }));
+  };
   let filteredProductList = [];
   function filterSet() {
-    // if(filteredProducts==undefined){
-    if (name === undefined && brand === undefined && MenuContent === undefined) {
+    if (
+      name === undefined &&
+      brand === undefined &&
+      MenuContent === undefined
+    ) {
       setProductCategory(decodeURIComponent(location.pathname.split("/")[2]));
       if (subCategories.includes(location.pathname.split("/")[2])) {
         console.log("sc");
@@ -94,8 +101,7 @@ function ProductListPage() {
           product.gender === brand.split("/")[0]
       );
       setTempArr(filteredProductList);
-      console.log("brand Clicked")
-
+      console.log("brand Clicked");
     } else if (name !== undefined) {
       filteredProductList = productList?.filter(
         (product) =>
@@ -103,7 +109,7 @@ function ProductListPage() {
           product.gender === name.split("/")[0]
       );
       setTempArr(filteredProductList);
-      console.log("subcategory Clicked")
+      console.log("subcategory Clicked");
     } else if (MenuContent !== undefined) {
       filteredProductList = productList?.filter(
         (product) =>
@@ -112,9 +118,8 @@ function ProductListPage() {
           product.gender === MenuContent.split("/")[0]
       );
       setTempArr(filteredProductList);
-      setProductCategory(MenuContent.split("/")[1])
-  console.log("Menu_Type",MenuContent.split("/")[1] );
-
+      setProductCategory(MenuContent.split("/")[1]);
+      console.log("Menu_Type", MenuContent.split("/")[1]);
     }
   }
 
@@ -155,69 +160,10 @@ function ProductListPage() {
   useEffect(() => {
     filterSet();
   }, [productList, location.pathname]);
-  let keyword = "Printed T-shirts";
-  let keywordArray = keyword.split(" ");
-  let dressType = {};
-  const MenuProducts = {};
-  MenuProducts["Printed T-shirt_Women"] = productList?.filter(
-    (item) =>
-      (item.name.includes("Printed T-shirt") ||
-        item.description.includes("Printed T-shirt")) &&
-      item.gender === "Women"
-  );
-  MenuProducts["Printed T-shirt_Men"] = productList?.filter(
-    (item) =>
-      (item.name.includes("Printed T-shirt") ||
-        item.description.includes("Printed T-shirt")) &&
-      item.gender === "Men"
-  );
-  MenuProducts["Oversized T-shirt_Men"] = productList?.filter(
-    (item) =>
-      (item.name.includes("Oversized T-shirt") ||
-        item.description.includes("Oversized T-shirt")) &&
-      item.gender === "Men"
-  );
-  MenuProducts["Oversized T-shirt_Women"] = productList?.filter(
-    (item) =>
-      (item.name.includes("Oversized T-shirt") ||
-        item.description.includes("Oversized T-shirt")) &&
-      item.gender === "Women"
-  );
-  MenuProducts["Full Sleeve T-Shirt_Men"] = productList?.filter(
-    (item) =>
-      (item.name.includes("Full Sleeve T-Shirt") ||
-        item.description.includes("Full Sleeve T-Shirt")) &&
-      item.gender === "Men"
-  );
-  MenuProducts["Half Sleeve T-Shirt_Men"] = productList?.filter(
-    (item) =>
-      (item.name.includes("Half Sleeve T-Shirt") ||
-        item.description.includes("Half Sleeve T-Shirt")) &&
-      item.gender === "Men"
-  );
-  MenuProducts["polo t-Shirt_Men"] = productList?.filter(
-    (item) =>
-      (item.name.includes("polo t-shirt") ||
-        item.description.includes("polo t-shirt")) &&
-      item.gender === "Men"
-  );
-  // MenuProducts["Chimpaaanzee"] = productList?.filter(
-  //   (item) =>item.name.includes("Chimpaaanzee") || item.description.includes("Chimpaaanzee") && item.gender === "Women"
-  // );
-  MenuProducts["Sweater_Men"] = productList?.filter(
-    (item) =>
-      (item.name.includes("Sweater") || item.description.includes("Sweater")) &&
-      item.gender === "Men"
-  );
-  // if ("Half Sleeve T-shirt_Women" in MenuProducts && MenuProducts["Half Sleeve T-shirt_Women"].length > 0) {
-  //   console.log("Printed T-shirt_Women is present with items.");
-  // } else {
-  //   console.log("Printed T-shirt_Women is either not present or has no items.");
-  // }
 
-  console.log("MenuProducts", MenuProducts);
-  console.log("productList", productList);
-  console.log("temp", tempArr);
+  useEffect(() => {
+    console.log("selectedFilters",selectedFilters);
+  }, [selectedFilters]);
 
   return (
     <>
@@ -240,73 +186,73 @@ function ProductListPage() {
 
                 {/* accordion and prouduct card */}
                 <div className="flex mt-[40px] justify-center ">
-                  {tempArr.length>0 &&
-                  <div className="w-[25%] ">
-                    <p className="text-[rgba(45,45,45,.5)] text-[12px] font-[900] pl-[20px] py-[10px]">
-                      FILTERS
-                    </p>
-                    <FilterComponent
-                      filteredProducts={tempArr}
-                      onFilterChange={handleFilter}
-                    />
-                  </div>
-                  }
+                  {tempArr?.length > 0 && (
+                    <div className="w-[25%] ">
+                      <p className="text-[rgba(45,45,45,.5)] text-[12px] font-[900] pl-[20px] py-[10px]">
+                        FILTERS
+                      </p>
+                      <FilterComponent
+                        filteredProducts={tempArr}
+                        onFilterChange={handleFilterChange}
+                      />
+                    </div>
+                  )}
                   <div className="relative pl-[5px] w-[80%]  flex flex-col items-center ">
-                 { tempArr.length>0 &&
-                    <div className=" flex w-[89%] pb-[15px] pr-[10px] ml-[20px]  flex-row-reverse">
-                      <div
-                        className="flex flex-row-reverse gap-[5px]"
-                        onMouseEnter={() => setSortContainerDisplay(true)}
-                        onMouseLeave={() => setSortContainerDisplay(false)}
-                      >
-                        <IoChevronDown />
-                        <p className="text-[#2d2d2d] text-[12px] pl-[8px] font-[300]">
-                          Popular
-                        </p>
-                        <p className="text-[rgba(45,45,45,.5)] font-[900] text-[12px]">
-                          SORT BY
-                        </p>
-                        {sortContainerDisplay && (
-                          <div
-                            className="absolute min-w-[145px] z-30 py-[17px] border-[1px] border-[#ccc] solid
+                    {tempArr?.length > 0 && (
+                      <div className=" flex w-[89%] pb-[15px] pr-[10px] ml-[20px]  flex-row-reverse">
+                        <div
+                          className="flex flex-row-reverse gap-[5px]"
+                          onMouseEnter={() => setSortContainerDisplay(true)}
+                          onMouseLeave={() => setSortContainerDisplay(false)}
+                        >
+                          <IoChevronDown />
+                          <p className="text-[#2d2d2d] text-[12px] pl-[8px] font-[300]">
+                            Popular
+                          </p>
+                          <p className="text-[rgba(45,45,45,.5)] font-[900] text-[12px]">
+                            SORT BY
+                          </p>
+                          {sortContainerDisplay && (
+                            <div
+                              className="absolute min-w-[145px] z-30 py-[17px] border-[1px] border-[#ccc] solid
                  top-[45px] right-[40px] shadow-[0_4px_8px_0_rgba(0,0,0,.2)] bg-white pl-[10px]
                   text-[rgba(45,45,45,.7)] text-[12px]"
-                          >
-                            <p
-                              className="my-[5px] text-[rgb(81,204,204)] transition 300 
-                          hover:bg-[#f7f7f7]"
                             >
-                              Popular
-                            </p>
-                            <p
-                              className="my-[5px] hover:text-[black] transition 300 
+                              <p
+                                className="my-[5px] text-[rgb(81,204,204)] transition 300 
                           hover:bg-[#f7f7f7]"
-                            >
-                              New
-                            </p>
-                            <p
-                              className="my-[5px] hover:text-[black] transition 300 
+                              >
+                                Popular
+                              </p>
+                              <p
+                                className="my-[5px] hover:text-[black] transition 300 
                           hover:bg-[#f7f7f7]"
-                            >
-                              Price : High to Low
-                            </p>
-                            <p
-                              className="my-[5px] hover:text-[black] transition 300 
+                              >
+                                New
+                              </p>
+                              <p
+                                className="my-[5px] hover:text-[black] transition 300 
                           hover:bg-[#f7f7f7]"
-                            >
-                              Price : Low to High
-                            </p>
-                          </div>
-                        )}
+                              >
+                                Price : High to Low
+                              </p>
+                              <p
+                                className="my-[5px] hover:text-[black] transition 300 
+                          hover:bg-[#f7f7f7]"
+                              >
+                                Price : Low to High
+                              </p>
+                            </div>
+                          )}
+                        </div>
                       </div>
-                    </div>
-                 }
+                    )}
                     {/* product card */}
 
                     <div className="flex flex-wrap justify-center gap-[10px]">
                       {Array.isArray(tempArr) ? (
-                        tempArr.length > 0 ? (
-                          tempArr.map((product) => (
+                        tempArr?.length > 0 ? (
+                          tempArr?.map((product) => (
                             <Link
                               key={product._id}
                               to={{
@@ -373,7 +319,7 @@ function ProductListPage() {
                           ))
                         ) : (
                           // <Loader />
-                          <ComingSoon/>
+                          <ComingSoon />
                         )
                       ) : null}
                     </div>

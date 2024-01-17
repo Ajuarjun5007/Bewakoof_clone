@@ -26,6 +26,7 @@ import ReviewEditPage from "./Components/ProductComponent/ReviewComponent/Review
 import ReviewPage from "./Components/ProductComponent/ReviewComponent/ReviewPage";
 import MobileNavBar from "./Components/MobileComponent/MobileNavBar";
 import {useScreenSize} from "./Components/MobileComponent/useScreenSize"
+import ComingSoon from "./Components/ComingSoon";
 function App() {
   const location =  useLocation();
   const [footerDisplay,setFooterDisplay] = useState(true);
@@ -55,6 +56,7 @@ function App() {
      }
         <Routes>
           <Route path="/" element={<HomePage/>}/>
+          <Route path="/ComingSoonPage" element={<ComingSoon/>}/>
           <Route path="/OfferPage" element={<OfferPage/>}/>
           <Route path="/FanbookPage" element={<FanbookPage/>}/>
           <Route path="/DownloadAppPage" element={<DownloadAppPage/>}/>
@@ -77,10 +79,10 @@ function App() {
           <Route path="/ReviewPage/:id" element={<ReviewPage/>}/>
 
         </Routes>
-  {/* {
+  {
     footerDisplay &&
       <FooterComponent/>
-  } */}
+  }
      
     </>
   )

@@ -12,14 +12,21 @@ import { ChevronDownIcon } from "@radix-ui/react-icons";
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./ProductPage.css";
-function FilterComponent({ onFilterChange, filteredProducts }) {
+function FilterComponent({onFilterChange,filteredProducts}) {
+
   let filteredSubCategories = [
     ...new Set(filteredProducts?.map((item) => item.subCategory)),
   ];
-  let filteredBrands = [...new Set(filteredProducts?.map((item) => item.brand))];
-  let filteredColors = [...new Set(filteredProducts?.map((item) => item.color))];
+  let filteredBrands = [
+    ...new Set(filteredProducts?.map((item) => item.brand)),
+  ];
+  let filteredColors = [
+    ...new Set(filteredProducts?.map((item) => item.color)),
+  ];
   // let filteredSizes = filteredProducts?.map((item) => [...new Set(item.size)]);
-  let filteredSizes = [...new Set(filteredProducts?.flatMap(item => item.size))];
+  let filteredSizes = [
+    ...new Set(filteredProducts?.flatMap((item) => item.size)),
+  ];
 
   const [activeFilters, setActiveFilters] = useState({
     size: false,
@@ -30,54 +37,72 @@ function FilterComponent({ onFilterChange, filteredProducts }) {
   });
 
   const [sizeFilter, setSizeFilter] = useState([]);
-  const [categoryFilter, setCategoryFilter] = useState([]);
+  const [subCategoryFilter, setSubCategoryFilter] = useState([]);
   const [colorFilter, setColorFilter] = useState([]);
   const [brandFilter, setBrandFilter] = useState([]);
   const [ratingsFilter, setRatingsFilter] = useState([]);
-  
-  // function updateFilters(filterType, value) {
-  //   switch (filterType) {
-  //     case 'size':
-  //       setSizeFilter((prev) => {
-  //         const updatedSizes = prev.includes(value) ? prev.filter(item => item !== value) : [...prev, value];
-  //         return [...new Set(updatedSizes)]; // Use Set to filter out duplicates
-  //       });
-  //       break;
-  //     case 'category':
-  //       setCategoryFilter((prev) => {
-  //         const updatedCategories = prev.includes(value) ? prev.filter(item => item !== value) : [...prev, value];
-  //         return [...new Set(updatedCategories)]; // Use Set to filter out duplicates
-  //       });
-  //       break;
-  //     case 'color':
-  //       setColorFilter((prev) => {
-  //         const updatedColors = prev.includes(value) ? prev.filter(item => item !== value) : [...prev, value];
-  //         return [...new Set(updatedColors)]; // Use Set to filter out duplicates
-  //       });
-  //       break;
-  //     case 'brand':
-  //       setBrandFilter((prev) => {
-  //         const updatedBrands = prev.includes(value) ? prev.filter(item => item !== value) : [...prev, value];
-  //         return [...new Set(updatedBrands)]; // Use Set to filter out duplicates
-  //       });
-  //       break;
-  //     case 'ratings':
-  //       setRatingsFilter((prev) => {
-  //         const updatedRatings = prev.includes(value) ? prev.filter(item => item !== value) : [...prev, value];
-  //         return [...new Set(updatedRatings)]; // Use Set to filter out duplicates
-  //       });
-  //       break;
-  //     default:
-  //       break;
-  //   }
-  // }
-  
-  
-  
-  useEffect(() => {
-    // console.log("filtertags", colorFilter, sizeFilter);
-  }, [colorFilter, sizeFilter]);
-  
+  const [updatedValues, setUpdatedValues] = useState({});
+  function updateFilters(filterType,value){
+    
+    switch (filterType) {
+      case "size":
+        setSizeFilter((prev) => {
+          console.log("value",value);
+          const updatedSizes = prev.includes(value)
+            ? prev.filter((item) => item !== value)
+            : [...prev, value];
+            setUpdatedValues((prevValues) => ({ ...prevValues, [filterType]: updatedSizes }));
+              onFilterChange(updatedValues);
+          return [...new Set(updatedSizes)]; 
+        });
+        break;
+      case "subCategory":
+        setSubCategoryFilter((prev) => {
+          const updatedSubCategories = prev.includes(value)
+            ? prev.filter((item) => item !== value)
+            : [...prev, value];
+            setUpdatedValues((prevValues) => ({ ...prevValues, [filterType]: updatedSubCategories }));
+          return [...new Set(updatedSubCategories)]; 
+        });
+        break;
+      case "color":
+        setColorFilter((prev) => {
+          const updatedColors = prev.includes(value)
+            ? prev.filter((item) => item !== value)
+            : [...prev, value];
+          return [...new Set(updatedColors)]; 
+        });
+        break;
+      case "brand":
+        setBrandFilter((prev) => {
+          const updatedBrands = prev.includes(value)
+            ? prev.filter((item) => item !== value)
+            : [...prev, value];
+            setUpdatedValues((prevValues) => ({ ...prevValues, [filterType]: updatedBrands }));
+          return [...new Set(updatedBrands)]; // Use Set to filter out duplicates
+        });
+        break;
+      case "ratings":
+        setRatingsFilter((prev) => {
+          const updatedRatings = prev.includes(value)
+            ? prev.filter((item) => item !== value)
+            : [...prev, value];
+          return [...new Set(updatedRatings)]; // Use Set to filter out duplicates
+        });
+        break;
+      default:
+        break;
+    }
+  }
+
+  useEffect(()=>{
+    onFilterChange(updatedValues);
+    console.log("updatedvalues",updatedValues);
+  },[updatedValues])
+
+ 
+  console.log("updatedSizes",sizeFilter);
+
 
   return (
     <>
@@ -91,6 +116,7 @@ function FilterComponent({ onFilterChange, filteredProducts }) {
                   key={index}
                   className="py-[5px] text-[rgba(45,45,45,.7] hover:bg-slate-100  text-[12px] hover:text-[black] transition 300 
                           "
+                   onClick={() => updateFilters("subCategory",item)}    
                 >
                   {item}
                 </p>
@@ -107,7 +133,7 @@ function FilterComponent({ onFilterChange, filteredProducts }) {
                 className={`pl-[30px] text-[rgba(45,45,45,.7)] text-[12px] hover:text-[black] transition 300 
                           hover:bg-slate-100 
                           `}
-                onClick={() => updateFilters("size", item, index)}
+                // onClick={() => updateFilters("size",item)}
               >
                 <p
                   key={index}
@@ -116,7 +142,7 @@ function FilterComponent({ onFilterChange, filteredProducts }) {
                   //     ? "bg-red-400"
                   //     : "bg-yellow-400"
                   // }`}
-                  onClick={() => updateFilters("size", item, index)}
+                  onClick={() => updateFilters("size",item)}
                 >
                   {item}
                 </p>
@@ -129,14 +155,16 @@ function FilterComponent({ onFilterChange, filteredProducts }) {
           <AccordionContent>
             {filteredBrands.map((item, index) => (
               <div
-              key={index}
-              className="pl-[30px] text-[rgba(45,45,45,.7)] text-[12px] hover:text-[black] transition 300 hover:bg-slate-100"
-            >
-              <p key={index} className="my-[5px]">
-                {item?.charAt(0).toUpperCase()+item?.slice(1)}
-              </p>
-            </div>
-            
+                key={index}
+                className="pl-[30px] text-[rgba(45,45,45,.7)] text-[12px] hover:text-[black] transition 300 hover:bg-slate-100"
+              >
+                <p key={index} 
+                className="my-[5px]"
+                onClick={() => updateFilters("brand",item)}
+                >
+                  {item?.charAt(0).toUpperCase() + item?.slice(1)}
+                </p>
+              </div>
             ))}
           </AccordionContent>
         </AccordionItem>

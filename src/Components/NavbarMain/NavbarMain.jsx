@@ -22,6 +22,7 @@ import { brandimages } from "../imageconstants";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import "./NavbarMain.css";
+import ComingSoon from "../ComingSoon";
 function NavbarMain() {
   const [userLoggedIn, setUserLoggedIn] = useState(false);
   const [userDetailsDisplay, setUserDetailsDisplay] = useState(false);
@@ -32,6 +33,7 @@ function NavbarMain() {
 
   const [menuContentForMen, setMenuContentForMen] = useState(false);
   const [menuContentForWomen, setMenuContentForWomen] = useState(false);
+  const [menuContentForMobile, setMenuContentForMobile] = useState(false);
   let userInfo = JSON.parse(localStorage.getItem("userInfo")) || "";
   useEffect(() => {
     if (localStorage.getItem("userInfo")) {
@@ -297,14 +299,7 @@ function NavbarMain() {
                           ))}
                         </div>
                       </div>
-                      {/* <div className="">
-                    <span className="pb-[20px]  font-[450] solid text-[#494949] text-[14px] ">Inner wear & Lounge wear</span>
-                    <div className="my-3">
-                    {innerWearLoungewearForWomen.map((item)=>(
-                        <p className="text-[13px] text-[#7f7f7f] py-[3px] hover:underline">{item}</p>
-                    ))}
-                    </div>
-                </div> */}
+                    
                     </div>
                     <div className=" pl-[70px] ">
                       <span className="font-[450] mb-[30px] solid text-[#494949] text-[14px]">
@@ -335,10 +330,25 @@ function NavbarMain() {
                 </div>
               )}
             </div>
-            <div>
+            <div
+              onMouseOverCapture={() => setMenuContentForMobile(true)}
+              onMouseLeave={() => setMenuContentForMobile(false)}
+            >
+            <Link to='/ComingSoonPage'>
               <span className="text-sm pt-4 px-3 pb-3 leading-3  hover:border-b-[4px] border-hoveryellow">
                 MOBILE COVERS
               </span>
+              </Link>
+              {menuContentForMobile && (
+                   <div
+                  className="flex w-[1140px] justify-center z-11 max-h-[550px] overflow-scroll absolute left-[-150px]
+             top-12  border-[1px] bg-white border-[rgba(0,0,0,0.2)]"
+                >
+                  <div className=" p-10 mt-10 flex">
+                    <ComingSoon/>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 
@@ -434,7 +444,7 @@ function NavbarMain() {
       </div>
       {/* scroll navbar */}
       {isVisible && (
-        <div className=" w-full z-[1] flex justify-center bg-white fixed top-[84px]  py-4 ">
+        <div className=" w-full z-[1] flex justify-center bg-white fixed top-[84px] pt-4 ">
           <div className=" px-1  flex w-[90%]   overflow-scroll">
             {subCategories.map((subCategory, index) => (
               <Link
