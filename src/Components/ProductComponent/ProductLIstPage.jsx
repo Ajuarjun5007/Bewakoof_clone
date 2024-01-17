@@ -33,7 +33,6 @@ function ProductListPage() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [filterQuery, updateFilterQuery] = useState({});
   const [tempArr, setTempArr] = useState([]);
   const [productCategory, setProductCategory] = useState("");
 
@@ -45,11 +44,11 @@ function ProductListPage() {
     (state) => state.productReducer.dressList
   );
   const [selectedFilters, setSelectedFilters] = useState({
-    size: [],
-    subCategory: [],
-    color: [],
-    brand: [],
-    ratings: [],
+    size: null,
+    subCategory: null,
+    color: null,
+    brand: null,
+    ratings: null,
   });
 
   const [sortContainerDisplay, setSortContainerDisplay] = useState(false);
@@ -60,9 +59,6 @@ function ProductListPage() {
   const [loading, setLoading] = useState(false);
 
   const productList = productListResult?.data;
-  useEffect(() => {
-    // console.log("isWishListAdded", isWishListAdded);
-  }, [wishList]);
 
   const handleFilterChange = (updatedValues) => {
     console.log("pl", updatedValues);
@@ -74,6 +70,7 @@ function ProductListPage() {
       ratings: updatedValues.ratings || prevFilters.ratings,
     }));
   };
+
   let filteredProductList = [];
   function filterSet() {
     if (
@@ -154,15 +151,24 @@ function ProductListPage() {
   }
 
   useEffect(() => {
-    setTempArr(getProductByFilters);
-  }, [filterQuery, getProductByFilters]);
-
-  useEffect(() => {
     filterSet();
   }, [productList, location.pathname]);
 
   useEffect(() => {
-    console.log("selectedFilters",selectedFilters);
+    if(selectedFilters['size']) {
+    const resultByFilter = tempArr.filter((item) => {
+        return selectedFilters['size'].every((element) => item.size.includes(element))
+      });
+      setTempArr(resultByFilter);
+    };
+    if(selectedFilters['subCategory']){
+      const resultByFilter = tempArr.filter((item) => {
+          return selectedFilters['subCategory'].every((element) => item.subCategory.includes(element))
+        });
+        setTempArr(resultByFilter);
+        console.log("filter", resultByFilter);
+      };
+
   }, [selectedFilters]);
 
   return (
@@ -259,17 +265,17 @@ function ProductListPage() {
                                 pathname: `/ProductDetailsPage/${product._id}`,
                               }}
                             >
-                              <div key={product._id} className="w-[266px]">
+                              <div key={product?._id} className="w-[266px]">
                                 <div className="relative flex overflow-hidden">
                                   <img
                                     className="w-[266px] fog h-[330px] hover:scale-105 transition-all duration-[200ms] ease-in-out"
-                                    src={product.displayImage}
+                                    src={product?.displayImage}
                                     alt="image"
                                   />
                                   <div className="flex items-center gap-[5px] py-[1px] pl-[8px] pr-[4px] absolute bottom-5 bg-white">
                                     <FaStar className="text-[#ffc700] text-[9px]" />
                                     <p className="text-[#337ab7] text-[10px]">
-                                      {product.ratings.toFixed(1)}
+                                      {product?.ratings?.toFixed(1)}
                                     </p>
                                   </div>
                                 </div>

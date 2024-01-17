@@ -51,37 +51,6 @@ const sellerTags = [
 "top rated",
 ]
 
-// const brands = [
-// "Bewakoof®",
-// "TISTABENE",
-// "7 Shores",
-// "Campus Sutra",
-// "Style Quotient", 
-// "Breakbounce",
-// "Chkokko",
-// "XYXX",
-// "Rigo", 
-// "Alstyle",
-// "Brown Mocha",
-// "Hubberholme",
-// "CHIMPAAANZEE",
-// "Smugglerz",
-// "Blue Tyga",
-// "TALES and STORIES",
-// "Belliskey",
-// "ANGEL FAB",
-// "Kotty",
-// "Thomas Scott",
-// "Old Grey",
-// "BLANCK",
-// "Urban Scottish",
-// "THE DAILY OUTFITS",
-// "TrueBuyWorld",
-// "INDICLUB",
-// "Bstories",
-// "Shopolics",
-// "THE DRY STATE",
-// ]
 const brands = [
     "OFFICIAL DISNEY MERCHANDISE",
     "Bewakoof®",
@@ -138,6 +107,15 @@ const brands = [
     "INDICLUB",
     "Bstories"
   ];
+  const Ratings  =[
+    '4.5 and above',
+   "4 and above",
+   "3.5 and above",
+   "3 and above",
+   "2.5 and above",
+   "2 and above",
+   "1.5 and above",
+  ]
 const mobiles = [
 "Apple",
 "Realme",
@@ -167,4 +145,4 @@ const typeshirts_men=[
 const typeshirts_women=[
     
 ]
-export {genders,sizes,trendingCategories,colorMappings,brands,sellerTags,subCategories,mobiles};
+export {genders,sizes,Ratings,trendingCategories,colorMappings,brands,sellerTags,subCategories,mobiles};

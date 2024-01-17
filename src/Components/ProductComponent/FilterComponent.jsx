@@ -4,6 +4,7 @@ import {
   subCategories,
   brands,
   colorMappings,
+  Ratings,
 } from "../TypeConstants";
 import classNames from "classnames";
 
@@ -27,7 +28,9 @@ function FilterComponent({onFilterChange,filteredProducts}) {
   let filteredSizes = [
     ...new Set(filteredProducts?.flatMap((item) => item.size)),
   ];
-
+  let filteredRatings = [
+    ...new Set(filteredProducts?.flatMap((item) => item?.ratings?.toFixed(1))),
+  ];
   const [activeFilters, setActiveFilters] = useState({
     size: false,
     subCategory: false,
@@ -70,6 +73,7 @@ function FilterComponent({onFilterChange,filteredProducts}) {
           const updatedColors = prev.includes(value)
             ? prev.filter((item) => item !== value)
             : [...prev, value];
+            setUpdatedValues((prevValues) => ({ ...prevValues, [filterType]: updatedColors }));
           return [...new Set(updatedColors)]; 
         });
         break;
@@ -79,7 +83,7 @@ function FilterComponent({onFilterChange,filteredProducts}) {
             ? prev.filter((item) => item !== value)
             : [...prev, value];
             setUpdatedValues((prevValues) => ({ ...prevValues, [filterType]: updatedBrands }));
-          return [...new Set(updatedBrands)]; // Use Set to filter out duplicates
+          return [...new Set(updatedBrands)]; 
         });
         break;
       case "ratings":
@@ -87,7 +91,8 @@ function FilterComponent({onFilterChange,filteredProducts}) {
           const updatedRatings = prev.includes(value)
             ? prev.filter((item) => item !== value)
             : [...prev, value];
-          return [...new Set(updatedRatings)]; // Use Set to filter out duplicates
+            setUpdatedValues((prevValues) => ({ ...prevValues, [filterType]: updatedRatings }));
+          return [...new Set(updatedRatings)]; 
         });
         break;
       default:
@@ -97,11 +102,10 @@ function FilterComponent({onFilterChange,filteredProducts}) {
 
   useEffect(()=>{
     onFilterChange(updatedValues);
-    console.log("updatedvalues",updatedValues);
+    // console.log("updatedvalues",updatedValues);
   },[updatedValues])
 
  
-  console.log("updatedSizes",sizeFilter);
 
 
   return (
@@ -174,7 +178,7 @@ function FilterComponent({onFilterChange,filteredProducts}) {
             <div className="flex justify-left gap-2 flex-wrap ">
               {filteredColors.map((item, index) => (
                 <div
-                  onClick={() => updateFilters("color", name)}
+                  onClick={() => updateFilters("color",item)}    
                   key={index}
                   style={{ backgroundColor: colorMappings[item] }}
                   className="border-[1px] rounded-[4px] border-[#e6e6e6] solid w-[30px] h-[30px]"
@@ -187,48 +191,16 @@ function FilterComponent({onFilterChange,filteredProducts}) {
           <AccordionTrigger>Ratings</AccordionTrigger>
           <AccordionContent>
             <div className="pl-[30px] text-[rgba(45,45,45,.7)] text-[12px]">
+              { Ratings.map((item,index)=>
               <p
                 className="my-[5px] hover:text-[black] transition 300 
                           hover:bg-slate-100"
+                key={index}
+                onClick={() => updateFilters("ratings",item)}    
               >
-                4.5 and above
+                {item}
               </p>
-              <p
-                className="my-[5px] hover:text-[black] transition 300 
-                          hover:bg-slate-100"
-              >
-                4 and above
-              </p>
-              <p
-                className="my-[5px] hover:text-[black] transition 300 
-                          hover:bg-slate-100"
-              >
-                3.5 and above
-              </p>{" "}
-              <p
-                className="my-[5px] hover:text-[black] transition 300 
-                          hover:bg-slate-100"
-              >
-                3 and above
-              </p>
-              <p
-                className="my-[5px] hover:text-[black] transition 300 
-                          hover:bg-slate-100"
-              >
-                2.5 and above
-              </p>
-              <p
-                className="my-[5px] hover:text-[black] transition 300 
-                          hover:bg-slate-100"
-              >
-                2 and above
-              </p>
-              <p
-                className="my-[5px] hover:text-[black] transition 300 
-                          hover:bg-slate-100"
-              >
-                1.5 and above
-              </p>
+              )}
             </div>
           </AccordionContent>
         </AccordionItem>
