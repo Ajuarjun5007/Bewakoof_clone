@@ -26,9 +26,8 @@ import FilterComponent from "./FilterComponent";
 import ComingSoon from "../ComingSoon";
 function ProductListPage() {
   const location = useLocation();
-  const name = location.state?.name;
-  const brand = location.state?.brand;
-  const MenuContent = location.state?.MenuContent;
+  const { state } = location;
+  const { name, brand, MenuContent } = state || {};
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [tempArr, setTempArr] = useState([]);
@@ -36,6 +35,7 @@ function ProductListPage() {
   const [isWishListAdded, setIsWishListAdded] = useState([]);
   const [loading, setLoading] = useState(false);
   const [activeSortTag, setActiveSortTag] = useState("");
+  const [wishListId, setWishListId] = useState([]);
 
   const { getProductByFilters, wishList } = useSelector(
     (state) => state.productReducer
@@ -44,6 +44,8 @@ function ProductListPage() {
   const productListResult = useSelector(
     (state) => state.productReducer.dressList
   );
+  let wishListResult;
+ 
   const [selectedFilters, setSelectedFilters] = useState({
     size: null,
     subCategory: null,
@@ -99,7 +101,6 @@ function ProductListPage() {
     }
   }
   const [sortContainerDisplay, setSortContainerDisplay] = useState(false);
-  // const [productList, setProductList] = useState([]);
   const [isWishListClicked, setIsWishListClicked] = useState(false);
 
   const productList = productListResult?.data;
@@ -235,8 +236,17 @@ function ProductListPage() {
       console.log("filter", resultByFilter);
     }
   }, [selectedFilters]);
+
+ 
+    wishListResult=(useSelector(
+      (state) => state.productReducer.wishList.data.items.map((item)=>item.products._id)
+    ));
+    useEffect(()=>{
+      setWishListId(wishListResult);
+    },[])
   console.log("activesorttag", activeSortTag);
   console.log("tempArr", tempArr);
+  console.log("wishListResult",wishListResult);
 
   return (
     <>
@@ -276,7 +286,7 @@ function ProductListPage() {
                         <div
                           className="flex flex-row-reverse gap-[5px]"
                           onMouseEnter={() => setSortContainerDisplay(true)}
-                          // onMouseLeave={() => setSortContainerDisplay(false)}
+                          onMouseLeave={() => setSortContainerDisplay(false)}
                         >
                           <IoChevronDown />
                           <p className="text-[#2d2d2d] text-[12px] pl-[8px] font-[300]">
@@ -287,7 +297,7 @@ function ProductListPage() {
                           </p>
                           {sortContainerDisplay && (
                             <div
-                              className="absolute min-w-[145px] z-30 py-[17px] border-[1px] border-[#ccc] solid
+                              className="absolute min-w-[145px] z-[1] py-[17px] border-[1px] border-[#ccc] solid
                  top-[25px] right-[40px] shadow-[0_4px_8px_0_rgba(0,0,0,.2)] bg-white pl-[10px]
                   text-[rgba(45,45,45,.7)] text-[12px]"
                             >
@@ -377,11 +387,11 @@ function ProductListPage() {
                                   <div className="relative">
                                     <div
                                       onClick={(event) => {
-                                        wishListHandler(event, product._id);
+                                        wishListHandler(event,product._id);
                                       }}
                                       className="absolute mt-[15px] right-[4px] text-[25px] border-[1px]"
                                     >
-                                      {!isWishListClicked ? (
+                                      {!wishListResult?.includes(product._id)? (
                                         <img src={empty_heart} alt="" />
                                       ) : (
                                         <img src={red_heart} alt="" />

@@ -41,4 +41,3 @@ function HeaderComponent() {
   );
 }
 export default HeaderComponent;
-// lg:max-xl:w-full

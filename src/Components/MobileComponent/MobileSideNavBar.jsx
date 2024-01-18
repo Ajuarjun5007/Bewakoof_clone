@@ -144,7 +144,8 @@ function MobileSideNavBar({ onClose }) {
               </p>
               <ul className="menuList pt-1 text-xs font-bold">
                 <Link onClick={onClose} to="/OfferPage">
-                  <li className="menulistOption hover:bg-[#00000013] px-5 flex justify-between items-center h-12">
+                  <li className="menulistOption hover:bg-[#00000013] px-5 
+                  flex justify-between items-center h-12">
                     <span className="font-bold">Offers</span>
                   </li>
                 </Link>

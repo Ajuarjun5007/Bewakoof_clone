@@ -32,20 +32,21 @@ function FooterComponent() {
   }, [location.pathname]);
   return (
     <>
-      <div className=" px-[110px] pt-[72px] pb-[250px] bg-[rgb(24,24,24)] w-full left-0 text-[12px] bottom-0">
+      <div className=" px-[110px] min-[280px]:max-lg:px-[20px] pt-[72px] pb-[250px] bg-[rgb(24,24,24)] w-full 
+      left-0 text-[12px] bottom-0 md:px-0">
       {/* section 1 */}
         <div className=" ">
           {/* footer logo */}
           <div className="">
             <img src={footer_logo} alt="" />
           </div>
-          <div className="flex gap-[150px] px-[14px] ">
+          <div className=" flex gap-[150px] min-[280px]:max-lg:gap-[10px] min-[280px]:max-lg:pl-[10px]  px-[14px] min-[280px]:max-lg:flex-col">
             {/* customer service */}
-            <div className="py-[10px]">
+            <div className="py-[10px] ">
               <span className="text-[12px] pb-[15px] text-[#fdd835] tracking-[1px]">
                 CUSTOMER SERVICE
               </span>
-              <div className="mt-[20px]">
+              <div className="mt-[20px] min-[280px]:max-lg:flex min-[280px]:max-lg:text-[12px]">
                 <p className="text-[hsla(0,0%,100%,.9)] tracking-[1px]">
                   Contact us
                 </p>
@@ -244,7 +245,7 @@ function FooterComponent() {
                 
             </div>
         </div>
-        {
+        {/* {
           bewakoofDetailsShow &&
         <div className="text-[hsla(0,0%,100%,.9)]">
           <div className="p-[10px]">
@@ -351,7 +352,7 @@ function FooterComponent() {
            an impact by breaking conventions and having a different perspective!
           </div>
         </div>
-        }
+        } */}
       </div>
     </>
   );
