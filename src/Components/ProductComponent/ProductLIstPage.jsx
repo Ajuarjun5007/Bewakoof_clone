@@ -26,15 +26,16 @@ import FilterComponent from "./FilterComponent";
 import ComingSoon from "../ComingSoon";
 function ProductListPage() {
   const location = useLocation();
-
   const name = location.state?.name;
   const brand = location.state?.brand;
   const MenuContent = location.state?.MenuContent;
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [tempArr, setTempArr] = useState([]);
   const [productCategory, setProductCategory] = useState("");
+  const [isWishListAdded, setIsWishListAdded] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [activeSortTag, setActiveSortTag] = useState("");
 
   const { getProductByFilters, wishList } = useSelector(
     (state) => state.productReducer
@@ -50,13 +51,56 @@ function ProductListPage() {
     brand: null,
     ratings: null,
   });
-
+ 
+  function sortByFilterChange(filterTag) {
+    if (filterTag == "top rated") {
+      const filteredProducts = tempArr?.filter((item) => {
+        return item.sellerTag == filterTag;
+      });
+      setTempArr(filteredProducts);
+      if (activeSortTag == "" || activeSortTag != "top rated") {
+        setActiveSortTag("top rated");
+      } else {
+        setActiveSortTag("");
+      }
+    }
+    if (filterTag == "new arrival") {
+      const filteredProducts = tempArr?.filter((item) => {
+        return item.sellerTag == filterTag;
+      });
+      setTempArr(filteredProducts);
+      if (activeSortTag == "" || activeSortTag != "new arrival") {
+        setActiveSortTag("new arrival");
+      } else {
+        setActiveSortTag("");
+      }
+    }
+     if (filterTag == "price:low to high") {
+      const filteredProducts = tempArr?.sort((item1, item2) => {
+        return item1.price - item2.price;
+      });
+      setTempArr(filteredProducts);
+      if (activeSortTag == "" || activeSortTag != "price:low to high") {
+        setActiveSortTag("price:low to high");
+      } else {
+        setActiveSortTag("");
+      }
+    }
+    if (filterTag == "price:high to low") {
+      const filteredProducts = tempArr?.sort((item1, item2) => {
+        return item2.price - item1.price;
+      });
+      setTempArr(filteredProducts);
+      if (activeSortTag == "" || activeSortTag != "price:high to low") {
+        setActiveSortTag("price:high to low");
+      } else {
+        setActiveSortTag("");
+      }
+    }
+  }
   const [sortContainerDisplay, setSortContainerDisplay] = useState(false);
   // const [productList, setProductList] = useState([]);
   const [isWishListClicked, setIsWishListClicked] = useState(false);
-
-  const [isWishListAdded, setIsWishListAdded] = useState([]);
-  const [loading, setLoading] = useState(false);
 
   const productList = productListResult?.data;
 
@@ -155,42 +199,44 @@ function ProductListPage() {
 
   useEffect(() => {
     if (selectedFilters["size"]) {
-      const resultByFilter = tempArr.filter((item) => {
+      const resultByFilter = tempArr?.filter((item) => {
         return selectedFilters["size"].every((element) =>
-          item.size.includes(element)
+          item?.size.includes(element)
         );
       });
       setTempArr(resultByFilter);
       console.log("filter", resultByFilter);
     }
     if (selectedFilters["subCategory"]) {
-      const resultByFilter = tempArr.filter((item) => {
+      const resultByFilter = tempArr?.filter((item) => {
         return selectedFilters["subCategory"].every((element) =>
-          item.subCategory.includes(element)
+          item?.subCategory.includes(element)
         );
       });
       setTempArr(resultByFilter);
       console.log("filter", resultByFilter);
     }
     if (selectedFilters["color"]) {
-      const resultByFilter = tempArr.filter((item) => {
+      const resultByFilter = tempArr?.filter((item) => {
         return selectedFilters["color"].every((element) =>
-          item.color.includes(element)
+          item?.color.includes(element)
         );
       });
       setTempArr(resultByFilter);
       console.log("filter", resultByFilter);
     }
     if (selectedFilters["brand"]) {
-      const resultByFilter = tempArr.filter((item) => {
+      const resultByFilter = tempArr?.filter((item) => {
         return selectedFilters["brand"].every((element) =>
-          item.brand.includes(element)
+          item?.brand.includes(element)
         );
       });
       setTempArr(resultByFilter);
       console.log("filter", resultByFilter);
     }
   }, [selectedFilters]);
+  console.log("activesorttag", activeSortTag);
+  console.log("tempArr", tempArr);
 
   return (
     <>
@@ -230,7 +276,7 @@ function ProductListPage() {
                         <div
                           className="flex flex-row-reverse gap-[5px]"
                           onMouseEnter={() => setSortContainerDisplay(true)}
-                          onMouseLeave={() => setSortContainerDisplay(false)}
+                          // onMouseLeave={() => setSortContainerDisplay(false)}
                         >
                           <IoChevronDown />
                           <p className="text-[#2d2d2d] text-[12px] pl-[8px] font-[300]">
@@ -242,30 +288,56 @@ function ProductListPage() {
                           {sortContainerDisplay && (
                             <div
                               className="absolute min-w-[145px] z-30 py-[17px] border-[1px] border-[#ccc] solid
-                 top-[45px] right-[40px] shadow-[0_4px_8px_0_rgba(0,0,0,.2)] bg-white pl-[10px]
+                 top-[25px] right-[40px] shadow-[0_4px_8px_0_rgba(0,0,0,.2)] bg-white pl-[10px]
                   text-[rgba(45,45,45,.7)] text-[12px]"
                             >
                               <p
-                                className="my-[5px] text-[rgb(81,204,204)] transition 300 
-                          hover:bg-[#f7f7f7]"
+                                className={`my-[5px] hover:text-[black]  transition 300 
+                          hover:bg-[#f7f7f7] ${
+                            activeSortTag == "top rated"
+                              ? "text-[rgb(81,204,204)]"
+                              : ""
+                          }`}
+                                onClick={() => sortByFilterChange("top rated")}
                               >
-                                Popular
+                                Top Rated
                               </p>
                               <p
-                                className="my-[5px] hover:text-[black] transition 300 
-                          hover:bg-[#f7f7f7]"
+                                className={`my-[5px] hover:text-[black]  transition 300 
+                              hover:bg-[#f7f7f7] ${
+                                activeSortTag == "new arrival"
+                                  ? "text-[rgb(81,204,204)]"
+                                  : ""
+                              }`}
+                                onClick={() =>
+                                  sortByFilterChange("new arrival")
+                                }
                               >
-                                New
+                                New Arrival
                               </p>
                               <p
-                                className="my-[5px] hover:text-[black] transition 300 
-                          hover:bg-[#f7f7f7]"
+                                className={`my-[5px] hover:text-[black]  transition 300 
+                                 hover:bg-[#f7f7f7] ${
+                                   activeSortTag == "price:high to low"
+                                     ? "text-[rgb(81,204,204)]"
+                                     : ""
+                                 }`}
+                                onClick={() =>
+                                  sortByFilterChange("price:high to low")
+                                }
                               >
                                 Price : High to Low
                               </p>
                               <p
-                                className="my-[5px] hover:text-[black] transition 300 
-                          hover:bg-[#f7f7f7]"
+                                className={`my-[5px] hover:text-[black]  transition 300 
+                                hover:bg-[#f7f7f7] ${
+                                  activeSortTag == "price:low to high"
+                                    ? "text-[rgb(81,204,204)]"
+                                    : ""
+                                }`}
+                                onClick={() =>
+                                  sortByFilterChange("price:low to high")
+                                }
                               >
                                 Price : Low to High
                               </p>
@@ -279,71 +351,75 @@ function ProductListPage() {
                     <div className="flex flex-wrap justify-center gap-[10px]">
                       {Array.isArray(tempArr) ? (
                         tempArr?.length > 0 ? (
-                          tempArr?.map((product) => (
-                            <Link
-                              key={product._id}
-                              to={{
-                                pathname: `/ProductDetailsPage/${product._id}`,
-                              }}
-                            >
-                              <div key={product?._id} className="w-[266px]">
-                                <div className="relative flex overflow-hidden">
-                                  <img
-                                    className="w-[266px] fog h-[330px] hover:scale-105 transition-all duration-[200ms] ease-in-out"
-                                    src={product?.displayImage}
-                                    alt="image"
-                                  />
-                                  <div className="flex items-center gap-[5px] py-[1px] pl-[8px] pr-[4px] absolute bottom-5 bg-white">
-                                    <FaStar className="text-[#ffc700] text-[9px]" />
-                                    <p className="text-[#337ab7] text-[10px]">
-                                      {product?.ratings?.toFixed(1)}
-                                    </p>
+                          tempArr ? (
+                            tempArr.map((product) => (
+                              <Link
+                                key={product._id}
+                                to={{
+                                  pathname: `/ProductDetailsPage/${product._id}`,
+                                }}
+                              >
+                                <div key={product?._id} className="w-[266px]">
+                                  <div className="relative flex overflow-hidden">
+                                    <img
+                                      className="w-[266px] fog h-[330px] hover:scale-105 transition-all duration-[200ms] ease-in-out"
+                                      src={product?.displayImage}
+                                      alt="image"
+                                    />
+                                    <div className="flex items-center gap-[5px] py-[1px] pl-[8px] pr-[4px] absolute bottom-5 bg-white">
+                                      <FaStar className="text-[#ffc700] text-[9px]" />
+                                      <p className="text-[#337ab7] text-[10px]">
+                                        {product?.ratings?.toFixed(1)}
+                                      </p>
+                                    </div>
                                   </div>
-                                </div>
 
-                                <div className="relative">
-                                  <div
-                                    onClick={(event) => {
-                                      wishListHandler(event, product._id);
-                                    }}
-                                    className="absolute mt-[15px] right-[4px] text-[25px] border-[1px]"
-                                  >
-                                    {!isWishListClicked ? (
-                                      <img src={empty_heart} alt="" />
-                                    ) : (
-                                      <img src={red_heart} alt="" />
-                                    )}
-                                  </div>
-                                  <p className="mt-[5px] text-[#4f5362] text-[12px] leading-[15px] font-[550]">
-                                    {product.brand}
-                                  </p>
-                                  <p className="mt-[5px] w-[85%] truncate text-[#737373] text-[10px] leading-[12px] font-[550]">
-                                    {product.name}
-                                  </p>
-                                  <div className="flex gap-[5px] mt-[5px] items-center text-[16px] leading-[14px]">
-                                    <p>
-                                      ₹<strong>{product.price}</strong>
-                                    </p>
-                                    <p className="line-through text-[#949494] text-[12px]">
-                                      {Math.round(
-                                        product.price * 0.5 + product.price
+                                  <div className="relative">
+                                    <div
+                                      onClick={(event) => {
+                                        wishListHandler(event, product._id);
+                                      }}
+                                      className="absolute mt-[15px] right-[4px] text-[25px] border-[1px]"
+                                    >
+                                      {!isWishListClicked ? (
+                                        <img src={empty_heart} alt="" />
+                                      ) : (
+                                        <img src={red_heart} alt="" />
                                       )}
+                                    </div>
+                                    <p className="mt-[5px] text-[#4f5362] text-[12px] leading-[15px] font-[550]">
+                                      {product.brand}
+                                    </p>
+                                    <p className="mt-[5px] w-[85%] truncate text-[#737373] text-[10px] leading-[12px] font-[550]">
+                                      {product.name}
+                                    </p>
+                                    <div className="flex gap-[5px] mt-[5px] items-center text-[16px] leading-[14px]">
+                                      <p>
+                                        ₹<strong>{product.price}</strong>
+                                      </p>
+                                      <p className="line-through text-[#949494] text-[12px]">
+                                        {Math.round(
+                                          product.price * 0.5 + product.price
+                                        )}
+                                      </p>
+                                    </div>
+                                    <p className="text-[#525252] mt-[8px] text-[10px] px-[8px] py-[2px]">
+                                      ₹
+                                      {Math.round(
+                                        product.price - product.price * 0.1
+                                      )}{" "}
+                                      for triBE Members
+                                    </p>
+                                    <p className="w-max border-[1px] border-[rgb(115,115,115)] my-[12px] solid text-[rgb(115,115,115)] p-[1px] text-[10px]">
+                                      {product.sellerTag}
                                     </p>
                                   </div>
-                                  <p className="text-[#525252] mt-[8px] text-[10px] px-[8px] py-[2px]">
-                                    ₹
-                                    {Math.round(
-                                      product.price - product.price * 0.1
-                                    )}{" "}
-                                    for triBE Members
-                                  </p>
-                                  <p className="w-max border-[1px] border-[rgb(115,115,115)] my-[12px] solid text-[rgb(115,115,115)] p-[1px] text-[10px]">
-                                    {product.sellerTag}
-                                  </p>
                                 </div>
-                              </div>
-                            </Link>
-                          ))
+                              </Link>
+                            ))
+                          ) : (
+                            <Loader />
+                          )
                         ) : (
                           // <Loader />
                           <ComingSoon />

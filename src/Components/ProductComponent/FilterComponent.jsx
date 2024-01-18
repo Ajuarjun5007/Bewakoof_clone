@@ -36,9 +36,6 @@ setFilteredSubCategories([
   setFilteredSizes([
     ...new Set(filteredItems?.flatMap((item) => item.size)),
   ]);
-  //  filteredRatings = [
-  //   ...new Set(filteredItems?.flatMap((item) => item?.ratings?.toFixed(1))),
-  // ];
 },[])
   const [activeFilters, setActiveFilters] = useState({
     size: false,
@@ -52,7 +49,6 @@ setFilteredSubCategories([
   const [subCategoryFilter, setSubCategoryFilter] = useState([]);
   const [colorFilter, setColorFilter] = useState([]);
   const [brandFilter, setBrandFilter] = useState([]);
-  const [ratingsFilter, setRatingsFilter] = useState([]);
   const [updatedValues, setUpdatedValues] = useState({});
   function updateFilters(filterType,value){
     
@@ -196,54 +192,7 @@ setFilteredSubCategories([
             </div>
           </AccordionContent>
         </AccordionItem>
-        <AccordionItem value="item-5">
-          <AccordionTrigger>Ratings</AccordionTrigger>
-          <AccordionContent>
-            <div className="pl-[30px] text-[rgba(45,45,45,.7)] text-[12px]">
-              { Ratings.map((item,index)=>
-              <p
-                className="my-[5px] hover:text-[black] transition 300 
-                          hover:bg-slate-100"
-                key={index}
-                onClick={() => updateFilters("ratings",item)}    
-              >
-                {item}
-              </p>
-              )}
-            </div>
-          </AccordionContent>
-        </AccordionItem>
-        <AccordionItem value="item-6">
-          <AccordionTrigger>Sort By</AccordionTrigger>
-          <AccordionContent>
-            <div className="pl-[30px] text-[rgba(45,45,45,.7)] text-[12px]">
-              <p
-                className="my-[5px] text-[rgb(81,204,204)] transition 300 
-                          hover:bg-slate-100"
-              >
-                Popular
-              </p>
-              <p
-                className="my-[5px] hover:text-[black] transition 300 
-                          hover:bg-slate-100"
-              >
-                New
-              </p>
-              <p
-                className="my-[5px] hover:text-[black] transition 300 
-                          hover:bg-slate-100"
-              >
-                Price : High to Low
-              </p>
-              <p
-                className="my-[5px] hover:text-[black] transition 300 
-                          hover:bg-slate-100"
-              >
-                Price : Low to High
-              </p>
-            </div>
-          </AccordionContent>
-        </AccordionItem>
+       
       </Accordion.Root>
     </>
   );
