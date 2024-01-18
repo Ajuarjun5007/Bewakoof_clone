@@ -32,21 +32,22 @@ function FooterComponent() {
   }, [location.pathname]);
   return (
     <>
-      <div className=" px-[110px] min-[280px]:max-lg:px-[20px] pt-[72px] pb-[250px] bg-[rgb(24,24,24)] w-full 
-      left-0 text-[12px] bottom-0 md:px-0">
+      <div className=" px-[110px] min-[280px]:max-[820px]:px-[20px] pt-[72px] pb-[250px] bg-[rgb(24,24,24)] w-full 
+      left-0 text-[12px] bottom-0  min-[280px]:max-[767px]:px-[0px]">
       {/* section 1 */}
-        <div className=" ">
+        <div className=" min-[280px]:max-[820px]:pl-[20px]">
           {/* footer logo */}
           <div className="">
             <img src={footer_logo} alt="" />
           </div>
-          <div className=" flex gap-[150px] min-[280px]:max-lg:gap-[10px] min-[280px]:max-lg:pl-[10px]  px-[14px] min-[280px]:max-lg:flex-col">
+          <div className=" flex gap-[150px] min-[280px]:max-[820px]:gap-[30px] min-[820px]:gap-[70px]  min-[1022px]:gap-[80px]
+          min-[280px]:max-[820px]:pl-[10px]  px-[14px] min-[280px]:max-[767px]:flex-col ">
             {/* customer service */}
-            <div className="py-[10px] ">
+            <div className="py-[10px]  ">
               <span className="text-[12px] pb-[15px] text-[#fdd835] tracking-[1px]">
                 CUSTOMER SERVICE
               </span>
-              <div className="mt-[20px] min-[280px]:max-lg:flex min-[280px]:max-lg:text-[12px]">
+              <div className="mt-[20px]">
                 <p className="text-[hsla(0,0%,100%,.9)] tracking-[1px]">
                   Contact us
                 </p>
@@ -114,7 +115,7 @@ function FooterComponent() {
               </div>
             </div>
             {/* keep up to date */}
-            <div className="py-[10px]">
+            <div className="py-[10px] ">
               <span className="text-[12px] pb-[15px] text-[#fdd835] tracking-[1px]">
                 KEEP UP TO DATE
               </span>
@@ -135,25 +136,24 @@ function FooterComponent() {
               </div>
             </div>
           </div>
-          <div className="flex  px-[14px] ">
+          <div className="flex min-[280px]:max-[767px]:flex-col">
             {/* policy & delivery  */}
-            <div className="my-[20px] ">
+            <div className="my-[20px] mx-[0px] ">
               <div className="flex px-[14px] gap-3 my-[10px]">
                 <SlHandbag className="text-[hsla(0,0%,100%,.9)]" />
                 <span className="text-[hsla(0,0%,100%,.9)] ">
-                  {" "}
-                  15 Days return policy*{" "}
+                  15 Days return policy*
                 </span>
               </div>
               <div className="flex px-[14px] gap-3">
                 <HiOutlineFilter className="text-[hsla(0,0%,100%,.9)]" />
-                <span className="text-[hsla(0,0%,100%,.9)] ">
+                <span className="text-[hsla(0,0%,100%,.9)]">
                   Cash on delivery*
                 </span>
               </div>
             </div>
             {/* App store images */}
-            <div className="my-[20px] ml-[100px] gap-y-[10px]">
+            <div className="my-[20px] ml-[50px] gap-y-[10px] min-[280px]:max-[820px]:ml-4">
               <span className="text-[12px]  text-[#fdd835] tracking-[1px]">
                 DOWNLOAD THE APP
               </span>
@@ -167,7 +167,7 @@ function FooterComponent() {
               </div>
             </div>
             {/* payment*/}
-            <div className="my-[20px] gap-y-[10px] ml-[60px]">
+            <div className="my-[20px] gap-y-[10px] ml-[60px] min-[280px]:max-[820px]:ml-4">
               <span className="text-[12px]  text-[#fdd835] tracking-[1px]">
                 100% SECURE PAYMENT
               </span>
@@ -178,7 +178,8 @@ function FooterComponent() {
           </div>
         </div>
         {/* section 2 */}
-        <div className="flex  border-t-[1px] m-[14px] px-[10px] py-[20px] border-[#979797] solid">
+        <div className="flex  border-t-[1px] m-[14px] px-[10px] py-[20px] 
+        border-[#979797] solid min-[280px]:max-[767px]:flex-col">
             {/* mens clothing */}
             <div className="w-[255px] px-[10px] pr-[40px]">
                 <span className="text-[white] font-[900] text-[17px] tracking-[1px]">MEN'S CLOTHING</span>
@@ -224,9 +225,9 @@ function FooterComponent() {
                 </div>
             </div>
             {/* Mobiles */}
-            <div className="w-[255px] px-[10px] pr-[40px]">
+            {/* <div className="w-[255px] px-[10px] pr-[40px]">
                 <span className="text-[white] font-[900] text-[17px] tracking-[1px]">MOBILE COVERS</span>
-                {/* topwear */}
+              
                 <div className=" py-[10px] pt-[30px]">
                     <p className="text-[hsla(0,0%,100%,.9)] tracking-[1px]">Brands</p>
                 {
@@ -235,17 +236,17 @@ function FooterComponent() {
                     ))
                 }
                 </div>
-            </div>
+            </div> */}
             {/* FANMAP */}
             <div className="w-[255px] px-[10px] pr-[40px] ">
                 <p className="text-[#51cccc] font-[900] text-[17px] tracking-[1px] pb-[15px]">FAN BOOK</p>
                 <p className="text-[#51cccc] font-[900] text-[17px] tracking-[1px] pb-[15px]">OFFERS</p>
                 <p className="text-[#51cccc] font-[900] text-[17px] tracking-[1px] pb-[15px]">SITEMAP</p>
-                {/* topwear */}
+                
                 
             </div>
         </div>
-        {/* {
+        {
           bewakoofDetailsShow &&
         <div className="text-[hsla(0,0%,100%,.9)]">
           <div className="p-[10px]">
@@ -352,7 +353,7 @@ function FooterComponent() {
            an impact by breaking conventions and having a different perspective!
           </div>
         </div>
-        } */}
+        }
       </div>
     </>
   );

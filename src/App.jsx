@@ -57,7 +57,7 @@ function App() {
         </>
       )}
 
-      {isMobile && <MobileNavBar />}
+      {isMobile && <MobileNavBar/>}
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/ComingSoonPage" element={<ComingSoon />} />
