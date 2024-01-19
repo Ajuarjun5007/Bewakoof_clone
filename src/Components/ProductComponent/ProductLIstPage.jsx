@@ -35,7 +35,7 @@ function ProductListPage() {
   const [loading, setLoading] = useState(false);
   const [activeSortTag, setActiveSortTag] = useState("");
   const [sortContainerDisplay, setSortContainerDisplay] = useState(false);
- 
+
   const productListResult = useSelector(
     (state) => state.productReducer.dressList
   );
@@ -160,7 +160,7 @@ function ProductListPage() {
       (item) => item?.products._id || item?.products
     )
   );
- 
+
   function wishListHandler(event, Id) {
     event.stopPropagation();
     event.preventDefault();
@@ -183,7 +183,6 @@ function ProductListPage() {
             suffix: Id,
           })
         );
-    
       }
     } else {
       navigate("/LoginPage");
@@ -235,7 +234,7 @@ function ProductListPage() {
   let wishListResultdemo = useSelector(
     (state) => state.productReducer.wishList?.data
   );
-  
+
   console.log("wishListResult", wishListResult);
   console.log("wishListResultdemo", wishListResultdemo);
 
@@ -405,6 +404,13 @@ function ProductListPage() {
                                           product.price * 0.5 + product.price
                                         )}
                                       </p>
+                        <p className="pl-2 text-[#00b852] text-[10px] md:text-xs whitespace-nowrap"> {Math.round(
+                          ((product.price * 0.5 +
+                            product.price -
+                            product.price) /
+                            (product.price * 0.5 + product.price)) *
+                            100
+                        )}% OFF</p>
                                     </div>
                                     <p className="text-[#525252] mt-[8px] text-[10px] px-[8px] py-[2px]">
                                       ₹
