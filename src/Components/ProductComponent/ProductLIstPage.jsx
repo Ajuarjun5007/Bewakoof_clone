@@ -36,7 +36,8 @@ function ProductListPage() {
   const [loading, setLoading] = useState(false);
   const [activeSortTag, setActiveSortTag] = useState("");
   const [wishListId, setWishListId] = useState([]);
-
+  const [sortContainerDisplay, setSortContainerDisplay] = useState(false);
+  const [isWishListClicked, setIsWishListClicked] = useState(false);
   const { getProductByFilters, wishList } = useSelector(
     (state) => state.productReducer
   );
@@ -45,7 +46,6 @@ function ProductListPage() {
     (state) => state.productReducer.dressList
   );
   let wishListResult;
- 
   const [selectedFilters, setSelectedFilters] = useState({
     size: null,
     subCategory: null,
@@ -53,7 +53,7 @@ function ProductListPage() {
     brand: null,
     ratings: null,
   });
- 
+
   function sortByFilterChange(filterTag) {
     if (filterTag == "top rated") {
       const filteredProducts = tempArr?.filter((item) => {
@@ -77,7 +77,7 @@ function ProductListPage() {
         setActiveSortTag("");
       }
     }
-     if (filterTag == "price:low to high") {
+    if (filterTag == "price:low to high") {
       const filteredProducts = tempArr?.sort((item1, item2) => {
         return item1.price - item2.price;
       });
@@ -100,8 +100,6 @@ function ProductListPage() {
       }
     }
   }
-  const [sortContainerDisplay, setSortContainerDisplay] = useState(false);
-  const [isWishListClicked, setIsWishListClicked] = useState(false);
 
   const productList = productListResult?.data;
 
@@ -164,11 +162,19 @@ function ProductListPage() {
     }
   }
 
+  wishListResult = useSelector((state) =>
+    state.productReducer.wishList?.data?.items?.map(
+      (item) => item?.products._id || item?.products
+    )
+  );
+  // useEffect(() => {
+  //   setWishListId(wishListResult);
+  // }, [isWishListClicked]);
   function wishListHandler(event, Id) {
     event.stopPropagation();
     event.preventDefault();
     if (localStorage.getItem("userInfo")) {
-      if (isWishListAdded.includes(Id)) {
+      if (wishListResult?.includes(Id)) {
         dispatch(
           getWishListOperations({
             id: Id,
@@ -177,7 +183,7 @@ function ProductListPage() {
             suffix: Id,
           })
         );
-        setIsWishListClicked(true);
+        setIsWishListClicked(() => !isWishListClicked);
       } else {
         dispatch(
           getWishListOperations({
@@ -187,7 +193,15 @@ function ProductListPage() {
             suffix: Id,
           })
         );
-        setIsWishListClicked(false);
+        // dispatch(
+        //   getWishListOperations({
+        //     id: "",
+        //     type: "GET",
+        //     tokenValue: JSON.parse(localStorage.getItem("userInfo"))[0],
+        //     suffix: "",
+        //   })
+        // );
+        setIsWishListClicked(() => !isWishListClicked);
       }
     } else {
       navigate("/LoginPage");
@@ -236,17 +250,16 @@ function ProductListPage() {
       console.log("filter", resultByFilter);
     }
   }, [selectedFilters]);
-
- 
-    wishListResult=(useSelector(
-      (state) => state.productReducer.wishList.data.items.map((item)=>item.products._id)
-    ));
-    useEffect(()=>{
-      setWishListId(wishListResult);
-    },[])
-  console.log("activesorttag", activeSortTag);
-  console.log("tempArr", tempArr);
-  console.log("wishListResult",wishListResult);
+  let wishListResultdemo = useSelector(
+    (state) => state.productReducer.wishList?.data
+    // .items?.map(
+    //   (item) => item?.products._id
+    // )
+  );
+  // console.log("activesorttag", activeSortTag);
+  // console.log("tempArr", tempArr);
+  console.log("wishListResult", wishListResult);
+  console.log("wishListResultdemo", wishListResultdemo);
 
   return (
     <>
@@ -387,11 +400,13 @@ function ProductListPage() {
                                   <div className="relative">
                                     <div
                                       onClick={(event) => {
-                                        wishListHandler(event,product._id);
+                                        wishListHandler(event, product._id);
                                       }}
                                       className="absolute mt-[15px] right-[4px] text-[25px] border-[1px]"
                                     >
-                                      {!wishListResult?.includes(product._id)? (
+                                      {!wishListResult?.includes(
+                                        product._id
+                                      ) ? (
                                         <img src={empty_heart} alt="" />
                                       ) : (
                                         <img src={red_heart} alt="" />

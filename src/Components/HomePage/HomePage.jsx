@@ -80,7 +80,7 @@ function HomePage() {
   };
   const [userLoggedIn, setUserLoggedIn] = useState(false);
   const dispatch = useDispatch();
-  useEffect(() => {
+  const callProduct=()=>{
     const info = dispatch(
       getWishListOperations({
         id: "",
@@ -98,6 +98,9 @@ function HomePage() {
         suffix: "?limit=1200",
       })
     );
+  }
+  useEffect(() => {
+   callProduct();
   }, []);
 
   return (
