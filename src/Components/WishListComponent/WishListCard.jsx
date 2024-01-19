@@ -3,6 +3,7 @@ import bag_img from "../../assets/wishlist_blue_bag.svg";
 import crossbtn_img from "../../assets/crossBtn.svg";
 import { AiFillStar } from "react-icons/ai";
 import { FaStar } from "react-icons/fa6";
+import { useSelector, useDispatch } from "react-redux";
 
 import {
   applyFilters,
@@ -14,13 +15,13 @@ import { useEffect, useState } from "react";
 
 function WishListCard({ Id }) {
   const [productInfo, setProductInfo] = useState([]);
-  console.log("Id", Id);
+  const dispatch = useDispatch();
+
+//   console.log("Id", Id);
   useEffect(() => {
     if (Id !== undefined) {
       productDetail(Id).then((res) => {
         setProductInfo(res.data);
-        //   setImages(res.data.images);
-        //   setIsLoading(false);
       });
     }
   }, []);
@@ -37,7 +38,6 @@ function WishListCard({ Id }) {
       })
     );
   }
-  console.log("Pi", productInfo);
   return (
     <>
       <div className=" w-[266px] relative mt-[10px] ml-[20px] mb-[30px]">
@@ -99,7 +99,10 @@ function WishListCard({ Id }) {
             </div>
           </div>
         </div>
-        <div className="absolute top-2 right-2 cursor-pointer">
+
+        <div 
+        onClick={(event)=>removeItemFromWishList(event,productInfo?._id)}
+        className="absolute top-2 right-2 cursor-pointer">
           <img className="" src={crossbtn_img} alt="" />
         </div>
         {/* {!isAddedToCart && */}

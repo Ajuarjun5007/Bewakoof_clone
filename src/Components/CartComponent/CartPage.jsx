@@ -14,6 +14,7 @@ function CartPage(){
             </button>
           </div> */}
           <CartPagePresent/>
+
         </>
     )
 }

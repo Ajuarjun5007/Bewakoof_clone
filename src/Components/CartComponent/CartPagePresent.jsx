@@ -10,10 +10,16 @@ import "react-multi-carousel/lib/styles.css";
 import img_1 from  "../../assets/bw-demo-3.webp"
 import SuggestionCarousel from "../ProductComponent/SuggestionCarousel";
 import payment_img from "../../assets/footerImage/secure-payments-image.webp";
-
+import { useSelector, useDispatch } from "react-redux";
+import WishListCard from "../WishListComponent/WishListCard"
+import { Link } from "react-router-dom";
 
 function CartPagePresent(){
-   
+    let wishListResult = useSelector((state) =>
+    state.productReducer.wishList?.data?.items?.map(
+      (item) => item?.products._id || item?.products
+    )
+  );
     return(
         <>
         <div className="mt-[120px] flex flex-col items-center justify-center">
@@ -30,7 +36,20 @@ function CartPagePresent(){
                 <p className="ml-2 text-xs font-medium">Yay! You get FREE delivery on this order</p>
             </div>
             <Cartcard/>
+        <p className="flex px-4 items-center font-semibold text-[15px]">My wishlist</p>
+            <div className="flex-wrap flex">
+            {wishListResult?.length > 0 &&
+          wishListResult?.map((Id) => 
+          <Link
+          key={Id}
+          to={{
+            pathname: `/ProductDetailsPage/${Id}`,
+          }}>
+          <WishListCard key={Id} Id={Id} />
+          </Link>
+          )}
            
+            </div>
         </div>
         {/* right section */}
         <div className="w-[45%] ">
