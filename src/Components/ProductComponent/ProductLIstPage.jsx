@@ -32,20 +32,13 @@ function ProductListPage() {
   const navigate = useNavigate();
   const [tempArr, setTempArr] = useState([]);
   const [productCategory, setProductCategory] = useState("");
-  const [isWishListAdded, setIsWishListAdded] = useState([]);
   const [loading, setLoading] = useState(false);
   const [activeSortTag, setActiveSortTag] = useState("");
-  const [wishListId, setWishListId] = useState([]);
   const [sortContainerDisplay, setSortContainerDisplay] = useState(false);
-  const [isWishListClicked, setIsWishListClicked] = useState(false);
-  const { getProductByFilters, wishList } = useSelector(
-    (state) => state.productReducer
-  );
-
+ 
   const productListResult = useSelector(
     (state) => state.productReducer.dressList
   );
-  let wishListResult;
   const [selectedFilters, setSelectedFilters] = useState({
     size: null,
     subCategory: null,
@@ -162,14 +155,12 @@ function ProductListPage() {
     }
   }
 
-  wishListResult = useSelector((state) =>
+  let wishListResult = useSelector((state) =>
     state.productReducer.wishList?.data?.items?.map(
       (item) => item?.products._id || item?.products
     )
   );
-  // useEffect(() => {
-  //   setWishListId(wishListResult);
-  // }, [isWishListClicked]);
+ 
   function wishListHandler(event, Id) {
     event.stopPropagation();
     event.preventDefault();
@@ -183,7 +174,6 @@ function ProductListPage() {
             suffix: Id,
           })
         );
-        setIsWishListClicked(() => !isWishListClicked);
       } else {
         dispatch(
           getWishListOperations({
@@ -193,15 +183,7 @@ function ProductListPage() {
             suffix: Id,
           })
         );
-        // dispatch(
-        //   getWishListOperations({
-        //     id: "",
-        //     type: "GET",
-        //     tokenValue: JSON.parse(localStorage.getItem("userInfo"))[0],
-        //     suffix: "",
-        //   })
-        // );
-        setIsWishListClicked(() => !isWishListClicked);
+    
       }
     } else {
       navigate("/LoginPage");
@@ -252,12 +234,8 @@ function ProductListPage() {
   }, [selectedFilters]);
   let wishListResultdemo = useSelector(
     (state) => state.productReducer.wishList?.data
-    // .items?.map(
-    //   (item) => item?.products._id
-    // )
   );
-  // console.log("activesorttag", activeSortTag);
-  // console.log("tempArr", tempArr);
+  
   console.log("wishListResult", wishListResult);
   console.log("wishListResultdemo", wishListResultdemo);
 

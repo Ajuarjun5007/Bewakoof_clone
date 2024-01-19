@@ -38,11 +38,19 @@ import { useParams, useNavigate } from "react-router-dom";
 import Loader from "../Loader";
 import ReviewWrapper from "./ReviewComponent/ReviewWrapper";
 register();
-
+import { useSelector, useDispatch } from "react-redux";
+import {
+  applyFilters,
+  getProductList,
+  getWishListOperations,
+} from "./Slices/FilterSlice";
 function ProductDetailsPage() {
   const verticalSwiperRef = useRef();
   const horizontalSwiperRef = useRef();
   const params = useParams();
+  const dispatch = useDispatch();
+  let Id  = params?.id;
+  console.log("Id",Id);
   const navigate = useNavigate();
   const [images, setImages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -119,12 +127,8 @@ function ProductDetailsPage() {
     }
     setIsAddedToCart(() => !isAddedToCart);
   };
-  const handleWishlisted = () => {
-    // if (!authenticated) {
-    //     return navigate('/LoginPage');
-    // }
-    setWishListed(!wishListed);
-  };
+ 
+
   const onClose = (event) => {
     if (event.stopPropagation) {
       event.stopPropagation();
@@ -169,6 +173,42 @@ function ProductDetailsPage() {
   const ProductDescription = ({ description }) => {
     return <div dangerouslySetInnerHTML={{ __html: description }} />;
   };
+
+  let wishListResult = useSelector((state) =>
+  state.productReducer.wishList?.data?.items?.map(
+    (item) => item?.products._id || item?.products
+  )
+);
+function wishListHandler(event,Id) {
+  event.stopPropagation();
+  event.preventDefault();
+  console.log("ID",Id)
+  if (localStorage.getItem("userInfo")) {
+    if (wishListResult?.includes(Id)) {
+      dispatch(
+        getWishListOperations({
+          id: Id,
+          type: "DELETE",
+          tokenValue: JSON.parse(localStorage.getItem("userInfo"))[0],
+          suffix: Id,
+        })
+      );
+    } else {
+      dispatch(
+        getWishListOperations({
+          id: Id,
+          type: "PATCH",
+          tokenValue: JSON.parse(localStorage.getItem("userInfo"))[0],
+          suffix: Id,
+        })
+      );
+  
+    }
+  } else {
+    navigate("/LoginPage");
+  }
+}
+
   useEffect(() => {
     const pincodeDetails = JSON.parse(
       window.localStorage.getItem("bewakoof_pincode_details")
@@ -178,8 +218,8 @@ function ProductDetailsPage() {
 
   useEffect(() => {
     setIsLoading(true);
-    if (params.id !== undefined) {
-      productDetail(params.id).then((res) => {
+    if (Id !== undefined) {
+      productDetail(Id).then((res) => {
         setProductInfo(res.data);
         setImages(res.data.images);
         setIsLoading(false);
@@ -417,22 +457,24 @@ function ProductDetailsPage() {
                   {/* wishlist */}
 
                   <button
-                    onClick={handleWishlisted}
+                     onClick={(event) => {
+                      wishListHandler(event,Id);
+                    }}
                     className={`h-11 hidden md:flex flex-1  items-center justify-center border rounded-sm hover:shadow-md transition-all ${
                       wishListed ? "border-black" : ""
                     }`}
                   >
-                    {wishListed ? (
+                    {(wishListResult?.includes(Id))? (
                       <img className="w-6 h-6" src={wishlisted_img} alt="bag" />
                     ) : (
                       <img className="w-6 h-6" src={wishlist_img} alt="bag" />
                     )}
                     <p
                       className={`${
-                        wishListed ? "text-black" : "text-[#949494]"
+                        (wishListResult?.includes(Id))? "text-black" : "text-[#949494]"
                       } text-sm pl-2`}
                     >
-                      {wishListed ? "WISHLISTED" : "WISHLIST"}
+                      {(wishListResult?.includes(Id))? "WISHLISTED" : "WISHLIST"}
                     </p>
                   </button>
                 </div>
@@ -606,7 +648,7 @@ function ProductDetailsPage() {
                   </div>
                 </div>
                 <div className="">
-                  <ReviewWrapper productId={params.id} />
+                  <ReviewWrapper productId={Id} />
                 </div>
               </div>
             </div>
