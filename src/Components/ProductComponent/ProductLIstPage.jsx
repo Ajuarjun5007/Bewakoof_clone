@@ -235,8 +235,8 @@ function ProductListPage() {
     (state) => state.productReducer.wishList?.data
   );
 
-  console.log("wishListResult", wishListResult);
-  console.log("wishListResultdemo", wishListResultdemo);
+  // console.log("wishListResult", wishListResult);
+  // console.log("wishListResultdemo", wishListResultdemo);
 
   return (
     <>

@@ -25,7 +25,7 @@ function SignupPage() {
   const [passwordErrorAlert, setPasswordErrorAlert] = useState(false);
   const [checkboxErrorAlert, setcheckboxErrorAlert] = useState(false);
   const [errorAlert, setErrorAlert] = useState(false);
-
+  const [userExistAlert,setUserExistAlert] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {}, [isPasswordActive, isEmailActive, isNameActive]);
@@ -103,9 +103,10 @@ function SignupPage() {
       .catch((error) => {
         if (error.response) {
           console.log([error.response?.data?.message]);
+          setUserExistAlert(error.response?.data?.message);
         }
       });
-    console.log("login success");
+    // console.log("login success");
   }
 
   // console.log("errorAlert", errorAlert);
@@ -123,12 +124,21 @@ function SignupPage() {
             <div className="">
               <p className="text-[24px] font-bold text-[#333]">Signup</p>
               <p className="pt-[10px] text-[18px] font-[600] text-[#333]">
-                Hi new buddy, let's get you started with the bewakoofi!
+                Hi new buddy, let's get you started with the bewakoof!
               </p>
             </div>
 
             <form onSubmit={(event) => register(event)}>
               <div className="flex flex-col w-[100%] mt-[35px] relative mb-[45px]">
+                {
+          userExistAlert &&
+              <p className=" text-sm absolute font-medium bg-white flex items-center gap-2 w-full -top-9 left-0 border shadow-sm px-2 py-1 my-2 lg:container m-auto">
+                    <span className="bg-red-600 text-white flex items-center justify-center rounded-full w-5 h-5">
+                        !
+                    </span>
+                    <span>{userExistAlert}</span>
+                </p>
+                }
                 <input
                   type="text"
                   placeholder="Name"

@@ -20,6 +20,7 @@ function CartPagePresent(){
       (item) => item?.products._id || item?.products
     )
   );
+  console.log("w",wishListResult);
     return(
         <>
         <div className="mt-[120px] flex flex-col items-center justify-center">
@@ -36,8 +37,13 @@ function CartPagePresent(){
                 <p className="ml-2 text-xs font-medium">Yay! You get FREE delivery on this order</p>
             </div>
             <Cartcard/>
-        <p className="flex px-4 items-center font-semibold text-[15px]">My wishlist</p>
-            <div className="flex-wrap flex">
+            <Cartcard/>
+            <div className="flex-wrap">
+            {
+    wishListResult?.length > 0 &&
+             <p className="flex px-4 items-center font-semibold text-[15px]">My wishlist</p>
+            }
+             <div className="flex flex-wrap">
             {wishListResult?.length > 0 &&
           wishListResult?.map((Id) => 
           <Link
@@ -49,6 +55,7 @@ function CartPagePresent(){
           </Link>
           )}
            
+             </div>
             </div>
         </div>
         {/* right section */}
@@ -129,7 +136,7 @@ function CartPagePresent(){
         </div>
         <div className="w-[85%] py-[40px]">
             <div className="flex justify-center py-[20px] font-[600] text-[#333] mt-[10px]">YOU MAY ALSO LIKE</div>
-                <SuggestionCarousel/>
+                {/* <SuggestionCarousel/> */}
         </div>
         <div className="py-[40px]">
             <img src={payment_img} alt="" />

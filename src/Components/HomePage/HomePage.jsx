@@ -54,13 +54,16 @@ import { useEffect, useState } from "react";
 import { trendingCategories, brands, subCategories } from "../TypeConstants";
 import { dressList } from "../ApiFetch";
 import Loader from "../Loader";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   getWishListOperations,
   getProductList,
+  getCartOperations,
 } from "../ProductComponent/Slices/FilterSlice";
 // import { dressList } from "../ApiFetch";
+
 function HomePage() {
+
   const responsive = {
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
@@ -79,22 +82,38 @@ function HomePage() {
     },
   };
   const [userLoggedIn, setUserLoggedIn] = useState(false);
+  let {wishList} = useSelector(
+    (state) => state.productReducer.cartList);
+    console.log("wishList", wishList);
   const dispatch = useDispatch();
   const callProduct=()=>{
-    const info = dispatch(
-      getWishListOperations({
-        id: "",
-        type: "GET",
-        tokenValue: JSON.parse(localStorage.getItem("userInfo"))[0],
-        suffix: "",
-      })
-    );
+    if(localStorage.getItem("userInfo")){
+      dispatch(
+        getWishListOperations({
+          id: "",
+          type: "GET",
+          tokenValue: JSON.parse(localStorage.getItem("userInfo"))[0],
+          suffix: "",
+        })
+      );
+      dispatch(
+        getCartOperations({
+          id: "",
+          type: "GET",
+          tokenValue: JSON.parse(localStorage.getItem("userInfo"))[0],
+          suffix: "",
+          Size:'',
+          Quantity:'',
+        })
+      );
+
+    }
 
     dispatch(
       getProductList({
         id: "",
         type: "GET",
-        tokenValue: JSON.parse(localStorage.getItem("userInfo"))[0],
+        // tokenValue: JSON.parse(localStorage.getItem("userInfo"))[0],
         suffix: "?limit=1200",
       })
     );

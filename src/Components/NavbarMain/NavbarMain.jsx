@@ -392,7 +392,9 @@ function NavbarMain() {
                             My Account
                           </p>
                         </Link>
-                        <Link to="/WishlistPage">
+                        <Link 
+                        to="/WishlistPage"
+                        >
                           <p className="hover:bg-[rgba(0,0,0,.05)]  px-[15px] py-[10px]">
                             My Wishlist
                           </p>
@@ -426,12 +428,16 @@ function NavbarMain() {
               </div>
 
               <span className="px-2 text-[30px] ">
-                <Link to="WishlistPage">
+                <Link 
+                to={`${userLoggedIn?'/WishlistPage':'LoginPage'}`}
+                >
                   <CiHeart />
                 </Link>
               </span>
               <span className="px-2 text-[22px] ">
-                <Link to="CartPage">
+                <Link 
+                to={`${userLoggedIn?'/CartPage':'LoginPage'}`}
+                >
                   <BsBag />
                 </Link>
               </span>
