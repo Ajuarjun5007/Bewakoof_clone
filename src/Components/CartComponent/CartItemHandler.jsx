@@ -7,7 +7,7 @@ function CartItemHandler({
   title,
   heading,
   handleQty,
-  initialQuantity = options[0],
+  initialQuantity = options?.[0],
 }) {
   const [selected, setSelected] = useState(initialQuantity);
   const [modalOpen, setModalOpen] = useState(false);
@@ -36,6 +36,7 @@ function CartItemHandler({
       onClose(e);
     }
   };
+  // console.log("options",options)
   return (
     <>
       <div

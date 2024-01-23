@@ -433,7 +433,7 @@ function ProductListPage() {
                           // <Loader />
                           <ComingSoon />
                         )
-                      ) : null}
+                      ) : <Loader />}
                     </div>
                   </div>
                 </div>

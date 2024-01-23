@@ -117,22 +117,15 @@ function ProductDetailsPage() {
 
   let {cartList, isLoading: LoadingCheck} = useSelector((state) => state.productReducer);
 
-  let CL =  !LoadingCheck && cartList?.data?.items?.map((item)=>{
+  let cartListItems =  !LoadingCheck && cartList?.data?.items?.map((item)=>{
         return item;
   })
-  console.log("Cl",CL);
-  let cartListId = !LoadingCheck && CL?.map((item)=>{
+  let cartListId = !LoadingCheck && cartListItems?.map((item)=>{
      return  item.product._id;
   }) 
-console.log('caa',cartListId);
 
-  let cartListResultdemo = useSelector(
-    (state) => state.productReducer.cartList?.data?.items
-    // .map(
-    //   (item) => item?.products._id || item?.products
-    // )
-  );
-console.log("cartlistdemp",cartListResultdemo);
+console.log("cartListId",cartListId);
+console.log("cartListItems",cartListItems);
   const onClose = (event) => {
     if (event.stopPropagation) {
       event.stopPropagation();
@@ -218,18 +211,17 @@ console.log("cartlistdemp",cartListResultdemo);
     // event.preventDefault();
 
     if (localStorage.getItem("userInfo")) {
-      if (cartListId?.includes(Id)) {
-        dispatch(
-          getCartOperations({
-            id: Id,
-            size: selectedSize,
-            qty: selectedQty,
-            type: "DELETE",
-            tokenValue: JSON.parse(localStorage.getItem("userInfo"))[0],
-            suffix: Id,
-          })
-        );
-      } else {
+      if (cartListId && !cartListId?.includes(Id)) {
+        // dispatch(
+        //   getCartOperations({
+        //     id: Id,
+        //     size: selectedSize,
+        //     qty: selectedQty,
+        //     type: "DELETE",
+        //     tokenValue: JSON.parse(localStorage.getItem("userInfo"))[0],
+        //     suffix: Id,
+        //   })
+        // );
         dispatch(
           getCartOperations({
             id: Id,
@@ -237,10 +229,12 @@ console.log("cartlistdemp",cartListResultdemo);
             type: "PATCH",
             tokenValue: JSON.parse(localStorage.getItem("userInfo"))[0],
             suffix: Id,
-            qty: selectedQty,
+            // qty: selectedQty,
           })
         );
-      }
+      }else{
+        // navigate("/CartPage")
+      } 
     } else {
       navigate("/LoginPage");
     }
@@ -256,11 +250,14 @@ console.log("cartlistdemp",cartListResultdemo);
       cartListHandler(event, Id, selectedSize);
     }
 
-    if (isAddedToCart) {
-      navigate("/CartPage");
-    }
-    // setIsAddedToCart(() => !isAddedToCart);
+    // if (isAddedToCart) {
+    //   navigate("/CartPage");
+    // }
   };
+
+  // useEffect(()=>{
+  //   cartListHandler((event)=>event,Id,selectedSize);
+  // },[selectedSize])
 
   useEffect(() => {
     const pincodeDetails = JSON.parse(
@@ -279,9 +276,7 @@ console.log("cartlistdemp",cartListResultdemo);
       });
     }
   }, [params]);
-  // console.log("productInfo", productInfo);
 
-  // console.log("cartList", cartListResult);
   return (
     <>
       <div className="relative">

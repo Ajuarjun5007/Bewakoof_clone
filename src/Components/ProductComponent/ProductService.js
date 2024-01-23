@@ -16,7 +16,18 @@ const productDetail = async (id) => {
       console.error("Error fetching data:", error);
     }
   };
-
+  const cartProductDetail = async (id) => {
+    const suffix="ecommerce/cart/"+id;
+    try {
+      const response = await instance.get(
+        suffix,
+      );
+  
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
   const productFilterService = async (filters = {}) => {
     const size = 'size';
     const val = 'M';
@@ -70,4 +81,4 @@ const productDetail = async (id) => {
     }
   };
   
-export {productDetail,productFilterService,productReview,addReview};
+export {cartProductDetail,productDetail,productFilterService,productReview,addReview};

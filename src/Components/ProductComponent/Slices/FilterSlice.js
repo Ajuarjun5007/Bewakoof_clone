@@ -79,7 +79,7 @@ export const getCartOperations = createAsyncThunk(
       let raw = JSON.stringify({
         productId: id,
         size: size,
-        quantity: qty,
+        // quantity: qty,
       });
       requestOptions = {
         method: type,
@@ -95,10 +95,10 @@ export const getCartOperations = createAsyncThunk(
       };
     }
     let url = BASE_URL + "cart/" + suffix;
-    console.log("fetch call", url, requestOptions, suffix);
+    // console.log("fetch call", url, requestOptions, suffix);
     try {
       const response = await fetch(url, requestOptions);
-      console.log("slice", response);
+      // console.log("slice", response);
       if (response.ok) {
         const result = await response.json();
         return result;
