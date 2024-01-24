@@ -24,21 +24,22 @@ const CartPagePresent=()=>{
   let { cartList, isLoading: LoadingCheck } = useSelector(
     (state) => state.productReducer
   );
-
+  // console.log("isLoading",LoadingCheck);
+  
   let cartListItems = !LoadingCheck && cartList?.data?.items;
-    // let cartListSize = !LoadingCheck &&
-    // cartList?.data?.items?.map((item) => {
-    //   return item.size;
-    // });
-    // console.log("cartListSize",cartListSize);
-//   let cartListId =
-//     !LoadingCheck &&
-//     cartListItems?.map((item) => {
-//       return item.product.size;
-//     });
+    let cartListSize = !LoadingCheck &&
+    cartList?.data?.items?.map((item) => {
+      return item.size;
+    });
+  
+   let cartListId =
+    !LoadingCheck &&
+    cartListItems?.map((item) => {
+      return item?.product;
+    });
   //   console.log("w",wishListResult);
-  // console.log("cartListItems", cartListItems);
-//   console.log("cartListId", cartListId);
+  console.log("cartListItems", cartListItems);
+  // console.log("cartListId", cartListId);
 //   console.log("add");
   return (
     <>
@@ -69,7 +70,7 @@ const CartPagePresent=()=>{
                     Id={item.product._id} 
                     name={item.product.name}
                     price={item.product.price}
-                    quantity={item.product.quantity}
+                    quantity={item.quantity}
                     size={item.size}
                     image={item.product.displayImage}
                     />

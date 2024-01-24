@@ -79,7 +79,7 @@ export const getCartOperations = createAsyncThunk(
       let raw = JSON.stringify({
         productId: id,
         size: size,
-        // quantity: qty,
+        quantity: Number(qty),
       });
       requestOptions = {
         method: type,

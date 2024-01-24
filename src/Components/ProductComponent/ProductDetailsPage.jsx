@@ -219,6 +219,7 @@ console.log("cartListItems",cartListItems);
             type: "PATCH",
             tokenValue: JSON.parse(localStorage.getItem("userInfo"))[0],
             suffix: Id,
+            qty:1,
           })
         );
       }else{

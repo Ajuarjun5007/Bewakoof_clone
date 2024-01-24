@@ -7,7 +7,7 @@ function WishlistPage() {
       (item) => item?.products._id || item?.products
     )
   );
-  console.log("wishListResult", wishListResult);
+  // console.log("wishListResult", wishListResult);
 
   return (
     <>

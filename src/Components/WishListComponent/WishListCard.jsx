@@ -60,13 +60,14 @@ function WishListCard({ Id }) {
           type: "PATCH",
           tokenValue: JSON.parse(localStorage.getItem("userInfo"))[0],
           suffix: Id,
+          qty:1,
         })
       );
     console.log("add to bag clicked");
   }
   
-  console.log("wishcart", cartListItems);
-  console.log("Pi", productInfo);
+  // console.log("wishcart", cartListItems);
+  // console.log("Pi", productInfo);
 
   return (
     <>

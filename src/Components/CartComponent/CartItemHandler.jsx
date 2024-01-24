@@ -7,7 +7,7 @@ function CartItemHandler({
   title,
   heading,
   handleQty,
-  initialQuantity = options?.[0],
+  initialQuantity = options[0],
 }) {
   const [selected, setSelected] = useState(initialQuantity);
   const [modalOpen, setModalOpen] = useState(false);
@@ -25,18 +25,22 @@ function CartItemHandler({
 
   const handleSelect = (e) => {
     const { textContent } = e.target;
+    console.log("textContent", textContent);
+  
     if (handleQty) {
-      handleQty(Number(textContent));
+      handleQty(textContent);
     }
+  
     setSelected(textContent);
     onClose(e);
   };
+  
   const handleModalClose = (e) => {
     if (e.target === e.currentTarget) {
       onClose(e);
     }
   };
-  // console.log("options",options)
+//  console.log("se",selected);
   return (
     <>
       <div
@@ -68,7 +72,7 @@ function CartItemHandler({
                     className={`p-3 hover:bg-[#e6e6e6] cursor-pointer ${
                       selected === value ? "text-[#51cccc]" : ""
                     }`}
-                    onClick={handleSelect}
+                    onClick={(e)=>handleSelect(e)}
                     key={id}
                   >
                     {value}

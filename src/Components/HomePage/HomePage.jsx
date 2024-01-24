@@ -83,7 +83,7 @@ function HomePage() {
   };
   const [userLoggedIn, setUserLoggedIn] = useState(false);
   let {wishList} = useSelector(
-    (state) => state.productReducer.cartList);
+    (state) => state.productReducer.wishList);
     console.log("wishList", wishList);
   const dispatch = useDispatch();
   const callProduct=()=>{

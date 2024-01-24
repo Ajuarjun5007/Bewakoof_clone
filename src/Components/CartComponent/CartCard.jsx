@@ -11,7 +11,7 @@ import { useSelector,useDispatch } from "react-redux";
 import { getCartOperations,getWishListOperations} from "../ProductComponent/Slices/FilterSlice";
 
 function Cartcard({ Id,name,price,quantity,size,image }) {
- 
+  const sizes = ["S","L","M","XL","XXL"];
   const quantities = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   
   const [qty, setQty] = useState(1);
@@ -20,8 +20,9 @@ function Cartcard({ Id,name,price,quantity,size,image }) {
   const [cartProductInfo, setCartProductInfo] = useState([]);
 
 
-  
-  const [selectedSize, setSelectedSize] = useState("s");
+  console.log("quantity",quantity);
+
+  const [selectedSize,setSelectedSize] = useState(size);
   const [selectedQty, setSelectedQty] = useState(quantities[0]);
   const [modalOpen, setModalOpen] = useState(false);
   const onClose = (e) => {
@@ -41,39 +42,40 @@ function Cartcard({ Id,name,price,quantity,size,image }) {
     if (handleQty) {
       handleQty(Number(value));
     }
-    // setSelectedSize(value);
     onClose(event);
   };
-  const handleModalClose = (e) => {
-    if (e.target === e.currentTarget) {
-      onClose(e);
+ 
+  const handleSizeChange = (sizeToSet) => {
+    setSelectedSize(sizeToSet);
+    dispatch(
+      getCartOperations({
+        id: Id,
+        size: sizeToSet,
+        type: "PATCH",
+        tokenValue: JSON.parse(localStorage.getItem("userInfo"))[0],
+        suffix: Id,
+        qty:selectedQty,
+      })
+    );
+  }
+
+  const handleQtyChange = (quantityToSet) => {
+    if(Number(quantityToSet)){
+      setSelectedQty(quantityToSet);
+      const resQty = quantityToSet - quantity;
+      dispatch(
+        getCartOperations({
+          id: Id,
+          size: selectedSize,
+          type: "PATCH",
+          tokenValue: JSON.parse(localStorage.getItem("userInfo"))[0],
+          suffix: Id,
+          qty:resQty,
+        })
+      );
     }
   };
-
-  
-
-  const handleQtyChange = (quantity) => {
-    if(Number(quantity)){
-      setSelectedQty(quantity);
-      console.log("qt",quantity);
-    }else{
-      setSelectedSize(quantity);
-      console.log("szqt",quantity);
-    }
-  };
-  // useEffect(()=>{
-  //   dispatch(
-  //     getCartOperations({
-  //       id: Id,
-  //       size: selectedSize,
-  //       type: "PATCH",
-  //       tokenValue: JSON.parse(localStorage.getItem("userInfo"))[0],
-  //       suffix: Id,
-  //       qty: selectedQty,
-  //     })
-  //   );
-  // },[selectedSize,selectedQty])
-  // console.log("pi", productInfo);
+  console.log("Id",Id);
  function removefromCart(Id){
     dispatch(
       getCartOperations({
@@ -109,11 +111,13 @@ function Cartcard({ Id,name,price,quantity,size,image }) {
       );
  
 }
-  // console.log('selectedSize',selectedSize);
-  // console.log('selectedQty',selectedQty);
+  console.log('selectedSize',selectedSize);
+  console.log('selectedQty',selectedQty);
+  let ProductPrice = price*quantity;
+  console.log("ProdPrice",ProductPrice);
   // console.log("Id",Id);
-  console.log("prisize",cartProductInfo && cartProductInfo);
-  console.log("s",size);
+  // console.log("prisize",cartProductInfo && cartProductInfo);
+  // console.log("s",size);
   return (
     <>
       <div className="px-4">
@@ -126,17 +130,17 @@ function Cartcard({ Id,name,price,quantity,size,image }) {
                 </span>
                 <div className="flex items-center my-[6px]">
                   <span className="text-[#333] font-semibold mr-1">
-                    ₹{price}{" "}
+                    ₹{ProductPrice}{" "}
                   </span>
                   <span className="text-[#9c9c9c] text-sm line-through">
-                    {Math.round(price * 0.5 + price)}
+                    {Math.round(ProductPrice * 0.5 + ProductPrice)}
                   </span>
                 </div>
                 <div className="block text-[16px] text-[#1d8802] font-[400] pt-1 pb-3">
                   <p>
                     You Saved ₹{" "}
-                    {Math.round((price) * 0.5 + (price)) -
-                      (price)}
+                    {Math.round((ProductPrice) * 0.5 + (ProductPrice)) -
+                      (ProductPrice)}
                     !
                   </p>
                 </div>
@@ -144,11 +148,11 @@ function Cartcard({ Id,name,price,quantity,size,image }) {
                   {
                    
                       <CartItemHandler
-                        options={size}
+                        options={sizes}
                         title={"Size"}
                         heading={"Select Size"}
-                        handleQty={handleQtyChange}
-                        productSizes={size}
+                        handleQty={handleSizeChange}
+                        initialQuantity={selectedSize}
                       />
                     
                   }
@@ -157,6 +161,8 @@ function Cartcard({ Id,name,price,quantity,size,image }) {
                     title={"Qty"}
                     heading={"Select Quantity"}
                     handleQty={handleQtyChange}
+                    initialQuantity={quantity}
+
                   />
                 </div>
               </div>
