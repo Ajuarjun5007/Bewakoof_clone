@@ -32,14 +32,18 @@ const CartPagePresent=()=>{
       return item.size;
     });
   
-   let cartListId =
+ let  cartListTotalPrice=
     !LoadingCheck &&
     cartListItems?.map((item) => {
-      return item?.product;
+      let price = item?.product.price;
+      let qty = item?.quantity;
+      let itemPrice = price*qty;
+      return itemPrice;
     });
+    let total = cartListTotalPrice?.reduce((acc, currentValue) => acc + currentValue, 0);
   //   console.log("w",wishListResult);
   console.log("cartListItems", cartListItems);
-  // console.log("cartListId", cartListId);
+  console.log("cartListTotalPrice", cartListTotalPrice);
 //   console.log("add");
   return (
     <>
@@ -133,7 +137,7 @@ const CartPagePresent=()=>{
                   <div className="px-4 pt-5">
                     <div className="flex justify-between pb-3 text-[13px] text-[#333]">
                       <p className="font-[400]">Total MRP (Incl. of taxes)</p>
-                      <p className="font-[500]">₹ 999</p>
+                      <p className="font-[500]">₹ {total}</p>
                     </div>
                   </div>
                   <div className="px-4 py-0">
@@ -147,7 +151,7 @@ const CartPagePresent=()=>{
                       <p className="font-bold text-[15px] tracking-wider">
                         Subtotal
                       </p>
-                      <p className="font-bold text-[15px]">₹ 999</p>
+                      <p className="font-bold text-[15px]">₹ {total}</p>
                     </div>
                   </div>
                   <div className="mt-4 flex items-center justify-between">
@@ -155,7 +159,7 @@ const CartPagePresent=()=>{
                       <span className="font-[450] text-[#333]">Total</span>
                       <div className="font-bold text-[#333]">
                         <span>₹</span>
-                        <p className="text-base inline">999</p>
+                        <p className="text-base inline">{total}</p>
                       </div>
                     </div>
                     <button
