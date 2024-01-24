@@ -212,16 +212,6 @@ console.log("cartListItems",cartListItems);
 
     if (localStorage.getItem("userInfo")) {
       if (cartListId && !cartListId?.includes(Id)) {
-        // dispatch(
-        //   getCartOperations({
-        //     id: Id,
-        //     size: selectedSize,
-        //     qty: selectedQty,
-        //     type: "DELETE",
-        //     tokenValue: JSON.parse(localStorage.getItem("userInfo"))[0],
-        //     suffix: Id,
-        //   })
-        // );
         dispatch(
           getCartOperations({
             id: Id,
@@ -229,7 +219,6 @@ console.log("cartListItems",cartListItems);
             type: "PATCH",
             tokenValue: JSON.parse(localStorage.getItem("userInfo"))[0],
             suffix: Id,
-            // qty: selectedQty,
           })
         );
       }else{

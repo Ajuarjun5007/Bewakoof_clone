@@ -8,7 +8,7 @@ import { cartProductDetail } from "../ProductComponent/ProductService";
 import { Link } from "react-router-dom";
 import Loader from "../Loader";
 import { useSelector,useDispatch } from "react-redux";
-import { getCartOperations } from "../ProductComponent/Slices/FilterSlice";
+import { getCartOperations,getWishListOperations} from "../ProductComponent/Slices/FilterSlice";
 
 function Cartcard({ Id,name,price,quantity,size,image }) {
  
@@ -86,6 +86,29 @@ function Cartcard({ Id,name,price,quantity,size,image }) {
       })
     );
  }
+ function moveToWishList(Id){
+  if (localStorage.getItem("userInfo")) {
+  dispatch(
+    getCartOperations({
+      id: Id,
+      size: 'S',
+      type: "DELETE",
+      tokenValue: JSON.parse(localStorage.getItem("userInfo"))[0],
+      suffix: Id,
+      qty: '1',
+    })
+  );
+  }
+      dispatch(
+        getWishListOperations({
+          id: Id,
+          type: "PATCH",
+          tokenValue: JSON.parse(localStorage.getItem("userInfo"))[0],
+          suffix: Id,
+        })
+      );
+ 
+}
   // console.log('selectedSize',selectedSize);
   // console.log('selectedQty',selectedQty);
   // console.log("Id",Id);
@@ -162,7 +185,9 @@ function Cartcard({ Id,name,price,quantity,size,image }) {
              className="py-5 border-r border-t flex-1  justify-center cursor-pointer">
               Remove
             </button>
-            <button className="py-5 border-l border-t flex-[2] cursor-pointer">
+            <button 
+            onClick={()=>moveToWishList(Id)}
+            className="py-5 border-l border-t flex-[2] cursor-pointer">
               Move to Wishlist
             </button>
           </div>

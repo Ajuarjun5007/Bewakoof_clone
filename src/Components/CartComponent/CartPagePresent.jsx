@@ -37,7 +37,7 @@ const CartPagePresent=()=>{
 //       return item.product.size;
 //     });
   //   console.log("w",wishListResult);
-  console.log("cartListItems", cartListItems);
+  // console.log("cartListItems", cartListItems);
 //   console.log("cartListId", cartListId);
 //   console.log("add");
   return (
@@ -46,9 +46,8 @@ const CartPagePresent=()=>{
         <div className="  w-85 ">
           <div className="px-4 pb-10 flex justify-start">
             <p className="">
-              <strong>My Bag</strong>
-               {/* {cartListId.length} */}
-                item(s){" "}
+              <strong>My Bag </strong>
+                {cartListItems.length}{" "}item(s)
             </p>
           </div>
           <div className="pt-9 flex ">
@@ -84,14 +83,7 @@ const CartPagePresent=()=>{
                 <div className="flex flex-wrap">
                   {wishListResult?.length > 0 &&
                     wishListResult?.map((Id) => (
-                      <Link
-                        key={Id}
-                        to={{
-                          pathname: `/ProductDetailsPage/${Id}`,
-                        }}
-                      >
                         <WishListCard key={Id} Id={Id} />
-                      </Link>
                     ))}
                 </div>
               </div>

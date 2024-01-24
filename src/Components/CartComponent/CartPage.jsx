@@ -5,8 +5,8 @@ import CartPagePresent from "../CartComponent/CartPagePresent";
 function CartPage(){
     let {cartList, isLoading: LoadingCheck} = useSelector((state) => state.productReducer);
 
-    let cartListItems = !LoadingCheck && cartList?.data?.items ? cartList.data.items.map((item) => item) : [];
-  
+    let cartListItems = !LoadingCheck && cartList?.data?.items?cartList.data.items.map((item) => item) : [];
+  // console.log("cart",cartListItems);
     return (
         <>
         {

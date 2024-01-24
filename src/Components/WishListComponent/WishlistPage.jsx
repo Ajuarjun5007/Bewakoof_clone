@@ -14,13 +14,7 @@ function WishlistPage() {
       <div className="flex justify-center items-center mt-[120px] flex-wrap gap-1">
         {wishListResult?.length > 0 &&
           wishListResult?.map((Id) => 
-          <Link
-          key={Id}
-          to={{
-            pathname: `/ProductDetailsPage/${Id}`,
-          }}>
           <WishListCard key={Id} Id={Id} />
-          </Link>
           )}
         {wishListResult?.length === 0 && (
           <div className="mx-w-[450px] pb-[80px]  flex flex-col items-center justify-center">

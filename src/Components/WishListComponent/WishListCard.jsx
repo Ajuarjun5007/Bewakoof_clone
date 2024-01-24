@@ -4,11 +4,12 @@ import crossbtn_img from "../../assets/crossBtn.svg";
 import { AiFillStar } from "react-icons/ai";
 import { FaStar } from "react-icons/fa6";
 import { useSelector, useDispatch } from "react-redux";
-
+import { Link } from "react-router-dom";
 import {
   applyFilters,
   getProductList,
   getWishListOperations,
+  getCartOperations,
 } from "../ProductComponent/Slices/FilterSlice";
 import { productDetail } from "../ProductComponent/ProductService";
 import { useEffect, useState } from "react";
@@ -16,19 +17,29 @@ import { useEffect, useState } from "react";
 function WishListCard({ Id }) {
   const [productInfo, setProductInfo] = useState([]);
   const dispatch = useDispatch();
-
-//   console.log("Id", Id);
+  let { cartList, isLoading: LoadingCheck } = useSelector(
+    (state) => state.productReducer
+  );
+  let cartListItems = !LoadingCheck && cartList?.data?.items?cartList.data.items.map((item) => item) : [];
   useEffect(() => {
-    if (Id !== undefined) {
-      productDetail(Id).then((res) => {
-        setProductInfo(res.data);
-      });
-    }
-  }, []);
+    const fetchData = async () => {
+      if (Id !== undefined) {
+        try {
+          const res = await productDetail(Id);
+          if (res && res?.data) {
+            setProductInfo(res.data);
+          }
+        } catch (error) {
+          console.error("Error fetching product details:", error);
+        }
+      }
+    };
+    fetchData();
+  }, [Id]);
+
   function removeItemFromWishList(event, Id) {
     event.stopPropagation();
     event.preventDefault();
-
     dispatch(
       getWishListOperations({
         id: Id,
@@ -38,32 +49,57 @@ function WishListCard({ Id }) {
       })
     );
   }
+
+  function addToBag(Id) {
+    // event.stopPropagation();
+    // event.preventDefault();
+      dispatch(
+        getCartOperations({
+          id: Id,
+          size: 'S',
+          type: "PATCH",
+          tokenValue: JSON.parse(localStorage.getItem("userInfo"))[0],
+          suffix: Id,
+        })
+      );
+    console.log("add to bag clicked");
+  }
+  
+  console.log("wishcart", cartListItems);
+  console.log("Pi", productInfo);
+
   return (
     <>
       <div className=" w-[266px] relative mt-[10px] ml-[20px] mb-[30px]">
         <div className=" border lg:border-none rounded-sm ">
           {/* <Link to={`/p/${_id}`}> */}
-          <div className="overflow-hidden relative mt">
-            <img
-              className="w-[266px] fog h-[330px] transition-all hover:scale-105 aspect-[5/7] object-cover object-top"
-              src={productInfo?.displayImage}
-              alt={name}
-            />
-            {/* {
+          <Link
+            key={Id}
+            to={{
+              pathname: `/ProductDetailsPage/${Id}`,
+            }}
+          >
+            <div className="overflow-hidden relative mt">
+              <img
+                className="w-[266px] fog h-[330px] transition-all hover:scale-105 aspect-[5/7] object-cover object-top"
+                src={productInfo?.displayImage}
+                alt={name}
+              />
+              {/* {
                             !!ratings && */}
-            <div className="flex items-center gap-[5px] py-[1px] pl-[8px] pr-[4px] absolute bottom-5 bg-white">
-              <FaStar className="text-[#ffc700] text-[9px]" />
-              <p className="text-[#337ab7] text-[10px]">
-                {productInfo?.ratings?.toFixed(1)}
-                {/* 4.2 */}
-              </p>
-            </div>
-            {/* } */}
-            {/* <div className="tagContainer  bg-[#525252cc] absolute top-0 left-0 min-h-4 flex items-center">
+              <div className="flex items-center gap-[5px] py-[1px] pl-[8px] pr-[4px] absolute bottom-5 bg-white">
+                <FaStar className="text-[#ffc700] text-[9px]" />
+                <p className="text-[#337ab7] text-[10px]">
+                  {productInfo?.ratings?.toFixed(1)}
+                  {/* 4.2 */}
+                </p>
+              </div>
+              {/* } */}
+              {/* <div className="tagContainer  bg-[#525252cc] absolute top-0 left-0 min-h-4 flex items-center">
                             <span className="tagText text-white font-semibold px-1 py-[2px] md:px-2 text-[10px]">OVERSIZED FIT</span>
                         </div> */}
-          </div>
-          {/* </Link> */}
+            </div>
+          </Link>
 
           <div className="cardDetails border pt-1 px-1 md:pt-2 md:px-2 pb-2`">
             <div className="flex">
@@ -81,10 +117,8 @@ function WishListCard({ Id }) {
                 ₹<strong>{productInfo?.price}</strong>
               </p>
               <p className="line-through text-[#949494] text-[12px]">
-                                        {Math.round(
-                                          productInfo?.price * 0.5 + productInfo?.price
-                                        )}
-                                      </p>
+                {Math.round(productInfo?.price * 0.5 + productInfo?.price)}
+              </p>
               <p className="pl-2 text-[#00b852] text-[10px] md:text-xs whitespace-nowrap">
                 {" "}
                 {Math.round(
@@ -100,16 +134,32 @@ function WishListCard({ Id }) {
           </div>
         </div>
 
-        <div 
-        onClick={(event)=>removeItemFromWishList(event,productInfo?._id)}
-        className="absolute top-2 right-2 cursor-pointer">
+        <div
+          onClick={(event) => removeItemFromWishList(event, productInfo?._id)}
+          className="absolute top-2 right-2 cursor-pointer"
+        >
           <img className="" src={crossbtn_img} alt="" />
         </div>
         {/* {!isAddedToCart && */}
-        <div className=" flex items-center justify-center gap-2 cursor-pointer border border-t-0 text-[10px] text-[#207bb4] px-3 py-2 font-semibold hover:text-[#333] hover:bg-[#e6e6e6]">
+        {/* <div 
+        onClick={()=>addToBag(Id)}
+        className=" flex items-center justify-center gap-2 cursor-pointer border border-t-0 text-[10px] text-[#207bb4] 
+        px-3 py-2 font-semibold hover:text-[#333] hover:bg-[#e6e6e6]
+        ">
+          <img src={bag_img} alt="" />
+          <span className="">ADD TO BAG</span>
+        </div> */}
+        <div
+          onClick={() => {
+            addToBag(Id);
+            console.log("Clicked ADD TO BAG");
+          }}
+          className="flex items-center justify-center gap-2 cursor-pointer border border-t-0 text-[10px] text-[#207bb4] px-3 py-2 font-semibold hover:text-[#333] hover:bg-[#e6e6e6]"
+        >
           <img src={bag_img} alt="" />
           <span className="">ADD TO BAG</span>
         </div>
+
         {/* } */}
       </div>
     </>
