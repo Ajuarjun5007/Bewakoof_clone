@@ -47,7 +47,7 @@ function App() {
   }, [location]);
 
   let isMobile = screenSize < 1000;
-
+  console.log("Footerdisplay",footerDisplay);
   return (
     <>
       {!isMobile && (

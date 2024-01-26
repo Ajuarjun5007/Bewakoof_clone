@@ -1,10 +1,40 @@
 import PaymentType from "./PaymentType";
 import { useState } from "react";
 import comingSoon from "../../assets/coming-soon.webp";
-function PaymentPage() {
-  const [activeTab, setActiveTab] = useState(4);
+import { useSelector, useDispatch } from "react-redux";
+import * as Accordion from "@radix-ui/react-accordion";
+import { ChevronDownIcon } from "@radix-ui/react-icons";
+import React from "react";
+import classNames from "classnames";
+import rightArrow from "../../assets/right-arrow-address.svg";
+import { Link } from "react-router-dom";
 
+function PaymentPage() {
+  const userDetails =
+    localStorage.getItem("userInfo") && localStorage.getItem("userInfo");
+    const user = JSON.parse(userDetails)?.[1]?.name;
+  const [activeTab, setActiveTab] = useState(4);
+  let { cartList, isLoading: LoadingCheck } = useSelector(
+    (state) => state.productReducer
+  );
+
+  let cartListItems = !LoadingCheck && cartList?.data?.items;
+
+  let cartListTotalPrice =
+    !LoadingCheck &&
+    cartListItems?.map((item) => {
+      let price = item?.product.price;
+      let qty = item?.quantity;
+      let itemPrice = price * qty;
+      return itemPrice;
+    });
+    let total = Array.isArray(cartListTotalPrice)
+    ? cartListTotalPrice.reduce((acc, currentValue) => acc + currentValue, 0)
+    : 0;
+  
   console.log("activetab", activeTab);
+  
+  console.log("user", user);
   return (
     <>
       <div className="flex justify-center">
@@ -20,16 +50,17 @@ function PaymentPage() {
                   />
                   <div className="paymentTabDetails flex-[2] flex justify-center items-center px-4">
                     {activeTab != 4 ? (
-                      <div
-                        className="flex  items-center my-2 text-sm sm:text-base "
-                      >
+                      <div className="flex  items-center my-2 text-sm sm:text-base ">
                         This Payment method in updation.
                       </div>
                     ) : (
                       <div className="my-3 text-sm sm:text-base">
-            <p className="text-[#4e5664] font-medium mb-4">Cash handling charges of ₹ 20 are applicable</p>
-            <button 
-             className="cursor-pointer h-12 text-sm font-semibold w-full border-none outline-none flex bg-[#42a2a2] hover:bg-opacity-90 justify-center items-center rounded-md text-white">Pay </button>
+                        <p className="text-[#4e5664] font-medium mb-4">
+                          Cash handling charges of ₹ 20 are applicable
+                        </p>
+                        <button className="cursor-pointer h-12 text-sm font-semibold w-full border-none outline-none flex bg-[#42a2a2] hover:bg-opacity-90 justify-center items-center rounded-md text-white">
+                          Pay ₹{20 + total}
+                        </button>
                       </div>
                     )}
                   </div>
@@ -38,36 +69,44 @@ function PaymentPage() {
 
               {/* ! right side ! */}
               <div className="pmt-right md:flex-1 px-4 lg:px-0 lg:pl-4 mb-4 lg:border-l bg-[#f7f7f7] lg:bg-white border-[#d6d6d6]">
-                    <div className="border bg-white border-[#d6d6d6] px-4 rounded-md mb-4 hover:shadow-md transition-all">
-                    </div>
-                    <div className="border bg-white border-[#d6d6d6] px-4 rounded-md mb-4 hover:shadow-md transition-all">
-                    </div>
-                    <div className="summaryBorderBox md:sticky md:top-24  md:mb-8">
-                        <div className="sectionHeading py-3 px-5 text-xs font-bold">
-                            <h4 className="">PRICE SUMMARY</h4>
-                        </div>
-                        <div className="paymentBox bg-white font-medium">
-                            <div className="pmtsWrap p-4">
-                                <div className="flex justify-between pb-3 text-xs">
-                                    <p>Total MRP (Incl. of taxes)</p>
-                                    <p>₹1000</p>
-                                </div>
-                                <div className="flex justify-between pb-3 text-xs">
-                                    <p>Shipping Charges</p>
-                                    <p className="text-[#42a2a2]">FREE</p>
-                                </div>
-                                <div className="justify-between pb-3 text-xs hidden">
-                                    <p>Discount on MRP</p>
-                                    <p>- ₹1000</p>
-                                </div>
-                                <div className="flex border-t-2 justify-between py-3 text-sm font-semibold">
-                                    <p>Final amount</p>
-                                    <p>₹1000</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div className="flex justify-between items-center border bg-white border-b-[#d6d6d6] px-4 py-2 rounded-md mb-4 hover:shadow-md transition-all">
+                  <p>
+                    Delivering Order to{" "}
+                    <storng className="font-[650] text-[16px]">{user}</storng>
+                  </p>
+                  <Link to="/AddressPage">
+                    <img src={rightArrow} alt="" className="h-5" />
+                  </Link>
                 </div>
+                <div className="border bg-white border-[#d6d6d6] px-4 rounded-md mb-4 hover:shadow-md transition-all">
+
+                </div>
+                <div className="summaryBorderBox md:sticky md:top-24  md:mb-8">
+                  <div className="sectionHeading py-3 px-5 text-xs font-bold">
+                    <h4 className="">PRICE SUMMARY</h4>
+                  </div>
+                  <div className="paymentBox bg-white font-medium">
+                    <div className="pmtsWrap p-4">
+                      <div className="flex justify-between pb-3 text-xs">
+                        <p>Total MRP (Incl. of taxes)</p>
+                        <p>₹{total}</p>
+                      </div>
+                      <div className="flex justify-between pb-3 text-xs">
+                        <p>Shipping Charges</p>
+                        <p className="text-[#42a2a2]">FREE</p>
+                      </div>
+                      <div className="justify-between pb-3 text-xs hidden">
+                        <p>Discount on MRP</p>
+                        <p>- ₹{total}</p>
+                      </div>
+                      <div className="flex border-t-2 justify-between py-3 text-sm font-semibold">
+                        <p>Final amount</p>
+                        <p>₹{total}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -75,4 +114,5 @@ function PaymentPage() {
     </>
   );
 }
+
 export default PaymentPage;

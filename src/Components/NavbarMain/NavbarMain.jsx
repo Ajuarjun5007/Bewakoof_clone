@@ -56,7 +56,6 @@ function NavbarMain() {
     }
   }, [location.pathname]);
 
- 
   return (
     <>
       <div className="flex  w-full  fixed z-10 bg-white top-8 pt-[3px] justify-center border-b-[1px] border-[rgba(0,0,0,0.2)] solid ">
@@ -102,13 +101,17 @@ function NavbarMain() {
                         </span>
                         <div className="my-3">
                           {topWearForMen.map((item) => (
-                           <Link
-                            to={`/ProductListPage/${decodeURIComponent(item)}_Men`}
-                            state={{ MenuContent:`Men/${decodeURIComponent(item)}`}}
+                            <Link
+                              to={`/ProductListPage/${decodeURIComponent(
+                                item
+                              )}_Men`}
+                              state={{
+                                MenuContent: `Men/${decodeURIComponent(item)}`,
+                              }}
                             >
-                            <p className="text-[13px] text-[#7f7f7f] py-[3px] hover:underline">
-                              {item}
-                            </p>
+                              <p className="text-[13px] text-[#7f7f7f] py-[3px] hover:underline">
+                                {item}
+                              </p>
                             </Link>
                           ))}
                         </div>
@@ -119,13 +122,17 @@ function NavbarMain() {
                         </span>
                         <div className="my-3">
                           {bottomWearForMen.map((item) => (
-                              <Link
-                              to={`/ProductListPage/${decodeURIComponent(item)}_Men`}
-                              state={{ MenuContent:`Men/${decodeURIComponent(item)}`}}
-                              >
-                            <p className="text-[13px] text-[#7f7f7f] py-[3px] hover:underline">
-                              {item}
-                            </p>
+                            <Link
+                              to={`/ProductListPage/${decodeURIComponent(
+                                item
+                              )}_Men`}
+                              state={{
+                                MenuContent: `Men/${decodeURIComponent(item)}`,
+                              }}
+                            >
+                              <p className="text-[13px] text-[#7f7f7f] py-[3px] hover:underline">
+                                {item}
+                              </p>
                             </Link>
                           ))}
                         </div>
@@ -136,13 +143,17 @@ function NavbarMain() {
                         </span>
                         <div className="my-3">
                           {winterWearForMen.map((item) => (
-                              <Link
-                              to={`/ProductListPage/${decodeURIComponent(item)}_Men`}
-                              state={{ MenuContent:`Men/${decodeURIComponent(item)}`}}
-                              >
-                            <p className="text-[13px] text-[#7f7f7f] py-[3px] hover:underline">
-                              {item}
-                            </p>
+                            <Link
+                              to={`/ProductListPage/${decodeURIComponent(
+                                item
+                              )}_Men`}
+                              state={{
+                                MenuContent: `Men/${decodeURIComponent(item)}`,
+                              }}
+                            >
+                              <p className="text-[13px] text-[#7f7f7f] py-[3px] hover:underline">
+                                {item}
+                              </p>
                             </Link>
                           ))}
                         </div>
@@ -153,13 +164,17 @@ function NavbarMain() {
                         </span>
                         <div className="my-3">
                           {plusSizeForMen.map((item) => (
-                              <Link
-                              to={`/ProductListPage/${decodeURIComponent(item)}_Men`}
-                              state={{ MenuContent:`Men/${decodeURIComponent(item)}`}}
-                              >
-                            <p className="text-[13px] text-[#7f7f7f] py-[3px] hover:underline">
-                              {item}
-                            </p>
+                            <Link
+                              to={`/ProductListPage/${decodeURIComponent(
+                                item
+                              )}_Men`}
+                              state={{
+                                MenuContent: `Men/${decodeURIComponent(item)}`,
+                              }}
+                            >
+                              <p className="text-[13px] text-[#7f7f7f] py-[3px] hover:underline">
+                                {item}
+                              </p>
                             </Link>
                           ))}
                         </div>
@@ -237,13 +252,19 @@ function NavbarMain() {
                         </span>
                         <div className="my-3">
                           {topWearForWomen.map((item) => (
-                              <Link
-                              to={`/ProductListPage/${decodeURIComponent(item)}_Women`}
-                              state={{ MenuContent:`Women/${decodeURIComponent(item)}`}}
-                              >
-                            <p className="text-[13px] text-[#7f7f7f] py-[3px] hover:underline">
-                              {item}
-                            </p>
+                            <Link
+                              to={`/ProductListPage/${decodeURIComponent(
+                                item
+                              )}_Women`}
+                              state={{
+                                MenuContent: `Women/${decodeURIComponent(
+                                  item
+                                )}`,
+                              }}
+                            >
+                              <p className="text-[13px] text-[#7f7f7f] py-[3px] hover:underline">
+                                {item}
+                              </p>
                             </Link>
                           ))}
                         </div>
@@ -254,13 +275,19 @@ function NavbarMain() {
                         </span>
                         <div className="my-3">
                           {bottomWearForWomen.map((item) => (
-                              <Link
-                              to={`/ProductListPage/${decodeURIComponent(item)}_Women`}
-                              state={{ MenuContent:`Women/${decodeURIComponent(item)}`}}
-                              >
-                            <p className="text-[13px] text-[#7f7f7f] py-[3px] hover:underline">
-                              {item}
-                            </p>
+                            <Link
+                              to={`/ProductListPage/${decodeURIComponent(
+                                item
+                              )}_Women`}
+                              state={{
+                                MenuContent: `Women/${decodeURIComponent(
+                                  item
+                                )}`,
+                              }}
+                            >
+                              <p className="text-[13px] text-[#7f7f7f] py-[3px] hover:underline">
+                                {item}
+                              </p>
                             </Link>
                           ))}
                         </div>
@@ -271,13 +298,19 @@ function NavbarMain() {
                         </span>
                         <div className="my-3">
                           {winterWearForWomen.map((item) => (
-                              <Link
-                              to={`/ProductListPage/${decodeURIComponent(item)}_Women`}
-                              state={{ MenuContent:`Women/${decodeURIComponent(item)}`}}
-                              >
-                            <p className="text-[13px] text-[#7f7f7f] py-[3px] hover:underline">
-                              {item}
-                            </p>
+                            <Link
+                              to={`/ProductListPage/${decodeURIComponent(
+                                item
+                              )}_Women`}
+                              state={{
+                                MenuContent: `Women/${decodeURIComponent(
+                                  item
+                                )}`,
+                              }}
+                            >
+                              <p className="text-[13px] text-[#7f7f7f] py-[3px] hover:underline">
+                                {item}
+                              </p>
                             </Link>
                           ))}
                         </div>
@@ -289,17 +322,22 @@ function NavbarMain() {
                         <div className="my-3">
                           {plusSizeForWomen.map((item) => (
                             <Link
-                            to={`/ProductListPage/${decodeURIComponent(item)}_Women`}
-                            state={{ MenuContent:`Women/${decodeURIComponent(item)}`}}
+                              to={`/ProductListPage/${decodeURIComponent(
+                                item
+                              )}_Women`}
+                              state={{
+                                MenuContent: `Women/${decodeURIComponent(
+                                  item
+                                )}`,
+                              }}
                             >
-                            <p className="text-[13px] text-[#7f7f7f] py-[3px] hover:underline">
-                              {item}
-                            </p>
+                              <p className="text-[13px] text-[#7f7f7f] py-[3px] hover:underline">
+                                {item}
+                              </p>
                             </Link>
                           ))}
                         </div>
                       </div>
-                    
                     </div>
                     <div className=" pl-[70px] ">
                       <span className="font-[450] mb-[30px] solid text-[#494949] text-[14px]">
@@ -309,20 +347,20 @@ function NavbarMain() {
                         .fill()
                         .map((_, i) => (
                           <Link
-                          to={`/ProductListPage/${brands[i]}`}
-                          state={{ brand: `Women/${brands[i]}` }}
-                        >
-                          <div
-                            key={i}
-                            className="flex items-center py-[10px] gap-3  font-[400] solid text-[#7f7f7f] text-[13px]"
+                            to={`/ProductListPage/${brands[i]}`}
+                            state={{ brand: `Women/${brands[i]}` }}
                           >
-                            <img
-                              className="h-9 w-9"
-                              src={brandimages[i]}
-                              alt=""
-                            />
-                            {brands[i]}
-                          </div>
+                            <div
+                              key={i}
+                              className="flex items-center py-[10px] gap-3  font-[400] solid text-[#7f7f7f] text-[13px]"
+                            >
+                              <img
+                                className="h-9 w-9"
+                                src={brandimages[i]}
+                                alt=""
+                              />
+                              {brands[i]}
+                            </div>
                           </Link>
                         ))}
                     </div>
@@ -334,18 +372,18 @@ function NavbarMain() {
               onMouseOverCapture={() => setMenuContentForMobile(true)}
               onMouseLeave={() => setMenuContentForMobile(false)}
             >
-            <Link to='/ComingSoonPage'>
-              <span className="text-sm pt-4 px-3 pb-3 leading-3  hover:border-b-[4px] border-hoveryellow">
-                MOBILE COVERS
-              </span>
+              <Link to="/ComingSoonPage">
+                <span className="text-sm pt-4 px-3 pb-3 leading-3  hover:border-b-[4px] border-hoveryellow">
+                  MOBILE COVERS
+                </span>
               </Link>
               {menuContentForMobile && (
-                   <div
+                <div
                   className="flex w-[1140px] justify-center z-11 max-h-[550px] overflow-scroll absolute left-[-150px]
              top-12  border-[1px] bg-white border-[rgba(0,0,0,0.2)]"
                 >
                   <div className=" p-10 mt-10 flex">
-                    <ComingSoon/>
+                    <ComingSoon />
                   </div>
                 </div>
               )}
@@ -392,9 +430,7 @@ function NavbarMain() {
                             My Account
                           </p>
                         </Link>
-                        <Link 
-                        to="/WishlistPage"
-                        >
+                        <Link to="/WishlistPage">
                           <p className="hover:bg-[rgba(0,0,0,.05)]  px-[15px] py-[10px]">
                             My Wishlist
                           </p>
@@ -428,16 +464,12 @@ function NavbarMain() {
               </div>
 
               <span className="px-2 text-[30px] ">
-                <Link 
-                to={`${userLoggedIn?'/WishlistPage':'LoginPage'}`}
-                >
+                <Link to={`${userLoggedIn ? "/WishlistPage" : "LoginPage"}`}>
                   <CiHeart />
                 </Link>
               </span>
               <span className="px-2 text-[22px] ">
-                <Link 
-                to={`${userLoggedIn?'/CartPage':'LoginPage'}`}
-                >
+                <Link to={`${userLoggedIn ? "/CartPage" : "LoginPage"}`}>
                   <BsBag />
                 </Link>
               </span>

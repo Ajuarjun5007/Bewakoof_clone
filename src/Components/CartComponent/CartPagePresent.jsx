@@ -14,7 +14,7 @@ import { useSelector, useDispatch } from "react-redux";
 import WishListCard from "../WishListComponent/WishListCard";
 import { Link } from "react-router-dom";
 
-const CartPagePresent=()=>{
+const CartPagePresent = () => {
   let wishListResult = useSelector((state) =>
     state.productReducer.wishList?.data?.items?.map(
       (item) => item?.products._id || item?.products
@@ -25,26 +25,32 @@ const CartPagePresent=()=>{
     (state) => state.productReducer
   );
   // console.log("isLoading",LoadingCheck);
-  
+
   let cartListItems = !LoadingCheck && cartList?.data?.items;
-    let cartListSize = !LoadingCheck &&
+  let cartListSize =
+    !LoadingCheck &&
     cartList?.data?.items?.map((item) => {
       return item.size;
     });
-  
- let  cartListTotalPrice=
+
+  let cartListTotalPrice =
     !LoadingCheck &&
     cartListItems?.map((item) => {
       let price = item?.product.price;
       let qty = item?.quantity;
-      let itemPrice = price*qty;
+      let itemPrice = price * qty;
       return itemPrice;
     });
-    let total = cartListTotalPrice?.reduce((acc, currentValue) => acc + currentValue, 0);
+  let total = cartListTotalPrice?.reduce(
+    (acc, currentValue) => acc + currentValue,
+    0
+  );
   //   console.log("w",wishListResult);
   console.log("cartListItems", cartListItems);
   console.log("cartListTotalPrice", cartListTotalPrice);
-//   console.log("add");
+  //   console.log("add");
+  let addressInfo = localStorage.getItem("addressInfo");
+
   return (
     <>
       <div className="mt-[120px] flex flex-col items-center justify-center">
@@ -52,7 +58,7 @@ const CartPagePresent=()=>{
           <div className="px-4 pb-10 flex justify-start">
             <p className="">
               <strong>My Bag </strong>
-                {cartListItems.length}{" "}item(s)
+              {cartListItems.length} item(s)
             </p>
           </div>
           <div className="pt-9 flex ">
@@ -68,16 +74,16 @@ const CartPagePresent=()=>{
                 </p>
               </div>
               {!LoadingCheck &&
-                cartListItems?.map((item,index) =>(
-                    <Cartcard 
-                    key={index} 
-                    Id={item.product._id} 
+                cartListItems?.map((item, index) => (
+                  <Cartcard
+                    key={index}
+                    Id={item.product._id}
                     name={item.product.name}
                     price={item.product.price}
                     quantity={item.quantity}
                     size={item.size}
                     image={item.product.displayImage}
-                    />
+                  />
                 ))}
               <div className="flex-wrap">
                 {wishListResult?.length > 0 && (
@@ -88,7 +94,7 @@ const CartPagePresent=()=>{
                 <div className="flex flex-wrap">
                   {wishListResult?.length > 0 &&
                     wishListResult?.map((Id) => (
-                        <WishListCard key={Id} Id={Id} />
+                      <WishListCard key={Id} Id={Id} />
                     ))}
                 </div>
               </div>
@@ -113,8 +119,8 @@ const CartPagePresent=()=>{
               </div>
               <div className="rounded-md px-4 py-1 mb-4 border text-sm">
                 <p>
-                  Whistles! Get extra Rs.100 Discount on all prepaid orders
-                  above Rs.1499. Use Code - EXTRA100.
+                  Get Rs.200 instant discount on your First Purchase above
+                  Rs.999. Coupon code -NEW200
                 </p>
               </div>
               <div className="p-2 border text-xs">
@@ -162,12 +168,26 @@ const CartPagePresent=()=>{
                         <p className="text-base inline">{total}</p>
                       </div>
                     </div>
-                    <button
-                      className="cursor-pointer mr-4 h-10 w-72 font-medium 
+                    {addressInfo ? (
+                      <Link to="/PaymentPage">
+                        <button
+                          className="cursor-pointer mr-4 h-10 w-72 font-medium 
+border-none outline-none flex justify-center items-center rounded-md text-white bg-[#42a2a2] hover:bg-opacity-80"
+                        >
+                          CONTINUE
+                        </button>
+                      </Link>
+                    ) : (
+                      <Link to="/AddressPage">
+                        <button
+                          className="cursor-pointer mr-4 h-10 w-72 font-medium 
         border-none outline-none flex justify-center items-center rounded-md text-white bg-[#42a2a2] hover:bg-opacity-80"
-                    >
-                      CONTINUE
-                    </button>
+                        >
+                          ADD ADDRESS
+                          {/* CONTINUE */}
+                        </button>
+                      </Link>
+                    )}
                   </div>
                 </div>
                 <div className=" py-10 flex justify-center gap-2 text-center">
@@ -218,5 +238,5 @@ const CartPagePresent=()=>{
       </div>
     </>
   );
-}
+};
 export default CartPagePresent;

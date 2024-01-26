@@ -8,6 +8,7 @@ const initialState = {
   error: "",
   dressList: [],
   cartList: [],
+  adddressInfo:[],
 };
 
 export const applyFilters = createAsyncThunk("url", async (filters = {}) => {
@@ -149,7 +150,46 @@ export const getProductList = createAsyncThunk(
     }
   }
 );
+export const updateMe = createAsyncThunk(
+  "produtList/updateMe",
+  async ({ streetValue,zipcodeValue,cityValue,stateValue,countryValue,}, { rejectWithValue }) => {
+    let myHeaders = new Headers();
+    myHeaders.append("projectID", "gams07bkd3di");
+    myHeaders.append("Authorization", `Bearer ${tokenValue}`);
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("accept", "application/json");
 
+    let requestOptions;
+      let raw = JSON.stringify({
+       city:cityValue,
+       street:streetValue,
+       zipcode:zipcodeValue,
+       country:countryValue,
+       state:stateValue,
+      });
+      requestOptions = {
+        method: 'PATCH',
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow",
+      };
+   
+    let url = BASE_URL + "updateme";
+    // console.log("fetch call", url, requestOptions, suffix);
+    try {
+      const response = await fetch(url, requestOptions);
+      // console.log("slice", response);
+      if (response.ok) {
+        const result = await response.json();
+        return result;
+      } else {
+        return rejectWithValue({ error: "fetching failed" });
+      }
+    } catch (error) {
+      return rejectWithValue({ error: "An error occurred during the fetch" });
+    }
+  }
+);
 export const productSlice = createSlice({
   name: "productReducer",
   initialState,
@@ -197,6 +237,20 @@ export const productSlice = createSlice({
       })
 
       .addCase(getCartOperations.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action?.payload?.error;
+      })
+      .addCase(updateMe.pending, (state, action) => {
+        state.isLoading = true;
+      })
+
+      .addCase(updateMe.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.cartList = action.payload;
+        state.error = "";
+      })
+
+      .addCase(updateMe.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action?.payload?.error;
       })

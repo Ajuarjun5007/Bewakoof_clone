@@ -22,37 +22,15 @@ import { IoEye } from "react-icons/io5";
 import { IoEyeOff } from "react-icons/io5";
 
 function LoginPage() {
-  const countryOptions = [
-    { value: "91", label: "+91", image: ind_img },
-    { value: "1", label: "+1", image: canada_img },
-    { value: "61", label: "+61", image: aus_img },
-    { value: "61", label: "+60", image: malaysia_img },
-    { value: "966", label: "+966", image: oman_img },
-    { value: "971", label: "+971", image: qatar_img },
-    { value: "968", label: "+968", image: saudi_img },
-    { value: "974", label: "+974", image: uae_img },
-    { value: "1", label: "+1", image: usa_img },
-    { value: "66", label: "+66", image: thailand_img },
-    { value: "65", label: "+65", image: singapore_img },
-    // Add other options with values, labels,and images as needed
-  ];
+ 
 
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const [selectCountry, setSelectCountry] = useState("+91");
-  const [countryImage, setCountryImage] = useState(ind_img);
-  const [countryDisplay, setCountryDisplay] = useState(false);
-  const navigate = useNavigate();
-  const selectCountryHandler = (item) => {
-    setCountryImage(item.image);
-    setSelectCountry(item.label);
-    setCountryDisplay(false);
-  };
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorAlert, setErrorAlert] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-
+  const navigate = useNavigate();
   let idInfo = [];
 
   const loginHandler = (event) => {
@@ -72,11 +50,12 @@ function LoginPage() {
         localStorage.setItem("userInfo", JSON.stringify(idInfo));
         localStorage.setItem("user", JSON.stringify(response.data.data));
         navigate("/");
+        console.log("navi");
         navigate(0);
       })
       .catch((error) => {
-        console.log("err", error.response.data.message);
-        setErrorMessage(error.response.data.message);
+        console.log("err", error);
+        setErrorMessage(error?.response?.data?.message);
         setErrorAlert(true);
       });
   };

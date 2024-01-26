@@ -15,8 +15,9 @@ import { bottomWearForMen } from "../HomePage/menucontent";
 import { topWearForWomen } from "../HomePage/menucontent";
 import { bottomWearForWomen } from "../HomePage/menucontent";
 import { mobiles } from "../TypeConstants";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
+
 function FooterComponent() {
   const location = useLocation();
   const [bewakoofDetailsShow, setBewakoofDetailsShow] = useState(false);
@@ -185,19 +186,38 @@ function FooterComponent() {
                 <span className="text-[white] font-[900] text-[17px] tracking-[1px]">MEN'S CLOTHING</span>
                 {/* topwear */}
                 <div className=" py-[10px] pt-[30px]">
-                    <p className="text-[hsla(0,0%,100%,.9)] tracking-[1px]">Top Wear</p>
+                    <p className="text-[hsla(0,0%,100%,.9)] text-[14px] pb-[10px] font-[550] tracking-[1px]">Top Wear</p>
                 {
                     topWearForMen.map((item,index)=>(
+                      <Link
+                              to={`/ProductListPage/${decodeURIComponent(
+                                item
+                              )}_Men`}
+                              state={{
+                                MenuContent: `Men/${decodeURIComponent(item)}`,
+                              }}
+                            >
                         <p key={index} className="text-[hsla(0,0%,100%,.9)] tracking-[1px]">{item}</p>
+                             </Link>
                     ))
                 }
                 </div>
                   {/* bottomwear */}
                   <div className=" py-[10px]">
-                    <p className="text-[hsla(0,0%,100%,.9)] tracking-[1px]">Bottom Wear</p>
+                    <p className="text-[hsla(0,0%,100%,.9)] text-[14px] pb-[10px] font-[550] tracking-[1px]">Bottom Wear</p>
                 {
                     bottomWearForMen.map((item,index)=>(
+                      <Link
+                      to={`/ProductListPage/${decodeURIComponent(
+                        item
+                      )}_Men`}
+                      state={{
+                        MenuContent: `Men/${decodeURIComponent(item)}`,
+                      }}
+                    >
                         <p key={index} className="text-[hsla(0,0%,100%,.9)] tracking-[1px]">{item}</p>
+                        </Link>
+                   
                     ))
                 }
                 </div>
@@ -207,19 +227,41 @@ function FooterComponent() {
                 <span className="text-[white] font-[900] text-[17px] tracking-[1px]">WOMEN'S CLOTHING</span>
                 {/* topwear */}
                 <div className=" py-[10px] pt-[30px]">
-                    <p className="text-[hsla(0,0%,100%,.9)] tracking-[1px]">Top Wear</p>
+                    <p className="text-[hsla(0,0%,100%,.9)] text-[14px] pb-[10px] font-[550] tracking-[1px]">Top Wear</p>
                 {
                     topWearForWomen.map((item)=>(
+                      <Link
+                      to={`/ProductListPage/${decodeURIComponent(
+                        item
+                      )}_Women`}
+                      state={{
+                        MenuContent: `Women/${decodeURIComponent(
+                          item
+                        )}`,
+                      }}
+                    >
                         <p className="text-[hsla(0,0%,100%,.9)] tracking-[1px]">{item}</p>
+                      </Link>
                     ))
                 }
                 </div>
                   {/* bottomwear */}
                   <div className=" py-[10px]">
-                    <p className="text-[hsla(0,0%,100%,.9)] tracking-[1px]">Bottom Wear</p>
+                    <p className="text-[hsla(0,0%,100%,.9)] text-[14px] pb-[10px] font-[550] tracking-[1px]">Bottom Wear</p>
                 {
                     bottomWearForWomen.map((item,index)=>(
+                      <Link
+                      to={`/ProductListPage/${decodeURIComponent(
+                        item
+                      )}_Women`}
+                      state={{
+                        MenuContent: `Women/${decodeURIComponent(
+                          item
+                        )}`,
+                      }}
+                    >
                         <p key={index} className="text-[hsla(0,0%,100%,.9)] tracking-[1px]">{item}</p>
+                        </Link>
                     ))
                 }
                 </div>
