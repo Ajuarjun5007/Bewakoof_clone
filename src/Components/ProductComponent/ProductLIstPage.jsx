@@ -24,6 +24,7 @@ import {
 } from "./Slices/FilterSlice";
 import FilterComponent from "./FilterComponent";
 import ComingSoon from "../ComingSoon";
+
 function ProductListPage() {
   const location = useLocation();
   const { state } = location;

@@ -19,17 +19,16 @@ import { innerWearLoungewearForMen } from "../HomePage/menucontent";
 import user_img from "../../assets/user_icon.png";
 import { brands } from "../TypeConstants";
 import { brandimages } from "../imageconstants";
-import { Link, useLocation, useNavigate} from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import "./NavbarMain.css";
 import ComingSoon from "../ComingSoon";
 import { setSearchValue } from "../ProductComponent/Slices/FilterSlice";
 import { useDispatch } from "react-redux";
 function NavbarMain() {
- 
   const [userLoggedIn, setUserLoggedIn] = useState(false);
   const [userDetailsDisplay, setUserDetailsDisplay] = useState(false);
-  const [dressList,setDressList] = useState([]);
+  const [dressList, setDressList] = useState([]);
   const [userName, setUserName] = useState("");
   const location = useLocation();
   const [isVisible, setIsVisible] = useState(false);
@@ -38,11 +37,19 @@ function NavbarMain() {
   const [menuContentForMen, setMenuContentForMen] = useState(false);
   const [menuContentForWomen, setMenuContentForWomen] = useState(false);
   const [menuContentForMobile, setMenuContentForMobile] = useState(false);
-  let userInfo = JSON.parse(localStorage.getItem("userInfo")) || "";
+  
+  // console.log("user",user);
   const searchValueResult = useSelector(
-      (state) => state.productReducer.searchValue
-    );
- 
+    (state) => state.productReducer.searchValue
+  );
+
+  useEffect(()=>{
+    if(localStorage.getItem("userInfo")){
+      setUserLoggedIn(true);
+      let userInfo = JSON.parse(localStorage.getItem("userInfo")) || "";
+      setUserName(JSON.parse(localStorage.getItem("userInfo"))[1].name);
+    }
+  },[])
   const clearStorage = () => {
     localStorage.removeItem("userInfo");
     localStorage.removeItem("user");
@@ -58,21 +65,21 @@ function NavbarMain() {
     }
   }, [location.pathname]);
 
-  function searchHandler(e){
+  function searchHandler(e) {
     const value = e.target.value;
-    console.log("value",e.target.value);
+    console.log("value", e.target.value);
     dispatch(
       setSearchValue({
         id: "",
         type: "GET",
         // tokenValue: JSON.parse(localStorage.getItem("userInfo"))[0],
         suffix: "&limit=10",
-        searchQuery:value,
+        searchQuery: value,
       })
     );
-    }
-  ;
-  console.log("searchvalueresult",searchValueResult);
+  }
+  console.log("searchvalueresult", searchValueResult);
+  console.log("userLog",userLoggedIn);
   return (
     <>
       <div className="flex  w-full  fixed z-10 bg-white top-8 pt-[3px] justify-center border-b-[1px] border-[rgba(0,0,0,0.2)] solid ">
@@ -412,8 +419,7 @@ function NavbarMain() {
             <div className="inputwrapper flex relative  bg-[#eaeaea] mt-1 mb-1 h-10  rounded">
               <IoIosSearch className="absolute left-3.5 top-2 text-[rgba(0,0,0,0.5)] text-[24px]" />
               <input
-              // value={searchValue}
-              onChange={(e)=>searchHandler(e)}
+                onChange={(e) => searchHandler(e)}
                 className=" pr-1.5 pl-10 text-[11px] text-[rgba(0,0,0,0.5)] w-[330px] focus:bg-white focus:border-[1px] bg-[#eaeaea] rounded"
                 type="text"
                 placeholder="Search by product, category or collection"
