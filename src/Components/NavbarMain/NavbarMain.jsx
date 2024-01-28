@@ -25,6 +25,7 @@ import "./NavbarMain.css";
 import ComingSoon from "../ComingSoon";
 import { setSearchValue } from "../ProductComponent/Slices/FilterSlice";
 import { useDispatch } from "react-redux";
+import SearchResultsList from "././SearchResultsList";
 function NavbarMain() {
   const [userLoggedIn, setUserLoggedIn] = useState(false);
   const [userDetailsDisplay, setUserDetailsDisplay] = useState(false);
@@ -37,19 +38,19 @@ function NavbarMain() {
   const [menuContentForMen, setMenuContentForMen] = useState(false);
   const [menuContentForWomen, setMenuContentForWomen] = useState(false);
   const [menuContentForMobile, setMenuContentForMobile] = useState(false);
-  
+  const [searchValue,setSearchValue]=useState('')
   // console.log("user",user);
   const searchValueResult = useSelector(
     (state) => state.productReducer.searchValue
   );
-
-  useEffect(()=>{
-    if(localStorage.getItem("userInfo")){
+  const [searchResultsListHandler,setSearchResultsListHandler] = useState(false);
+  useEffect(() => {
+    if (localStorage.getItem("userInfo")) {
       setUserLoggedIn(true);
       let userInfo = JSON.parse(localStorage.getItem("userInfo")) || "";
       setUserName(JSON.parse(localStorage.getItem("userInfo"))[1].name);
     }
-  },[])
+  }, []);
   const clearStorage = () => {
     localStorage.removeItem("userInfo");
     localStorage.removeItem("user");
@@ -63,23 +64,30 @@ function NavbarMain() {
     } else {
       setIsVisible(false);
     }
+    setSearchResultsListHandler(false);
   }, [location.pathname]);
 
   function searchHandler(e) {
     const value = e.target.value;
+    if(value.length >=2){
+      setSearchResultsListHandler(true);
+    }
     console.log("value", e.target.value);
     dispatch(
       setSearchValue({
         id: "",
         type: "GET",
         // tokenValue: JSON.parse(localStorage.getItem("userInfo"))[0],
-        suffix: "&limit=10",
+        suffix: "&limit=20",
         searchQuery: value,
       })
     );
   }
-  console.log("searchvalueresult", searchValueResult);
-  console.log("userLog",userLoggedIn);
+  function searchDivHandler(value){
+    setSearchResultsListHandler(value);
+  }
+  console.log("searchResultsListHandler", searchResultsListHandler);
+  // console.log("userLog", userLoggedIn);
   return (
     <>
       <div className="flex  w-full  fixed z-10 bg-white top-8 pt-[3px] justify-center border-b-[1px] border-[rgba(0,0,0,0.2)] solid ">
@@ -420,11 +428,20 @@ function NavbarMain() {
               <IoIosSearch className="absolute left-3.5 top-2 text-[rgba(0,0,0,0.5)] text-[24px]" />
               <input
                 onChange={(e) => searchHandler(e)}
+                // value={searchValue}
                 className=" pr-1.5 pl-10 text-[11px] text-[rgba(0,0,0,0.5)] w-[330px] focus:bg-white focus:border-[1px] bg-[#eaeaea] rounded"
                 type="text"
                 placeholder="Search by product, category or collection"
               />
+              {searchResultsListHandler && 
+                <div className="absolute left-0 right-0 top-full bg-white border border-t-0 mt-2">
+                  <SearchResultsList 
+                  searchDivHandler={searchDivHandler}
+                  />
+                </div>
+            }
             </div>
+          
             {/* right navbar */}
             <div
               onMouseOverCapture={() => setUserDetailsDisplay(true)}
