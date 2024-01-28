@@ -16,6 +16,7 @@ import { useEffect, useState } from "react";
 
 function WishListCard({ Id }) {
   const [productInfo, setProductInfo] = useState([]);
+  const [selectedSize,setSelectedSize]=useState([]);
   const dispatch = useDispatch();
   let { cartList, isLoading: LoadingCheck } = useSelector(
     (state) => state.productReducer
@@ -36,7 +37,8 @@ function WishListCard({ Id }) {
     };
     fetchData();
   }, [Id]);
-
+    // const sizeHandler = productInfo?.size
+    // console.log("siz",sizeHandler);
   function removeItemFromWishList(event, Id) {
     event.stopPropagation();
     event.preventDefault();
@@ -51,12 +53,10 @@ function WishListCard({ Id }) {
   }
 
   function addToBag(Id) {
-    // event.stopPropagation();
-    // event.preventDefault();
       dispatch(
         getCartOperations({
           id: Id,
-          size: 'S',
+          size: productInfo?.size[0],
           type: "PATCH",
           tokenValue: JSON.parse(localStorage.getItem("userInfo"))[0],
           suffix: Id,
@@ -67,7 +67,7 @@ function WishListCard({ Id }) {
   }
   
   // console.log("wishcart", cartListItems);
-  // console.log("Pi", productInfo);
+  console.log("Pi", productInfo);
 
   return (
     <>

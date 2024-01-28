@@ -1,17 +1,17 @@
 import { Link, useNavigate } from "react-router-dom";
 import { GoChevronLeft } from "react-icons/go";
 import { useState, useEffect } from "react";
-import { updateMe} from "../ProductComponent/Slices/FilterSlice";
-
+import { getUpdateMe } from "../ProductComponent/Slices/FilterSlice";
+import { useDispatch, useSelector } from "react-redux";
 function AddressPage() {
-  // let user = JSON.parse(localStorage.getItem("userInfo"))[1].name;
+  // let userValue= JSON.parse(localStorage.getItem("userInfo"))[1].name;
+  const dispatch = useDispatch();
   let userInfo = JSON.parse(localStorage.getItem("userInfo"));
-let userName;
-if (userInfo && Array.isArray(userInfo) && userInfo.length > 1) {
-  userName = userInfo[1].name;
-}
-  console.log("user", userName);
-  console.log("userInfo",JSON.parse(localStorage.getItem("userInfo")));
+  let userValue;
+  if (userInfo && Array.isArray(userInfo) && userInfo.length > 1) {
+    userValue = userInfo[1].name;
+  }
+  console.log("user", userValue);
   const navigate = useNavigate();
   const [pincodeErrorAlert, setPinCodeErrorAlert] = useState(true);
   const [cityErrorAlert, setCityErrorAlert] = useState(true);
@@ -20,10 +20,11 @@ if (userInfo && Array.isArray(userInfo) && userInfo.length > 1) {
   const [addressTypeErrorAlert, setAddressTypeErrorAlert] = useState(true);
   const [streetErrorAlert, setStreetErrorAlert] = useState(true);
   const [errorAlert, setErrorAlert] = useState(true);
-  const [addressTypeValue,setAddressTypeValue] = useState('');
-  const [streetValue,setStreetValue] = useState('');
-  const [cityValue,setCityValue] = useState('');
-  const [stateValue,setStateValue] = useState('');
+  const [addressTypeValue, setAddressTypeValue] = useState("");
+  const [streetValue, setStreetValue] = useState("");
+  const [cityValue, setCityValue] = useState("");
+  const [stateValue, setStateValue] = useState("");
+  const [zipcodeValue, setZipcodeValue] = useState("");
   const [addressInfo, setAddressInfo] = useState({
     addressType: "",
     street: "",
@@ -32,13 +33,11 @@ if (userInfo && Array.isArray(userInfo) && userInfo.length > 1) {
     country: "India",
     zipcode: "",
   });
-  // const [country,setCountry] =useState('');
-  const [zipcodeValue,setZipcodeValue] =useState('');
   useEffect(() => {
     if (
       !cityErrorAlert &&
       !stateErrorAlert &&
-      !addressTypeErrorAlert &&
+      !pincodeErrorAlert &&
       !streetErrorAlert
     ) {
       setErrorAlert(false);
@@ -48,27 +47,27 @@ if (userInfo && Array.isArray(userInfo) && userInfo.length > 1) {
   }, [
     cityErrorAlert,
     stateErrorAlert,
-    addressTypeErrorAlert,
+    pincodeErrorAlert,
     streetErrorAlert,
   ]);
-  
-  useEffect(()=>{
-     setAddressInfo({
-      addressType:addressTypeValue,
-      street:streetValue,
-      city:cityValue,
-      state:stateValue,
-      country:'India',
-      zipcode:zipcodeValue,
+  // let updateMe  = useSelector((state) => state.productReducer.updateMe);
+  // console.log("updateMe", updateMe);
+  useEffect(() => {
+    setAddressInfo({
+      addressType: addressTypeValue,
+      street: streetValue,
+      city: cityValue,
+      state: stateValue,
+      country: "India",
+      zipcode: zipcodeValue,
     });
-  },[addressTypeValue,cityValue,streetValue,stateValue])
-
+  }, [addressTypeValue, cityValue, streetValue, stateValue]);
 
   function handleInputChange(value, type) {
     if (value.trim() !== "" && type == "pincode") {
       if (value.length == 6 && Number(value)) {
         setPinCodeErrorAlert(false);
-       setZipcodeValue(''+value);
+        setZipcodeValue("" + value);
       } else {
         setPinCodeErrorAlert(true);
       }
@@ -76,7 +75,7 @@ if (userInfo && Array.isArray(userInfo) && userInfo.length > 1) {
     if (value.trim() !== "" && type == "city") {
       if (value.length >= 4) {
         setCityErrorAlert(false);
-        setCityValue(""+value);
+        setCityValue("" + value);
       } else {
         setCityErrorAlert(true);
       }
@@ -84,8 +83,7 @@ if (userInfo && Array.isArray(userInfo) && userInfo.length > 1) {
     if (value.trim() !== "" && type == "state") {
       if (value.length >= 4) {
         setStateErrorAlert(false);
-        setStateValue(""+value);
-
+        setStateValue("" + value);
       } else {
         setStateErrorAlert(true);
       }
@@ -93,7 +91,7 @@ if (userInfo && Array.isArray(userInfo) && userInfo.length > 1) {
     if (value.trim() !== "" && type == "Address Type") {
       if (value.length >= 4) {
         setAddressTypeErrorAlert(false);
-          setAddressTypeValue(""+value);
+        setAddressTypeValue("" + value);
       } else {
         setAddressTypeErrorAlert(true);
       }
@@ -101,7 +99,7 @@ if (userInfo && Array.isArray(userInfo) && userInfo.length > 1) {
     if (value.trim() !== "" && type == "residence Details") {
       if (value.length >= 4) {
         setStreetErrorAlert(false);
-        setStreetValue(""+value);
+        setStreetValue("" + value);
       } else {
         setStreetErrorAlert(true);
       }
@@ -112,32 +110,38 @@ if (userInfo && Array.isArray(userInfo) && userInfo.length > 1) {
   function handleFormSubmit(e) {
     e.preventDefault();
     e.stopPropagation();
-    if (!errorAlert){
-      localStorage.removeItem("addressInfo");
-      console.log("ad",addressInfo);
-      // localStorage.setItem("user?.address, JSON.stringify(addressInfo));
-       user.address = addressInfo;
-       localStorage.setItem("user", JSON.stringify(user));
+    if (!errorAlert) {
+      console.log("dids");
+      dispatch(
+        getUpdateMe({
+          userName:userValue,
+          streetName: streetValue,
+          cityName: cityValue,
+          stateName: stateValue,
+          countryName: 'India',
+          zipcodeName: zipcodeValue,
+          tokenValue: JSON.parse(localStorage.getItem("userInfo"))[0],
+        })
+      );
     }
-    if(user.address){
-      navigate("/PaymentPage");
-    }
+    // if(user.address){
+    //   navigate("/PaymentPage");
+    // }
+    console.log("hanndleformclicked");
   }
   let userAddressInfo = JSON.parse(localStorage.getItem("addressInfo"));
-  // console.log("addressInfo",JSON.parse(localStorage.getItem("addressInfo")));
-  console.log("userAddressInfo",userAddressInfo);
- function removeAddress(e){
-  e.stopPropagation();
-  e.preventDefault();
-  if(localStorage.getItem("addressInfo")){
-    localStorage.removeItem("addressInfo");
-    window.location.reload();
+  
+  function removeAddress(e) {
+    e.stopPropagation();
+    e.preventDefault();
+    if (localStorage.getItem("addressInfo")) {
+      localStorage.removeItem("addressInfo");
+      window.location.reload();
+    }
+    console.log("remveo");
+    console.log("addressInfo", JSON.parse(localStorage.getItem("user")));
   }
-  console.log("remveo");
-  console.log("addressInfo",JSON.parse(localStorage.getItem("user")));
-
- }
-
+  console.log("value", cityValue, streetValue, stateValue, zipcodeValue);
   return (
     <>
       <div className="flex justify-center">
@@ -153,23 +157,21 @@ if (userInfo && Array.isArray(userInfo) && userInfo.length > 1) {
             <div className="w-9/12 h-[2px] bg-[#fbd139] mt-[6px]  ml-[2px]"></div>
           </div>
           <div className="">
-            <form 
-               onSubmit={(e)=>handleFormSubmit(e)}
-            className="relative w-full lg:w-11/12 pb-12 m-auto">
+            <form
+              onSubmit={(e) => handleFormSubmit(e)}
+              className="relative w-full lg:w-11/12 pb-12 m-auto"
+            >
               <div className="w-[80%]">
                 <div className="px-4 md:px-6">
                   <div className="flex-1 pb-7">
-                    <label
-                   
-                      className="text-xs font-medium opacity-60 block mb-2"
-                    >
+                    <label className="text-xs font-medium opacity-60 block mb-2">
                       Full Name
                     </label>
                     <div className="">
                       <input
                         type="text"
                         disabled
-                        placeholder={userName}
+                        placeholder={userValue}
                         onChange={(e) =>
                           handleInputChange(e.target.value, "name")
                         }
@@ -179,14 +181,12 @@ if (userInfo && Array.isArray(userInfo) && userInfo.length > 1) {
                     </div>
                   </div>
                   <div className="flex-1 pb-7 pt-7">
-                    <label
-                      className="text-xs font-medium opacity-60 block mb-2"
-                    >
+                    <label className="text-xs font-medium opacity-60 block mb-2">
                       Flat / Building No,Street Name
                     </label>
                     <div className="">
                       <input
-                      value={user?.address?.street}
+                        value={user?.address?.street}
                         type="text"
                         onChange={(e) =>
                           handleInputChange(e.target.value, "residence Details")
@@ -200,10 +200,7 @@ if (userInfo && Array.isArray(userInfo) && userInfo.length > 1) {
                     )}
                   </div>
                   <div className="flex-1  pb-7">
-                    <label
-                    
-                      className="text-xs font-medium opacity-60 block mb-2"
-                    >
+                    <label className="text-xs font-medium opacity-60 block mb-2">
                       Pincode/Postal Code/Zipcode
                     </label>
                     <div className="">
@@ -230,7 +227,7 @@ if (userInfo && Array.isArray(userInfo) && userInfo.length > 1) {
                       </label>
                       <div className="">
                         <input
-                           value={user?.address?.city}
+                          value={user?.address?.city}
                           type="text"
                           onChange={(e) =>
                             handleInputChange(e.target.value, "city")
@@ -264,11 +261,8 @@ if (userInfo && Array.isArray(userInfo) && userInfo.length > 1) {
                     </div>
                   </div>
                   <div className="flex-1 pb-7 pt-7">
-                    <label
-                   
-                      className="text-xs font-medium opacity-60 block mb-2"
-                    >
-                     Area / Locality (Optional)
+                    <label className="text-xs font-medium opacity-60 block mb-2">
+                      Area / Locality (Optional)
                     </label>
                     <div className="">
                       <input
@@ -286,10 +280,7 @@ if (userInfo && Array.isArray(userInfo) && userInfo.length > 1) {
                     )} */}
                   </div>
                   <div className="flex-1 pb-7">
-                    <label
-                     
-                      className="text-xs font-medium opacity-60 block mb-2"
-                    >
+                    <label className="text-xs font-medium opacity-60 block mb-2">
                       Landmark (Optional)
                     </label>
                     <div className="">
@@ -310,7 +301,9 @@ if (userInfo && Array.isArray(userInfo) && userInfo.length > 1) {
                       cursor-pointer lg:h-14 h-14 lg:text-xl w-full flex-1 
                       border-none outline-none flex justify-center items-center 
                       md:rounded-md text-white ${
-                        errorAlert && !user?.address? "bg-[grey]" : "bg-[#42a2a2]"
+                        errorAlert && !user?.address
+                          ? "bg-[grey]"
+                          : "bg-[#42a2a2]"
                       }`}
                     >
                       SAVE ADDRESS
@@ -318,9 +311,9 @@ if (userInfo && Array.isArray(userInfo) && userInfo.length > 1) {
                     <button
                       className="hidden md:flex border border-[#51cccc] text-[#51cccc] 
                                 rounded-md justify-center items-center lg:text-xl flex-1"
-                      onClick={(e)=>removeAddress(e)}
+                      onClick={(e) => removeAddress(e)}
                     >
-                  EDIT ADDRESS
+                      EDIT ADDRESS
                     </button>
                   </div>
                 </div>

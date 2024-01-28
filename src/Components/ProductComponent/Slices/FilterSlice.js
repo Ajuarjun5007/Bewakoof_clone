@@ -3,12 +3,13 @@ import { productFilterService } from "../ProductService";
 import { json } from "react-router-dom";
 
 const initialState = {
-  wishList: [],
+  wishList:[],
   isLoading: true,
-  error: "",
-  dressList: [],
+  error:"",
+  dressList:[],
   cartList: [],
-  adddressInfo:[],
+  updateMeInfo:[],
+  searchValue:[],
 };
 
 export const applyFilters = createAsyncThunk("url", async (filters = {}) => {
@@ -150,9 +151,49 @@ export const getProductList = createAsyncThunk(
     }
   }
 );
-export const updateMe = createAsyncThunk(
-  "produtList/updateMe",
-  async ({ streetValue,zipcodeValue,cityValue,stateValue,countryValue,}, { rejectWithValue }) => {
+export const setSearchValue = createAsyncThunk(
+  "movieList/setSearchValue",
+  async (
+    {
+      id,
+      type,
+      // tokenValue,
+      suffix,
+      searchQuery,
+    },
+    { rejectWithValue }
+  ) => {
+    let myHeaders = new Headers();
+    myHeaders.append("projectID", "gams07bkd3di");
+    // myHeaders.append("Authorization", `Bearer ${tokenValue}`);
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("accept", "application/json");
+
+    let requestOptions = {
+      method: type,
+      headers: myHeaders,
+      redirect: "follow",
+    };
+    let url = BASE_URL + `clothes/products?search={"name":"${searchQuery}"}` + suffix;
+    // console.log(id,type,url)
+    try {
+      const response = await fetch(url, requestOptions);
+      // console.log("product",response);
+      if (response.ok) {
+        const result = await response.json();
+        // console.log("productResult",result.data);
+        return result;
+      } else {
+        return rejectWithValue({ error: "fetching failed" });
+      }
+    } catch (error) {
+      return rejectWithValue({ error: "An error occurred during the fetch" });
+    }
+  }
+);
+export const getUpdateMe = createAsyncThunk(
+  "productList/getUpdateMe",
+  async ({userName,streetName,cityName,stateName,countryName,zipcodeName,tokenValue}, { rejectWithValue }) => {
     let myHeaders = new Headers();
     myHeaders.append("projectID", "gams07bkd3di");
     myHeaders.append("Authorization", `Bearer ${tokenValue}`);
@@ -161,11 +202,14 @@ export const updateMe = createAsyncThunk(
 
     let requestOptions;
       let raw = JSON.stringify({
-       city:cityValue,
-       street:streetValue,
-       zipcode:zipcodeValue,
-       country:countryValue,
-       state:stateValue,
+      name:userName,
+      address:{
+      street:streetName,
+       city:cityName,
+       state:stateName,
+       country:countryName,
+       zipcode:zipcodeName,
+      }
       });
       requestOptions = {
         method: 'PATCH',
@@ -174,8 +218,8 @@ export const updateMe = createAsyncThunk(
         redirect: "follow",
       };
    
-    let url = BASE_URL + "updateme";
-    // console.log("fetch call", url, requestOptions, suffix);
+    let url = BASE_URL + "user/updateme";
+    console.log("fetch call", url, requestOptions, suffix);
     try {
       const response = await fetch(url, requestOptions);
       // console.log("slice", response);
@@ -197,17 +241,14 @@ export const productSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(applyFilters.pending, (state, action) => {
-        // state.getProductByFilters[action.meta.arg] = 'pending'
         state.getProductByFilters = "pending";
       })
 
       .addCase(applyFilters.fulfilled, (state, action) => {
-        // state.getProductByFilters[action.meta.arg] = action.payload
         state.getProductByFilters = action.payload;
       })
 
       .addCase(applyFilters.rejected, (state, action) => {
-        // state.getProductByFilters[ac//tion.meta.arg] = 'rejected'
         state.getProductByFilters = "rejected";
       })
 
@@ -240,17 +281,17 @@ export const productSlice = createSlice({
         state.isLoading = false;
         state.error = action?.payload?.error;
       })
-      .addCase(updateMe.pending, (state, action) => {
+      .addCase(getUpdateMe.pending, (state, action) => {
         state.isLoading = true;
       })
 
-      .addCase(updateMe.fulfilled, (state, action) => {
+      .addCase(getUpdateMe.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.cartList = action.payload;
+        state.updateMeInfo= action.payload;
         state.error = "";
       })
 
-      .addCase(updateMe.rejected, (state, action) => {
+      .addCase(getUpdateMe.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action?.payload?.error;
       })
@@ -264,6 +305,18 @@ export const productSlice = createSlice({
         state.error = "";
       })
       .addCase(getProductList.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload.error;
+      })
+       .addCase(setSearchValue.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(setSearchValue.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.searchValue = action.payload;
+        state.error = "";
+      })
+      .addCase(setSearchValue.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload.error;
       });
