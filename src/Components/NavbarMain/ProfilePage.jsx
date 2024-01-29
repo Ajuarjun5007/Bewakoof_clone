@@ -7,6 +7,10 @@ function ProfilePage() {
   const handleGenderChange = (gender) => {
     setSelectedGender(gender);
   };
+  let userName = JSON.parse(localStorage.getItem("userInfo"))[1].name;
+  let userMail = JSON.parse(localStorage.getItem("userInfo"))[1].email;
+  let userPassword = JSON.parse(localStorage.getItem("userInfo"))[1].password;
+  console.log(userPassword);
   return (
     <>
       <div className="flex justify-center">
@@ -30,7 +34,8 @@ function ProfilePage() {
                   </label>
                   <div className="mb-3">
                     <input
-                      placeholder="Name"
+                      placeholder={userName}
+                      disabled
                       type="text"
                       className="border text-black h-12 lg:h-14 text-sm lg:text-base font-bold rounded-md p-1 w-full pl-3 outline-none border-[#979797]"
                     />
@@ -54,7 +59,8 @@ function ProfilePage() {
                   </label>
                   <div className="mb-3">
                     <input
-                      placeholder="Name"
+                      placeholder={userMail}
+                      disabled
                       type="text"
                       className="border text-black h-12 lg:h-14 text-sm lg:text-base font-bold rounded-md p-1 w-full pl-3 outline-none border-[#979797]"
                     />

@@ -1,24 +1,22 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { setSearchValue } from "../ProductComponent/Slices/FilterSlice";
 
 const SearchResultsList = () => {
-  const dispatch = useDispatch();
+    const dispatch = useDispatch();
+
   const searchValueResult = useSelector(
-    (state) => state.productReducer.searchValue
+    (state) => state?.productReducer?.searchValueList
   );
-  const handleResults = () => {
-    dispatch(setSearchValue(""));
-  };
+  // console.log("search",searchValueResult);
 
   return (
     <div className="md:border-0 border lg:container">
       <ul className="flex flex-col">
-        {searchValueResult?.data?.slice(0, 6).map((item) => (
+        {searchValueResult?.data?.slice(0,6).map((item) => (
           <Link
             key={item._id}
             to={{
-              pathname: `/ProductDetailsPage/${item._id}`,
+              pathname:`/ProductDetailsPage/${item._id}`,
             }}
           >
             <li className="text-xs font-medium p-3 truncate hover:bg-gray-100 w-full">
@@ -27,12 +25,14 @@ const SearchResultsList = () => {
           </Link>
         ))}
       </ul>
-      {/* <Link 
-            onClick={handleResults} to={`/search/Search Results for "${searchValue}"?name=${searchValue}`}> */}
+      <Link 
+            to="/ProductListPage/Search Results"
+            state={{searchResults:"searchResults"}}
+            >
       <p className="text-xs text-[#42a2a2] font-medium p-3 border-t md:border-0 hover:bg-gray-200">
         See All Results
       </p>
-      {/* </Link> */}
+      </Link>
     </div>
   );
 };

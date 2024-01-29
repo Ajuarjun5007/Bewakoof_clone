@@ -31,7 +31,7 @@ function ReviewWrapper(props){
         navigate(`/ReviewPage/${productId}`, { state: productReviews });
     }
        
-    const alreadyReviewed = productReviews.some((review) => user?._id === review?.user);
+    const alreadyReviewed = productReviews?.some((review) => user?._id === review?.user);
 
 
       

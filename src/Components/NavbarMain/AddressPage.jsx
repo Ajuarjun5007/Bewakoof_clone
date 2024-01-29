@@ -50,8 +50,8 @@ function AddressPage() {
     pincodeErrorAlert,
     streetErrorAlert,
   ]);
-  // let updateMe  = useSelector((state) => state.productReducer.updateMe);
-  // console.log("updateMe", updateMe);
+  let updateMe  = useSelector((state) => state.productReducer.updateMeInfo);
+  console.log("updateMe", updateMe);
   useEffect(() => {
     setAddressInfo({
       addressType: addressTypeValue,
@@ -114,6 +114,7 @@ function AddressPage() {
       console.log("dids");
       dispatch(
         getUpdateMe({
+          type:"PATCH",
           userName:userValue,
           streetName: streetValue,
           cityName: cityValue,
@@ -123,6 +124,7 @@ function AddressPage() {
           tokenValue: JSON.parse(localStorage.getItem("userInfo"))[0],
         })
       );
+      console.log("form",streetValue,cityValue,stateValue,zipcodeValue);
     }
     // if(user.address){
     //   navigate("/PaymentPage");
@@ -138,10 +140,10 @@ function AddressPage() {
       localStorage.removeItem("addressInfo");
       window.location.reload();
     }
-    console.log("remveo");
-    console.log("addressInfo", JSON.parse(localStorage.getItem("user")));
+    // console.log("remveo");
+    // console.log("addressInfo", JSON.parse(localStorage.getItem("user")));
   }
-  console.log("value", cityValue, streetValue, stateValue, zipcodeValue);
+  // console.log("value", cityValue, streetValue, stateValue, zipcodeValue);
   return (
     <>
       <div className="flex justify-center">
@@ -301,7 +303,7 @@ function AddressPage() {
                       cursor-pointer lg:h-14 h-14 lg:text-xl w-full flex-1 
                       border-none outline-none flex justify-center items-center 
                       md:rounded-md text-white ${
-                        errorAlert && !user?.address
+                        errorAlert
                           ? "bg-[grey]"
                           : "bg-[#42a2a2]"
                       }`}

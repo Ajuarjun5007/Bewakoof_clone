@@ -28,7 +28,7 @@ import ComingSoon from "../ComingSoon";
 function ProductListPage() {
   const location = useLocation();
   const { state } = location;
-  const { name, brand, MenuContent } = state || {};
+  const { name, brand, MenuContent,searchResults } = state || {};
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [tempArr, setTempArr] = useState([]);
@@ -36,9 +36,12 @@ function ProductListPage() {
   const [loading, setLoading] = useState(false);
   const [activeSortTag, setActiveSortTag] = useState("");
   const [sortContainerDisplay, setSortContainerDisplay] = useState(false);
-
+  console.log("sata",state);
   const productListResult = useSelector(
     (state) => state.productReducer.dressList
+  );
+  const searchValueResult = useSelector(
+    (state) => state?.productReducer?.searchValueList
   );
   const [selectedFilters, setSelectedFilters] = useState({
     size: null,
@@ -98,7 +101,6 @@ function ProductListPage() {
   const productList = productListResult?.data;
 
   const handleFilterChange = (updatedValues) => {
-    console.log("pl", updatedValues);
     setSelectedFilters((prevFilters) => ({
       size: updatedValues.size || prevFilters.size,
       subCategory: updatedValues.subCategory || prevFilters.subCategory,
@@ -113,7 +115,8 @@ function ProductListPage() {
     if (
       name === undefined &&
       brand === undefined &&
-      MenuContent === undefined
+      MenuContent === undefined &&
+      searchResults === undefined
     ) {
       setProductCategory(decodeURIComponent(location.pathname.split("/")[2]));
       if (subCategories.includes(location.pathname.split("/")[2])) {
@@ -153,6 +156,9 @@ function ProductListPage() {
       setTempArr(filteredProductList);
       setProductCategory(MenuContent.split("/")[1]);
       console.log("Menu_Type", MenuContent.split("/")[1]);
+    }else if(searchResults!==undefined){
+      setTempArr(searchValueResult?.data);
+      console.log("searchvlaie");
     }
   }
 

@@ -9,7 +9,7 @@ const initialState = {
   dressList:[],
   cartList: [],
   updateMeInfo:[],
-  searchValue:[],
+  searchValueList:[],
 };
 
 export const applyFilters = createAsyncThunk("url", async (filters = {}) => {
@@ -193,7 +193,7 @@ export const setSearchValue = createAsyncThunk(
 );
 export const getUpdateMe = createAsyncThunk(
   "productList/getUpdateMe",
-  async ({userName,streetName,cityName,stateName,countryName,zipcodeName,tokenValue}, { rejectWithValue }) => {
+  async ({type,userName,streetName,cityName,stateName,countryName,zipcodeName,tokenValue}, { rejectWithValue }) => {
     let myHeaders = new Headers();
     myHeaders.append("projectID", "gams07bkd3di");
     myHeaders.append("Authorization", `Bearer ${tokenValue}`);
@@ -212,7 +212,7 @@ export const getUpdateMe = createAsyncThunk(
       }
       });
       requestOptions = {
-        method: 'PATCH',
+        method:type,
         headers: myHeaders,
         body: raw,
         redirect: "follow",
@@ -313,7 +313,7 @@ export const productSlice = createSlice({
       })
       .addCase(setSearchValue.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.searchValue = action.payload;
+        state.searchValueList = action.payload;
         state.error = "";
       })
       .addCase(setSearchValue.rejected, (state, action) => {

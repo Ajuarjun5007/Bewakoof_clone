@@ -38,11 +38,12 @@ function NavbarMain() {
   const [menuContentForMen, setMenuContentForMen] = useState(false);
   const [menuContentForWomen, setMenuContentForWomen] = useState(false);
   const [menuContentForMobile, setMenuContentForMobile] = useState(false);
-  const [searchValue,setSearchValue]=useState('')
+  // const [searchValue,setSearchValue]=useState('')
   // console.log("user",user);
   const searchValueResult = useSelector(
-    (state) => state.productReducer.searchValue
+    (state) => state.productReducer.searchValueList
   );
+  console.log("searchValueRslt",searchValueResult);
   const [searchResultsListHandler,setSearchResultsListHandler] = useState(false);
   useEffect(() => {
     if (localStorage.getItem("userInfo")) {
@@ -71,22 +72,22 @@ function NavbarMain() {
     const value = e.target.value;
     if(value.length >=2){
       setSearchResultsListHandler(true);
+    }else{
+      setSearchResultsListHandler(false);
     }
-    console.log("value", e.target.value);
+    
     dispatch(
       setSearchValue({
         id: "",
         type: "GET",
         // tokenValue: JSON.parse(localStorage.getItem("userInfo"))[0],
-        suffix: "&limit=20",
+        suffix: "&limit=30",
         searchQuery: value,
       })
     );
   }
-  function searchDivHandler(value){
-    setSearchResultsListHandler(value);
-  }
-  console.log("searchResultsListHandler", searchResultsListHandler);
+  
+  // console.log("searchResultsListHandler", searchResultsListHandler);
   // console.log("userLog", userLoggedIn);
   return (
     <>
@@ -436,7 +437,7 @@ function NavbarMain() {
               {searchResultsListHandler && 
                 <div className="absolute left-0 right-0 top-full bg-white border border-t-0 mt-2">
                   <SearchResultsList 
-                  searchDivHandler={searchDivHandler}
+                  // searchDivHandler={searchDivHandler}
                   />
                 </div>
             }
