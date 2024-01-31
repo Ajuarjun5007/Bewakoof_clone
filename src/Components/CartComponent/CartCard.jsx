@@ -20,7 +20,7 @@ function Cartcard({ Id,name,price,quantity,size,image }) {
   const [cartProductInfo, setCartProductInfo] = useState([]);
 
 
-  console.log("quantity",quantity);
+  // console.log("quantity",quantity);
 
   const [selectedSize,setSelectedSize] = useState(size);
   const [selectedQty, setSelectedQty] = useState(quantities[0]);
@@ -75,7 +75,7 @@ function Cartcard({ Id,name,price,quantity,size,image }) {
       );
     }
   };
-  console.log("Id",Id);
+  // console.log("Id",Id);
  function removefromCart(Id){
     dispatch(
       getCartOperations({
@@ -111,10 +111,10 @@ function Cartcard({ Id,name,price,quantity,size,image }) {
       );
  
 }
-  console.log('selectedSize',selectedSize);
-  console.log('selectedQty',selectedQty);
+  // console.log('selectedSize',selectedSize);
+  // console.log('selectedQty',selectedQty);
   let ProductPrice = price*quantity;
-  console.log("ProdPrice",ProductPrice);
+  // console.log("ProdPrice",ProductPrice);
   // console.log("Id",Id);
   // console.log("prisize",cartProductInfo && cartProductInfo);
   // console.log("s",size);

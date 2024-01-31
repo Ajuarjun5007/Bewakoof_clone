@@ -135,13 +135,10 @@ export const getProductList = createAsyncThunk(
       redirect: "follow",
     };
     let url = BASE_URL + "clothes/products" + suffix;
-    // console.log(id,type,url)
     try {
       const response = await fetch(url, requestOptions);
-      // console.log("product",response);
       if (response.ok) {
         const result = await response.json();
-        // console.log("productResult",result.data);
         return result;
       } else {
         return rejectWithValue({ error: "fetching failed" });
@@ -193,7 +190,16 @@ export const setSearchValue = createAsyncThunk(
 );
 export const getUpdateMe = createAsyncThunk(
   "productList/getUpdateMe",
-  async ({type,userName,streetName,cityName,stateName,countryName,zipcodeName,tokenValue}, { rejectWithValue }) => {
+  async ({type,
+    userName,
+    streetName,
+    cityName,
+    stateName,
+    countryName,
+    zipcodeName,
+    tokenValue,
+    phoneNumber,
+    }, { rejectWithValue }) => {
     let myHeaders = new Headers();
     myHeaders.append("projectID", "gams07bkd3di");
     myHeaders.append("Authorization", `Bearer ${tokenValue}`);
@@ -201,25 +207,30 @@ export const getUpdateMe = createAsyncThunk(
     myHeaders.append("accept", "application/json");
 
     let requestOptions;
+      
       let raw = JSON.stringify({
-      name:userName,
-      address:{
-      street:streetName,
-       city:cityName,
-       state:stateName,
-       country:countryName,
-       zipcode:zipcodeName,
-      }
+        name:userName,
+        address:{
+          street:streetName,
+          city:cityName,
+          state:stateName,
+          country:countryName,
+          zipcode:zipcodeName,
+        },
+        phone:phoneNumber,
       });
+      
       requestOptions = {
-        method:type,
+        method:"PATCH",
         headers: myHeaders,
         body: raw,
         redirect: "follow",
       };
-   
-    let url = BASE_URL + "user/updateme";
-    console.log("fetch call", url, requestOptions, suffix);
+      console.log("raw",requestOptions);
+      
+    // let url = BASE_URL + "user/updateme";
+    let url = "https://academics.newtonschool.co/api/v1/user/updateme";
+    // console.log("fetch call", url, requestOptions);
     try {
       const response = await fetch(url, requestOptions);
       // console.log("slice", response);

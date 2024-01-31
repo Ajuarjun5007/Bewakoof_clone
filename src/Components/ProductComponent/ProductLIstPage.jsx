@@ -24,11 +24,12 @@ import {
 } from "./Slices/FilterSlice";
 import FilterComponent from "./FilterComponent";
 import ComingSoon from "../ComingSoon";
-
+import { useScreenSize } from "../MobileComponent/useScreenSize";
 function ProductListPage() {
   const location = useLocation();
+  const screenSize = useScreenSize();
   const { state } = location;
-  const { name, brand, MenuContent,searchResults } = state || {};
+  const { name, brand, MenuContent, searchResults } = state || {};
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [tempArr, setTempArr] = useState([]);
@@ -36,7 +37,7 @@ function ProductListPage() {
   const [loading, setLoading] = useState(false);
   const [activeSortTag, setActiveSortTag] = useState("");
   const [sortContainerDisplay, setSortContainerDisplay] = useState(false);
-  console.log("sata",state);
+  console.log("sata", state);
   const productListResult = useSelector(
     (state) => state.productReducer.dressList
   );
@@ -156,7 +157,7 @@ function ProductListPage() {
       setTempArr(filteredProductList);
       setProductCategory(MenuContent.split("/")[1]);
       console.log("Menu_Type", MenuContent.split("/")[1]);
-    }else if(searchResults!==undefined){
+    } else if (searchResults !== undefined) {
       setTempArr(searchValueResult?.data);
       console.log("searchvlaie");
     }
@@ -244,7 +245,8 @@ function ProductListPage() {
 
   // console.log("wishListResult", wishListResult);
   // console.log("wishListResultdemo", wishListResultdemo);
-
+  let isMobile = screenSize < 768;
+  console.log("Pc", productCategory);
   return (
     <>
       <div className="flex justify-center">
@@ -255,18 +257,18 @@ function ProductListPage() {
             </div>
           ) : (
             <div className="">
-              <div className="my-[30px] pl-[10px]  flex flex-col justify-left ">
+              <div className="my-[30px] pl-[10px]   flex flex-col justify-left max-[768px]:pl-0   max-[768px]:justify-center max-[768px]:items-center ">
                 {/* heading wrapper */}
-                <div className="text-[24px] text-[#2d2d2d] font-[900]">
-                  <p className="underline w-10/12 decoration-[#fdd835] decoration-[2px] underline-offset-[12px]">
+
+                <div className="text-[24px] text-[#2d2d2d] flex font-[900] max-[768px]:justify-center">
+                  <p className="underline w-10/12 decoration-[#fdd835] justify-center items-center decoration-[2px] underline-offset-[12px]">
                     {productCategory.toUpperCase()}
-                    {/* ssss */}
                   </p>
                 </div>
 
                 {/* accordion and prouduct card */}
                 <div className="flex mt-[40px] justify-center ">
-                  {tempArr?.length > 0 && (
+                  {!isMobile && tempArr?.length > 0 && (
                     <div className="w-[25%] ">
                       <p className="text-[rgba(45,45,45,.5)] text-[12px] font-[900] pl-[20px] py-[10px]">
                         FILTERS
@@ -277,8 +279,8 @@ function ProductListPage() {
                       />
                     </div>
                   )}
-                  <div className="relative pl-[5px] w-[80%]  flex flex-col items-center ">
-                    {tempArr?.length > 0 && (
+                  <div className="relative pl-[5px] w-[80%] border-[1px] flex flex-col  max-[768px]:pl-0 max-[768px]:justify-center max-[768px]:w-full">
+                    {!isMobile && tempArr?.length > 0 && (
                       <div className=" flex w-[89%] pb-[15px] pr-[10px] ml-[20px]  flex-row-reverse">
                         <div
                           className="flex flex-row-reverse gap-[5px]"
@@ -355,7 +357,7 @@ function ProductListPage() {
                     )}
                     {/* product card */}
 
-                    <div className="flex flex-wrap justify-center gap-[10px]">
+                    <div className="flex flex-wrap justify-center gap-[10px] max-[768px]:gap-[5px] max-[768px]:justify-center ">
                       {Array.isArray(tempArr) ? (
                         tempArr?.length > 0 ? (
                           tempArr ? (
@@ -369,7 +371,7 @@ function ProductListPage() {
                                 <div key={product?._id} className="w-[266px]">
                                   <div className="relative flex overflow-hidden">
                                     <img
-                                      className="w-[266px] fog h-[330px] hover:scale-105 transition-all duration-[200ms] ease-in-out"
+                                      className="w-[266px] fog h-[330px] max-[768px]:w-[210px] max-[768px]:h-[250px] hover:scale-105 transition-all duration-[200ms] ease-in-out"
                                       src={product?.displayImage}
                                       alt="image"
                                     />
@@ -380,13 +382,12 @@ function ProductListPage() {
                                       </p>
                                     </div>
                                   </div>
-
                                   <div className="relative">
                                     <div
                                       onClick={(event) => {
                                         wishListHandler(event, product._id);
                                       }}
-                                      className="absolute mt-[15px] right-[4px] text-[25px] border-[1px]"
+                                      className="absolute mt-[15px] right-[4px] text-[25px]"
                                     >
                                       {!wishListResult?.includes(
                                         product._id
@@ -440,7 +441,9 @@ function ProductListPage() {
                           // <Loader />
                           <ComingSoon />
                         )
-                      ) : <Loader />}
+                      ) : (
+                        <Loader />
+                      )}
                     </div>
                   </div>
                 </div>

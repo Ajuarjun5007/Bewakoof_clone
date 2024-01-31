@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-const SearchResultsList = () => {
+const SearchResultsList = ({searchInputHandler}) => {
     const dispatch = useDispatch();
 
   const searchValueResult = useSelector(
@@ -14,6 +14,7 @@ const SearchResultsList = () => {
       <ul className="flex flex-col">
         {searchValueResult?.data?.slice(0,6).map((item) => (
           <Link
+             onClick={()=>searchInputHandler()}
             key={item._id}
             to={{
               pathname:`/ProductDetailsPage/${item._id}`,
@@ -26,6 +27,7 @@ const SearchResultsList = () => {
         ))}
       </ul>
       <Link 
+             onClick={()=>searchInputHandler()}
             to="/ProductListPage/Search Results"
             state={{searchResults:"searchResults"}}
             >

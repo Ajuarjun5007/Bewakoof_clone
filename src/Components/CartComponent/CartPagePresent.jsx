@@ -46,10 +46,10 @@ const CartPagePresent = () => {
     0
   );
   //   console.log("w",wishListResult);
-  console.log("cartListItems", cartListItems);
-  console.log("cartListTotalPrice", cartListTotalPrice);
+ 
   //   console.log("add");
-  let addressInfo = localStorage.getItem("addressInfo");
+  let userAddress = JSON.parse(localStorage.getItem("AddressInfo"));
+   console.log("userAddreess",userAddress);
 
   return (
     <>
@@ -168,7 +168,8 @@ const CartPagePresent = () => {
                         <p className="text-base inline">{total}</p>
                       </div>
                     </div>
-                    {addressInfo ? (
+                    {
+                    userAddress ? (
                       <Link to="/PaymentPage">
                         <button
                           className="cursor-pointer mr-4 h-10 w-72 font-medium 
@@ -187,7 +188,8 @@ border-none outline-none flex justify-center items-center rounded-md text-white 
                           {/* CONTINUE */}
                         </button>
                       </Link>
-                    )}
+                     )
+                    } 
                   </div>
                 </div>
                 <div className=" py-10 flex justify-center gap-2 text-center">

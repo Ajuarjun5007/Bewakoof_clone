@@ -38,12 +38,13 @@ function NavbarMain() {
   const [menuContentForMen, setMenuContentForMen] = useState(false);
   const [menuContentForWomen, setMenuContentForWomen] = useState(false);
   const [menuContentForMobile, setMenuContentForMobile] = useState(false);
+  const [searchInput,setSearchInput] = useState('');
   // const [searchValue,setSearchValue]=useState('')
   // console.log("user",user);
   const searchValueResult = useSelector(
     (state) => state.productReducer.searchValueList
   );
-  console.log("searchValueRslt",searchValueResult);
+  // console.log("searchValueRslt",searchValueResult);
   const [searchResultsListHandler,setSearchResultsListHandler] = useState(false);
   useEffect(() => {
     if (localStorage.getItem("userInfo")) {
@@ -70,6 +71,7 @@ function NavbarMain() {
 
   function searchHandler(e) {
     const value = e.target.value;
+    setSearchInput(value);
     if(value.length >=2){
       setSearchResultsListHandler(true);
     }else{
@@ -86,7 +88,10 @@ function NavbarMain() {
       })
     );
   }
-  
+  function searchInputHandler(){
+    setSearchInput('');
+    
+  }
   // console.log("searchResultsListHandler", searchResultsListHandler);
   // console.log("userLog", userLoggedIn);
   return (
@@ -429,7 +434,7 @@ function NavbarMain() {
               <IoIosSearch className="absolute left-3.5 top-2 text-[rgba(0,0,0,0.5)] text-[24px]" />
               <input
                 onChange={(e) => searchHandler(e)}
-                // value={searchValue}
+                value={searchInput}
                 className=" pr-1.5 pl-10 text-[11px] text-[rgba(0,0,0,0.5)] w-[330px] focus:bg-white focus:border-[1px] bg-[#eaeaea] rounded"
                 type="text"
                 placeholder="Search by product, category or collection"
@@ -438,6 +443,7 @@ function NavbarMain() {
                 <div className="absolute left-0 right-0 top-full bg-white border border-t-0 mt-2">
                   <SearchResultsList 
                   // searchDivHandler={searchDivHandler}
+                  searchInputHandler={searchInputHandler}
                   />
                 </div>
             }

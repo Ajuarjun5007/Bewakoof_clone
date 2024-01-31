@@ -11,7 +11,7 @@ function CartPage() {
     !LoadingCheck && cartList?.data?.items
       ? cartList.data.items.map((item) => item)
       : [];
-
+    
   return (
     <>
       {cartListItems.length > 0 ? (

@@ -67,7 +67,7 @@ function WishListCard({ Id }) {
   }
   
   // console.log("wishcart", cartListItems);
-  console.log("Pi", productInfo);
+  // console.log("Pi", productInfo);
 
   return (
     <>

@@ -6,12 +6,12 @@ import { useDispatch, useSelector } from "react-redux";
 function AddressPage() {
   // let userValue= JSON.parse(localStorage.getItem("userInfo"))[1].name;
   const dispatch = useDispatch();
+  let token = JSON.parse(localStorage.getItem("userInfo"))[0];
   let userInfo = JSON.parse(localStorage.getItem("userInfo"));
   let userValue;
   if (userInfo && Array.isArray(userInfo) && userInfo.length > 1) {
     userValue = userInfo[1].name;
   }
-  console.log("user", userValue);
   const navigate = useNavigate();
   const [pincodeErrorAlert, setPinCodeErrorAlert] = useState(true);
   const [cityErrorAlert, setCityErrorAlert] = useState(true);
@@ -25,14 +25,7 @@ function AddressPage() {
   const [cityValue, setCityValue] = useState("");
   const [stateValue, setStateValue] = useState("");
   const [zipcodeValue, setZipcodeValue] = useState("");
-  const [addressInfo, setAddressInfo] = useState({
-    addressType: "",
-    street: "",
-    city: "",
-    state: "",
-    country: "India",
-    zipcode: "",
-  });
+  
   useEffect(() => {
     if (
       !cityErrorAlert &&
@@ -51,17 +44,8 @@ function AddressPage() {
     streetErrorAlert,
   ]);
   let updateMe  = useSelector((state) => state.productReducer.updateMeInfo);
-  console.log("updateMe", updateMe);
-  useEffect(() => {
-    setAddressInfo({
-      addressType: addressTypeValue,
-      street: streetValue,
-      city: cityValue,
-      state: stateValue,
-      country: "India",
-      zipcode: zipcodeValue,
-    });
-  }, [addressTypeValue, cityValue, streetValue, stateValue]);
+  // console.log("updateMe",updateMe?.data?.user?.address);
+  // console.log("updateMe",updateMe?.data?.user?.address);
 
   function handleInputChange(value, type) {
     if (value.trim() !== "" && type == "pincode") {
@@ -88,30 +72,23 @@ function AddressPage() {
         setStateErrorAlert(true);
       }
     }
-    if (value.trim() !== "" && type == "Address Type") {
-      if (value.length >= 4) {
-        setAddressTypeErrorAlert(false);
-        setAddressTypeValue("" + value);
-      } else {
-        setAddressTypeErrorAlert(true);
-      }
-    }
+   
     if (value.trim() !== "" && type == "residence Details") {
-      if (value.length >= 4) {
+      if (value.length >=4) {
         setStreetErrorAlert(false);
         setStreetValue("" + value);
       } else {
         setStreetErrorAlert(true);
       }
+      console.log("se",streetErrorAlert);
     }
   }
   let user = JSON.parse(localStorage.getItem("user"));
 
-  function handleFormSubmit(e) {
+  function handleFormSubmit(e){
     e.preventDefault();
-    e.stopPropagation();
-    if (!errorAlert) {
-      console.log("dids");
+    // e.stopPropagation();
+    if (!errorAlert){
       dispatch(
         getUpdateMe({
           type:"PATCH",
@@ -121,29 +98,34 @@ function AddressPage() {
           stateName: stateValue,
           countryName: 'India',
           zipcodeName: zipcodeValue,
-          tokenValue: JSON.parse(localStorage.getItem("userInfo"))[0],
+          tokenValue:token,
+          phoneNumber:"",
         })
       );
-      console.log("form",streetValue,cityValue,stateValue,zipcodeValue);
-    }
-    // if(user.address){
-    //   navigate("/PaymentPage");
-    // }
-    console.log("hanndleformclicked");
+      // console.log("func",updateMe);
+      localStorage.removeItem("AddressInfo");
+      // console.log("AddresOnfo",updateMe?.data?.user?.address);
+      let AddressInfo = JSON.parse(localStorage.getItem("AddressInfo"));
+      console.log("Addd",AddressInfo==null);
+  }
   }
   let userAddressInfo = JSON.parse(localStorage.getItem("addressInfo"));
+  localStorage.setItem("AddressInfo",JSON.stringify(updateMe?.data?.user?.address));
   
   function removeAddress(e) {
     e.stopPropagation();
     e.preventDefault();
-    if (localStorage.getItem("addressInfo")) {
-      localStorage.removeItem("addressInfo");
-      window.location.reload();
+    if (localStorage.getItem("AddressInfo")) {
+      localStorage.removeItem("AddressInfo");
+      localStorage.setItem("AddressInfo",null);
+      // window.location.reload();
+      // let AddressInfo = JSON.parse(localStorage.getItem("AddressInfo"));
+      // console.log("Addd",AddressInfo==null);
     }
-    // console.log("remveo");
-    // console.log("addressInfo", JSON.parse(localStorage.getItem("user")));
   }
-  // console.log("value", cityValue, streetValue, stateValue, zipcodeValue);
+  let AddressInfo = JSON.parse(localStorage.getItem("AddressInfo"));
+  console.log("Addd",AddressInfo==null);
+
   return (
     <>
       <div className="flex justify-center">
@@ -188,7 +170,7 @@ function AddressPage() {
                     </label>
                     <div className="">
                       <input
-                        value={user?.address?.street}
+                        value={streetValue}
                         type="text"
                         onChange={(e) =>
                           handleInputChange(e.target.value, "residence Details")
@@ -197,7 +179,7 @@ function AddressPage() {
                         className="border text-black h-12 lg:h-14 text-sm lg:text-base font-bold rounded-md  p-1 w-full pl-3 outline-none border-[#979797] opacity-100 "
                       />
                     </div>
-                    {!userAddressInfo?.street && streetErrorAlert && (
+                    {streetErrorAlert && (
                       <p className="text-red-500">Invalid residence Details</p>
                     )}
                   </div>
@@ -208,7 +190,7 @@ function AddressPage() {
                     <div className="">
                       <input
                         type="text"
-                        value={user?.address?.zipcode}
+                        value={zipcodeValue}
                         onChange={(e) =>
                           handleInputChange(e.target.value, "pincode")
                         }
@@ -229,7 +211,7 @@ function AddressPage() {
                       </label>
                       <div className="">
                         <input
-                          value={user?.address?.city}
+                          value={cityValue}
                           type="text"
                           onChange={(e) =>
                             handleInputChange(e.target.value, "city")
@@ -249,7 +231,7 @@ function AddressPage() {
                       <div className="">
                         <input
                           type="text"
-                          value={user?.address?.state}
+                          value={stateValue}
                           onChange={(e) =>
                             handleInputChange(e.target.value, "state")
                           }
