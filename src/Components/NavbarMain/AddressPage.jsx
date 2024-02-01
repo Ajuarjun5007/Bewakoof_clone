@@ -25,7 +25,7 @@ function AddressPage() {
   const [cityValue, setCityValue] = useState("");
   const [stateValue, setStateValue] = useState("");
   const [zipcodeValue, setZipcodeValue] = useState("");
-  
+
   useEffect(() => {
     if (
       !cityErrorAlert &&
@@ -37,15 +37,8 @@ function AddressPage() {
     } else {
       setErrorAlert(true);
     }
-  }, [
-    cityErrorAlert,
-    stateErrorAlert,
-    pincodeErrorAlert,
-    streetErrorAlert,
-  ]);
-  let updateMe  = useSelector((state) => state.productReducer.updateMeInfo);
-  // console.log("updateMe",updateMe?.data?.user?.address);
-  // console.log("updateMe",updateMe?.data?.user?.address);
+  }, [cityErrorAlert, stateErrorAlert, pincodeErrorAlert, streetErrorAlert]);
+  let updateMe = useSelector((state) => state.productReducer.updateMeInfo);
 
   function handleInputChange(value, type) {
     if (value.trim() !== "" && type == "pincode") {
@@ -72,59 +65,76 @@ function AddressPage() {
         setStateErrorAlert(true);
       }
     }
-   
+
     if (value.trim() !== "" && type == "residence Details") {
-      if (value.length >=4) {
+      if (value.length >= 4) {
         setStreetErrorAlert(false);
         setStreetValue("" + value);
       } else {
         setStreetErrorAlert(true);
       }
-      console.log("se",streetErrorAlert);
+      console.log("se", streetErrorAlert);
     }
   }
   let user = JSON.parse(localStorage.getItem("user"));
-
-  function handleFormSubmit(e){
+  let userInfoAddress=userInfo[1];
+  console.log("userInfAdd",userInfoAddress);
+  function handleFormSubmit(e) {
     e.preventDefault();
-    // e.stopPropagation();
-    if (!errorAlert){
+    if (!errorAlert) {
       dispatch(
         getUpdateMe({
-          type:"PATCH",
-          userName:userValue,
+          type: "PATCH",
+          userName: userValue,
           streetName: streetValue,
           cityName: cityValue,
           stateName: stateValue,
-          countryName: 'India',
+          countryName: "India",
           zipcodeName: zipcodeValue,
-          tokenValue:token,
-          phoneNumber:"",
+          tokenValue: token,
+          phoneNumber: "",
         })
       );
-      // console.log("func",updateMe);
-      localStorage.removeItem("AddressInfo");
-      // console.log("AddresOnfo",updateMe?.data?.user?.address);
-      let AddressInfo = JSON.parse(localStorage.getItem("AddressInfo"));
-      console.log("Addd",AddressInfo==null);
+      
+    }
+    console.log("value",streetValue,cityValue,zipcodeValue,stateValue)
+    
   }
+  console.log("outside",updateMe);
+
+  let userDetails = JSON.parse(localStorage.getItem("user"));
+  if (
+    updateMe
+  ) {
+    userInfoAddress ={
+      ...userInfoAddress,
+      address:updateMe.data?.user?.address
+    }
+    userDetails = {
+      ...userDetails,
+      address: updateMe.data?.user?.address,
+    };
+
+    localStorage.setItem("user", JSON.stringify(userDetails));
+    console.log("i",userDetails);
+    console.log("usia",userInfoAddress);
   }
-  let userAddressInfo = JSON.parse(localStorage.getItem("addressInfo"));
-  localStorage.setItem("AddressInfo",JSON.stringify(updateMe?.data?.user?.address));
-  
+
   function removeAddress(e) {
     e.stopPropagation();
     e.preventDefault();
-    if (localStorage.getItem("AddressInfo")) {
-      localStorage.removeItem("AddressInfo");
-      localStorage.setItem("AddressInfo",null);
-      // window.location.reload();
-      // let AddressInfo = JSON.parse(localStorage.getItem("AddressInfo"));
-      // console.log("Addd",AddressInfo==null);
+  
+    let userDetails = JSON.parse(localStorage.getItem("user"));
+  
+    if (userDetails && userDetails.address) {
+      userDetails.address.length=0;
+      localStorage.setItem("user", JSON.stringify(userDetails));
     }
+  
+    console.log("address", userDetails.address);
+    console.log("ree",updateMe);
   }
-  let AddressInfo = JSON.parse(localStorage.getItem("AddressInfo"));
-  console.log("Addd",AddressInfo==null);
+  
 
   return (
     <>
@@ -155,7 +165,7 @@ function AddressPage() {
                       <input
                         type="text"
                         disabled
-                        placeholder={userValue}
+                        // placeholder={userValue}
                         onChange={(e) =>
                           handleInputChange(e.target.value, "name")
                         }
@@ -170,7 +180,7 @@ function AddressPage() {
                     </label>
                     <div className="">
                       <input
-                        value={streetValue}
+                        // value={streetValue}
                         type="text"
                         onChange={(e) =>
                           handleInputChange(e.target.value, "residence Details")
@@ -190,7 +200,7 @@ function AddressPage() {
                     <div className="">
                       <input
                         type="text"
-                        value={zipcodeValue}
+                        // value={zipcodeValue}
                         onChange={(e) =>
                           handleInputChange(e.target.value, "pincode")
                         }
@@ -211,7 +221,7 @@ function AddressPage() {
                       </label>
                       <div className="">
                         <input
-                          value={cityValue}
+                          // value={cityValue}
                           type="text"
                           onChange={(e) =>
                             handleInputChange(e.target.value, "city")
@@ -231,7 +241,7 @@ function AddressPage() {
                       <div className="">
                         <input
                           type="text"
-                          value={stateValue}
+                          // value={stateValue}
                           onChange={(e) =>
                             handleInputChange(e.target.value, "state")
                           }
@@ -285,9 +295,7 @@ function AddressPage() {
                       cursor-pointer lg:h-14 h-14 lg:text-xl w-full flex-1 
                       border-none outline-none flex justify-center items-center 
                       md:rounded-md text-white ${
-                        errorAlert
-                          ? "bg-[grey]"
-                          : "bg-[#42a2a2]"
+                        errorAlert ? "bg-[grey]" : "bg-[#42a2a2]"
                       }`}
                     >
                       SAVE ADDRESS

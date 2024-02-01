@@ -35,6 +35,8 @@ function PaymentPage() {
   console.log("activetab", activeTab);
   
   console.log("user", user);
+  let userInfo = JSON.parse(localStorage.getItem("user"));
+  console.log("userInfo",userInfo);
   return (
     <>
       <div className="flex justify-center">

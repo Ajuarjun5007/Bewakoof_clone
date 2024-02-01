@@ -257,7 +257,7 @@ function ProductListPage() {
             </div>
           ) : (
             <div className="">
-              <div className="my-[30px] pl-[10px]   flex flex-col justify-left max-[768px]:pl-0   max-[768px]:justify-center max-[768px]:items-center ">
+              <div className="my-[30px] pl-[10px]   flex flex-col justify-left max-[768px]:pl-0   max-[768px]:justify-center max-[768px]:items-center max-[768px]:no-scrollbar">
                 {/* heading wrapper */}
 
                 <div className="text-[24px] text-[#2d2d2d] flex font-[900] max-[768px]:justify-center">
@@ -279,7 +279,7 @@ function ProductListPage() {
                       />
                     </div>
                   )}
-                  <div className="relative pl-[5px] w-[80%] border-[1px] flex flex-col  max-[768px]:pl-0 max-[768px]:justify-center max-[768px]:w-full">
+                  <div className="relative pl-[5px] w-[80%] border-[1px] border-red-800 flex flex-col  max-[768px]:pl-0 max-[768px]:justify-center max-[768px]:w-full">
                     {!isMobile && tempArr?.length > 0 && (
                       <div className=" flex w-[89%] pb-[15px] pr-[10px] ml-[20px]  flex-row-reverse">
                         <div
@@ -357,7 +357,7 @@ function ProductListPage() {
                     )}
                     {/* product card */}
 
-                    <div className="flex flex-wrap justify-center gap-[10px] max-[768px]:gap-[5px] max-[768px]:justify-center ">
+                    <div className="flex flex-wrap justify-center gap-[10px] max-[768px]:gap-0 max-[768px]:justify-center ">
                       {Array.isArray(tempArr) ? (
                         tempArr?.length > 0 ? (
                           tempArr ? (
@@ -368,10 +368,10 @@ function ProductListPage() {
                                   pathname: `/ProductDetailsPage/${product._id}`,
                                 }}
                               >
-                                <div key={product?._id} className="w-[266px]">
+                                <div key={product?._id} className="w-[266px] max-[768px]:w-max max-[768px]:py-1">
                                   <div className="relative flex overflow-hidden">
                                     <img
-                                      className="w-[266px] fog h-[330px] max-[768px]:w-[210px] max-[768px]:h-[250px] hover:scale-105 transition-all duration-[200ms] ease-in-out"
+                                      className="w-[266px] fog h-[330px] max-[768px]:w-[full] max-[768px]:h-[full] hover:scale-105 transition-all duration-[200ms] ease-in-out"
                                       src={product?.displayImage}
                                       alt="image"
                                     />
@@ -382,12 +382,12 @@ function ProductListPage() {
                                       </p>
                                     </div>
                                   </div>
-                                  <div className="relative">
+                                  <div className="relative border-[1px]">
                                     <div
                                       onClick={(event) => {
                                         wishListHandler(event, product._id);
                                       }}
-                                      className="absolute mt-[15px] right-[4px] text-[25px]"
+                                      className="absolute mt-[15px] right-[4px] text-[25px] "
                                     >
                                       {!wishListResult?.includes(
                                         product._id
