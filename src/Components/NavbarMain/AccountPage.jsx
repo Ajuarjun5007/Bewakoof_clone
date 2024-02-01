@@ -60,7 +60,9 @@ function AccountPage() {
                     Continue Shopping
                 </button>
                 </div>
-                <img src={account_img} alt="" />
+                <img 
+                className="overflow-hidden"
+                src={account_img} alt="" />
             </div>
         </div>
       </div>

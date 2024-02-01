@@ -25,6 +25,7 @@ import {
 import FilterComponent from "./FilterComponent";
 import ComingSoon from "../ComingSoon";
 import { useScreenSize } from "../MobileComponent/useScreenSize";
+import MobileFilter from "../MobileComponent/MobileFilter";
 function ProductListPage() {
   const location = useLocation();
   const screenSize = useScreenSize();
@@ -245,8 +246,8 @@ function ProductListPage() {
 
   // console.log("wishListResult", wishListResult);
   // console.log("wishListResultdemo", wishListResultdemo);
-  let isMobile = screenSize < 768;
   console.log("Pc", productCategory);
+  let isMobile = screenSize < 768;
   return (
     <>
       <div className="flex justify-center">
@@ -450,6 +451,9 @@ function ProductListPage() {
               </div>
             </div>
           )}
+          {/* {isMobile &&
+          <MobileFilter/>
+          } */}
         </div>
       </div>
     </>

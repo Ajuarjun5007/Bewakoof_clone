@@ -77,8 +77,8 @@ function AddressPage() {
     }
   }
   let user = JSON.parse(localStorage.getItem("user"));
-  let userInfoAddress=userInfo[1];
-  console.log("userInfAdd",userInfoAddress);
+  let userInfoAddress = userInfo[1];
+  console.log("userInfAdd", userInfoAddress);
   function handleFormSubmit(e) {
     e.preventDefault();
     if (!errorAlert) {
@@ -95,51 +95,46 @@ function AddressPage() {
           phoneNumber: "",
         })
       );
-      
     }
-    console.log("value",streetValue,cityValue,zipcodeValue,stateValue)
-    
+    console.log("value", streetValue, cityValue, zipcodeValue, stateValue);
   }
-  console.log("outside",updateMe);
+  console.log("outside", updateMe);
 
   let userDetails = JSON.parse(localStorage.getItem("user"));
-  if (
-    updateMe
-  ) {
-    userInfoAddress ={
+  if (updateMe) {
+    userInfoAddress = {
       ...userInfoAddress,
-      address:updateMe.data?.user?.address
-    }
+      address: updateMe.data?.user?.address,
+    };
     userDetails = {
       ...userDetails,
       address: updateMe.data?.user?.address,
     };
 
     localStorage.setItem("user", JSON.stringify(userDetails));
-    console.log("i",userDetails);
-    console.log("usia",userInfoAddress);
+    console.log("i", userDetails);
+    console.log("usia", userInfoAddress);
   }
 
   function removeAddress(e) {
     e.stopPropagation();
     e.preventDefault();
-  
+
     let userDetails = JSON.parse(localStorage.getItem("user"));
-  
+
     if (userDetails && userDetails.address) {
-      userDetails.address.length=0;
+      userDetails.address.length = 0;
       localStorage.setItem("user", JSON.stringify(userDetails));
     }
-  
+
     console.log("address", userDetails.address);
-    console.log("ree",updateMe);
+    console.log("ree", updateMe);
   }
-  
 
   return (
     <>
       <div className="flex justify-center">
-        <div className="w-85 mt-[120px]">
+        <div className="w-85 mt-[120px] md:w-full ">
           <Link to="/AccountPage">
             <div className="my-5 text-[#51cccc] flex items-center text-sm gap-2">
               <GoChevronLeft className="text-[19px] font-[400]" />
@@ -153,10 +148,10 @@ function AddressPage() {
           <div className="">
             <form
               onSubmit={(e) => handleFormSubmit(e)}
-              className="relative w-full lg:w-11/12 pb-12 m-auto"
+              className=" w-full lg:w-11/12 pb-12 m-auto"
             >
-              <div className="w-[80%]">
-                <div className="px-4 md:px-6">
+              <div className="w-[80%] max-[767px]:w-full">
+                <div className="px-4 md:px-1">
                   <div className="flex-1 pb-7">
                     <label className="text-xs font-medium opacity-60 block mb-2">
                       Full Name
@@ -170,7 +165,7 @@ function AddressPage() {
                           handleInputChange(e.target.value, "name")
                         }
                         className="border text-black h-12 lg:h-14 text-sm lg:text-base font-bold 
-                        rounded-md  p-1 w-full pl-3 outline-none border-[#979797] opacity-100"
+    rounded-md  p-1 w-full pl-3 outline-none border-[#979797] opacity-100"
                       />
                     </div>
                   </div>
@@ -270,8 +265,8 @@ function AddressPage() {
                       />
                     </div>
                     {/* {!user?.address?.addressType && addressTypeErrorAlert && (
-                      <p className="text-red-500">Invalid Address Type</p>
-                    )} */}
+  <p className="text-red-500">Invalid Address Type</p>
+)} */}
                   </div>
                   <div className="flex-1 pb-7">
                     <label className="text-xs font-medium opacity-60 block mb-2">
@@ -288,11 +283,11 @@ function AddressPage() {
                       />
                     </div>
                   </div>
-                  <div className="flex gap-6 md:w-4/5 m-auto mt-10 my-2">
+                  <div className="flex gap-2 md:w-4/5 m-auto mt-10 my-2">
                     <button
                       type="submit"
-                      className={`submit fixed md:static md:z-0 z-50 bottom-0 uppercase 
-                      cursor-pointer lg:h-14 h-14 lg:text-xl w-full flex-1 
+                      className={`submit fixed md:static md:z-0 z-50 bottom-16 uppercase 
+                      cursor-pointer lg:h-14 h-14 lg:text-xl w-[80%] ml-0 pr-30 flex-1 
                       border-none outline-none flex justify-center items-center 
                       md:rounded-md text-white ${
                         errorAlert ? "bg-[grey]" : "bg-[#42a2a2]"
@@ -301,8 +296,9 @@ function AddressPage() {
                       SAVE ADDRESS
                     </button>
                     <button
-                      className="hidden md:flex border border-[#51cccc] text-[#51cccc] 
-                                rounded-md justify-center items-center lg:text-xl flex-1"
+                      className="fixed md:static md:z-0  z-50 bottom-1 uppercase 
+                      cursor-pointer lg:h-14 h-14 lg:text-xl w-[80%] ml-0 pr-30 flex-1 bg-[grey] border border-[#51cccc] text-[#51cccc] 
+                                rounded-md justify-center items-center "
                       onClick={(e) => removeAddress(e)}
                     >
                       EDIT ADDRESS
