@@ -47,3 +47,12 @@
 	box-shadow: 0 0 0 4px #fff, 0 0 4px 7px #51cccc;
 	background-color:red;
 }
+.sort-container-child{
+	/* display: none; */
+	visibility:hidden;
+	transition: opacity 1s ease-in-out; 
+}
+.sort-container-parent:hover .sort-container-child{
+		/* display:block; */
+		visibility:visible;
+}

@@ -37,6 +37,7 @@ import { sizes } from "../../Components/TypeConstants";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import Loader from "../Loader";
 import ReviewWrapper from "./ReviewComponent/ReviewWrapper";
+import { useScreenSize } from "../../Components/MobileComponent/useScreenSize";
 register();
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -125,6 +126,7 @@ function ProductDetailsPage() {
 
 console.log("cartListId",cartListId);
 console.log("cartListItems",cartListItems);
+const screenSize = useScreenSize();
   const onClose = (event) => {
     if (event.stopPropagation) {
       event.stopPropagation();
@@ -265,16 +267,18 @@ console.log("cartListItems",cartListItems);
       });
     }
   }, [params]);
-
+  let isMobile = screenSize < 767;
   return (
     <>
       <div className="relative">
         <div className="flex justify-center">
           <div className="mt-[90px] flex gap-[2%] h-[620px]   w-85 max-[767px]:w-[90%] max-[767px]:h-full max-[767px]:flex-col">
-            <div className="flex h-max sticky justify-center items-start w-[45%]  ">
+            <div className="flex h-max sticky justify-center items-start w-[45%]  max-[767px]:w-[100%] max-[767px]:h-full">
               {!isLoading ? (
-                <div className="flex gap-[5px] md:h-[470px] xl:h-[575px] overflow-hidden pb-2">
-                  {/* <div className="md:w-1/5 hidden md:flex flex-col gap-2">
+                <div className="flex gap-[5px]  xl:h-[575px] overflow-hidden pb-2 ">
+                  {
+                    !isMobile && 
+                  <div className="md:w-1/5 hidden md:flex flex-col gap-2">
                     <div
                       onClick={() => handlePrevClick()}
                       className=" cursor-pointer flex items-center justify-center truncate"
@@ -307,8 +311,9 @@ console.log("cartListItems",cartListItems);
                     >
                       <SlArrowDown />
                     </div>
-                  </div> */}
-                  {/* <div className="w-full md:w-4/5 ">
+                  </div>
+                  }
+                  <div className="w-full md:w-4/5 border">
                     <swiper-container
                       ref={horizontalSwiperRef}
                       controller-control=".verticalSwiper"
@@ -323,7 +328,7 @@ console.log("cartListItems",cartListItems);
                           <div className="">
                             <img
                               className="h-[558px] md:w-full !object-contain 
-                                    md:object-cover object-center "
+                                    md:object-cover object-center max-[768px]:h-full "
                               src={image}
                               alt=""
                             />
@@ -331,13 +336,13 @@ console.log("cartListItems",cartListItems);
                         </swiper-slide>
                       ))}
                     </swiper-container>
-                  </div> */}
+                  </div>
                 </div>
               ) : (
                 <Loader />
               )}
             </div>
-            <div className="w-[50%] max-[767px]:w-[100%] pt-[20px] overflow-scroll max-[768px]:overflow-scroll no-scrollbar">
+            <div className="w-[50%] max-[768px]:w-[100%] pt-[20px] overflow-scroll max-[768px]:overflow-scroll no-scrollbar">
               <div className="">
                 <p className="text-[#4f5362] text-lg font-[400]">
                   {productInfo.brand}
@@ -624,16 +629,16 @@ console.log("cartListItems",cartListItems);
                 <div className="h-[3px] w-[75%] max-[767px]:w-[100%]  bg-[#eee]"></div>
                 <div className="productDescription">
                   <Accordion.Root
-                    className=" rounded-md flex flex-col"
+                    className=" rounded-md flex flex-col max-[281px]:gap-4"
                     type="single"
                     collapsible
                   >
                     <AccordionItem value="item-1">
                       <AccordionTrigger className="">
-                        <div className="flex gap-2 ">
+                        <div className="flex gap-2 max-[281px]:gap-4 ">
                           <img src={list_img} alt="" />
                           <div className=" flex flex-col items-start justify-left">
-                            <p className="font-bold text-sm">
+                            <p className="font-bold text-sm max-[281px]:text-[12px]">
                               Product Description
                             </p>
                             <p className="text-[11px] text-[#878787]">
@@ -658,10 +663,10 @@ console.log("cartListItems",cartListItems);
                         <div className="flex gap-2">
                           <img src={tofro_img} alt="" />
                           <div className="flex flex-col items-start justify-left">
-                            <p className="font-bold text-sm">
+                            <p className="font-bold text-sm max-[281px]:text-[12px]">
                               15 Days Returns & Exchange
                             </p>
-                            <p className="text-[11px] text-[#878787]">
+                            <p className="text-[11px] text-[#878787] max-[281px]:text-[9px]">
                               Know about return & exchange policy
                             </p>
                           </div>
@@ -773,7 +778,7 @@ const AccordionItem = React.forwardRef(
   ({ children, className, ...props }, forwardedRef) => (
     <Accordion.Item
       className={classNames(
-        "focus-within:shadow-mauve12 w-[75%] max-[767px]:w-[100%] border-b-[2px] border-[#eee] solid overflow-hidden first:mt-0 first:rounded-t last:rounded-b focus-within:relative focus-within:z-1 ",
+        "focus-within:shadow-mauve12 w-[75%] max-[768px]:w-[100%] border-b-[2px] border-[#eee] solid overflow-hidden first:mt-0 first:rounded-t last:rounded-b focus-within:relative focus-within:z-1 ",
         className
       )}
       {...props}

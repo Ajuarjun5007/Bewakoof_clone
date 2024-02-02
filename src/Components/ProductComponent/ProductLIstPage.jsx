@@ -1,4 +1,5 @@
 import "react-multi-carousel/lib/styles.css";
+import "../ProductComponent/ProductPage.css"
 import * as Accordion from "@radix-ui/react-accordion";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
 import React, { useEffect } from "react";
@@ -251,19 +252,20 @@ function ProductListPage() {
   return (
     <>
       <div className="flex justify-center">
-        <div className="w-85 flex flex-col justify-left mt-[70px] ">
+        <div className="w-85 flex flex-col justify-left mt-[70px] max-[768px]:w-full">
           {loading ? (
             <div className="mt-[30px]">
               <Loader />
             </div>
           ) : (
             <div className="">
-              <div className="my-[30px] pl-[10px]   flex flex-col justify-left max-[768px]:pl-0   max-[768px]:justify-center max-[768px]:items-center max-[768px]:no-scrollbar">
+              <div className="my-[30px] pl-[10px] flex flex-col justify-left max-[768px]:pl-0 max-[768px]:justify-center max-[768px]:items-center max-[768px]:no-scrollbar">
                 {/* heading wrapper */}
 
                 <div className="text-[24px] text-[#2d2d2d] flex font-[900] max-[768px]:justify-center">
                   <p className="underline w-10/12 decoration-[#fdd835] justify-center items-center decoration-[2px] underline-offset-[12px]">
                     {productCategory.toUpperCase()}
+                  
                   </p>
                 </div>
 
@@ -280,13 +282,12 @@ function ProductListPage() {
                       />
                     </div>
                   )}
-                  <div className="relative pl-[5px] w-[80%] border-[1px] border-red-800 flex flex-col  max-[768px]:pl-0 max-[768px]:justify-center max-[768px]:w-full">
+                  <div className="relative pl-[5px] w-[80%]  flex flex-col  max-[768px]:p-0 max-[768px]:items-center max-[768px]:justify-center max-[768px]:w-full">
                     {!isMobile && tempArr?.length > 0 && (
-                      <div className=" flex w-[89%] pb-[15px] pr-[10px] ml-[20px]  flex-row-reverse">
+                      <div className="sort-container-parent flex w-[89%] pb-[15px] pr-[10px] ml-[20px]  flex-row-reverse">
                         <div
-                          className="flex flex-row-reverse gap-[5px]"
-                          onMouseEnter={() => setSortContainerDisplay(true)}
-                          onMouseLeave={() => setSortContainerDisplay(false)}
+                          className="flex flex-row-reverse gap-[5px] "
+                      
                         >
                           <IoChevronDown />
                           <p className="text-[#2d2d2d] text-[12px] pl-[8px] font-[300]">
@@ -295,10 +296,10 @@ function ProductListPage() {
                           <p className="text-[rgba(45,45,45,.5)] font-[900] text-[12px]">
                             SORT BY
                           </p>
-                          {sortContainerDisplay && (
+
                             <div
-                              className="absolute min-w-[145px] z-[1] py-[17px] border-[1px] border-[#ccc] solid
-                 top-[25px] right-[40px] shadow-[0_4px_8px_0_rgba(0,0,0,.2)] bg-white pl-[10px]
+                              className="sort-container-child absolute min-w-[145px] z-[1] py-[17px] border-[1px] border-[#ccc] solid
+                 top-[25px] right-[75px] shadow-[0_4px_8px_0_rgba(0,0,0,.2)] bg-white pl-[10px]
                   text-[rgba(45,45,45,.7)] text-[12px]"
                             >
                               <p
@@ -352,13 +353,13 @@ function ProductListPage() {
                                 Price : Low to High
                               </p>
                             </div>
-                          )}
+                 
                         </div>
                       </div>
                     )}
                     {/* product card */}
 
-                    <div className="flex flex-wrap justify-center gap-[10px] max-[768px]:gap-0 max-[768px]:justify-center ">
+                    <div className="flex flex-wrap justify-center gap-[10px]  max-[768px]:gap-0 max-[768px]:justify-center ">
                       {Array.isArray(tempArr) ? (
                         tempArr?.length > 0 ? (
                           tempArr ? (
@@ -369,10 +370,13 @@ function ProductListPage() {
                                   pathname: `/ProductDetailsPage/${product._id}`,
                                 }}
                               >
-                                <div key={product?._id} className="w-[266px] max-[768px]:w-max max-[768px]:py-1">
+                                <div
+                                  key={product?._id}
+                                  className="w-[266px] max-[768px]:w-full max-[768px]:py-1"
+                                >
                                   <div className="relative flex overflow-hidden">
                                     <img
-                                      className="w-[266px] fog h-[330px] max-[768px]:w-[full] max-[768px]:h-[full] hover:scale-105 transition-all duration-[200ms] ease-in-out"
+                                      className="w-[266px] fog h-[330px] max-[768px]:w-full max-[768px]:h-[full] hover:scale-105 transition-all duration-[200ms] ease-in-out"
                                       src={product?.displayImage}
                                       alt="image"
                                     />
@@ -439,7 +443,6 @@ function ProductListPage() {
                             <Loader />
                           )
                         ) : (
-                          // <Loader />
                           <ComingSoon />
                         )
                       ) : (
@@ -451,9 +454,6 @@ function ProductListPage() {
               </div>
             </div>
           )}
-          {/* {isMobile &&
-          <MobileFilter/>
-          } */}
         </div>
       </div>
     </>
@@ -461,3 +461,8 @@ function ProductListPage() {
 }
 
 export default ProductListPage;
+{
+  /* {isMobile &&
+          <MobileFilter/>
+          } */
+}
