@@ -52,7 +52,6 @@ function ProductDetailsPage() {
   const dispatch = useDispatch();
 
   let Id = params?.id;
-  // console.log("Id",Id);
   const navigate = useNavigate();
   const [images, setImages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -271,11 +270,11 @@ console.log("cartListItems",cartListItems);
     <>
       <div className="relative">
         <div className="flex justify-center">
-          <div className="mt-[90px] flex gap-[2%] h-[620px]  w-85 ">
-            <div className="flex h-max sticky justify-center items-start w-[45%] ">
+          <div className="mt-[90px] flex gap-[2%] h-[620px]   w-85 max-[767px]:w-[90%] max-[767px]:h-full max-[767px]:flex-col">
+            <div className="flex h-max sticky justify-center items-start w-[45%]  ">
               {!isLoading ? (
                 <div className="flex gap-[5px] md:h-[470px] xl:h-[575px] overflow-hidden pb-2">
-                  <div className="md:w-1/5 hidden md:flex flex-col gap-2">
+                  {/* <div className="md:w-1/5 hidden md:flex flex-col gap-2">
                     <div
                       onClick={() => handlePrevClick()}
                       className=" cursor-pointer flex items-center justify-center truncate"
@@ -308,8 +307,8 @@ console.log("cartListItems",cartListItems);
                     >
                       <SlArrowDown />
                     </div>
-                  </div>
-                  <div className="w-full md:w-4/5 ">
+                  </div> */}
+                  {/* <div className="w-full md:w-4/5 ">
                     <swiper-container
                       ref={horizontalSwiperRef}
                       controller-control=".verticalSwiper"
@@ -332,13 +331,13 @@ console.log("cartListItems",cartListItems);
                         </swiper-slide>
                       ))}
                     </swiper-container>
-                  </div>
+                  </div> */}
                 </div>
               ) : (
                 <Loader />
               )}
             </div>
-            <div className="w-[50%] pt-[20px] overflow-scroll no-scrollbar">
+            <div className="w-[50%] max-[767px]:w-[100%] pt-[20px] overflow-scroll max-[768px]:overflow-scroll no-scrollbar">
               <div className="">
                 <p className="text-[#4f5362] text-lg font-[400]">
                   {productInfo.brand}
@@ -388,7 +387,7 @@ console.log("cartListItems",cartListItems);
                 </div>
               </div>
               <div className="tribeContainer py-2 mt-1">
-                <div className="h-[3px] w-[75%] bg-[#eee]"></div>
+                <div className="h-[3px] w-[75%] max-[767px]:w-[100%] bg-[#eee]"></div>
                 <div className="tribeMsg py-4 text-[11px] font-medium cursor-pointer">
                   <span className="text-[#333] font-[400]">
                     TriBe members get an extra discount of <strong>₹20</strong>{" "}
@@ -396,7 +395,7 @@ console.log("cartListItems",cartListItems);
                   </span>
                   <span className="text-[#42a2a2]">Learn more</span>
                 </div>
-                <div className="h-[3px] w-[75%] bg-[#eee]"></div>
+                <div className="h-[3px] w-[75%] max-[767px]:w-[100%] bg-[#eee]"></div>
                 <div className="">
                   <div className="colorsDiv ml-[10px]">
                     <div className="colorName text-sm font-bold text-[#333] mb-3 w-max">
@@ -415,7 +414,7 @@ console.log("cartListItems",cartListItems);
                     </div>
                   </div>
                 </div>
-                <div className="sizeName text-[11px] w-[75%] flex items-center justify-between font-bold text-[#333] my-2">
+                <div className="sizeName text-[11px] w-[75%] max-[767px]:w-[100%] flex items-center justify-between font-bold text-[#333] my-2">
                   <p>SELECT SIZE </p>
                   <div className="font-bold cursor-pointer  text-[#42a2a2]">
                     Size Guide
@@ -538,8 +537,8 @@ console.log("cartListItems",cartListItems);
                     </p>
                   </button>
                 </div>
-                <div className="h-[3px] w-[75%] bg-[#eee]"></div>
-                <div className=" w-[75%]">
+                <div className="h-[3px] w-[75%] max-[767px]:w-[100%] bg-[#eee]"></div>
+                <div className=" w-[75%] ">
                   <div className="checkPincode mt-1 mb-4">
                     <div className="checkPincodeHeader text-[#2d2d2d] text-[11px] p-2 pl-0 flex items-center gap-1">
                       <img
@@ -622,16 +621,16 @@ console.log("cartListItems",cartListItems);
                     )}
                   </div>
                 </div>
-                <div className="h-[3px] w-[75%] bg-[#eee]"></div>
+                <div className="h-[3px] w-[75%] max-[767px]:w-[100%]  bg-[#eee]"></div>
                 <div className="productDescription">
                   <Accordion.Root
-                    className=" rounded-md "
+                    className=" rounded-md flex flex-col"
                     type="single"
                     collapsible
                   >
                     <AccordionItem value="item-1">
-                      <AccordionTrigger>
-                        <div className="flex gap-2">
+                      <AccordionTrigger className="">
+                        <div className="flex gap-2 ">
                           <img src={list_img} alt="" />
                           <div className=" flex flex-col items-start justify-left">
                             <p className="font-bold text-sm">
@@ -712,7 +711,7 @@ console.log("cartListItems",cartListItems);
                 </div>
               </div>
             </div>
-          </div>
+          </div>v
         </div>
         {openSizeModal && (
           <div className="z-10 absolute top-[0px] flex justify-center items-center  w-full h-full left-[0px] bg-[#0000007a]">
@@ -774,7 +773,7 @@ const AccordionItem = React.forwardRef(
   ({ children, className, ...props }, forwardedRef) => (
     <Accordion.Item
       className={classNames(
-        "focus-within:shadow-mauve12 w-[75%] border-b-[2px] border-[#eee] solid overflow-hidden first:mt-0 first:rounded-t last:rounded-b focus-within:relative focus-within:z-1 ",
+        "focus-within:shadow-mauve12 w-[75%] max-[767px]:w-[100%] border-b-[2px] border-[#eee] solid overflow-hidden first:mt-0 first:rounded-t last:rounded-b focus-within:relative focus-within:z-1 ",
         className
       )}
       {...props}

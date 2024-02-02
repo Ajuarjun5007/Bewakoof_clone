@@ -34,7 +34,7 @@ function FooterComponent() {
   return (
     <>
       <div className=" px-[110px] min-[280px]:max-[820px]:px-[20px] pt-[72px] pb-[250px] bg-[rgb(24,24,24)] w-full 
-      left-0 text-[12px] bottom-0  min-[280px]:max-[767px]:px-[0px]">
+      left-0 text-[12px] bottom-0  min-[280px]:max-[767px]:px-[0px] max-[767px]:pb-0 ">
       {/* section 1 */}
         <div className=" min-[280px]:max-[820px]:pl-[20px]">
           {/* footer logo */}
@@ -168,14 +168,7 @@ function FooterComponent() {
               </div>
             </div>
             {/* payment*/}
-            <div className="my-[20px] gap-y-[10px] ml-[60px] min-[280px]:max-[820px]:ml-4">
-              <span className="text-[12px]  text-[#fdd835] tracking-[1px]">
-                100% SECURE PAYMENT
-              </span>
-              <div className=" mt-[20px] flex gap-[10px]">
-                <img className="w-[220px] h-[20px]" src={payment_img} alt="" />
-              </div>
-            </div>
+  
           </div>
         </div>
         {/* section 2 */}
@@ -267,18 +260,7 @@ function FooterComponent() {
                 </div>
             </div>
             {/* Mobiles */}
-            {/* <div className="w-[255px] px-[10px] pr-[40px]">
-                <span className="text-[white] font-[900] text-[17px] tracking-[1px]">MOBILE COVERS</span>
-              
-                <div className=" py-[10px] pt-[30px]">
-                    <p className="text-[hsla(0,0%,100%,.9)] tracking-[1px]">Brands</p>
-                {
-                    mobiles.map((item,index)=>(
-                        <p key={index} className="text-[hsla(0,0%,100%,.9)] tracking-[1px]">{item}</p>
-                    ))
-                }
-                </div>
-            </div> */}
+          
             {/* FANMAP */}
             <div className="w-[255px] px-[10px] pr-[40px] ">
                 <p className="text-[#51cccc] font-[900] text-[17px] tracking-[1px] pb-[15px]">FAN BOOK</p>
