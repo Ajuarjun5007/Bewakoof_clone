@@ -490,7 +490,7 @@ const screenSize = useScreenSize();
                   flex items-center md:rounded-none justify-center 
                   rounded-sm hover:shadow-md transition-all"
                   >
-                    {!LoadingCheck && cartListId.includes(Id) ? (
+                    {!LoadingCheck && cartListId?.includes(Id) ? (
                       <Link to="/CartPage">
                         <img
                           className="w-5 h-5"
@@ -502,7 +502,7 @@ const screenSize = useScreenSize();
                       <img className="w-5 h-5" src={bag_white_img} alt="bag" />
                     )}
                     
-                      {!LoadingCheck && cartListId.includes(Id)?(
+                      {!LoadingCheck && cartListId?.includes(Id)?(
                           <Link to="/CartPage">
                         <p className="text-black font-[400] text-sm pl-2">
                         GO TO BAG

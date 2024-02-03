@@ -20,6 +20,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { login } from "./LoginService";
 import { IoEye } from "react-icons/io5";
 import { IoEyeOff } from "react-icons/io5";
+import mobile_login_img from "../../assets/login_mobile.webp"
+import { useScreenSize } from "../MobileComponent/useScreenSize";
 
 function LoginPage() {
  
@@ -32,7 +34,7 @@ function LoginPage() {
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
   let idInfo = [];
-
+  const screenSize = useScreenSize();
   const loginHandler = (event) => {
     event.preventDefault();
     console.log("event",event);
@@ -62,11 +64,11 @@ function LoginPage() {
   const passwordVisibleHandler = () => {
     setPasswordVisible(!passwordVisible);
   };
-  
+  const isMobile  = screenSize < 767;
   return (
     <>
-      <div className="mt-[90px] flex text-[montserrat,sans-serif]">
-        <div className="w-[50%]  flex flex-col items-center bg-[linear-gradient(0deg,#fff4c4,#fff)]">
+      <div className="mt-[90px] flex text-[montserrat,sans-serif] max-[767px]:flex-col max-[767px]:w-full">
+        <div className="w-[50%]  flex flex-col items-center bg-[linear-gradient(0deg,#fff4c4,#fff)] max-[767px]:hidden">
           <div className="py-[40px] font-[900] text-[30px] tracking-wide">
             <p>Welcome to the world of Bewakoof®!</p>
           </div>
@@ -74,12 +76,18 @@ function LoginPage() {
             <img src={img_1} alt="" />
           </div>
         </div>
-        <div className="w-[50%] flex items-center  flex-col ">
+{
+  isMobile &&
+        <div className="max-[768px]:block">
+                <img className="w-[100%] object-cover max-[768px]:block " src={mobile_login_img} alt="" />
+            </div>
+}
+        <div className="w-[50%] flex items-center  flex-col max-[767px]:w-full ">
           <div className="flex flex-col items-center content-center py-[20px]">
             <p className="text-[24px] py-[10px] font-[500] text-[#333]">
               Log in / Sign up
             </p>
-            <p className="text-[18px] text-[#a0a0a0] tracking-wider">
+            <p className="text-[18px] text-[#a0a0a0] tracking-wider flex justify-center items-center max-[767px]:px-[3%]">
               for Latest trends, exciting offers and everything Bewakoof®!
             </p>
           </div>
@@ -96,8 +104,8 @@ function LoginPage() {
                   onChange={(event)=>setEmail(event.target.value)}
                   className={
                     errorAlert
-                      ? "focus:outline-none border-[1px] border-[#db3236] solid rounded text-black font-[900] flex justify-center pl-[20px] w-[380px] h-[40px] mb-[10px] py-[25px]"
-                      : "focus:outline-none border-[1px] border-[#979797] solid rounded text-black font-[900] flex justify-center pl-[20px] w-[380px] h-[40px] mb-[10px] py-[25px]"
+                      ? "focus:outline-none border-[1px] border-[#db3236] solid rounded text-black font-[900] flex justify-center pl-[20px] w-[360px] h-[40px] mb-[10px] py-[25px] max-[281px]:w-[250px]"
+                      : "focus:outline-none border-[1px] border-[#979797] solid rounded text-black font-[900] flex justify-center pl-[20px] w-[360px] h-[40px] mb-[10px] py-[25px] max-[281px]:w-[250px]"
                   }
                 />
                 <div className="">
@@ -107,8 +115,8 @@ function LoginPage() {
                   onChange={(event)=>setPassword(event.target.value)}
                   className={
                     errorAlert
-                      ? "focus:outline-none border-[1px] border-[#db3236] solid rounded text-black font-[900] flex justify-center pl-[20px] w-[380px] h-[40px] py-[25px]"
-                      : "focus:outline-none border-[1px] border-[#979797] solid rounded text-black font-[900] flex justify-center pl-[20px] w-[380px] h-[40px] py-[25px]"
+                      ? "focus:outline-none border-[1px] border-[#db3236] solid rounded text-black font-[900] flex justify-center pl-[20px] w-[360px] h-[40px] py-[25px] max-[281px]:w-[250px]"
+                      : "focus:outline-none border-[1px] border-[#979797] solid rounded text-black font-[900] flex justify-center pl-[20px] w-[360px] h-[40px] py-[25px] max-[281px]:w-[250px]"
                   }
                 />
                    <div
@@ -133,7 +141,7 @@ function LoginPage() {
                 type="submit"
                 onClick={(email,password)=>loginHandler(email,password)}
                 className="rounded bg-[#42a2a2] text-[20px] text-[#fff] flex justify-center items-center 
-               w-[380px] h-[40px] py-[25px]"
+               w-[360px] h-[40px] py-[25px]  max-[281px]:w-[250px] "
               >
                 CONTINUE
               </button>
@@ -142,7 +150,8 @@ function LoginPage() {
 
           {/* or container */}
           <div className="my-[20px]">
-            <div className="relative border-b-[1px] w-[380px] m-[20px] flex justify-center z-0 border-[#aeaeae] font-[300] solid text-black">
+            <div className="relative border-b-[2px] w-[380px]  m-[20px] flex justify-center 
+            z-0 border-[#aeaeae] font-[300] solid text-black max-[767px]:w-[250px] max-[767px]:mx-0">
               <span className="absolute top-[-14px] bg-white">OR</span>
             </div>
           </div>
@@ -150,7 +159,7 @@ function LoginPage() {
           <Link to={"/SignupPage"}>
           <div
             className="border-[1px] flex justify-center items-center w-[340px] mb-[10px] 
-          rounded border-[#aeaeae] solid "
+          rounded border-[#aeaeae] solid  max-[281px]:w-[250px]  "
           >
             <div className="flex  justify-center items-center text-[16px]  py-[8px]">
               <button
@@ -163,7 +172,7 @@ function LoginPage() {
             </div>
           </div>
                 </Link>
-          <div className="flex w-[340px]  gap-[5px] ">
+          <div className="flex w-[360px] max-[281px]:w-[250px] gap-[5px] mt-2">
             <button className="flex w-[50%]  text-[16px] py-[4px] rounded text-[#5c5c5c] font-[900] justify-evenly items-center border-[1px] border-[#aeaeae] solid">
               <img className="w-[18px]" src={google_img} alt="" />
               <span>GOOGLE</span>
@@ -173,7 +182,7 @@ function LoginPage() {
               <span>FACEBOOK</span>
             </button>
           </div>
-          <div className="w-[400px] text-[12px] text-[#a0a0a0] mt-[30px]">
+          <div className="w-[400px] max-[281px]:w-[260px] text-[12px] text-[#a0a0a0] mt-[30px]">
             <p>
               By creating an account or logging in, you agree with Bewakoof®'s{" "}
               <strong className="text-[#42a2a2]"> Terms and Conditions</strong>{" "}

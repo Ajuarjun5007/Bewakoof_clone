@@ -1,8 +1,6 @@
-/* .dropdown-container{
+ .dropdown-container{
     display: none;
 }
-.user-detail-container:hover{
-    .dropdown-container{
-        display: block;
-    }
-} */
+.user-container:hover .dropdown-container{
+    display: block;
+}

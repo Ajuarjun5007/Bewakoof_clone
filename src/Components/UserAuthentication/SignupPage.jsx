@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import signup_img from "../../assets/signup_image.webp";
 import { IoEye } from "react-icons/io5";
 import { IoEyeOff } from "react-icons/io5";
 import { signup } from "./LoginService";
 import { MdWhatsapp } from "react-icons/md";
+import { useState,useEffect} from "react";
+import { useScreenSize } from "../MobileComponent/useScreenSize";
 function SignupPage() {
   const location = useLocation();
   const mobileNumber = location.state || "";
@@ -27,7 +28,7 @@ function SignupPage() {
   const [errorAlert, setErrorAlert] = useState(false);
   const [userExistAlert,setUserExistAlert] = useState('');
   const navigate = useNavigate();
-
+  const screenSize = useScreenSize();
   useEffect(() => {}, [isPasswordActive, isEmailActive, isNameActive]);
 
   function checking() {
@@ -108,7 +109,7 @@ function SignupPage() {
       });
     // console.log("login success");
   }
-
+  let isMobile  = screenSize < 768;
   // console.log("errorAlert", errorAlert);
   // console.log("nameErrorAlert", nameErrorAlert);
   // console.log("mailErrorAlert", mailErrorAlert);
@@ -116,11 +117,13 @@ function SignupPage() {
   return (
     <>
       <div className="flex flex-col justify-center items-center mt-[80px] pb-[30px] pt-[50px]  bg-[linear-gradient(0deg,#fff4c4,#fff)]">
-        <div className="w-[70%] flex justify-between">
-          <div className="py-[20px]">
+        <div className="w-[70%] flex justify-between max-[767px]:w-full ">
+         { isMobile
+         &&
+         <div className="py-[20px]">
             <img className="w-[320px] h-[430px]" src={signup_img} alt="" />
-          </div>
-          <div className="mx-[20px] block  justify-start w-[420px] pt-[5px] px-[60px] pb-[5px] bg-white">
+          </div>}
+          <div className="mx-[20px] block  justify-start w-[420px] pt-[5px] px-[60px] pb-[5px] bg-white max-[281px]:w-[260px]">
             <div className="">
               <p className="text-[24px] font-bold text-[#333]">Signup</p>
               <p className="pt-[10px] text-[18px] font-[600] text-[#333]">

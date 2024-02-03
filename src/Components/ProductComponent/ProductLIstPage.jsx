@@ -284,9 +284,10 @@ function ProductListPage() {
                   )}
                   <div className="relative pl-[5px] w-[80%]  flex flex-col  max-[768px]:p-0 max-[768px]:items-center max-[768px]:justify-center max-[768px]:w-full">
                     {!isMobile && tempArr?.length > 0 && (
-                      <div className="sort-container-parent flex w-[89%] pb-[15px] pr-[10px] ml-[20px]  flex-row-reverse">
+                      <div className="  flex w-[89%] pb-[15px] pr-[10px] ml-[20px]  flex-row-reverse">
+                        <div className="sort-container-parent">
                         <div
-                          className="flex flex-row-reverse gap-[5px] "
+                          className=" flex flex-row-reverse gap-[5px] "
                       
                         >
                           <IoChevronDown />
@@ -354,6 +355,7 @@ function ProductListPage() {
                               </p>
                             </div>
                  
+                        </div>
                         </div>
                       </div>
                     )}

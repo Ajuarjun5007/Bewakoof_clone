@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 function AddressPage() {
   // let userValue= JSON.parse(localStorage.getItem("userInfo"))[1].name;
   const dispatch = useDispatch();
-  let token = JSON.parse(localStorage.getItem("userInfo"))[0];
+  let token = JSON.parse(localStorage.getItem("userInfo"))[0] || [];
   let userInfo = JSON.parse(localStorage.getItem("userInfo"));
   let userValue;
   if (userInfo && Array.isArray(userInfo) && userInfo.length > 1) {
@@ -96,7 +96,7 @@ function AddressPage() {
         })
       );
     }
-    console.log("value", streetValue, cityValue, zipcodeValue, stateValue);
+    // console.log("value", streetValue, cityValue, zipcodeValue, stateValue);
   }
   console.log("outside", updateMe);
 

@@ -38,14 +38,14 @@ function NavbarMain() {
   const [menuContentForMen, setMenuContentForMen] = useState(false);
   const [menuContentForWomen, setMenuContentForWomen] = useState(false);
   const [menuContentForMobile, setMenuContentForMobile] = useState(false);
-  const [searchInput,setSearchInput] = useState('');
-  // const [searchValue,setSearchValue]=useState('')
-  // console.log("user",user);
+  const [searchInput, setSearchInput] = useState("");
+
   const searchValueResult = useSelector(
     (state) => state.productReducer.searchValueList
   );
   // console.log("searchValueRslt",searchValueResult);
-  const [searchResultsListHandler,setSearchResultsListHandler] = useState(false);
+  const [searchResultsListHandler, setSearchResultsListHandler] =
+    useState(false);
   useEffect(() => {
     if (localStorage.getItem("userInfo")) {
       setUserLoggedIn(true);
@@ -72,12 +72,12 @@ function NavbarMain() {
   function searchHandler(e) {
     const value = e.target.value;
     setSearchInput(value);
-    if(value.length >=2){
+    if (value.length >= 2) {
       setSearchResultsListHandler(true);
-    }else{
+    } else {
       setSearchResultsListHandler(false);
     }
-    
+
     dispatch(
       setSearchValue({
         id: "",
@@ -88,9 +88,8 @@ function NavbarMain() {
       })
     );
   }
-  function searchInputHandler(){
-    setSearchInput('');
-    
+  function searchInputHandler() {
+    setSearchInput("");
   }
   // console.log("searchResultsListHandler", searchResultsListHandler);
   // console.log("userLog", userLoggedIn);
@@ -428,8 +427,8 @@ function NavbarMain() {
             </div>
           </div>
 
-          {/* lefttnavbar */}
           <div className="flex items-center border-[rgba(0,0,0,0.5)] md:max-xl:mr-2 ">
+            {/* lefttnavbar */}
             <div className="inputwrapper flex relative  bg-[#eaeaea] mt-1 mb-1 h-10  rounded">
               <IoIosSearch className="absolute left-3.5 top-2 text-[rgba(0,0,0,0.5)] text-[24px]" />
               <input
@@ -439,37 +438,31 @@ function NavbarMain() {
                 type="text"
                 placeholder="Search by product, category or collection"
               />
-              {searchResultsListHandler && 
+              {searchResultsListHandler && (
                 <div className="absolute left-0 right-0 top-full bg-white border border-t-0 mt-2">
-                  <SearchResultsList 
-                  // searchDivHandler={searchDivHandler}
-                  searchInputHandler={searchInputHandler}
+                  <SearchResultsList
+                    // searchDivHandler={searchDivHandler}
+                    searchInputHandler={searchInputHandler}
                   />
                 </div>
-            }
+              )}
             </div>
-          
+
             {/* right navbar */}
             <div
-              onMouseOverCapture={() => setUserDetailsDisplay(true)}
-              onMouseLeave={() => setUserDetailsDisplay(false)}
               className="flex justify-between items-center px-2 "
             >
               <RxDividerVertical className="text-[40px] font-light text-[rgba(0,0,0,0.5)] " />
 
-              <div>
+              <div className="user-container  relative" >
+                <div className="">
                 {userLoggedIn ? (
                   <div
                     className=" user-detail-container relative"
-                    //  onMouseOver={() => setUserDetailsDisplay(true)}
-                    //  onMouseLeave={() => setUserDetailsDisplay(false)}
                   >
                     <LuUser2 className="text-[27px]" />
-                    <div className="dropdown-container">
-                      <div
-                        className={`absolute w-[180px] z-2 mt-[14px] text-14 left-[-60px] cursor-pointer bg-white shadow-2px hover:shadow-md ${
-                          userDetailsDisplay ? "block" : "hidden"
-                        }`}
+                    <div
+                        className=" dropdown-container absolute w-[180px] z-2 mt-[14px] text-14 left-[-60px] cursor-pointer bg-white shadow-2px hover:shadow-md"
                       >
                         <p className="bg-[rgba(0,0,0,.05)] text-[rgba(0,0,0,.5)] text-ellipsis overflow-hidden italic  px-[15px] py-[10px]">
                           Hi ,{userName}
@@ -501,15 +494,47 @@ function NavbarMain() {
                           Logout
                         </p>
                       </div>
-                    </div>
                   </div>
                 ) : (
+                  // </div>
                   <Link to="LoginPage">
                     <span className="text-[14px] leading-3 tracking-wider">
                       Login
                     </span>
                   </Link>
                 )}
+                </div>
+                {/* <div className="dropdown-container absolute w-[180px] z-2 mt-[14px] text-14 left-[-30px] cursor-pointer bg-white shadow-2px hover:shadow-md">
+                  <p className="bg-[rgba(0,0,0,.05)] text-[rgba(0,0,0,.5)] text-ellipsis overflow-hidden italic  px-[15px] py-[10px]">
+                    Hi ,{userName}
+                  </p>
+                  <Link to="/AccountPage">
+                    <p className="hover:bg-[rgba(0,0,0,.05)] px-[15px] py-[10px]">
+                      My Account
+                    </p>
+                  </Link>
+                  <Link to="/WishlistPage">
+                    <p className="hover:bg-[rgba(0,0,0,.05)]  px-[15px] py-[10px]">
+                      My Wishlist
+                    </p>
+                  </Link>
+                  <Link to="/TrackOrderPage">
+                    <p className="hover:bg-[rgba(0,0,0,.05)]  px-[15px] py-[10px]">
+                      My Orders
+                    </p>
+                  </Link>
+                  <Link to="/WalletPage">
+                    <p className="hover:bg-[rgba(0,0,0,.05)]  px-[15px] py-[10px]">
+                      My Wallet
+                    </p>
+                  </Link>
+                  <p
+                    onClick={() => clearStorage()}
+                    className="hover:bg-[rgba(0,0,0,.05)] px-[15px] py-[10px]"
+                  >
+                    Logout
+                  </p>
+                </div> */}
               </div>
 
               <span className="px-2 text-[30px] ">
