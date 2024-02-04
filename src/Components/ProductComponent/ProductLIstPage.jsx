@@ -454,6 +454,12 @@ function ProductListPage() {
                   </div>
                 </div>
               </div>
+              {isMobile &&
+          <MobileFilter
+          filteredProducts={tempArr}
+          onFilterChange={handleFilterChange}
+          />
+          } 
             </div>
           )}
         </div>

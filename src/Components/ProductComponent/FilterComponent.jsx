@@ -16,7 +16,6 @@ import "./ProductPage.css";
 function FilterComponent({onFilterChange,filteredProducts}) {
 
     let filteredItems=[];
-    // let filteredSubCategories,filteredBrands,filteredColors,filteredSizes=[];
     const [filteredSubCategories,setFilteredSubCategories]=useState([]);
     const [filteredBrands,setFilteredBrands]=useState([]);
     const [filteredColors,setFilteredColors]=useState([]);
@@ -50,8 +49,8 @@ setFilteredSubCategories([
   const [colorFilter, setColorFilter] = useState([]);
   const [brandFilter, setBrandFilter] = useState([]);
   const [updatedValues, setUpdatedValues] = useState({});
+
   function updateFilters(filterType,value){
-    
     switch (filterType) {
       case "size":
         setSizeFilter((prev) => {
@@ -91,15 +90,7 @@ setFilteredSubCategories([
           return [...new Set(updatedBrands)]; 
         });
         break;
-      case "ratings":
-        setRatingsFilter((prev) => {
-          const updatedRatings = prev.includes(value)
-            ? prev.filter((item) => item !== value)
-            : [...prev, value];
-            setUpdatedValues((prevValues) => ({ ...prevValues, [filterType]: updatedRatings }));
-          return [...new Set(updatedRatings)]; 
-        });
-        break;
+    
       default:
         break;
     }
@@ -109,8 +100,8 @@ setFilteredSubCategories([
     onFilterChange(updatedValues);
   },[updatedValues])
 
- 
-
+  console.log("filtered",filteredBrands,filteredColors,filteredSizes,filteredSubCategories);
+  console.log("updatedvalues",updatedValues);
 
   return (
     <>

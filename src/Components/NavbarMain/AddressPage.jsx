@@ -25,6 +25,11 @@ function AddressPage() {
   const [cityValue, setCityValue] = useState("");
   const [stateValue, setStateValue] = useState("");
   const [zipcodeValue, setZipcodeValue] = useState("");
+  const [addressTypeFetch, setAddressTypeFetch] = useState("");
+  const [streetFetch, setStreetFetch] = useState("");
+  const [cityFetch, setCityFetch] = useState("");
+  const [stateFetch, setStateFetch] = useState("");
+  const [zipcodeFetch, setZipcodeFetch] = useState("");
 
   useEffect(() => {
     if (
@@ -39,7 +44,33 @@ function AddressPage() {
     }
   }, [cityErrorAlert, stateErrorAlert, pincodeErrorAlert, streetErrorAlert]);
   let updateMe = useSelector((state) => state.productReducer.updateMeInfo);
+  useEffect(()=>{ 
+  //   dispatch(
+  //     getUpdateMe({
+  //       type: "PATCH",
+  //       userName: userValue,
+  //       streetName: '',
+  //       cityName: '',
+  //       stateName: '',
+  //       countryName: "India",
+  //       zipcodeName: '',
+  //       tokenValue: token,
+  //       phoneNumber: "",
+  //     })
+  //   );
+  setTimeout(()=>{
+    setStateFetch(updateMe?.data?.user?.address?.state);
+    setCityFetch(updateMe?.data?.user?.address?.city);
+    setStreetFetch(updateMe?.data?.user?.address?.street);
+    setZipcodeFetch(updateMe?.data?.user?.address?.zipcode);  
+  },1000)
+},[])
+console.log("updateMe",updateMe);
 
+  console.log("fetch",stateFetch,cityFetch,zipcodeFetch,streetFetch);
+  // useEffect(()=>{
+    
+  // },[updateMe])
   function handleInputChange(value, type) {
     if (value.trim() !== "" && type == "pincode") {
       if (value.length == 6 && Number(value)) {
@@ -98,22 +129,18 @@ function AddressPage() {
     }
     // console.log("value", streetValue, cityValue, zipcodeValue, stateValue);
   }
-  console.log("outside", updateMe);
+  // console.log("outside", updateMe);
 
   let userDetails = JSON.parse(localStorage.getItem("user"));
   if (updateMe) {
-    userInfoAddress = {
-      ...userInfoAddress,
-      address: updateMe.data?.user?.address,
-    };
     userDetails = {
       ...userDetails,
       address: updateMe.data?.user?.address,
     };
 
     localStorage.setItem("user", JSON.stringify(userDetails));
-    console.log("i", userDetails);
-    console.log("usia", userInfoAddress);
+    // console.log("i", userDetails);
+    // console.log("usia", userInfoAddress);
   }
 
   function removeAddress(e) {
@@ -128,9 +155,9 @@ function AddressPage() {
     }
 
     console.log("address", userDetails.address);
-    console.log("ree", updateMe);
   }
-
+  console.log("ree", updateMe.length>0 );
+ 
   return (
     <>
       <div className="flex justify-center">
@@ -160,7 +187,7 @@ function AddressPage() {
                       <input
                         type="text"
                         disabled
-                        // placeholder={userValue}
+                        placeholder={userValue}
                         onChange={(e) =>
                           handleInputChange(e.target.value, "name")
                         }
@@ -175,7 +202,7 @@ function AddressPage() {
                     </label>
                     <div className="">
                       <input
-                        // value={streetValue}
+                        value={streetFetch !== '' ? streetFetch : ''}
                         type="text"
                         onChange={(e) =>
                           handleInputChange(e.target.value, "residence Details")
@@ -195,7 +222,7 @@ function AddressPage() {
                     <div className="">
                       <input
                         type="text"
-                        // value={zipcodeValue}
+                        value={zipcodeFetch}
                         onChange={(e) =>
                           handleInputChange(e.target.value, "pincode")
                         }
@@ -216,7 +243,7 @@ function AddressPage() {
                       </label>
                       <div className="">
                         <input
-                          // value={cityValue}
+                          value={cityFetch}
                           type="text"
                           onChange={(e) =>
                             handleInputChange(e.target.value, "city")
@@ -236,7 +263,7 @@ function AddressPage() {
                       <div className="">
                         <input
                           type="text"
-                          // value={stateValue}
+                          value={stateFetch}
                           onChange={(e) =>
                             handleInputChange(e.target.value, "state")
                           }
