@@ -44,13 +44,16 @@ function NavbarMain() {
     (state) => state.productReducer.searchValueList
   );
   // console.log("searchValueRslt",searchValueResult);
+  let userInfo = JSON.parse(localStorage.getItem("userInfo")) || "";
+  
   const [searchResultsListHandler, setSearchResultsListHandler] =
     useState(false);
   useEffect(() => {
     if (localStorage.getItem("userInfo")) {
       setUserLoggedIn(true);
-      let userInfo = JSON.parse(localStorage.getItem("userInfo")) || "";
-      setUserName(JSON.parse(localStorage.getItem("userInfo"))[1].name);
+       userInfo = JSON.parse(localStorage.getItem("userInfo")) || "";
+      setUserName(JSON.parse(localStorage.getItem("userInfo"))[1]?.name);
+      console.log("use",userInfo[1].name);
     }
   }, []);
   const clearStorage = () => {

@@ -207,17 +207,18 @@ export const getUpdateMe = createAsyncThunk(
     myHeaders.append("accept", "application/json");
 
     let requestOptions;
-      
+      console.log("name",streetName,cityName,stateName,countryName,zipcodeName,tokenValue,phoneNumber);
       let raw = JSON.stringify({
         name:userName,
         address:{
           street:streetName,
           city:cityName,
+          zipcode:zipcodeName,
           state:stateName,
           country:countryName,
-          zipcode:zipcodeName,
+       
         },
-        phone:phoneNumber,
+        // phone:"9789313131",
       });
       
       requestOptions = {
@@ -236,6 +237,7 @@ export const getUpdateMe = createAsyncThunk(
       // console.log("slice", response);
       if (response.ok) {
         const result = await response.json();
+        console.log("result",result);
         return result;
       } else {
         return rejectWithValue({ error: "fetching failed" });
@@ -300,6 +302,7 @@ export const productSlice = createSlice({
         state.isLoading = false;
         state.updateMeInfo= action.payload;
         state.error = "";
+        window.localStorage.setItem('addressInfo', JSON.stringify(state.updateMeInfo.data.user.address));
       })
 
       .addCase(getUpdateMe.rejected, (state, action) => {
