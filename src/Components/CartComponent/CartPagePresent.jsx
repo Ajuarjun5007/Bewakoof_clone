@@ -48,7 +48,7 @@ const CartPagePresent = () => {
   //   console.log("w",wishListResult);
  
   //   console.log("add");
-  let userAddress = JSON.parse(localStorage.getItem("AddressInfo"));
+  let userAddress = JSON.parse(localStorage.getItem("addressInfo"));
    console.log("userAddreess",userAddress);
 
   return (

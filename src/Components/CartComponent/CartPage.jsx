@@ -1,3 +1,4 @@
+import { useState } from "react";
 import empty_bag_img from "../../assets/cart_page/empty-cart-page-doodle.png";
 import CartPagePresent from "../CartComponent/CartPagePresent";
 import { useSelector, useDispatch } from "react-redux";
@@ -6,12 +7,15 @@ function CartPage() {
   let { cartList, isLoading: LoadingCheck } = useSelector(
     (state) => state.productReducer
   );
-
+  
+ 
   let cartListItems =
     !LoadingCheck && cartList?.data?.items
       ? cartList.data.items.map((item) => item)
       : [];
-    
+
+  
+
   return (
     <>
       {cartListItems.length > 0 ? (

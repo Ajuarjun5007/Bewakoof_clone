@@ -82,6 +82,9 @@ function HomePage() {
     },
   };
   const [userLoggedIn, setUserLoggedIn] = useState(false);
+  let updateMe = useSelector((state) => state.productReducer.updateMeInfo);
+  let addressInfo;
+  let address;
   let {wishList} = useSelector(
     (state) => state.productReducer.wishList);
     console.log("wishList", wishList);
@@ -108,7 +111,6 @@ function HomePage() {
       );
 
     }
-
     dispatch(
       getProductList({
         id: "",
@@ -120,6 +122,12 @@ function HomePage() {
   }
   useEffect(() => {
    callProduct();
+
+   if(localStorage.getItem("user")){
+    let user = JSON.parse(localStorage.getItem("user"));
+      console.log("user",user.address);
+      localStorage.setItem("addressInfo",JSON.stringify(user.address));
+   }
   }, []);
 
   return (

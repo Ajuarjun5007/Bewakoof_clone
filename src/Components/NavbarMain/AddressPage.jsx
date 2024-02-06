@@ -6,17 +6,16 @@ import { useDispatch, useSelector } from "react-redux";
 function AddressPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
+
   let userInfoData = JSON.parse(localStorage.getItem("userInfo")) || [];
   let token = userInfoData.length > 0 ? userInfoData[0] : [];
   let userInfo = userInfoData.length > 1 ? userInfoData[1] : {};
-  let userValue = userInfo && userInfo.name ? userInfo.name : '';
+  let userValue = userInfo && userInfo.name ? userInfo.name : "";
 
   const [pincodeErrorAlert, setPinCodeErrorAlert] = useState(true);
   const [cityErrorAlert, setCityErrorAlert] = useState(true);
   const [stateErrorAlert, setStateErrorAlert] = useState(true);
   const [countryErrorAlert, setCountryErrorAlert] = useState(true);
-  const [addressTypeErrorAlert, setAddressTypeErrorAlert] = useState(true);
   const [streetErrorAlert, setStreetErrorAlert] = useState(true);
   const [errorAlert, setErrorAlert] = useState(true);
   const [addressTypeValue, setAddressTypeValue] = useState("");
@@ -29,47 +28,28 @@ function AddressPage() {
   const [cityFetch, setCityFetch] = useState(null);
   const [stateFetch, setStateFetch] = useState(null);
   const [zipcodeFetch, setZipcodeFetch] = useState(null);
-  let updateMe = useSelector((state) => state.productReducer.updateMeInfo);
-  console.log("updateMe",updateMe);
-  let addressInfo;
-  let address;
 
-  if (updateMe?.status=="success"){
-    localStorage.setItem("addressInfo",JSON.stringify(updateMe.data?.user?.address));
-    addressInfo = updateMe.data?.user?.address;
-    address= addressInfo[0];
-   }
+  let updateMe = useSelector((state) => state.productReducer.updateMeInfo);
+  console.log("updateMe", updateMe);
+  let addressInfo = JSON.parse(localStorage.getItem("addressInfo"));
+ 
+
   useEffect(() => {
     if (addressInfo) {
-     console.log("addr",address);
+      let address = addressInfo[0];
+      console.log("addr", address);
       setStateFetch(address?.state);
       setCityFetch(address?.city);
       setStreetFetch(address?.street);
       setZipcodeFetch(address?.zipcode);
       setPinCodeErrorAlert(false);
-      setAddressTypeErrorAlert(false);
+   
       setCityErrorAlert(false);
       setStateErrorAlert(false);
       setStreetErrorAlert(false);
       console.log("checked");
     }
   }, []);
-  // useEffect(() => {
-  //   console.log("lengt",addressInfo.length);
-  //   if (addressInfo && address.length > 0) {
-  //    console.log("addr",address);
-  //     setStateFetch(address?.state);
-  //     setCityFetch(address?.city);
-  //     setStreetFetch(address?.street);
-  //     setZipcodeFetch(address?.zipcode);
-  //     setPinCodeErrorAlert(false);
-  //     setAddressTypeErrorAlert(false);
-  //     setCityErrorAlert(false);
-  //     setStateErrorAlert(false);
-  //     setStreetErrorAlert(false);
-  //     console.log("checked");
-  //   }
-  // }, [addressInfo]);
   useEffect(() => {
     if (
       !cityErrorAlert &&
@@ -82,30 +62,25 @@ function AddressPage() {
       setErrorAlert(true);
     }
   }, [cityErrorAlert, stateErrorAlert, pincodeErrorAlert, streetErrorAlert]);
- 
- 
-  
 
-  
   function handleInputChange(value, type) {
     if (value.trim() !== "" && type == "pincode") {
-      if ((value.length == 6 && Number(value))) {
+      if (value.length == 6 && Number(value)) {
         setPinCodeErrorAlert(false);
         setZipcodeValue("" + value);
-      }else {
+      } else {
         setPinCodeErrorAlert(true);
       }
     }
-    if ((value.trim() !== "" && type == "city")) {
+    if (value.trim() !== "" && type == "city") {
       if (value.length >= 4) {
         setCityErrorAlert(false);
         setCityValue("" + value);
-      }else if(address.city){
-        console.log("aciry",address.city)
+      } else if (address.city) {
+        console.log("aciry", address.city);
         setCityErrorAlert(false);
-      }
-       else {
-        setCityErrorAlert(true);
+      } else {
+        setCityErrorAlert(true); // let userDetails = JSON.parse(localStorage.getItem("user"));
       }
     }
     if (value.trim() !== "" && type == "state") {
@@ -128,7 +103,7 @@ function AddressPage() {
     }
   }
   let user = JSON.parse(localStorage.getItem("user"));
-  
+
   function handleFormSubmit(e) {
     e.preventDefault();
     if (!errorAlert) {
@@ -141,34 +116,33 @@ function AddressPage() {
           stateName: stateValue,
           countryName: "India",
           zipcodeName: zipcodeValue,
-          tokenValue: token || '',
+          tokenValue: token || "",
           phoneNumber: "",
         })
       );
+      navigate("/paymentPage");
     }
-    
   }
-
-  // let userDetails = JSON.parse(localStorage.getItem("user"));
-  
 
   function removeAddress(e) {
     e.stopPropagation();
     e.preventDefault();
 
-    // let userDetails = JSON.parse(localStorage.getItem("user"));
-
     if (addressInfo) {
-      addressInfo.length = 0;
-      localStorage.setItem("user", JSON.stringify("addressInfo"));
+      localStorage.removeItem("addressInfo");
+      setStateFetch("");
+      setCityFetch("");
+      setStreetFetch("");
+      setZipcodeFetch("");
+      setStreetErrorAlert(true);
+      setPinCodeErrorAlert(true);
+      setStateErrorAlert(true);
+      setCityErrorAlert(true);
     }
-
-    console.log("address", addressInfo);
   }
+  console.log("address", typeof addressInfo);
 
-  
-
-console.log("fetch",stateFetch,cityFetch,zipcodeFetch,streetFetch);
+  console.log("fetch", stateFetch, cityFetch, zipcodeFetch, streetFetch);
   return (
     <>
       <div className="flex justify-center">
@@ -198,13 +172,12 @@ console.log("fetch",stateFetch,cityFetch,zipcodeFetch,streetFetch);
                       <input
                         type="text"
                         disabled
-                        
                         placeholder={userValue}
                         onChange={(e) =>
                           handleInputChange(e.target.value, "name")
                         }
                         className="border text-black h-12 lg:h-14 text-sm lg:text-base font-bold 
-    rounded-md  p-1 w-full pl-3 outline-none border-[#979797] opacity-100 cursor-not-allowed" 
+    rounded-md  p-1 w-full pl-3 outline-none border-[#979797] opacity-100 cursor-not-allowed"
                       />
                     </div>
                   </div>
@@ -214,12 +187,12 @@ console.log("fetch",stateFetch,cityFetch,zipcodeFetch,streetFetch);
                     </label>
                     <div className="">
                       <input
-                        value={streetFetch}
+                        // value={streetFetch}
                         type="text"
                         onChange={(e) =>
                           handleInputChange(e.target.value, "residence Details")
                         }
-                        // placeholder={streetFetch}
+                        placeholder={streetFetch}
                         className="border text-black h-12 lg:h-14 text-sm lg:text-base font-bold rounded-md  p-1 w-full pl-3 outline-none border-[#979797] opacity-100 "
                       />
                     </div>
@@ -234,7 +207,7 @@ console.log("fetch",stateFetch,cityFetch,zipcodeFetch,streetFetch);
                     <div className="">
                       <input
                         type="text"
-                        value={zipcodeFetch}
+                        // value={zipcodeFetch}
                         onChange={(e) =>
                           handleInputChange(e.target.value, "pincode")
                         }
@@ -255,12 +228,12 @@ console.log("fetch",stateFetch,cityFetch,zipcodeFetch,streetFetch);
                       </label>
                       <div className="">
                         <input
-                          value={cityFetch}
+                          // value={cityFetch}
                           type="text"
                           onChange={(e) =>
                             handleInputChange(e.target.value, "city")
                           }
-                          // placeholder={cityFetch}
+                          placeholder={cityFetch}
                           className="border text-black h-12 lg:h-14 text-sm lg:text-base font-bold rounded-md  p-1 w-full pl-3 outline-none border-[#979797] opacity-100 "
                         />
                       </div>
@@ -275,11 +248,11 @@ console.log("fetch",stateFetch,cityFetch,zipcodeFetch,streetFetch);
                       <div className="">
                         <input
                           type="text"
-                          value={stateFetch}
+                          // value={stateFetch}
                           onChange={(e) =>
                             handleInputChange(e.target.value, "state")
                           }
-                          // placeholder={stateFetch}
+                          placeholder={stateFetch}
                           className="border text-black h-12 lg:h-14 text-sm lg:text-base font-bold rounded-md  p-1 w-full pl-3 outline-none border-[#979797] opacity-100 "
                         />
                       </div>
@@ -303,7 +276,6 @@ console.log("fetch",stateFetch,cityFetch,zipcodeFetch,streetFetch);
                         className="border text-black h-12 lg:h-14 text-sm lg:text-base font-bold rounded-md  p-1 w-full pl-3 outline-none border-[#979797] opacity-100 "
                       />
                     </div>
-              
                   </div>
                   <div className="flex-1 pb-7">
                     <label className="text-xs font-medium opacity-60 block mb-2">
