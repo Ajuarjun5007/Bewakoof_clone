@@ -59,6 +59,7 @@ import {
   getWishListOperations,
   getProductList,
   getCartOperations,
+  getOrderList,
 } from "../ProductComponent/Slices/FilterSlice";
 // import { dressList } from "../ApiFetch";
 
@@ -109,7 +110,20 @@ function HomePage() {
           Quantity:'',
         })
       );
-
+      dispatch(
+        getOrderList({
+          Id: "",
+          type: "GET",
+          qty:'',
+          streetName:'',
+          cityName:'',
+          stateName:'',
+          countryName:'',
+          zipcodeName:'',
+          phoneNumber:'',
+          tokenValue: JSON.parse(localStorage.getItem("userInfo"))[0],
+        })
+      );
     }
     dispatch(
       getProductList({
@@ -120,16 +134,19 @@ function HomePage() {
       })
     );
   }
+  let count=0;
+   addressInfo = localStorage.getItem("addressInfo");
   useEffect(() => {
    callProduct();
-
-   if(localStorage.getItem("user")){
-    let user = JSON.parse(localStorage.getItem("user"));
+   let user = JSON.parse(localStorage.getItem("user"));
+   if(localStorage.getItem("user")&& !addressInfo){
       console.log("user",user.address);
       localStorage.setItem("addressInfo",JSON.stringify(user.address));
+      count=1;
    }
+  console.log("user",user);
   }, []);
-
+  console.log("count",count);
   return (
     <>
       <div className="">

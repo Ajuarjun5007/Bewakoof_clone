@@ -24,7 +24,6 @@ const CartPagePresent = () => {
   let { cartList, isLoading: LoadingCheck } = useSelector(
     (state) => state.productReducer
   );
-  // console.log("isLoading",LoadingCheck);
 
   let cartListItems = !LoadingCheck && cartList?.data?.items;
   let cartListSize =
@@ -47,7 +46,7 @@ const CartPagePresent = () => {
   );
   //   console.log("w",wishListResult);
  
-  //   console.log("add");
+    console.log("cartaList",cartListItems);
   let userAddress = JSON.parse(localStorage.getItem("addressInfo"));
    console.log("userAddreess",userAddress);
 

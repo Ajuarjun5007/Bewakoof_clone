@@ -8,7 +8,6 @@ function CartPage() {
     (state) => state.productReducer
   );
   
- 
   let cartListItems =
     !LoadingCheck && cartList?.data?.items
       ? cartList.data.items.map((item) => item)

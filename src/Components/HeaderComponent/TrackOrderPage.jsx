@@ -2,9 +2,17 @@
 import { Link } from "react-router-dom";
 import img_1 from "../../assets/no-orders.png"
 import { IoChevronBackOutline } from "react-icons/io5"
-
+import { useSelector,useDispatch } from "react-redux";
 function TrackOrderPage(){
-
+//     let orderListResult = useSelector((state) =>
+//     state.productReducer.orderList?.data?.items?.map(
+//       (item) => item?.products._id || item?.products
+//     )
+//   ); 
+  let orderListResult = useSelector((state) =>
+  state.productReducer.orderList
+);
+    console.log("orderList",orderListResult);
     return(
         <>
         <div className="flex justify-center mt-[100px] bg-[#f9f9f9]">

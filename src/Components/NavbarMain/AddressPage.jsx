@@ -15,19 +15,16 @@ function AddressPage() {
   const [pincodeErrorAlert, setPinCodeErrorAlert] = useState(true);
   const [cityErrorAlert, setCityErrorAlert] = useState(true);
   const [stateErrorAlert, setStateErrorAlert] = useState(true);
-  const [countryErrorAlert, setCountryErrorAlert] = useState(true);
   const [streetErrorAlert, setStreetErrorAlert] = useState(true);
   const [errorAlert, setErrorAlert] = useState(true);
-  const [addressTypeValue, setAddressTypeValue] = useState("");
   const [streetValue, setStreetValue] = useState("");
   const [cityValue, setCityValue] = useState("");
   const [stateValue, setStateValue] = useState("");
   const [zipcodeValue, setZipcodeValue] = useState("");
-  const [addressTypeFetch, setAddressTypeFetch] = useState("");
   const [streetFetch, setStreetFetch] = useState(null);
   const [cityFetch, setCityFetch] = useState(null);
   const [stateFetch, setStateFetch] = useState(null);
-  const [zipcodeFetch, setZipcodeFetch] = useState(null);
+  const [zipCodeFetch, setZipCodeFetch] = useState(null);
 
   let updateMe = useSelector((state) => state.productReducer.updateMeInfo);
   console.log("updateMe", updateMe);
@@ -41,15 +38,14 @@ function AddressPage() {
       setStateFetch(address?.state);
       setCityFetch(address?.city);
       setStreetFetch(address?.street);
-      setZipcodeFetch(address?.zipcode);
+      setZipCodeFetch(address?.zipCode);
       setPinCodeErrorAlert(false);
-   
       setCityErrorAlert(false);
       setStateErrorAlert(false);
       setStreetErrorAlert(false);
       console.log("checked");
     }
-  }, []);
+  }, [addressInfo]);
   useEffect(() => {
     if (
       !cityErrorAlert &&
@@ -133,16 +129,15 @@ function AddressPage() {
       setStateFetch("");
       setCityFetch("");
       setStreetFetch("");
-      setZipcodeFetch("");
+      setZipCodeFetch("");
       setStreetErrorAlert(true);
       setPinCodeErrorAlert(true);
       setStateErrorAlert(true);
       setCityErrorAlert(true);
     }
   }
-  console.log("address", typeof addressInfo);
 
-  console.log("fetch", stateFetch, cityFetch, zipcodeFetch, streetFetch);
+  console.log("fetch", stateFetch, cityFetch, zipCodeFetch, streetFetch);
   return (
     <>
       <div className="flex justify-center">
@@ -188,12 +183,13 @@ function AddressPage() {
                     <div className="">
                       <input
                         // value={streetFetch}
+                        disabled={addressInfo}
                         type="text"
                         onChange={(e) =>
                           handleInputChange(e.target.value, "residence Details")
                         }
                         placeholder={streetFetch}
-                        className="border text-black h-12 lg:h-14 text-sm lg:text-base font-bold rounded-md  p-1 w-full pl-3 outline-none border-[#979797] opacity-100 "
+                        className={`border text-black h-12 lg:h-14 text-sm lg:text-base font-bold rounded-md  p-1 w-full pl-3 outline-none border-[#979797] opacity-100 ${addressInfo?"cursor-not-allowed":"cursor-pointer"}`}
                       />
                     </div>
                     {streetErrorAlert && (
@@ -207,12 +203,12 @@ function AddressPage() {
                     <div className="">
                       <input
                         type="text"
-                        // value={zipcodeFetch}
+                        // value={zipCodeFetch}
                         onChange={(e) =>
                           handleInputChange(e.target.value, "pincode")
                         }
-                        placeholder="Pincode/Postal Code/Zipcode"
-                        className="border text-black h-12 lg:h-14 text-sm lg:text-base font-bold rounded-md  p-1 w-full pl-3 outline-none border-[#979797] opacity-100 "
+                        placeholder={zipCodeFetch}
+                        className={`border text-black h-12 lg:h-14 text-sm lg:text-base font-bold rounded-md  p-1 w-full pl-3 outline-none border-[#979797] opacity-100 ${addressInfo?"cursor-not-allowed":"cursor-pointer"}`}
                       />
                     </div>
                     {!user?.address?.zipcode && pincodeErrorAlert && (
@@ -229,12 +225,13 @@ function AddressPage() {
                       <div className="">
                         <input
                           // value={cityFetch}
+                          disabled={addressInfo}
                           type="text"
                           onChange={(e) =>
                             handleInputChange(e.target.value, "city")
                           }
                           placeholder={cityFetch}
-                          className="border text-black h-12 lg:h-14 text-sm lg:text-base font-bold rounded-md  p-1 w-full pl-3 outline-none border-[#979797] opacity-100 "
+                          className={`border text-black h-12 lg:h-14 text-sm lg:text-base font-bold rounded-md  p-1 w-full pl-3 outline-none border-[#979797] opacity-100 ${addressInfo?"cursor-not-allowed":"cursor-pointer"}`}
                         />
                       </div>
                       {!user?.address?.city && cityErrorAlert && (
@@ -248,12 +245,13 @@ function AddressPage() {
                       <div className="">
                         <input
                           type="text"
+                          disabled={addressInfo}
                           // value={stateFetch}
                           onChange={(e) =>
                             handleInputChange(e.target.value, "state")
                           }
                           placeholder={stateFetch}
-                          className="border text-black h-12 lg:h-14 text-sm lg:text-base font-bold rounded-md  p-1 w-full pl-3 outline-none border-[#979797] opacity-100 "
+                          className={`border text-black h-12 lg:h-14 text-sm lg:text-base font-bold rounded-md  p-1 w-full pl-3 outline-none border-[#979797] opacity-100 ${addressInfo?"cursor-not-allowed":"cursor-pointer"}`}
                         />
                       </div>
                       {!user?.address?.state && stateErrorAlert && (
@@ -273,7 +271,7 @@ function AddressPage() {
                         //   handleInputChange(e.target.value, "Address Type")
                         // }
                         placeholder="Area/Locality (Optional)"
-                        className="border text-black h-12 lg:h-14 text-sm lg:text-base font-bold rounded-md  p-1 w-full pl-3 outline-none border-[#979797] opacity-100 "
+                        className={`border text-black h-12 lg:h-14 text-sm lg:text-base font-bold rounded-md  p-1 w-full pl-3 outline-none border-[#979797] opacity-100 ${addressInfo?"cursor-not-allowed":"cursor-pointer"}`}
                       />
                     </div>
                   </div>
@@ -288,7 +286,7 @@ function AddressPage() {
                           handleInputChange(e.target.value, "landmark")
                         }
                         placeholder="Landmark (Optional)"
-                        className="border text-black h-12 lg:h-14 text-sm lg:text-base font-bold rounded-md  p-1 w-full pl-3 outline-none border-[#979797] opacity-100 "
+                        className={`border text-black h-12 lg:h-14 text-sm lg:text-base font-bold rounded-md  p-1 w-full pl-3 outline-none border-[#979797] opacity-100 ${addressInfo?"cursor-not-allowed":"cursor-pointer"}`}
                       />
                     </div>
                   </div>

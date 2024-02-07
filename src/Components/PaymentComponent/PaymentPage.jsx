@@ -1,5 +1,5 @@
 import PaymentType from "./PaymentType";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import comingSoon from "../../assets/coming-soon.webp";
 import { useSelector, useDispatch } from "react-redux";
 import * as Accordion from "@radix-ui/react-accordion";
@@ -7,18 +7,38 @@ import { ChevronDownIcon } from "@radix-ui/react-icons";
 import React from "react";
 import classNames from "classnames";
 import rightArrow from "../../assets/right-arrow-address.svg";
-import { Link } from "react-router-dom";
-
+import { Link,useNavigate } from "react-router-dom";
+import img_1 from "../../assets/brand_images/brnd_1.webp";
+import badge_trust_img from "../../assets/badge-trust.svg";
+import globe_img from "../../assets/globe.svg";
+import easy_returns_img from "../../assets/easy-returns.svg";
+import { getOrderList } from "../ProductComponent/Slices/FilterSlice";
 function PaymentPage() {
-  const userDetails =
-    localStorage.getItem("userInfo") && localStorage.getItem("userInfo");
-    const user = JSON.parse(userDetails)?.[1]?.name;
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const userDetails = localStorage.getItem("userInfo") && localStorage.getItem("userInfo");
+  const user = JSON.parse(userDetails)?.[1]?.name;
+  const [cartItems, setCartItems] = useState([]);
+  let userInfo = JSON.parse(localStorage.getItem("user"));
+  console.log("user", userInfo);
+  let token  = JSON.parse(localStorage.getItem("userInfo"))[0];
+  // console.log("tol",token);
+  let addressInfo = JSON.parse(localStorage.getItem("addressInfo"))?.[0];
+  console.log("adres",addressInfo);
+  let streetValue,cityValue,stateValue,zipcodeValue;
+    streetValue=addressInfo.street;
+    cityValue=addressInfo.city;
+    stateValue=addressInfo.state;
+    zipcodeValue=addressInfo.pincode;
+  console.log("value",streetValue,cityValue,stateValue,zipcodeValue);
   const [activeTab, setActiveTab] = useState(4);
   let { cartList, isLoading: LoadingCheck } = useSelector(
     (state) => state.productReducer
   );
-
   let cartListItems = !LoadingCheck && cartList?.data?.items;
+  useEffect(() => {
+    setCartItems(cartListItems);
+  }, []);
 
   let cartListTotalPrice =
     !LoadingCheck &&
@@ -28,15 +48,39 @@ function PaymentPage() {
       let itemPrice = price * qty;
       return itemPrice;
     });
-    let total = Array.isArray(cartListTotalPrice)
+  let total = Array.isArray(cartListTotalPrice)
     ? cartListTotalPrice.reduce((acc, currentValue) => acc + currentValue, 0)
     : 0;
-  
-  console.log("activetab", activeTab);
-  
-  console.log("user", user);
-  let userInfo = JSON.parse(localStorage.getItem("user"));
-  console.log("userInfo",userInfo);
+
+   
+    function cartToOrderHandler(){
+      cartListItems?.map((item)=>{
+          console.log("Id",item.product._id);
+          console.log("qty",item.quantity);
+          dispatch(
+            getOrderList({
+              type: "POST",
+              Id:item.product._id,
+              qty:item.quantity,
+              userName: user,
+              streetName: streetValue,
+              cityName: cityValue,
+              stateName: stateValue,
+              countryName: "India",
+              zipcodeName: zipcodeValue,
+              tokenValue: token || "",
+              phoneNumber: "",
+            })
+          );
+      })
+     
+    }
+
+
+  // console.log("activetab", activeTab);
+  // console.log("cartLizt", cartListItems);
+  // console.log("Items", cartItems);
+
   return (
     <>
       <div className="flex justify-center">
@@ -60,7 +104,9 @@ function PaymentPage() {
                         <p className="text-[#4e5664] font-medium mb-4">
                           Cash handling charges of ₹ 20 are applicable
                         </p>
-                        <button className="cursor-pointer h-12 text-sm font-semibold w-full border-none outline-none flex bg-[#42a2a2] hover:bg-opacity-90 justify-center items-center rounded-md text-white">
+                        <button
+                          onClick={cartToOrderHandler}
+                        className="cursor-pointer h-12 text-sm font-semibold w-full border-none outline-none flex bg-[#42a2a2] hover:bg-opacity-90 justify-center items-center rounded-md text-white">
                           Pay ₹{20 + total}
                         </button>
                       </div>
@@ -81,23 +127,70 @@ function PaymentPage() {
                   </Link>
                 </div>
                 <div className="border bg-white border-[#d6d6d6] px-4 rounded-md mb-4 hover:shadow-md transition-all">
-                    {/* cartcard*/}
-                    <div className="flex rounded-md border border-[#d6d6d6] shadow p-2">
-            <div className="cardImageContainer relative h-[130px] min-w-[104px] rounded-md">
-                <img className="aspect-[10/13] w-full h-full object-cover rounded-md" src={displayImage || "/assets/images/others/product.webp"} alt={name} />
-                <div className="pQty absolute top-1 right-1"><span className="rounded-full flex items-center justify-center bg-black text-[10px] text-white h-4 w-4 text-center font-semibold shadow">{quantity}</span></div>
-            </div>
-            <div className="cardDetailsContainer flex flex-col gap-2 px-2">
-                {brand && <h3 className="brand text-black text-sm font-semibold">{brand}</h3>}
-                <p className="productName text-xs text-[#4e5664] font-medium">{name}</p>
-                <p className="arrivalTime font-medium text-[10px]">Delivery by <span className="font-semibold">03 Nov 2023</span></p>
-                <div className="priceWrap text-xs flex gap-1">
-                    <span className="price font-bold">₹{price}</span>
-                    <span className="mrp line-through text-[10px]">₹{discountPrice}</span>
-                </div>
-                <div className="infoMsg text-[10px] md:text-xs text-[#1d8802] font-semibold">You saved ₹{discountPrice - price}!</div>
-            </div>
-        </div>
+                  {/* cartcard*/}
+                  <Accordion.Root
+                    className=" rounded-md "
+                    type="single"
+                    defaultValue="item-1"
+                    collapsible
+                    data-state="closed"
+                  >
+                    <AccordionItem value="item-1">
+                      <AccordionTrigger>
+                        You are paying for these items
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        {!LoadingCheck &&
+                          cartListItems?.map((item) => (
+                            <div className="flex rounded-md border mt-2 border-[#d6d6d6] shadow p-2">
+                              <div className=" relative h-[130px] min-w-[104px] rounded-md">
+                                <img
+                                  className="aspect-[10/13] w-full h-full object-cover rounded-md"
+                                  src={item.product.displayImage}
+                                  alt={item.product.name}
+                                />
+                                <div className="pQty absolute top-1 right-1">
+                                  <span className="rounded-full flex items-center justify-center bg-black text-[10px] text-white h-4 w-4 text-center font-semibold shadow">
+                                    {item.quantity}
+                                  </span>
+                                </div>
+                              </div>
+                              <div className=" flex flex-col gap-2 px-2">
+                                <p className=" text-xs text-[#4e5664] font-medium">
+                                  {item.product.name}
+                                </p>
+                                <p className=" font-medium text-[10px]">
+                                  Delivery by{" "}
+                                  <span className="font-semibold">
+                                    TOMORROW!!
+                                  </span>
+                                </p>
+                                <div className=" text-xs flex gap-1">
+                                  <span className="price font-bold">
+                                    ₹{item.product.price}
+                                  </span>
+                                  <span className="mrp line-through text-[10px]">
+                                    ₹
+                                    {Math.round(
+                                      item.product.price * 0.5 +
+                                        item.product.price
+                                    )}
+                                  </span>
+                                </div>
+                                <div className=" text-[10px] md:text-xs text-[#1d8802] font-semibold">
+                                  You saved ₹
+                                  {Math.round(
+                                    item.product.price * 0.5 +
+                                      item.product.price
+                                  ) - item.product.price}
+                                  !
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion.Root>
                 </div>
                 <div className="summaryBorderBox md:sticky md:top-24  md:mb-8">
                   <div className="sectionHeading py-3 px-5 text-xs font-bold">
@@ -121,6 +214,38 @@ function PaymentPage() {
                         <p>Final amount</p>
                         <p>₹{total}</p>
                       </div>
+                      <div className=" py-10 flex justify-center gap-2 text-center">
+                  <div className="flex flex-col gap-1 items-center">
+                    <img
+                      className="w-10 h-10 object-cover"
+                      src={badge_trust_img}
+                      alt=""
+                    />
+                    <span className="font-semibold text-[13px] text-[#8f98a9]">
+                      100% SECURE PAYMENTS
+                    </span>
+                  </div>
+                  <div className="flex flex-col gap-1 items-center">
+                    <img
+                      className="w-10 h-10 object-cover"
+                      src={easy_returns_img}
+                      alt=""
+                    />
+                    <span className="font-semibold text-[13px] text-[#8f98a9]">
+                      EASY RETURNS & QUICK REFUNDS
+                    </span>
+                  </div>
+                  <div className="flex flex-col gap-1 items-center">
+                    <img
+                      className="w-10 h-10 object-contain"
+                      src={globe_img}
+                      alt=""
+                    />
+                    <span className="font-semibold text-[13px] text-[#8f98a9]">
+                      SHIPPING GLOBALLY
+                    </span>
+                  </div>
+                </div>
                     </div>
                   </div>
                 </div>
@@ -132,5 +257,59 @@ function PaymentPage() {
     </>
   );
 }
+
+const AccordionItem = React.forwardRef(
+  ({ children, className, ...props }, forwardedRef) => (
+    <Accordion.Item
+      className={classNames(
+        "focus-within:shadow-mauve12  overflow-hidden  first:mt-0 first:rounded-t last:rounded-b focus-within:relative focus-within:z-1 ",
+        className
+      )}
+      {...props}
+      ref={forwardedRef}
+    >
+      {children}
+    </Accordion.Item>
+  )
+);
+
+const AccordionTrigger = React.forwardRef(
+  ({ children, className, ...props }, forwardedRef) => (
+    <Accordion.Header className="flex">
+      <Accordion.Trigger
+        className={classNames(
+          "text-[#333]  font-[500] shadow-mauve6 hover:bg-mauve2 group flex h-[45px] flex-1 cursor-default items-center justify-between  px-5 text-[12px] leading-none  outline-none",
+          className
+        )}
+        {...props}
+        ref={forwardedRef}
+      >
+        {children}
+        {
+          <ChevronDownIcon
+            className="text-violet10  ease-[cubic-bezier(0.87,_0,_0.13,_1)] transition-transform duration-300 
+          group-data-[state=open]:rotate-180"
+            aria-hidden
+          />
+        }
+      </Accordion.Trigger>
+    </Accordion.Header>
+  )
+);
+
+const AccordionContent = React.forwardRef(
+  ({ children, className, ...props }, forwardedRef) => (
+    <Accordion.Content
+      className={classNames(
+        "data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp overflow-hidden text-[12px] text-[#333]",
+        className
+      )}
+      {...props}
+      ref={forwardedRef}
+    >
+      <div className="py-[15px] px-5">{children}</div>
+    </Accordion.Content>
+  )
+);
 
 export default PaymentPage;

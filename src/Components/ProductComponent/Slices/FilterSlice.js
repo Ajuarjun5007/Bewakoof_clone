@@ -10,6 +10,7 @@ const initialState = {
   cartList: [],
   updateMeInfo:[],
   searchValueList:[],
+  orderList:[]
 };
 
 export const applyFilters = createAsyncThunk("url", async (filters = {}) => {
@@ -213,7 +214,7 @@ export const getUpdateMe = createAsyncThunk(
         address:{
           street:streetName,
           city:cityName,
-          zipcode:zipcodeName,
+          zipCode:zipcodeName,
           state:stateName,
           country:countryName,
        
@@ -234,7 +235,82 @@ export const getUpdateMe = createAsyncThunk(
     // console.log("fetch call", url, requestOptions);
     try {
       const response = await fetch(url, requestOptions);
-      // console.log("slice", response);
+      console.log("slice", response);
+      if (response.ok) {
+        const result = await response.json();
+        console.log("result",result);
+        return result;
+      } else {
+        return rejectWithValue({ error: "fetching failed" });
+      }
+    } catch (error) {
+      return rejectWithValue({ error: "An error occurred during the fetch" });
+    }
+  }
+);
+export const getOrderList = createAsyncThunk(
+  "productList/getOrderList",
+  async ({
+    type,
+    Id,
+    qty,
+    streetName,
+    cityName,
+    stateName,
+    countryName,
+    zipcodeName,
+    tokenValue,
+    phoneNumber,
+    }, { rejectWithValue }) => {
+    let myHeaders = new Headers();
+    myHeaders.append("projectID", "gams07bkd3di");
+    myHeaders.append("Authorization", `Bearer ${tokenValue}`);
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("accept", "application/json");
+
+    let requestOptions;
+      console.log("order",Id,qty,streetName,cityName,stateName,countryName,zipcodeName,tokenValue,phoneNumber);
+      
+      if(type === 'POST'){
+        let raw = JSON.stringify({
+          productId:Id,
+          quantity:qty,
+          address:{
+            street:streetName,
+            city:cityName,
+            zipCode:"76777",
+            state:stateName,
+            country:countryName,
+          }
+          // phone:"9789313131",
+        });  
+        requestOptions = {
+          method:type,
+          headers: myHeaders,
+          body: raw,
+          redirect: "follow",
+        };
+        // console.log("raw",requestOptions);
+        console.log("type",type);
+      }else if(type === "GET"){
+        requestOptions = {
+          method:type,
+          headers: myHeaders,
+          redirect: "follow",
+        };
+        console.log("type",type);
+      }
+         requestOptions = {
+          method:type,
+          headers: myHeaders,
+          redirect: "follow",
+        };
+    // let url = BASE_URL + "user/updateme";
+    let url = "https://academics.newtonschool.co/api/v1/ecommerce/order";
+    // console.log("fetch call", url, requestOptions);
+    try {
+      const response = await fetch(url, requestOptions);
+      console.log("slice", response);
       if (response.ok) {
         const result = await response.json();
         console.log("result",result);
@@ -303,6 +379,21 @@ export const productSlice = createSlice({
         state.updateMeInfo= action.payload;
         state.error = "";
         window.localStorage.setItem('addressInfo', JSON.stringify(state.updateMeInfo.data.user.address));
+      })
+
+      .addCase(getOrderList.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action?.payload?.error;
+      })
+      .addCase(getOrderList.pending, (state, action) => {
+        state.isLoading = true;
+      })
+
+      .addCase(getOrderList.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.orderList= action.payload;
+        state.error = "";
+        window.localStorage.setItem('orderList', JSON.stringify(state.updateMeInfo.data));
       })
 
       .addCase(getUpdateMe.rejected, (state, action) => {
