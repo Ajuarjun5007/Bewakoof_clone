@@ -84,6 +84,10 @@ function HomePage() {
   };
   const [userLoggedIn, setUserLoggedIn] = useState(false);
   let updateMe = useSelector((state) => state.productReducer.updateMeInfo);
+//   let orderListResult = useSelector((state) =>
+//   state.productReducer.orderList?.data
+// );
+//     console.log("orderList",orderListResult);
   let addressInfo;
   let address;
   let {wishList} = useSelector(
@@ -112,8 +116,8 @@ function HomePage() {
       );
       dispatch(
         getOrderList({
-          Id: "",
-          type: "GET",
+          Id:"",
+          type:"GET",
           qty:'',
           streetName:'',
           cityName:'',

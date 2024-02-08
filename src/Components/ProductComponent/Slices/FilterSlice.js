@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { productFilterService } from "../ProductService";
-import { json } from "react-router-dom";
 
 const initialState = {
   wishList:[],
@@ -10,7 +9,7 @@ const initialState = {
   cartList: [],
   updateMeInfo:[],
   searchValueList:[],
-  orderList:[]
+  orderList:[],
 };
 
 export const applyFilters = createAsyncThunk("url", async (filters = {}) => {
@@ -258,7 +257,7 @@ export const getOrderList = createAsyncThunk(
     cityName,
     stateName,
     countryName,
-    zipcodeName,
+    zipCodeName,
     tokenValue,
     phoneNumber,
     }, { rejectWithValue }) => {
@@ -269,7 +268,7 @@ export const getOrderList = createAsyncThunk(
     myHeaders.append("accept", "application/json");
 
     let requestOptions;
-      console.log("order",Id,qty,streetName,cityName,stateName,countryName,zipcodeName,tokenValue,phoneNumber);
+      console.log("order",Id,qty,streetName,cityName,stateName,countryName,zipCodeName,tokenValue,phoneNumber);
       
       if(type === 'POST'){
         let raw = JSON.stringify({
@@ -278,19 +277,20 @@ export const getOrderList = createAsyncThunk(
           address:{
             street:streetName,
             city:cityName,
-            zipCode:"76777",
+            zipCode:zipCodeName,
             state:stateName,
             country:countryName,
           }
           // phone:"9789313131",
         });  
+   
         requestOptions = {
           method:type,
           headers: myHeaders,
           body: raw,
           redirect: "follow",
         };
-        // console.log("raw",requestOptions);
+        console.log("raw",requestOptions);
         console.log("type",type);
       }else if(type === "GET"){
         requestOptions = {
@@ -300,12 +300,13 @@ export const getOrderList = createAsyncThunk(
         };
         console.log("type",type);
       }
-         requestOptions = {
-          method:type,
-          headers: myHeaders,
-          redirect: "follow",
-        };
+        //  requestOptions = {
+        //   method:type,
+        //   headers: myHeaders,
+        //   redirect: "follow",
+        // };
     // let url = BASE_URL + "user/updateme";
+    console.log("request",requestOptions);
     let url = "https://academics.newtonschool.co/api/v1/ecommerce/order";
     // console.log("fetch call", url, requestOptions);
     try {
@@ -393,7 +394,7 @@ export const productSlice = createSlice({
         state.isLoading = false;
         state.orderList= action.payload;
         state.error = "";
-        window.localStorage.setItem('orderList', JSON.stringify(state.updateMeInfo.data));
+        // window.localStorage.setItem('orderList', JSON.stringify(state.updateMeInfo.data));
       })
 
       .addCase(getUpdateMe.rejected, (state, action) => {

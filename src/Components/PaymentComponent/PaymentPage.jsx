@@ -16,21 +16,22 @@ import { getOrderList } from "../ProductComponent/Slices/FilterSlice";
 function PaymentPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [portalVisibility,setPortalVisibility] = useState(false);
   const userDetails = localStorage.getItem("userInfo") && localStorage.getItem("userInfo");
   const user = JSON.parse(userDetails)?.[1]?.name;
   const [cartItems, setCartItems] = useState([]);
   let userInfo = JSON.parse(localStorage.getItem("user"));
-  console.log("user", userInfo);
+  // console.log("user", userInfo);
   let token  = JSON.parse(localStorage.getItem("userInfo"))[0];
   // console.log("tol",token);
   let addressInfo = JSON.parse(localStorage.getItem("addressInfo"))?.[0];
   console.log("adres",addressInfo);
-  let streetValue,cityValue,stateValue,zipcodeValue;
-    streetValue=addressInfo.street;
-    cityValue=addressInfo.city;
-    stateValue=addressInfo.state;
-    zipcodeValue=addressInfo.pincode;
-  console.log("value",streetValue,cityValue,stateValue,zipcodeValue);
+  let streetValue,cityValue,stateValue,zipCodeValue;
+    streetValue=addressInfo?.street;
+    cityValue=addressInfo?.city;
+    stateValue=addressInfo?.state;
+    zipCodeValue=addressInfo?.zipCode;
+  console.log("value",streetValue,cityValue,stateValue,zipCodeValue);
   const [activeTab, setActiveTab] = useState(4);
   let { cartList, isLoading: LoadingCheck } = useSelector(
     (state) => state.productReducer
@@ -55,23 +56,26 @@ function PaymentPage() {
    
     function cartToOrderHandler(){
       cartListItems?.map((item)=>{
-          console.log("Id",item.product._id);
-          console.log("qty",item.quantity);
-          dispatch(
-            getOrderList({
-              type: "POST",
-              Id:item.product._id,
-              qty:item.quantity,
-              userName: user,
-              streetName: streetValue,
-              cityName: cityValue,
-              stateName: stateValue,
-              countryName: "India",
-              zipcodeName: zipcodeValue,
-              tokenValue: token || "",
-              phoneNumber: "",
-            })
-          );
+          // console.log("Id",item.product._id);
+          // console.log("qty",item.quantity);
+          if(addressInfo){
+            dispatch(
+              getOrderList({
+                Id:item.product._id,
+                type: "POST",
+                qty:item.quantity,
+                streetName:streetValue,
+                cityName: cityValue,
+                stateName: stateValue,
+                countryName: "India",
+                zipCodeName: zipCodeValue,
+                userName: user,
+                tokenValue: token || "",
+                phoneNumber: "",
+              })
+            );
+            navigate("/OrderSuccessPage");
+          }
       })
      
     }

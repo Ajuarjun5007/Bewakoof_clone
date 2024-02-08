@@ -27,6 +27,7 @@ import ReviewPage from "./Components/ProductComponent/ReviewComponent/ReviewPage
 import MobileNavBar from "./Components/MobileComponent/MobileNavBar";
 import { useScreenSize } from "./Components/MobileComponent/useScreenSize";
 import ComingSoon from "./Components/ComingSoon";
+import OrderSuccessPage from "./Components/ProductComponent/OrderSuccessPage";
 function App() {
   const location = useLocation();
   const [footerDisplay, setFooterDisplay] = useState(true);
@@ -86,6 +87,8 @@ function App() {
         <Route path="/PaymentPage" element={<PaymentPage />} />
         <Route path="/ReviewEditPage/:id" element={<ReviewEditPage />} />
         <Route path="/ReviewPage/:id" element={<ReviewPage />} />
+        <Route path="/OrderSuccessPage" element={<OrderSuccessPage/>} />
+        
       </Routes>
       {footerDisplay && <FooterComponent />}
     </>

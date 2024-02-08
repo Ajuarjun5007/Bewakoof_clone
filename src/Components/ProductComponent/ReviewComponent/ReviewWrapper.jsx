@@ -37,7 +37,7 @@ function ReviewWrapper(props){
       
     return(
         <>
-          <div className=''>
+          <div className='mb-[130px]'>
             <div className="tab-wrapper flex items-center cursor-pointer h-11 text-center font-bold text-sm text-[#8f98a9]">
                 <button  className={`element flex-1 flex items-center 
                 justify-center h-full border-b-4 ${selectedProdTab ? 'border-b-[#ffd232] text-[#292d35]' : ''}`}>

@@ -6,7 +6,7 @@ const  ReviewPage = ({productReviews})=>{
     const reviewData = productReviews ? productReviews : state;
 
     return (
-        <div className="mt-[120px] ml-[100px]">
+        <div className="mt-[120px] ml-[100px] max-[768px]:m-0">
         <div className='reviewsWrapper md:container px-4 md:px-0'>
             {
                reviewData?.slice(0)?.reverse()?.map((productReview) => (
