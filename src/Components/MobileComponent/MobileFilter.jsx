@@ -7,8 +7,8 @@ import sort_img from "../../assets/mobile_sort.svg";
 import filter_img from "../../assets/mobile_filter.svg";
 import { useDispatch, useSelector } from "react-redux";
 
-const MobileFilter = ({ onFilterChange, filteredProducts }) => {
-  const [selectedSortBy, setSelectedSortBy] = useState("RAtings");
+const MobileFilter = ({ onFilterChange, filteredProducts, onSortChange }) => {
+  const [selectedSortBy, setSelectedSortBy] = useState("");
   const [toggleFilter, setToggleFilter] = useState(false);
   const [toggleSort, setToggleSort] = useState(false);
 
@@ -17,17 +17,18 @@ const MobileFilter = ({ onFilterChange, filteredProducts }) => {
   const [filteredBrands, setFilteredBrands] = useState([]);
   const [filteredColors, setFilteredColors] = useState([]);
   const [filteredSizes, setFilteredSizes] = useState([]);
-
+  console.log("fp", filteredProducts);
   useEffect(() => {
     filteredItems = [...filteredProducts];
+    console.log("fiteredItems", filteredItems);
     setFilteredSubCategories([
-      ...new Set(filteredProducts?.map((item) => item.subCategory)),
+      ...new Set(filteredItems?.map((item) => item.subCategory)),
     ]);
     setFilteredBrands([...new Set(filteredItems?.map((item) => item.brand))]);
     setFilteredColors([...new Set(filteredItems?.map((item) => item.color))]);
     setFilteredSizes([...new Set(filteredItems?.flatMap((item) => item.size))]);
     console.log("de");
-  }, []);
+  }, [filteredProducts]);
   const [activeFilters, setActiveFilters] = useState({
     size: false,
     subCategory: false,
@@ -35,7 +36,12 @@ const MobileFilter = ({ onFilterChange, filteredProducts }) => {
     brand: false,
     ratings: false,
   });
-
+  const sortByFilterTypes = [
+    "Top Rated",
+    "New Arrival",
+    "Price:High To Low",
+    "Price:Low To High",
+  ];
   const [sizeFilter, setSizeFilter] = useState([]);
   const [subCategoryFilter, setSubCategoryFilter] = useState([]);
   const [colorFilter, setColorFilter] = useState([]);
@@ -99,10 +105,24 @@ const MobileFilter = ({ onFilterChange, filteredProducts }) => {
         break;
     }
   }
-    console.log("filtered",filteredBrands,filteredColors,filteredSizes,filteredSubCategories);
-    // console.log("filter",sizeFilter,subCategoryFilter,colorFilter,brandFilter);
-    // console.log("fp",filteredProducts);
-    // console.log("fp",filteredProducts);
+  function HandleSortByFilter(value) {
+    setSelectedSortBy(value);
+    console.log("SortBy", value);
+    let changedValue = value.toLowerCase();
+    onSortChange(changedValue);
+    // console.log("handleSort",filteredProducts);
+}
+
+  console.log(
+    "filtered",
+    filteredBrands,
+    filteredColors,
+    filteredSizes,
+    filteredSubCategories
+  );
+  // console.log("filter",sizeFilter,subCategoryFilter,colorFilter,brandFilter);
+  // console.log("fp",filteredProducts);
+  // console.log("fp",filteredProducts);
   useEffect(() => {
     onFilterChange(updatedValues);
   }, [updatedValues]);
@@ -144,11 +164,11 @@ const MobileFilter = ({ onFilterChange, filteredProducts }) => {
       >
         {/* <div className={`dot w-[10px] h-[10px] ml-2  rounded-full
                  ${selectedSortBy.length > 0 ? 'bg-[#42a2a2]' : 'bg-black opacity-10'}`} /> */}
-        <div className="dot w-[10px] h-[10px] ml-2  rounded-full bg-black opacity-10" />
+        <div className="dot w-[10px] h-[10px] ml-2  rounded-full bg-[#42a2a2]" />
         <img src={sort_img} alt="" />
         <div className="flex flex-col capitalize">
           <h3 className="text-xs text-[#525252] font-bold">Sort</h3>
-          <p className="text-[10px] text-[#737373]">selectedSortBy</p>
+          <p className="text-[10px] text-[#737373]">{selectedSortBy}</p>
         </div>
         {toggleSort && (
           <Portal onClose={closeSortBy}>
@@ -165,23 +185,27 @@ const MobileFilter = ({ onFilterChange, filteredProducts }) => {
                   />
                 </div>
                 <ul className="flex flex-col text-xs">
-                  {/* {
-                        filters.at(-1).options?.slice(0, 2)?.map((value, i) => (
-                            <li onClick={handleClick} key={i} className={`${selectedSortBy === value ? 'font-bold' : ''}  capitalize hover:bg-gray-100 p-4 flex`}>{value}{selectedSortBy === value && <div className="dot w-[10px] h-[10px] ml-1 bg-[#42a2a2] rounded-full"></div>}</li>
-                        ))
-                    }
-                    {
-                        sortByPrice?.map(({ name }) => (
-                            <li onClick={handleClick} key={name} className={`${selectedSortBy === name ? 'font-bold' : ''}   capitalize hover:bg-gray-100 p-4 flex`}>{name}{selectedSortBy === name && <div className="dot w-[10px] h-[10px] ml-2 bg-[#42a2a2] rounded-full"></div>}</li>
-                        ))
-                    } */}
+                  {sortByFilterTypes?.map((item, index) => (
+                    <li
+                      key={index}
+                      onClick={() => HandleSortByFilter(item)}
+                      className={`${
+                        selectedSortBy === item ? "font-bold" : ""
+                      } capitalize hover:bg-gray-100 p-4 flex`}
+                    >
+                      {item}
+                      {selectedSortBy === item && (
+                        <div className="dot w-[10px] h-[10px] ml-1 bg-[#42a2a2] rounded-full"></div>
+                      )}
+                    </li>
+                  ))}
                 </ul>
               </div>
             </div>
           </Portal>
         )}
       </div>
-                    {/* FilterBy */}
+      {/* FilterBy */}
       <div
         onClick={openFilterBy}
         className="filterBox cursor-pointer flex items-center justify-center gap-2 flex-1 border-l h-full"
@@ -203,13 +227,11 @@ const MobileFilter = ({ onFilterChange, filteredProducts }) => {
                   <h4 className="font-bold">Filter</h4>
                 </div>
                 <div className="flex relative ">
-                  <ul className="flex flex-col text-xs bg-[#0000000d] flex-1 h-max border 
-                  border-r-0 sticky top-14 w-32">
-
-                    </ul>             
-                     <ul className="h-[700px] overflow-y-auto flex-[2]">
-
-                  </ul>
+                  <ul
+                    className="flex flex-col text-xs bg-[#0000000d] flex-1 h-max border 
+                  border-r-0 sticky top-14 w-32"
+                  ></ul>
+                  <ul className="h-[700px] overflow-y-auto flex-[2]"></ul>
                 </div>
               </div>
               <div className="flex font-medium items-center justify-center text-center bg-white absolute bottom-0 w-full shadow border-t">
