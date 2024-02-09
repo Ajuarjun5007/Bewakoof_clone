@@ -46,23 +46,23 @@ const CartPagePresent = () => {
   );
   //   console.log("w",wishListResult);
  
-    console.log("cartaList",cartListItems);
+  console.log("cartaList",cartListItems);
   let userAddress = JSON.parse(localStorage.getItem("addressInfo"));
    console.log("userAddreess",userAddress);
 
   return (
     <>
       <div className="mt-[120px] flex flex-col items-center justify-center">
-        <div className="  w-85 ">
+        <div className="  w-85 max-[768px]:w-full">
           <div className="px-4 pb-10 flex justify-start">
             <p className="">
               <strong>My Bag </strong>
               {cartListItems.length} item(s)
             </p>
           </div>
-          <div className="pt-9 flex ">
+          <div className="pt-9 flex  max-[768px]:flex-col ">
             {/* left section */}
-            <div className="w-[55%] ">
+            <div className="w-[55%] max-[768px]:w-full">
               <div
                 className="flex items-center h-12 relative bg-[#fcffee] overflow-hidden 
             rounded mb-5"
@@ -99,9 +99,9 @@ const CartPagePresent = () => {
               </div>
             </div>
             {/* right section */}
-            <div className="w-[45%] ">
-              <div className="relative rounded-md px-4 mb-4 h-12 flex items-center bg-[#fdd835]">
-                <span className="text-[15px] text-[#333] pr-4 flex  gap-1 font-[400] leading-4">
+            <div className="w-[45%] max-[768px]:flex max-[768px]:flex-col items-center justify-center max-[768px]:w-full ">
+              <div className="relative w-[100%] max-[768px]:w-[90%] justify-center rounded-md px-4 mb-4 h-12 flex items-center bg-[#fdd835]">
+                <span className="text-[15px] text-[#333] pr-10 flex  gap-1 font-[400] leading-4">
                   save extra <strong>₹ 450</strong> with
                 </span>
                 <img
@@ -138,14 +138,14 @@ const CartPagePresent = () => {
                 <p className="py-3 px-5 text-[12px] text-[#333] tracking-wider bg-[#0000000a] font-bold ">
                   PRICE SUMMARY
                 </p>
-                <div className="bg-white font-medium">
-                  <div className="px-4 pt-5">
+                <div className="bg-white font-medium max-[768px]:flex max-[768px]:flex-col">
+                  <div className="px-4 pt-5 ">
                     <div className="flex justify-between pb-3 text-[13px] text-[#333]">
                       <p className="font-[400]">Total MRP (Incl. of taxes)</p>
                       <p className="font-[500]">₹ {total}</p>
                     </div>
                   </div>
-                  <div className="px-4 py-0">
+                  <div className="px-4 py-0 max-[768px]:flex max-[768px]:flex-col">
                     <div className="flex justify-between pb-3 text-[13px] text-[#333]">
                       <p className="font-[400]">Shipping Charges</p>
                       <p className="font-[500] text-[#42a2a2]">FREE</p>
@@ -159,9 +159,9 @@ const CartPagePresent = () => {
                       <p className="font-bold text-[15px]">₹ {total}</p>
                     </div>
                   </div>
-                  <div className="mt-4 flex items-center justify-between">
-                    <div className="p-4 text-[13px] ">
-                      <span className="font-[450] text-[#333]">Total</span>
+                  <div className="mt-4 flex items-center justify-between max-[767px]:fixed bg-white bottom-0 max-[768px]:justify-center max-[768px]:flex-col max-[768px]:w-full">
+                    <div className="p-4 text-[18px] flex items-center gap-2 ">
+                      <span className="font-[450]  text-[#333]">Total</span>
                       <div className="font-bold text-[#333]">
                         <span>₹</span>
                         <p className="text-base inline">{total}</p>
@@ -171,7 +171,7 @@ const CartPagePresent = () => {
                     userAddress ? (
                       <Link to="/PaymentPage">
                         <button
-                          className="cursor-pointer mr-4 h-10 w-72 font-medium 
+                          className="cursor-pointer  h-10 w-[260px] sticky z-50 font-medium 
 border-none outline-none flex justify-center items-center rounded-md text-white bg-[#42a2a2] hover:bg-opacity-80"
                         >
                           CONTINUE
@@ -184,7 +184,6 @@ border-none outline-none flex justify-center items-center rounded-md text-white 
         border-none outline-none flex justify-center items-center rounded-md text-white bg-[#42a2a2] hover:bg-opacity-80"
                         >
                           ADD ADDRESS
-                          {/* CONTINUE */}
                         </button>
                       </Link>
                      )
