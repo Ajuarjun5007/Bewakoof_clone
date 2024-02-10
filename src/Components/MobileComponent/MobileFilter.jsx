@@ -6,9 +6,9 @@ import { IoCheckmarkSharp } from "react-icons/io5";
 import sort_img from "../../assets/mobile_sort.svg";
 import filter_img from "../../assets/mobile_filter.svg";
 import { useDispatch, useSelector } from "react-redux";
-
 const MobileFilter = ({ onFilterChange, filteredProducts, onSortChange }) => {
   const [selectedSortBy, setSelectedSortBy] = useState("");
+  const[filterDisplay,setFilterDisplay]=useState("");
   const [toggleFilter, setToggleFilter] = useState(false);
   const [toggleSort, setToggleSort] = useState(false);
 
@@ -42,6 +42,8 @@ const MobileFilter = ({ onFilterChange, filteredProducts, onSortChange }) => {
     "Price:High To Low",
     "Price:Low To High",
   ];
+  const filterTypes=["size","subCategory","brand","color"];
+  const [selectedFilterItems,setSelectedFilterItems] = useState([]);
   const [sizeFilter, setSizeFilter] = useState([]);
   const [subCategoryFilter, setSubCategoryFilter] = useState([]);
   const [colorFilter, setColorFilter] = useState([]);
@@ -105,14 +107,34 @@ const MobileFilter = ({ onFilterChange, filteredProducts, onSortChange }) => {
         break;
     }
   }
-  function HandleSortByFilter(value) {
+  function handleSortByFilter(value) {
     setSelectedSortBy(value);
     console.log("SortBy", value);
     let changedValue = value.toLowerCase();
     onSortChange(changedValue);
     // console.log("handleSort",filteredProducts);
 }
-
+function handleFilterType(value){
+  setFilterDisplay(value);
+  switch(value){
+    case "size":
+      setSelectedFilterItems(filteredSizes);
+      break;
+      case "subCategory":
+        setSelectedFilterItems(filteredSubCategories);
+      break;
+      case "brand":
+        setSelectedFilterItems(filteredBrands);
+      break;
+      case "color":
+        setSelectedFilterItems(filteredColors);
+      break;
+      default:
+      break;
+  }
+  // console.log("filter",value);
+}
+console.log("filterDisplay",filterDisplay);
   console.log(
     "filtered",
     filteredBrands,
@@ -149,6 +171,7 @@ const MobileFilter = ({ onFilterChange, filteredProducts, onSortChange }) => {
     e?.stopPropagation && e.stopPropagation();
     setToggleFilter(false);
     document.body.style.overflowY = "";
+    console.log("close");
   };
   const handleClose = (e) => {
     e?.stopPropagation && e.stopPropagation();
@@ -156,6 +179,8 @@ const MobileFilter = ({ onFilterChange, filteredProducts, onSortChange }) => {
       onClose(e);
     }
   };
+  // console.log("selected",selectedFilterItems);
+  console.log("updatedValues",updatedValues);
   return (
     <div className="fixed md:hidden z-50 bottom-0 left-0 right-0 bg-white h-14 flex items-center shadow">
       <div
@@ -188,7 +213,7 @@ const MobileFilter = ({ onFilterChange, filteredProducts, onSortChange }) => {
                   {sortByFilterTypes?.map((item, index) => (
                     <li
                       key={index}
-                      onClick={() => HandleSortByFilter(item)}
+                      onClick={() => handleSortByFilter(item)}
                       className={`${
                         selectedSortBy === item ? "font-bold" : ""
                       } capitalize hover:bg-gray-100 p-4 flex`}
@@ -217,9 +242,11 @@ const MobileFilter = ({ onFilterChange, filteredProducts, onSortChange }) => {
           <p className="text-[10px] text-[#737373]">filterString</p>
         </div>
         {toggleFilter && (
-          <Portal onClose={closeFilterBy}>
+          <Portal 
+          // onClose={closeFilterBy}
+          >
             <div
-              onClick={closeFilterBy}
+              // onClick={closeFilterBy}
               className="relative w-full h-full bg-[#0000008a]"
             >
               <div className="bg-white absolute w-full bottom-0 h-4/5 overflow-y-auto pb-10">
@@ -230,8 +257,31 @@ const MobileFilter = ({ onFilterChange, filteredProducts, onSortChange }) => {
                   <ul
                     className="flex flex-col text-xs bg-[#0000000d] flex-1 h-max border 
                   border-r-0 sticky top-14 w-32"
-                  ></ul>
-                  <ul className="h-[700px] overflow-y-auto flex-[2]"></ul>
+                  >
+                    {filterTypes.map((item)=>(
+                      <li onClick={()=>handleFilterType(item)}
+                      className={`p-4 cursor-pointer ${filterDisplay === item ? 'bg-white font-bold' : ''}`}>{item}</li>
+                    ))}
+                  </ul>
+                  <ul className="h-[700px] overflow-y-auto flex-[2]">
+                  {/* <li onClick={() => handleFilterClick(value)} className={`cursor-pointer capitalize p-4 text-sm flex items-center gap-3`}>
+            <div className={`inline-block border  ${filter[name]?.includes(value) ? 'bg-[#42a2a2] border-[#42a2a2]' : 'border-[#0000008a]'} `}><IoCheckmarkSharp className={`text-white`} /></div>
+            {value}
+        </li> */}
+                  {
+                    selectedFilterItems.map((item,index)=>(
+                      <li 
+                      // onClick={() => handleFilterClick(value)} 
+                        onClick={()=>updateFilters(filterDisplay,item)}
+                      // className={`cursor-pointer capitalize p-4 text-sm flex items-center gap-3`}
+                      >
+            {/* <div className={`inline-block border  ${filter[name]?.includes(value) ? 'bg-[#42a2a2] border-[#42a2a2]' : 'border-[#0000008a]'} `}><IoCheckmarkSharp className={`text-white`} /></div> */}
+            {item}
+        </li> 
+                    ))
+                  }
+        
+                  </ul>
                 </div>
               </div>
               <div className="flex font-medium items-center justify-center text-center bg-white absolute bottom-0 w-full shadow border-t">
