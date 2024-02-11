@@ -39,7 +39,6 @@ function ProductListPage() {
   const [loading, setLoading] = useState(false);
   const [activeSortTag, setActiveSortTag] = useState("");
   const [sortContainerDisplay, setSortContainerDisplay] = useState(false);
-  // console.log("sata", state);
   const productListResult = useSelector(
     (state) => state.productReducer.dressList
   );
@@ -54,53 +53,6 @@ function ProductListPage() {
     ratings: null,
   });
 
-  // function sortByFilterChange(filterTag) {
-  //   console.log("sortMobilefilter",filterTag);
-  //   if (filterTag == "top rated") {
-  //     const filteredProducts = tempArr?.filter((item) => {
-  //       return item.sellerTag == filterTag;
-  //     });
-  //     setTempArr(filteredProducts);
-  //     if (activeSortTag == "" || activeSortTag != "top rated") {
-  //       setActiveSortTag("top rated");
-  //     } else {
-  //       setActiveSortTag("");
-  //     }
-  //   }
-  //   if (filterTag == "new arrival") {
-  //     const filteredProducts = tempArr?.filter((item) => {
-  //       return item.sellerTag == filterTag;
-  //     });
-  //     setTempArr(filteredProducts);
-  //     if (activeSortTag == "" || activeSortTag != "new arrival") {
-  //       setActiveSortTag("new arrival");
-  //     } else {
-  //       setActiveSortTag("");
-  //     }
-  //   }
-  //   if (filterTag == "price:low to high") {
-  //     const filteredProducts = tempArr?.sort((item1, item2) => {
-  //       return item1.price - item2.price;
-  //     });
-  //     setTempArr(filteredProducts);
-  //     if (activeSortTag == "" || activeSortTag != "price:low to high") {
-  //       setActiveSortTag("price:low to high");
-  //     } else {
-  //       setActiveSortTag("");
-  //     }
-  //   }
-  //   if (filterTag == "price:high to low") {
-  //     const filteredProducts = tempArr?.sort((item1, item2) => {
-  //       return item2.price - item1.price;
-  //     });
-  //     setTempArr(filteredProducts);
-  //     if (activeSortTag == "" || activeSortTag != "price:high to low") {
-  //       setActiveSortTag("price:high to low");
-  //     } else {
-  //       setActiveSortTag("");
-  //     }
-  //   }
-  // }
   function sortByFilterChange(filterTag) {
     console.log("filtettag",filterTag);
     let filteredProducts;
@@ -119,6 +71,7 @@ function ProductListPage() {
         break;
       default:
         filteredProducts = tempArr;
+        break;
     }
     console.log("setAray");
     setTempArr(filteredProducts);

@@ -8,7 +8,7 @@ import filter_img from "../../assets/mobile_filter.svg";
 import { useDispatch, useSelector } from "react-redux";
 const MobileFilter = ({ onFilterChange, filteredProducts, onSortChange }) => {
   const [selectedSortBy, setSelectedSortBy] = useState("");
-  const[filterDisplay,setFilterDisplay]=useState("");
+  const [filterDisplay, setFilterDisplay] = useState("");
   const [toggleFilter, setToggleFilter] = useState(false);
   const [toggleSort, setToggleSort] = useState(false);
 
@@ -42,14 +42,13 @@ const MobileFilter = ({ onFilterChange, filteredProducts, onSortChange }) => {
     "Price:High To Low",
     "Price:Low To High",
   ];
-  const filterTypes=["size","subCategory","brand","color"];
-  const [selectedFilterItems,setSelectedFilterItems] = useState([]);
+  const filterTypes = ["size", "subCategory", "brand", "color"];
+  const [selectedFilterItems, setSelectedFilterItems] = useState()
   const [sizeFilter, setSizeFilter] = useState([]);
   const [subCategoryFilter, setSubCategoryFilter] = useState([]);
   const [colorFilter, setColorFilter] = useState([]);
   const [brandFilter, setBrandFilter] = useState([]);
   const [updatedValues, setUpdatedValues] = useState({});
-  const [expanded, setExpanded] = useState(0);
   function updateFilters(filterType, value) {
     switch (filterType) {
       case "size":
@@ -113,28 +112,27 @@ const MobileFilter = ({ onFilterChange, filteredProducts, onSortChange }) => {
     let changedValue = value.toLowerCase();
     onSortChange(changedValue);
     // console.log("handleSort",filteredProducts);
-}
-function handleFilterType(value){
-  setFilterDisplay(value);
-  switch(value){
-    case "size":
-      setSelectedFilterItems(filteredSizes);
-      break;
+  }
+  function handleFilterType(value) {
+    setFilterDisplay(value);
+    switch (value) {
+      case "size":
+        setSelectedFilterItems(filteredSizes);
+        break;
       case "subCategory":
         setSelectedFilterItems(filteredSubCategories);
-      break;
+        break;
       case "brand":
         setSelectedFilterItems(filteredBrands);
-      break;
+        break;
       case "color":
         setSelectedFilterItems(filteredColors);
-      break;
+        break;
       default:
-      break;
+        break;
+    }
   }
-  // console.log("filter",value);
-}
-console.log("filterDisplay",filterDisplay);
+  console.log("filterDisplay", filterDisplay);
   console.log(
     "filtered",
     filteredBrands,
@@ -142,9 +140,7 @@ console.log("filterDisplay",filterDisplay);
     filteredSizes,
     filteredSubCategories
   );
-  // console.log("filter",sizeFilter,subCategoryFilter,colorFilter,brandFilter);
-  // console.log("fp",filteredProducts);
-  // console.log("fp",filteredProducts);
+  
   useEffect(() => {
     onFilterChange(updatedValues);
   }, [updatedValues]);
@@ -180,16 +176,18 @@ console.log("filterDisplay",filterDisplay);
     }
   };
   // console.log("selected",selectedFilterItems);
-  console.log("updatedValues",updatedValues);
+  console.log("updatedValues", updatedValues);
+  console.log("selectedSortBy",selectedSortBy);
+  console.log("keys",Object.keys(updatedValues));
+  
   return (
     <div className="fixed md:hidden z-50 bottom-0 left-0 right-0 bg-white h-14 flex items-center shadow">
       <div
         onClick={openSortBy}
         className="sortBox cursor-pointer flex items-center justify-center gap-2 flex-1 border-r h-full"
       >
-        {/* <div className={`dot w-[10px] h-[10px] ml-2  rounded-full
-                 ${selectedSortBy.length > 0 ? 'bg-[#42a2a2]' : 'bg-black opacity-10'}`} /> */}
-        <div className="dot w-[10px] h-[10px] ml-2  rounded-full bg-[#42a2a2]" />
+        <div className={`dot w-[10px] h-[10px] ml-2  rounded-full 
+         ${selectedSortBy!='' ? 'bg-[#42a2a2]' : 'bg-black opacity-10'}`} />
         <img src={sort_img} alt="" />
         <div className="flex flex-col capitalize">
           <h3 className="text-xs text-[#525252] font-bold">Sort</h3>
@@ -220,7 +218,8 @@ console.log("filterDisplay",filterDisplay);
                     >
                       {item}
                       {selectedSortBy === item && (
-                        <div className="dot w-[10px] h-[10px] ml-1 bg-[#42a2a2] rounded-full"></div>
+                        <div className={`dot w-[10px] h-[10px] ml-1 ${selectedSortBy !== '' ? 'bg-[#42a2a2]' : 'bg-[#fff] opacity-0'} rounded-full`}></div>
+                        // <div className={`dot w-[10px] h-[10px] ml-1 ${selectedSortBy!=''?}"bg-[#42a2a2]":"bg-[#fff] opacity"} rounded-full`}></div>
                       )}
                     </li>
                   ))}
@@ -235,18 +234,25 @@ console.log("filterDisplay",filterDisplay);
         onClick={openFilterBy}
         className="filterBox cursor-pointer flex items-center justify-center gap-2 flex-1 border-l h-full"
       >
-        {/* <div className={`dot w-[10px] h-[10px] ml-2  rounded-full ${filterArray?.length !== 0 ? 'bg-[#42a2a2]' : 'bg-black opacity-10'}`} /> */}
+        <div className={`dot w-[10px] h-[10px] ml-2  rounded-full ${Object.keys(updatedValues).every(key => updatedValues[key].length != 0) ? 'bg-[#42a2a2]' : 'bg-black opacity-10'}`} />
         <img src={filter_img} alt="" />
         <div className="flex flex-col capitalize">
           <h3 className="text-xs text-[#525252] font-bold">Filter</h3>
-          <p className="text-[10px] text-[#737373]">filterString</p>
+          <p className="text-[10px] text-[#737373]">
+  {filterDisplay !== '' ? (
+    Object.keys(updatedValues).every(key => updatedValues[key].length === 0) ? 
+    "None" : 
+    Object.keys(updatedValues).join('')
+  ) : (
+    "None"
+  )}
+</p>
+
         </div>
         {toggleFilter && (
-          <Portal 
-          // onClose={closeFilterBy}
+          <Portal
           >
             <div
-              // onClick={closeFilterBy}
               className="relative w-full h-full bg-[#0000008a]"
             >
               <div className="bg-white absolute w-full bottom-0 h-4/5 overflow-y-auto pb-10">
@@ -258,29 +264,35 @@ console.log("filterDisplay",filterDisplay);
                     className="flex flex-col text-xs bg-[#0000000d] flex-1 h-max border 
                   border-r-0 sticky top-14 w-32"
                   >
-                    {filterTypes.map((item)=>(
-                      <li onClick={()=>handleFilterType(item)}
-                      className={`p-4 cursor-pointer ${filterDisplay === item ? 'bg-white font-bold' : ''}`}>{item}</li>
+                    {filterTypes.map((item) => (
+                      <li
+                        onClick={() => handleFilterType(item)}
+                        className={`p-4 cursor-pointer ${
+                          filterDisplay === item ? "bg-white font-bold" : ""
+                        }`}
+                      >
+                        {item}
+                      </li>
                     ))}
                   </ul>
                   <ul className="h-[700px] overflow-y-auto flex-[2]">
-                  {/* <li onClick={() => handleFilterClick(value)} className={`cursor-pointer capitalize p-4 text-sm flex items-center gap-3`}>
-            <div className={`inline-block border  ${filter[name]?.includes(value) ? 'bg-[#42a2a2] border-[#42a2a2]' : 'border-[#0000008a]'} `}><IoCheckmarkSharp className={`text-white`} /></div>
-            {value}
-        </li> */}
-                  {
-                    selectedFilterItems.map((item,index)=>(
-                      <li 
-                      // onClick={() => handleFilterClick(value)} 
-                        onClick={()=>updateFilters(filterDisplay,item)}
-                      // className={`cursor-pointer capitalize p-4 text-sm flex items-center gap-3`}
+                    {selectedFilterItems?.map((item) => (
+                      <li
+                        onClick={() => updateFilters(filterDisplay, item)}
+                        className={`cursor-pointer capitalize p-4 text-sm flex items-center gap-3`}
                       >
-            {/* <div className={`inline-block border  ${filter[name]?.includes(value) ? 'bg-[#42a2a2] border-[#42a2a2]' : 'border-[#0000008a]'} `}><IoCheckmarkSharp className={`text-white`} /></div> */}
-            {item}
-        </li> 
-                    ))
-                  }
-        
+                        <div
+                          className={`inline-block border  ${
+                            updatedValues[filterDisplay]?.includes(item)
+                              ? "bg-[#42a2a2] border-[#42a2a2]"
+                              : "border-[#0000008a]"
+                          } `}
+                        >
+                          <IoCheckmarkSharp className={`text-white`} />
+                        </div>
+                        {item}
+                      </li>
+                    ))}
                   </ul>
                 </div>
               </div>

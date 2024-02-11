@@ -81,14 +81,12 @@ function PaymentPage() {
     }
 
 
-  // console.log("activetab", activeTab);
-  // console.log("cartLizt", cartListItems);
-  // console.log("Items", cartItems);
+ 
 
   return (
     <>
       <div className="flex justify-center">
-        <div className="w-85 mt-[120px]">
+        <div className="w-85 mt-[120px] max-[360px]:w-full max-[360px]:mt-[30px]">
           <div className="pt-9 pb-12 bg-[#f7f7f7] lg:bg-white">
             <div className="lg:container flex lg:flex-row flex-col-reverse lg:px-4 ">
               <div className="pmt-left md:sticky md:top-28 h-max lg:flex-[2] p-4 lg:pr-4 lg:border-r border-[#d6d6d6] bg-white">
@@ -130,7 +128,7 @@ function PaymentPage() {
                     <img src={rightArrow} alt="" className="h-5" />
                   </Link>
                 </div>
-                <div className="border bg-white border-[#d6d6d6] px-4 rounded-md mb-4 hover:shadow-md transition-all">
+                <div className="border bg-white border-[#d6d6d6] px-4 rounded-md mb-4 hover:shadow-md transition-all max-[360px]:px-0">
                   {/* cartcard*/}
                   <Accordion.Root
                     className=" rounded-md "
@@ -146,7 +144,7 @@ function PaymentPage() {
                       <AccordionContent>
                         {!LoadingCheck &&
                           cartListItems?.map((item) => (
-                            <div className="flex rounded-md border mt-2 border-[#d6d6d6] shadow p-2">
+                            <div className="flex rounded-md border mt-2 border-[#d6d6d6] shadow p-2 max-[360px]:p-0 max-[360px]:w-[189px]">
                               <div className=" relative h-[130px] min-w-[104px] rounded-md">
                                 <img
                                   className="aspect-[10/13] w-full h-full object-cover rounded-md"

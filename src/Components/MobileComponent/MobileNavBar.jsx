@@ -59,8 +59,12 @@ function MobileNavBar() {
           <div className="lg:w-5/12 flex items-center  justify-end">
             <AiOutlineSearch className="lg:hidden w-7 h-7 mx-2 cursor-pointer" />
             <div className="divider border border-[rgba(0,0,0,0.3)] hidden  my-1 ml-4 h-6" />
+              <Link to="/WishlistPage">
             <AiOutlineHeart className="w-7 h-7 ml-1 mr-2 cursor-pointer" />
+              </Link>
+              <Link to="/CartPage">
             <BsBag className="h-7 w-6 cursor-pointer ml-1 mr-0 " />
+              </Link>
           </div>
         </div>
       </div>
