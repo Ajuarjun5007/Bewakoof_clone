@@ -32,7 +32,7 @@ function AddressPage() {
  
 
   useEffect(() => {
-    if (addressInfo) {
+    if (addressInfo.length>0) {
       let address = addressInfo[0];
       console.log("addr", address);
       setStateFetch(address?.state);
@@ -183,7 +183,7 @@ function AddressPage() {
                     <div className="">
                       <input
                         // value={streetFetch}
-                        disabled={addressInfo}
+                        disabled={addressInfo.length>0}
                         type="text"
                         onChange={(e) =>
                           handleInputChange(e.target.value, "residence Details")
@@ -204,6 +204,7 @@ function AddressPage() {
                       <input
                         type="text"
                         // value={zipCodeFetch}
+                        disabled={addressInfo.length>0}
                         onChange={(e) =>
                           handleInputChange(e.target.value, "pincode")
                         }
@@ -225,7 +226,7 @@ function AddressPage() {
                       <div className="">
                         <input
                           // value={cityFetch}
-                          disabled={addressInfo}
+                          disabled={addressInfo.length>0}
                           type="text"
                           onChange={(e) =>
                             handleInputChange(e.target.value, "city")
@@ -245,7 +246,7 @@ function AddressPage() {
                       <div className="">
                         <input
                           type="text"
-                          disabled={addressInfo}
+                          disabled={addressInfo.length>0}
                           // value={stateFetch}
                           onChange={(e) =>
                             handleInputChange(e.target.value, "state")

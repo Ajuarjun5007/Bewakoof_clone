@@ -9,9 +9,11 @@ import img_6 from "../../assets/fanbook_page/grid-image-6.jpeg"
 import img_7 from "../../assets/fanbook_page/grid-image-7.jpg"
 import img_8 from "../../assets/fanbook_page/grid-image-8.jpg"
 import img_9 from "../../assets/fanbook_page/grid-image-9.jpg"
+import { useScreenSize } from "../../Components/MobileComponent/useScreenSize";
 
 function FanbookPage () {
-    
+    const screenSize =  useScreenSize();
+    let isMobile = screenSize < 1000;
     return (
         <>
         <div className="">
@@ -19,6 +21,8 @@ function FanbookPage () {
                 <img className="py-[10px]" src={cover_pic_1} alt="" />
                 <img className="py-[10px]" src={cover_pic_2} alt="" />
             </div>
+            {
+                !isMobile &&
             <div className="grid grid-cols-3 px-[100px] py-10">
             <img className="p-[1px] h-[577px]" src={img_1} alt="" />
             <img className="p-[1px] h-[577px]" src={img_2} alt="" />
@@ -30,6 +34,7 @@ function FanbookPage () {
             <img className="p-[1px] h-[480px]" src={img_8} alt="" />
             <img className="p-[1px] w-[440px]" src={img_9} alt="" />
             </div>
+            }
         </div>
         </>
     )
