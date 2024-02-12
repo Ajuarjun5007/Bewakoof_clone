@@ -19,7 +19,7 @@ import tribe_carousel_img_5 from "../../assets/tribe_membership_page/tribe_carou
 import tribe_carousel_img_6 from "../../assets/tribe_membership_page/tribe_carousel_img_6.webp";
 import tribe_carousel_img_7 from "../../assets/tribe_membership_page/tribe_carousel_img_7.webp";
 import tribe_carousel_img_8 from "../../assets/tribe_membership_page/tribe_carousel_img_8.jpg";
-
+import { useScreenSize } from "../../Components/MobileComponent/useScreenSize";
 function TribeMembershipPage() {
   const responsive = {
     desktop: {
@@ -38,10 +38,15 @@ function TribeMembershipPage() {
       slidesToSlide: 1,
     },
   };
+  const screenSize =  useScreenSize();
+  let isMobile = screenSize < 770;
+
   return (
     <>
       <div className="">
         {/* top content */}
+        {
+          !isMobile &&
         <div className="mt-[80px] flex py-[20px]">
           <div className="px-[180px] py-[100px] w-[50%] bg-[rgb(255,216,53)]">
             <img className=" w-[270px] h-[135px]" src={tribe_logo} alt="" />
@@ -88,8 +93,11 @@ function TribeMembershipPage() {
             </div>
           </div>
         </div>
+        }
         {/* button wrapper */}
         <div className="flex justify-center  flex-col items-center ">
+          {
+            !isMobile &&
           <button className="bg-[rgba(255,199,0,.9)] flex flex-col items-center rounded-[5px] w-[455px] py-[10px]">
             <p className="text-[16px] font-[500] text-[#303030]">
               BUY BEWAKOOF TRIBE
@@ -101,17 +109,18 @@ function TribeMembershipPage() {
               for 3 months
             </div>
           </button>
+          }
           <p className="text-[15px] text-[#333] pt-[10px] pb-[30px]">
             <strong> 5,832</strong> users have joined Tribe last week
           </p>
         </div>
         {/* five reasons wrapper */}
-        <div className="bg-[#f8f8f8] my-[30px] flex justify-center py-[40px]">
-          <div className=" w-[80%] ">
-            <p className="text-[20px]">
+        <div className="bg-[#f8f8f8]  my-[30px] flex justify-center py-[40px]">
+          <div className=" w-[80%] max-[767px]:w-[100%] max-[767px]:flex-col max-[767px]:justify-center">
+            <p className="text-[20px] max-[767px]:ml-10 max-[767px]:mt-[50px]">
               <strong>Five Reasons</strong> Why You Should Join
             </p>
-            <div className="flex  py-[20px]">
+            <div className="flex max-[768px]:flex-col max-[767px]:items-center  py-[20px]">
               {/* discnt 1 */}
               <div className="flex  solid ">
                 <img className="w-[30px] h-[30px]" src={small_icon_5} alt="" />
@@ -178,8 +187,8 @@ function TribeMembershipPage() {
           </div>
         </div>
         {/* tribe carousel */}
-        <div className="flex  border-2 border-red-400 solid">
-          <div className="flex w-[80%]">
+        <div className="flex">
+          <div className="flex w-[80%] max-[768px]:w-[100%] max-[768px]:justify-center">
             <p>
               {" "}
               <strong>Exclusive Savings</strong> Only for our TriBees

@@ -33,7 +33,7 @@ function FooterComponent() {
   }, [location.pathname]);
   return (
     <>
-      <div className=" px-[110px] min-[280px]:max-[820px]:px-[20px] pt-[72px] pb-[250px] bg-[rgb(24,24,24)] w-full 
+      <div className=" px-[110px] min-[280px]:px-[0px] pt-[72px] pb-[250px] bg-[rgb(24,24,24)] w-full 
       left-0 text-[12px] bottom-0  min-[280px]:max-[767px]:px-[0px] max-[767px]:pb-0 ">
       {/* section 1 */}
         <div className=" min-[280px]:max-[820px]:pl-[20px]">

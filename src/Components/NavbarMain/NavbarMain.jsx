@@ -94,8 +94,7 @@ function NavbarMain() {
   function searchInputHandler() {
     setSearchInput("");
   }
-  // console.log("searchResultsListHandler", searchResultsListHandler);
-  // console.log("userLog", userLoggedIn);
+  
   return (
     <>
       <div className="flex  w-full  fixed z-10 bg-white top-8 pt-[3px] justify-center border-b-[1px] border-[rgba(0,0,0,0.2)] solid ">

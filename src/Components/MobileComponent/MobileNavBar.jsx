@@ -27,7 +27,7 @@ function MobileNavBar() {
     document.body.style.overflowY = "hidden";
     setIsOpenSidebar(true);
   };
-
+  let userInfo = JSON.parse(localStorage.getItem("userInfo")) || "";
   const closeSideNavbar = (e) => {
     e.stopPropagation();
     document.body.style.overflowY = "";
@@ -61,10 +61,10 @@ function MobileNavBar() {
             <AiOutlineSearch className="lg:hidden w-7 h-7 mx-2 cursor-pointer" />
             </Link>
             <div className="divider border border-[rgba(0,0,0,0.3)] hidden  my-1 ml-4 h-6" />
-              <Link to="/WishlistPage">
+              <Link to={`${userInfo?"/WishlistPage":"/LoginPage"}`}>
             <AiOutlineHeart className="w-7 h-7 ml-1 mr-2 cursor-pointer" />
               </Link>
-              <Link to="/CartPage">
+              <Link to={`${userInfo?"/CartPage":"/LoginPage"}`}>
             <BsBag className="h-7 w-6 cursor-pointer ml-1 mr-0 " />
               </Link>
           </div>

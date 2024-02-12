@@ -63,6 +63,7 @@ function MobileSideNavBar({ onClose }) {
               </p>
               <ul className="menuList pt-1 text-xs font-bold">
                 {/* <Link to={'Men'} onClick={onClose}> */}
+                <Link onClick={onClose} to="/ProductListPage/Men">
                 <li className="menulistOption hover:bg-[#f3f3f383] px-5 flex justify-between items-center h-12">
                   <span className="font-bold">Men</span>
                   <img
@@ -71,8 +72,9 @@ function MobileSideNavBar({ onClose }) {
                     alt=""
                   />
                 </li>
-                {/* </Link> */}
+                </Link>
                 {/* <Link to={'Women'} onClick={onClose}> */}
+                <Link onClick={onClose} to="/ProductListPage/Women">
                 <li className="menulistOption hover:bg-[#f3f3f393] px-5 flex justify-between items-center h-12">
                   <span className="font-bold">Women</span>
                   <img
@@ -81,7 +83,7 @@ function MobileSideNavBar({ onClose }) {
                     alt=""
                   />
                 </li>
-                {/* </Link> */}
+                </Link>
               </ul>
             </div>
             {/* My Profile */}
@@ -125,12 +127,12 @@ function MobileSideNavBar({ onClose }) {
                     <span className="font-bold">Help & Support</span>
                   </li>
                 </Link>
-                <Link onClick={onClose} to="/WishlistPage">
+                <Link onClick={onClose} to="/ComingSoonPage">
                   <li className="menulistOption hover:bg-[#00000013] px-5 flex justify-between items-center h-12">
                     <span className="font-bold">Feedback and Suggestions</span>
                   </li>
                 </Link>
-                <Link onClick={onClose} to="/TrackOrderPage">
+                <Link onClick={onClose} to="/ComingSoonPage">
                   <li className="menulistOption hover:bg-[#00000013] px-5 flex justify-between items-center h-12">
                     <span className="font-bold">Become a Seller</span>
                   </li>
@@ -167,7 +169,7 @@ function MobileSideNavBar({ onClose }) {
                             <span className="font-bold">Logout</span>
                         </div>
                         :
-                        <Link to="/LoginPage">
+                        <Link onClick={onClose} to="/LoginPage">
                         <div className="menulistOption hover:bg-[#f3f3f383] px-5 flex justify-between items-center text-xs h-12 cursor-pointer">
                             <span className="font-bold">Login</span>
                         </div>
