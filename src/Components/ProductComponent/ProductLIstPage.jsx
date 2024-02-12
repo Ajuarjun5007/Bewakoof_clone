@@ -15,8 +15,9 @@ import red_heart from "../../assets/wishlist_page/wishlisted.svg";
 import { FaStar } from "react-icons/fa6";
 import { IoChevronDown } from "react-icons/io5";
 import { useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate} from "react-router-dom";
 import Loader from "../Loader";
+
 import { useSelector, useDispatch } from "react-redux";
 import {
   applyFilters,
@@ -28,9 +29,12 @@ import ComingSoon from "../ComingSoon";
 import { useScreenSize } from "../MobileComponent/useScreenSize";
 import MobileFilter from "../MobileComponent/MobileFilter";
 function ProductListPage() {
+  
   const location = useLocation();
+  // const history = useHistory();
   const screenSize = useScreenSize();
-  const { state } = location;
+    const {state} = history || location;
+  // const { state } = location;
   const { name, brand, MenuContent, searchResults } = state || {};
   const dispatch = useDispatch();
   const navigate = useNavigate();

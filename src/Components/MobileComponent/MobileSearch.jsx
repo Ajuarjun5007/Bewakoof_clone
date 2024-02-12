@@ -4,10 +4,13 @@ import { AiOutlineClose } from "react-icons/ai";
 import { BsChevronLeft } from "react-icons/bs";
 import { FiSearch } from "react-icons/fi";
 import { useDispatch } from "react-redux";
+import {useNavigate} from 'react-router-dom';
 import { setSearchValue } from "../ProductComponent/Slices/FilterSlice";
 import SearchResultsList from "../NavbarMain/SearchResultsList";
 useState
 function MobileSearch(){
+  //  const history = useHistory();
+   const navigate = useNavigate();
     const [searchResultsListHandler, setSearchResultsListHandler] =
     useState(false);
     const [isVisible, setIsVisible] = useState(false);
@@ -43,6 +46,18 @@ function MobileSearch(){
       function searchInputHandler() {
         setSearchInput("");
       }
+      function enterKeyHandler(event){
+        if (event.key === "Enter") {
+            console.log("Enter");
+            // history.push({
+            //   pathname: "/ProductListPage/Search Results",
+            //   state: { searchResults: "searchResults" }
+            // });
+            console.log("end");
+            navigate("/ProductListPage/Search Results");
+            // window.location.href="/ProductListPage/Search Results";
+      }
+      }
     return(
         <>
 
@@ -55,6 +70,7 @@ function MobileSearch(){
                 <span className="pl-2 opacity-80"><FiSearch className="w-6 h-6 object-cover" /></span>
                 <input
                  onChange={(e) => searchHandler(e)}
+                 onKeyDown={(event)=>enterKeyHandler(event)}
                  value={searchInput}
                  className="bg-[#f2f2f2] border-none w-[120px] font-medium outline-none flex-1 pl-2 pr-10" placeholder="Type here to search" type="text" />
               

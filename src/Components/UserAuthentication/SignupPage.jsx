@@ -123,7 +123,7 @@ function SignupPage() {
          <div className="py-[20px]">
             <img className="w-[320px] h-[430px]" src={signup_img} alt="" />
           </div>}
-          <div className="mx-[20px] block  justify-start w-[420px] pt-[5px] px-[60px] pb-[5px] bg-white max-[281px]:w-[260px]">
+          <div className="mx-[20px] block  justify-start min-[282px]-max-[768px]:w-[420px] pt-[5px] px-[60px] pb-[5px] bg-white max-[281px]:w-[260px]">
             <div className="">
               <p className="text-[24px] font-bold text-[#333]">Signup</p>
               <p className="pt-[10px] text-[18px] font-[600] text-[#333]">
