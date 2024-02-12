@@ -99,7 +99,7 @@ function LoginPage() {
             <div className="flex flex-col gap-[2px] items-center justify-center">
               <div className="relative flex  flex-col items-center  p-[5px] ">
                 <input
-                  type="tel"
+                  type="email"
                   placeholder="Email"
                   onChange={(event)=>setEmail(event.target.value)}
                   className={
