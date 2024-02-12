@@ -444,7 +444,6 @@ function NavbarMain() {
               {searchResultsListHandler && (
                 <div className="absolute left-0 right-0 top-full bg-white border border-t-0 mt-2">
                   <SearchResultsList
-                    // searchDivHandler={searchDivHandler}
                     searchInputHandler={searchInputHandler}
                   />
                 </div>

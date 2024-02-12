@@ -11,7 +11,7 @@ const MobileFilter = ({ onFilterChange, filteredProducts, onSortChange }) => {
   const [filterDisplay, setFilterDisplay] = useState("");
   const [toggleFilter, setToggleFilter] = useState(false);
   const [toggleSort, setToggleSort] = useState(false);
-
+  const [emptyFilter,setEmptyFilter]=useState(true);
   let filteredItems = [];
   const [filteredSubCategories, setFilteredSubCategories] = useState([]);
   const [filteredBrands, setFilteredBrands] = useState([]);
@@ -143,6 +143,13 @@ const MobileFilter = ({ onFilterChange, filteredProducts, onSortChange }) => {
   
   useEffect(() => {
     onFilterChange(updatedValues);
+    for(let key in updatedValues) {
+      if (updatedValues[key].length > 0) {
+          setEmptyFilter(false);
+      }else{
+        setEmptyFilter(true);
+      }
+  }
   }, [updatedValues]);
 
   const openSortBy = (e) => {
@@ -179,7 +186,8 @@ const MobileFilter = ({ onFilterChange, filteredProducts, onSortChange }) => {
   console.log("updatedValues", updatedValues);
   console.log("selectedSortBy",selectedSortBy);
   console.log("keys",Object.keys(updatedValues));
-  
+  // console.log("object",Object.keys(updatedValues).every(key => updatedValues[key].length === 0));
+  console.log("object",Object.keys(updatedValues).length != 0);
   return (
     <div className="fixed md:hidden z-50 bottom-0 left-0 right-0 bg-white h-14 flex items-center shadow">
       <div
@@ -234,7 +242,7 @@ const MobileFilter = ({ onFilterChange, filteredProducts, onSortChange }) => {
         onClick={openFilterBy}
         className="filterBox cursor-pointer flex items-center justify-center gap-2 flex-1 border-l h-full"
       >
-        <div className={`dot w-[10px] h-[10px] ml-2  rounded-full ${Object.keys(updatedValues).every(key => updatedValues[key].length != 0) ? 'bg-[#42a2a2]' : 'bg-black opacity-10'}`} />
+        <div className={`dot w-[10px] h-[10px] ml-2  rounded-full ${!emptyFilter ? 'bg-[#42a2a2]' : 'bg-black opacity-10'}`} />
         <img src={filter_img} alt="" />
         <div className="flex flex-col capitalize">
           <h3 className="text-xs text-[#525252] font-bold">Filter</h3>

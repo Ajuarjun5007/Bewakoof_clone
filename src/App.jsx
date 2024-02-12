@@ -19,6 +19,7 @@ import { useEffect, useState } from "react";
 import SignupPage from "./Components/UserAuthentication/SignupPage";
 import WalletPage from "./Components/NavbarMain/WalletPage";
 import AccountPage from "./Components/NavbarMain/AccountPage";
+import MobileSearch from "./Components/MobileComponent/MobileSearch";
 import AddressPage from "./Components/NavbarMain/AddressPage";
 import ProfilePage from "./Components/NavbarMain/ProfilePage";
 import PaymentPage from "./Components/PaymentComponent/PaymentPage";
@@ -79,6 +80,7 @@ function App() {
           element={<ProductDetailsPage />}
         />
         <Route path="/CartPage" element={<CartPage />} />
+        <Route path="/MobileSearch" element={<MobileSearch />} />
         <Route path="/SignupPage" element={<SignupPage />} />
         <Route path="/WalletPage" element={<WalletPage />} />
         <Route path="/AccountPage" element={<AccountPage />} />
