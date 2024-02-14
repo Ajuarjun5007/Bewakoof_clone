@@ -1,16 +1,26 @@
 
+
+
 .myThumbSlider .swiper-slide-visible {
 	max-height: 100px;
 	overflow: hidden;
+	
 }
 
 .myThumbSlider .swiper-slide-thumb-active {
 	border: 2px solid #51cccc;
+	max-height: 100px;
+	/* height: unset!important; */
 }
 
 .myThumbSlider {
 	overflow: hidden !important;
-	max-height: 100% !important;
+	/* max-height: 100% !important; */
+}
+
+.verticalSlide {
+	max-height: max-content;
+	/* border: 2px solid black; */
 }
 
 .AccordionTrigger[data-state='open'] > .icons::before {
@@ -55,4 +65,72 @@
 .sort-container-parent:hover .sort-container-child{
 		/* display:block; */
 		visibility:visible;
+}
+
+@media only screen and (min-width:768px){
+	.mainSlider{
+		width:80%!important;
+	}
+	.buttonsContainer{
+		/* border:1px solid red; */
+		position:unset!important;
+		position:static!important;
+		z-index:0;
+		width:100%;
+		display:flex;
+		flex-direction: row-reverse;
+		flex-grow:1;
+		gap: 10px;
+		transform: rotate(180deg);
+	}
+	.cartButton{
+		transform: rotate(180deg);
+		background-color:#ffd84d;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 45px;
+		
+		width: 45%!important;
+	}
+	.wishListBtn{
+		transform: rotate(180deg);
+		/* background-color:#ffd84d; */
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 45px;
+		width: 45%!important;
+	}
+	.sizeContainer{
+		display: flex;
+		justify-content: center;
+	}
+	}
+@media only screen and (max-width:767px){
+.mainSlider{
+	width:100%!important;
+}
+.buttonsContainer{
+	/* border:1px solid red; */
+	position:unset!important;
+	position:fixed!important;
+	bottom: 0;
+	left:0;
+	z-index: 10;
+	width:100%;
+	transform: rotate(180deg);
+}
+.cartButton{
+	transform: rotate(180deg);
+	background-color:#ffd84d;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 45px;
+	width: inherit!important;
+}
+.wishListBtn{
+	display: none;
+}
 }

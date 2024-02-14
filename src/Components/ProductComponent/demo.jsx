@@ -115,24 +115,18 @@ function ProductDetailsPage() {
     return !isNaN(zip) && zip.length === 6;
   };
 
-  let { cartList, isLoading: LoadingCheck } = useSelector(
-    (state) => state.productReducer
-  );
+  let {cartList, isLoading: LoadingCheck} = useSelector((state) => state.productReducer);
 
-  let cartListItems =
-    !LoadingCheck &&
-    cartList?.data?.items?.map((item) => {
-      return item;
-    });
-  let cartListId =
-    !LoadingCheck &&
-    cartListItems?.map((item) => {
-      return item.product._id;
-    });
+  let cartListItems =  !LoadingCheck && cartList?.data?.items?.map((item)=>{
+        return item;
+  })
+  let cartListId = !LoadingCheck && cartListItems?.map((item)=>{
+     return  item.product._id;
+  }) 
 
-  // console.log("cartListId",cartListId);
-  // console.log("cartListItems",cartListItems);
-  const screenSize = useScreenSize();
+console.log("cartListId",cartListId);
+console.log("cartListItems",cartListItems);
+const screenSize = useScreenSize();
   const onClose = (event) => {
     if (event.stopPropagation) {
       event.stopPropagation();
@@ -184,6 +178,7 @@ function ProductDetailsPage() {
     )
   );
 
+
   function wishListHandler(event, Id) {
     event.stopPropagation();
     event.preventDefault();
@@ -225,17 +220,18 @@ function ProductDetailsPage() {
             type: "PATCH",
             tokenValue: JSON.parse(localStorage.getItem("userInfo"))[0],
             suffix: Id,
-            qty: 1,
+            qty:1,
           })
         );
-      } else {
+      }else{
         // navigate("/CartPage")
-      }
+      } 
     } else {
       navigate("/LoginPage");
     }
   }
   const handleAddedToBag = (Id, event, selectedSize) => {
+
     if (!localStorage.getItem("userInfo")) {
       navigate("/LoginPage");
     }
@@ -249,6 +245,10 @@ function ProductDetailsPage() {
     //   navigate("/CartPage");
     // }
   };
+
+  // useEffect(()=>{
+  //   cartListHandler((event)=>event,Id,selectedSize);
+  // },[selectedSize])
 
   useEffect(() => {
     const pincodeDetails = JSON.parse(
@@ -268,8 +268,6 @@ function ProductDetailsPage() {
     }
   }, [params]);
   let isMobile = screenSize < 767;
-  console.log("isMobile", isMobile);
-  console.log("win", window.innerWidth);
   return (
     <>
       <div className="relative">
@@ -277,10 +275,10 @@ function ProductDetailsPage() {
           <div className="mt-[90px] flex gap-[2%] h-[620px]   w-85 max-[767px]:w-[90%] max-[767px]:h-full max-[767px]:flex-col">
             <div className="flex h-max sticky justify-center items-start w-[45%]  max-[767px]:w-[100%] max-[767px]:h-full">
               {!isLoading ? (
-                <div className="flex gap-[5px] md:h-[470px]  xl:h-[575px] overflow-hidden pb-2 ">
+                <div className="flex gap-[5px]  xl:h-[575px] overflow-hidden pb-2 ">
                   {
                     !isMobile && 
-            <div className="md:w-1/5 hidden md:flex flex-col gap-2">
+                  <div className="md:w-1/5 md:flex flex-col gap-2">
                     <div
                       onClick={() => handlePrevClick()}
                       className=" cursor-pointer flex items-center justify-center truncate"
@@ -359,7 +357,7 @@ function ProductDetailsPage() {
                   {productInfo.ratings?.toFixed(1)}
                 </span>
               </div>
-              <div className=" mt-3">
+              <div className="priceRow mt-3">
                 <div className="priceContainer items-start flex flex-col justify-center">
                   <div className="flex items-end justify-between">
                     <div className="sellingPrice mr-1 text-2xl font-semibold text-[#0f0f0f]">
@@ -480,18 +478,17 @@ function ProductDetailsPage() {
                   </div>
                 )}
                 <div
-                  className="flex gap-4 p-2 pb-[10px] justify-between font-medium
-                  shadow-md md:bg-red-400"
+                  className="addButtons fixed bottom-0 left-0 z-50 md:z-0
+ h-14 w-full md:static md:mb-5 flex shadow-md md:shadow-none rotate-180 
+ md:rotate-0 gap-4 p-2 pb-[10px] md:p-0 items-center justify-between font-medium"
                 >
-                   {/* flex gap-4 p-2 pb-[10px] justify-between font-medium
-                  shadow-md  fixed bottom-0 left-0 z-50 h-14 w-full md:z-0  md:static 
-                  md:mb-5 md:shadow-none  md:rotate-0  md:p-0 items-center md:bg-red-400 */}
                   <button
                     onClick={(event) =>
                       handleAddedToBag(Id, event, selectedSize)
                     }
-                    className="h-11  md:rotate-0 flex-1 bg-[#ffd84d] flex items-center 
-                  md:rounded-none justify-center md:bg-red-400 rounded-sm hover:shadow-md transition-all"
+                    className="h-11 rotate-180  md:rotate-0 flex-1 bg-[#ffd84d] 
+                  flex items-center md:rounded-none justify-center 
+                  rounded-sm hover:shadow-md transition-all"
                   >
                     {!LoadingCheck && cartListId?.includes(Id) ? (
                       <Link to="/CartPage">
@@ -504,26 +501,28 @@ function ProductDetailsPage() {
                     ) : (
                       <img className="w-5 h-5" src={bag_white_img} alt="bag" />
                     )}
-
-                    {!LoadingCheck && cartListId?.includes(Id) ? (
-                      <Link to="/CartPage">
+                    
+                      {!LoadingCheck && cartListId?.includes(Id)?(
+                          <Link to="/CartPage">
                         <p className="text-black font-[400] text-sm pl-2">
-                          GO TO BAG
+                        GO TO BAG
                         </p>
-                      </Link>
-                    ) : (
-                      <p className="text-black font-[400] text-sm pl-2">
+                        </Link>
+                      ):(
+                        <p className="text-black font-[400] text-sm pl-2">
                         ADD TO BAG
-                      </p>
-                    )}
+                        </p>
+                      )
+                    }
                   </button>
+
                   {/* wishlist */}
+
                   <button
                     onClick={(event) => {
                       wishListHandler(event, Id);
                     }}
-                    className={`h-11 md:hidden  flex-1  
-                    items-center justify-center border rounded-sm hover:shadow-md transition-all ${
+                    className={`h-11 hidden md:flex flex-1  items-center justify-center border rounded-sm hover:shadow-md transition-all ${
                       wishListed ? "border-black" : ""
                     }`}
                   >
@@ -717,7 +716,7 @@ function ProductDetailsPage() {
                 </div>
               </div>
             </div>
-          </div>
+          </div>v
         </div>
         {openSizeModal && (
           <div className="z-10 absolute top-[0px] flex justify-center items-center  w-full h-full left-[0px] bg-[#0000007a]">

@@ -58,7 +58,7 @@ function ProductDetailsPage() {
   const [isLoading, setIsLoading] = useState(false);
   const horizontalSliderProps = useMemo(
     () =>
-      innerWidth > 768
+      innerWidth > 767
         ? {}
         : {
             "pagination-clickable": "true",
@@ -246,9 +246,6 @@ const screenSize = useScreenSize();
     // }
   };
 
-  // useEffect(()=>{
-  //   cartListHandler((event)=>event,Id,selectedSize);
-  // },[selectedSize])
 
   useEffect(() => {
     const pincodeDetails = JSON.parse(
@@ -272,13 +269,13 @@ const screenSize = useScreenSize();
     <>
       <div className="relative">
         <div className="flex justify-center">
-          <div className="mt-[90px] flex gap-[2%] h-[620px]   w-85 max-[767px]:w-[90%] max-[767px]:h-full max-[767px]:flex-col">
-            <div className="flex h-max sticky justify-center items-start w-[45%]  max-[767px]:w-[100%] max-[767px]:h-full">
+          <div className="mt-[90px] flex gap-[2%] h-[620px]  w-85 max-[767px]:w-[90%] max-[767px]:h-full max-[767px]:flex-col">
+            <div className="flex h-max sticky  items-start w-[45%]  max-[767px]:w-[100%] ">
               {!isLoading ? (
-                <div className="flex gap-[5px]  xl:h-[575px] overflow-hidden pb-2 ">
+                <div className="flex gap-[5px] md:border-2 md:border-yellow-200 justify-start h-[575px] overflow-hidden pb-2 ">
                   {
                     !isMobile && 
-                  <div className="md:w-1/5 md:flex flex-col gap-2">
+                  <div className="w-[200px] overflow-hidden  md:flex flex-col gap-2">
                     <div
                       onClick={() => handlePrevClick()}
                       className=" cursor-pointer flex items-center justify-center truncate"
@@ -293,11 +290,11 @@ const screenSize = useScreenSize();
                       loop="true"
                       direction="vertical"
                     >
-                      {images?.map((image, i) => (
+                      {images?.slice(0,5).map((image, i) => (
                         <swiper-slide class="verticalSlide" key={i}>
                           <div className="">
                             <img
-                              className="aspect-[4/5] object-contain md:object-cover object-center"
+                              className="  object-contain md:object-cover object-center"
                               src={image}
                               alt=""
                             />
@@ -313,7 +310,7 @@ const screenSize = useScreenSize();
                     </div>
                   </div>
                   }
-                  <div className="w-full md:w-4/5 border">
+                  <div className="mainSlider">
                     <swiper-container
                       ref={horizontalSwiperRef}
                       controller-control=".verticalSwiper"
@@ -323,12 +320,12 @@ const screenSize = useScreenSize();
                       slides-per-view="1"
                       {...horizontalSliderProps}
                     >
-                      {images?.map((image, i) => (
+                      {images?.slice(0,5).map((image, i) => (
                         <swiper-slide class="horizontalSlide" key={i}>
                           <div className="">
                             <img
-                              className="h-[558px] md:w-full !object-contain 
-                                    md:object-cover object-center max-[768px]:h-full "
+                              className="h-[558px] md:w-full 
+                                   object-cover object-center"
                               src={image}
                               alt=""
                             />
@@ -343,14 +340,32 @@ const screenSize = useScreenSize();
               )}
             </div>
             <div className="w-[50%] max-[768px]:w-[100%] pt-[20px] overflow-scroll max-[768px]:overflow-scroll no-scrollbar">
-              <div className="">
+              {/* <div className=""> */}
+              <div className="flex justify-between items-center">
                 <p className="text-[#4f5362] text-lg font-[400]">
                   {productInfo.brand}
                 </p>
+                  {/* <img
+                  className="h-10"
+                   src={wishlist_img} alt="" /> */}
+                   <button 
+                   className=""
+                   onClick={(event) => {
+                    wishListHandler(event, Id);
+                  }}
+                   >
+                      {wishListResult?.includes(Id) ? (
+                      <img className="h-10" src={wishlisted_img} alt="bag" />
+                    ) : (
+                      <img className="h-10" src={wishlist_img} alt="bag" />
+                    )}
+                   </button>
+                </div>
                 <p className="text-[#737373] pt-2 font-[300] text-[16px]">
                   {productInfo.name}
                 </p>
-              </div>
+                
+              {/* </div> */}
               <div className=" flex gap-[3px] border-[0.3px] border-[#949494] solid w-max py-[3px] px-[8px] bg-[#f7f7f7] mt-3 items-center">
                 <AiFillStar className="text-[#ffc700]" />
                 <span className="text-[14px] text-[#303030] font-[500]">
@@ -478,17 +493,13 @@ const screenSize = useScreenSize();
                   </div>
                 )}
                 <div
-                  className="addButtons fixed bottom-0 left-0 z-50 md:z-0
- h-14 w-full md:static md:mb-5 flex shadow-md md:shadow-none rotate-180 
- md:rotate-0 gap-4 p-2 pb-[10px] md:p-0 items-center justify-between font-medium"
+                  className="buttonsContainer"  
                 >
                   <button
                     onClick={(event) =>
                       handleAddedToBag(Id, event, selectedSize)
                     }
-                    className="h-11 rotate-180  md:rotate-0 flex-1 bg-[#ffd84d] 
-                  flex items-center md:rounded-none justify-center 
-                  rounded-sm hover:shadow-md transition-all"
+                    className="cartButton border rounded-sm  transition-all"
                   >
                     {!LoadingCheck && cartListId?.includes(Id) ? (
                       <Link to="/CartPage">
@@ -522,9 +533,8 @@ const screenSize = useScreenSize();
                     onClick={(event) => {
                       wishListHandler(event, Id);
                     }}
-                    className={`h-11 hidden md:flex flex-1  items-center justify-center border rounded-sm hover:shadow-md transition-all ${
-                      wishListed ? "border-black" : ""
-                    }`}
+                    className="wishListBtn border hover:shadow-md transition-all rounded-sm"
+                  
                   >
                     {wishListResult?.includes(Id) ? (
                       <img className="w-6 h-6" src={wishlisted_img} alt="bag" />
@@ -558,7 +568,7 @@ const screenSize = useScreenSize();
 
                     {/* <PincodeCheckForm /> */}
                     <div className="flex flex-col-reverse sm:flex-row justify-between">
-                      <div className="deliveryLocation font-bold py-2 text-[11px] flex flex-wrap items-center mb-2">
+                      <div className=" font-bold py-2 text-[11px] flex flex-wrap items-center mb-2">
                         <span>Delivering in</span>
                         <span className="text-[#207bb4] px-1">
                           {" "}
@@ -575,7 +585,7 @@ const screenSize = useScreenSize();
                       {pincodeDetails && (
                         <button
                           onClick={resetPincodeDetails}
-                          className="checkBtn text-[#207bb4] text-[11px] font-bold sm:px-3 my-2 self-end sm:self-start"
+                          className=" text-[#207bb4] text-[11px] font-bold sm:px-3 my-2 self-end sm:self-start"
                         >
                           CHANGE
                         </button>
@@ -614,7 +624,7 @@ const screenSize = useScreenSize();
                           onChange={(e) => setValue(e.target.value)}
                           className={`flex-1 p-2 border-none outline-none text-[11px] font-semibold`}
                         />
-                        <button className="checkBtn text-[#207bb4] text-[11px] font-semibold px-3">
+                        <button className=" text-[#207bb4] text-[11px] font-semibold px-3">
                           CHECK
                         </button>
                       </form>
@@ -716,14 +726,11 @@ const screenSize = useScreenSize();
                 </div>
               </div>
             </div>
-          </div>v
+          </div>
         </div>
         {openSizeModal && (
-          <div className="z-10 absolute top-[0px] flex justify-center items-center  w-full h-full left-[0px] bg-[#0000007a]">
-            <div
-              className=" top-[90px]l bg-[#0000007a] relative flex flex-col justify-end md:justify-center"
-              onClick={handleModalClose}
-            ></div>
+          <div className="z-50 absolute top-[0px]  flex justify-center 
+          items-center  w-full h-full left-[0px] bg-[#0000007a]">
             <div className="popup bg-white rounded-2xl md:rounded-xl md:overflow-hidden w-full mt-auto md:m-auto md:max-w-lg">
               <div className="flex flex-col items-center p-4">
                 <div className="bar w-10 h-[2px] bg-[#4e5664] mb-3 rounded-xl"></div>
