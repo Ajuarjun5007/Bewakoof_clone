@@ -7,6 +7,7 @@ import sort_img from "../../assets/mobile_sort.svg";
 import filter_img from "../../assets/mobile_filter.svg";
 import { useDispatch, useSelector } from "react-redux";
 const MobileFilter = ({ onFilterChange, filteredProducts, onSortChange }) => {
+  console.log("filteredProducts",filteredProducts);
   const [selectedSortBy, setSelectedSortBy] = useState("");
   const [filterDisplay, setFilterDisplay] = useState("");
   const [toggleFilter, setToggleFilter] = useState(false);

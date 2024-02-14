@@ -43,6 +43,10 @@ function ProductListPage() {
   const [loading, setLoading] = useState(false);
   const [activeSortTag, setActiveSortTag] = useState("");
   const [sortContainerDisplay, setSortContainerDisplay] = useState(false);
+  useEffect(()=>{
+    window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
+    window.scrollTo(0,0);
+  },[])
   const productListResult = useSelector(
     (state) => state.productReducer.dressList
   );
@@ -229,6 +233,7 @@ function ProductListPage() {
   // console.log("wishListResultdemo", wishListResultdemo);
   // console.log("Pc", productCategory);
   let isMobile = screenSize < 768;
+  console.log("ismob",isMobile);
   console.log("tempArr",tempArr);
   return (
     <>
@@ -342,7 +347,7 @@ function ProductListPage() {
                     )}
                     {/* product card */}
 
-                    <div className="flex flex-wrap justify-center gap-[10px]  max-[768px]:gap-0 max-[768px]:justify-center ">
+                    <div className="flex flex-wrap justify-center gap-[10px]  max-[768px]:gap-0 max-[768px]:justify-center min-[768px]:bg-black">
                       {Array.isArray(tempArr) ? (
                         tempArr?.length > 0 ? (
                           tempArr ? (

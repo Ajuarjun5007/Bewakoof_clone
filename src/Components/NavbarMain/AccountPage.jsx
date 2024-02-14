@@ -11,7 +11,7 @@ function AccountPage() {
             <div className="w-9/12 h-[2px] bg-[#fbd139] mt-[6px]  ml-[2px]"></div>
           </div>
             <div className="mb-10">
-          <div className="px-4 w-full flex flex-wrap">
+          <div className="px-4 w-full flex gap-4 flex-wrap">
             <Link to="/TrackOrderPage">
             <div className="py-5 text-[#181818] border-b md:border-r md:px-5 hover:bg-gray-50">
                 <div className="flex items-center gap-2">

@@ -278,7 +278,7 @@ const screenSize = useScreenSize();
                 <div className="flex gap-[5px]  xl:h-[575px] overflow-hidden pb-2 ">
                   {
                     !isMobile && 
-                  <div className="md:w-1/5 hidden md:flex flex-col gap-2">
+                  <div className="md:w-1/5 md:flex flex-col gap-2">
                     <div
                       onClick={() => handlePrevClick()}
                       className=" cursor-pointer flex items-center justify-center truncate"

@@ -294,7 +294,7 @@ function AddressPage() {
                   <div className="flex gap-2 md:w-4/5 m-auto mt-10 my-2">
                     <button
                       type="submit"
-                      className={`submit fixed md:static md:z-0 z-50 bottom-16 uppercase 
+                      className={`submit  static z-0 max-[768px]:z-50 max-[768px]:fixed bottom-16 uppercase 
                       cursor-pointer lg:h-14 h-14 lg:text-xl w-[80%] ml-0 pr-30 flex-1 
                       border-none outline-none flex justify-center items-center 
                       md:rounded-md text-white ${
@@ -304,7 +304,7 @@ function AddressPage() {
                       SAVE ADDRESS
                     </button>
                     <button
-                      className="fixed md:static md:z-0  z-50 bottom-1 uppercase 
+                      className=" md:static md:z-0 max-[768px]:fixed max-[768px]:z-50 bottom-1 uppercase 
                       cursor-pointer lg:h-14 h-14 lg:text-xl w-[80%] ml-0 pr-30 flex-1 bg-[grey] border border-[#51cccc] text-[#51cccc] 
                                 rounded-md justify-center items-center "
                       onClick={(e) => removeAddress(e)}
