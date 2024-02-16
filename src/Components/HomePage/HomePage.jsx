@@ -49,7 +49,16 @@ import bestpick_3 from "../../assets/Our_best_pick_images/best_pick_3.webp";
 import bestpick_4 from "../../assets/Our_best_pick_images/best_pick_4.webp";
 import tribe_img_1 from "../../assets/Tribe_member_images/tribe_img_1.webp";
 import tribe_img_2 from "../../assets/Tribe_member_images/tribe_img_2.jpg";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import ctgry_active from  '../../assets/mobile-categories-active.svg';
+import ctgry_inactive from  '../../assets/mobile-categories-inactive.svg';
+import profile_inactive from  '../../assets/mobile-profile-inactive.svg';
+import profile_active from  '../../assets/mobile-profile-active.svg';
+import home_active from  '../../assets/mobile-home-active.svg';
+import home_inactive from  '../../assets/mobile-home-inactive.svg';
+import explore_inactive from  '../../assets/mobile-explore-inactive.svg';
+import explore_active from  '../../assets/mobile-explore-active.svg';
+import { Link,useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { trendingCategories, brands, subCategories } from "../TypeConstants";
 import { dressList } from "../ApiFetch";
@@ -64,7 +73,7 @@ import {
 // import { dressList } from "../ApiFetch";
 
 function HomePage() {
-
+ 
   const responsive = {
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
@@ -151,6 +160,7 @@ function HomePage() {
   console.log("user",user);
   }, []);
   console.log("count",count);
+  console.log("loc",location);
   return (
     <>
       <div className="">
