@@ -15,6 +15,7 @@ import WishlistPage from "./Components/WishListComponent/WishlistPage";
 import ProductListPage from "./Components/ProductComponent/ProductLIstPage";
 import ProductDetailsPage from "./Components/ProductComponent/ProductDetailsPage";
 import CartPage from "./Components/CartComponent/CartPage";
+import MobileMenu from "./Components/MobileComponent/MobileMenu";
 import { useEffect, useState } from "react";
 import SignupPage from "./Components/UserAuthentication/SignupPage";
 import WalletPage from "./Components/NavbarMain/WalletPage";
@@ -32,7 +33,13 @@ import OrderSuccessPage from "./Components/ProductComponent/OrderSuccessPage";
 function App() {
   const location = useLocation();
   const [footerDisplay, setFooterDisplay] = useState(true);
+  const [mobileMenuDisplay,setMobileMenuDisplay] = useState(false);
   const screenSize = useScreenSize();
+  const MobileMenuShow = [
+    "/",
+    "AccountPage",
+    "WishlistPage",
+  ];
   const footerHidePage = [
     "LoginPage",
     "MailPage",
@@ -46,8 +53,11 @@ function App() {
     if (footerHidePage.includes(location.pathname.split("/")[1])) {
       setFooterDisplay(false);
     }
+    if (MobileMenuShow.includes(location.pathname)) {
+      setMobileMenuDisplay(true);
+    }
   }, [location]);
-
+  console.log("mobileMenuDisplay",mobileMenuDisplay);
   let isMobile = screenSize < 1000;
   return (
     <>
@@ -92,6 +102,7 @@ function App() {
         <Route path="/OrderSuccessPage" element={<OrderSuccessPage/>} />
         
       </Routes>
+      {mobileMenuDisplay && isMobile && <MobileMenu/>}
       {footerDisplay && <FooterComponent />}
     </>
   );

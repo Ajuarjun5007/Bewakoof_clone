@@ -159,7 +159,7 @@ function HomePage() {
    }
   console.log("user",user);
   }, []);
-  console.log("count",count);
+  // console.log("count",count);
   console.log("loc",location);
   return (
     <>

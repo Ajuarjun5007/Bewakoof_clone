@@ -268,7 +268,7 @@ export const getOrderList = createAsyncThunk(
     myHeaders.append("accept", "application/json");
 
     let requestOptions;
-      console.log("order",Id,qty,streetName,cityName,stateName,countryName,zipCodeName,tokenValue,phoneNumber);
+      // console.log("order",Id,qty,streetName,cityName,stateName,countryName,zipCodeName,tokenValue,phoneNumber);
       
       if(type === 'POST'){
         let raw = JSON.stringify({
@@ -298,7 +298,7 @@ export const getOrderList = createAsyncThunk(
           headers: myHeaders,
           redirect: "follow",
         };
-        console.log("type",type);
+        // console.log("type",type);
       }
         //  requestOptions = {
         //   method:type,
@@ -306,15 +306,15 @@ export const getOrderList = createAsyncThunk(
         //   redirect: "follow",
         // };
     // let url = BASE_URL + "user/updateme";
-    console.log("request",requestOptions);
+    // console.log("request",requestOptions);
     let url = "https://academics.newtonschool.co/api/v1/ecommerce/order";
     // console.log("fetch call", url, requestOptions);
     try {
       const response = await fetch(url, requestOptions);
-      console.log("slice", response);
+      // console.log("slice", response);
       if (response.ok) {
         const result = await response.json();
-        console.log("result",result);
+        // console.log("result",result);
         return result;
       } else {
         return rejectWithValue({ error: "fetching failed" });
