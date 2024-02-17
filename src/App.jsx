@@ -39,6 +39,7 @@ function App() {
     "/",
     "AccountPage",
     "WishlistPage",
+    "TribeMembershipPage",
   ];
   const footerHidePage = [
     "LoginPage",

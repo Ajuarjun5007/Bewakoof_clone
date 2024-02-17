@@ -45,12 +45,12 @@ function MobileMenu(){
           </NavLink>
 
           <NavLink
-            to={"/Men"}
+            to={"/MobileSearch"}
             className="bottomNavTab flex flex-col justify-center"
           >
             <img
               className="h-6 w-6 m-auto nav-icon"
-              src={ctgry_inactive}
+              src={`${locationName === "/MobileSearch"?ctgry_active:ctgry_inactive}`}
               alt="Categories"
             />
             <img
@@ -62,19 +62,15 @@ function MobileMenu(){
           </NavLink>
 
           <NavLink
-            to={"explore"}
+            to={"/TribeMembershipPage"}
             className="bottomNavTab flex flex-col justify-center"
           >
             <img
               className=" h-6 w-6 m-auto nav-icon"
-              src={explore_inactive}
+              src={`${locationName === "/TribeMembershipPage"?explore_active :explore_inactive}`}
               alt="Explore"
             />
-            <img
-              className=" h-6 w-6 m-auto nav-icon-active hidden"
-              src={explore_active}
-              alt="Explore"
-            />
+         
             <span className="text-xs w-12 text-center">Explore</span>
           </NavLink>
 
