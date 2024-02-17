@@ -49,20 +49,10 @@ import bestpick_3 from "../../assets/Our_best_pick_images/best_pick_3.webp";
 import bestpick_4 from "../../assets/Our_best_pick_images/best_pick_4.webp";
 import tribe_img_1 from "../../assets/Tribe_member_images/tribe_img_1.webp";
 import tribe_img_2 from "../../assets/Tribe_member_images/tribe_img_2.jpg";
-import { NavLink } from "react-router-dom";
-import ctgry_active from  '../../assets/mobile-categories-active.svg';
-import ctgry_inactive from  '../../assets/mobile-categories-inactive.svg';
-import profile_inactive from  '../../assets/mobile-profile-inactive.svg';
-import profile_active from  '../../assets/mobile-profile-active.svg';
-import home_active from  '../../assets/mobile-home-active.svg';
-import home_inactive from  '../../assets/mobile-home-inactive.svg';
-import explore_inactive from  '../../assets/mobile-explore-inactive.svg';
-import explore_active from  '../../assets/mobile-explore-active.svg';
 import { Link,useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { trendingCategories, brands, subCategories } from "../TypeConstants";
-import { dressList } from "../ApiFetch";
-import Loader from "../Loader";
+
 import { useDispatch, useSelector } from "react-redux";
 import {
   getWishListOperations,
@@ -101,7 +91,6 @@ function HomePage() {
   let address;
   let {wishList} = useSelector(
     (state) => state.productReducer.wishList);
-    console.log("wishList", wishList);
   const dispatch = useDispatch();
   const callProduct=()=>{
     if(localStorage.getItem("userInfo")){
@@ -157,10 +146,10 @@ function HomePage() {
       localStorage.setItem("addressInfo",JSON.stringify(user.address));
       count=1;
    }
-  console.log("user",user);
+  // console.log("user",user);
   }, []);
   // console.log("count",count);
-  console.log("loc",location);
+  // console.log("loc",location);
   return (
     <>
       <div className="">
@@ -560,18 +549,38 @@ function HomePage() {
          text-[23px] tracking-wider">
             <p>OUR BEST PICKS</p>
             <div className="flex justify-center w-full flex-wrap">
+            <Link
+                  to={`/ProductListPage/${brands[12]}`}
+                  state={{ brand: `Men/${brands[12]}` }}
+                >
                 <img 
                 className="px-[3px] py-[3px] w-[670px]"
                 src={bestpick_1} alt="" />
+                </Link>
+                <Link
+                  to={`/ProductListPage/${brands[16]}`}
+                  state={{ brand: `Men/${brands[16]}` }}
+                >
                 <img 
                 className="px-[3px] py-[3px] w-[670px]"
                 src={bestpick_2} alt="" />
+                </Link>
+                <Link
+                  to={`/ProductListPage/${brands[19]}`}
+                  state={{ brand: `Men/${brands[19]}` }}
+                >
                 <img 
                 className="px-[3px] py-[3px] w-[670px]"
                 src={bestpick_3} alt="" />
+                </Link>
+                <Link
+                  to={`/ProductListPage/${brands[8]}`}
+                  state={{ brand: `Men/${brands[8]}` }}
+                >
                 <img 
                 className="px-[3px] py-[3px] w-[670px]"
                 src={bestpick_4} alt="" />
+                </Link>
             </div>
         </div>
         {/* tribe member*/}

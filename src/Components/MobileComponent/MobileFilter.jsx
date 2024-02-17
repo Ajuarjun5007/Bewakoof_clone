@@ -7,7 +7,7 @@ import sort_img from "../../assets/mobile_sort.svg";
 import filter_img from "../../assets/mobile_filter.svg";
 import { useDispatch, useSelector } from "react-redux";
 const MobileFilter = ({ onFilterChange, filteredProducts, onSortChange }) => {
-  console.log("filteredProducts",filteredProducts);
+  // console.log("filteredProducts",filteredProducts);
   const [selectedSortBy, setSelectedSortBy] = useState("");
   const [filterDisplay, setFilterDisplay] = useState("");
   const [toggleFilter, setToggleFilter] = useState(false);
@@ -18,17 +18,16 @@ const MobileFilter = ({ onFilterChange, filteredProducts, onSortChange }) => {
   const [filteredBrands, setFilteredBrands] = useState([]);
   const [filteredColors, setFilteredColors] = useState([]);
   const [filteredSizes, setFilteredSizes] = useState([]);
-  console.log("fp", filteredProducts);
+  // console.log("fp", filteredProducts);
   useEffect(() => {
     filteredItems = [...filteredProducts];
-    console.log("fiteredItems", filteredItems);
+    // console.log("fiteredItems", filteredItems);
     setFilteredSubCategories([
       ...new Set(filteredItems?.map((item) => item.subCategory)),
     ]);
     setFilteredBrands([...new Set(filteredItems?.map((item) => item.brand))]);
     setFilteredColors([...new Set(filteredItems?.map((item) => item.color))]);
     setFilteredSizes([...new Set(filteredItems?.flatMap((item) => item.size))]);
-    console.log("de");
   }, [filteredProducts]);
   const [activeFilters, setActiveFilters] = useState({
     size: false,
@@ -133,14 +132,14 @@ const MobileFilter = ({ onFilterChange, filteredProducts, onSortChange }) => {
         break;
     }
   }
-  console.log("filterDisplay", filterDisplay);
-  console.log(
-    "filtered",
-    filteredBrands,
-    filteredColors,
-    filteredSizes,
-    filteredSubCategories
-  );
+  // console.log("filterDisplay", filterDisplay);
+  // console.log(
+  //   "filtered",
+  //   filteredBrands,
+  //   filteredColors,
+  //   filteredSizes,
+  //   filteredSubCategories
+  // );
   
   useEffect(() => {
     onFilterChange(updatedValues);
@@ -184,11 +183,11 @@ const MobileFilter = ({ onFilterChange, filteredProducts, onSortChange }) => {
     }
   };
   // console.log("selected",selectedFilterItems);
-  console.log("updatedValues", updatedValues);
-  console.log("selectedSortBy",selectedSortBy);
-  console.log("keys",Object.keys(updatedValues));
+  // console.log("updatedValues", updatedValues);
+  // console.log("selectedSortBy",selectedSortBy);
+  // console.log("keys",Object.keys(updatedValues));
   // console.log("object",Object.keys(updatedValues).every(key => updatedValues[key].length === 0));
-  console.log("object",Object.keys(updatedValues).length != 0);
+  // console.log("object",Object.keys(updatedValues).length != 0);
   return (
     <div className="fixed md:hidden z-50 bottom-0 left-0 right-0 bg-white h-14 flex items-center shadow">
       <div

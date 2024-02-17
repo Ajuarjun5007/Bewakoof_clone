@@ -33,7 +33,8 @@ function ProductListPage() {
   const location = useLocation();
   // const history = useHistory();
   const screenSize = useScreenSize();
-    const {state} = history || location;
+    const {state} =  location;
+    console.log("loca",location);
   // const { state } = location;
   const { name, brand, MenuContent, searchResults } = state || {};
   const dispatch = useDispatch();
@@ -62,7 +63,7 @@ function ProductListPage() {
   });
 
   function sortByFilterChange(filterTag) {
-    console.log("filtettag",filterTag);
+    // console.log("filtettag",filterTag);
     let filteredProducts;
     switch (filterTag) {
       case "top rated":
@@ -86,7 +87,7 @@ function ProductListPage() {
     setActiveSortTag(filterTag);
   }
   const productList = productListResult?.data;
-
+   console.log("prod",productList);
   const handleFilterChange = (updatedValues) => {
     setSelectedFilters((prevFilters) => ({
       size: updatedValues.size || prevFilters.size,
@@ -118,6 +119,7 @@ function ProductListPage() {
         setTempArr(filteredProductList);
       }
     } else if (brand !== undefined) {
+      setProductCategory(decodeURIComponent(location.pathname.split("/")[2]));
       filteredProductList = productList?.filter(
         (product) =>
           product.brand == brand.split("/")[1] &&
@@ -126,6 +128,7 @@ function ProductListPage() {
       setTempArr(filteredProductList);
       // console.log("brand Clicked");
     } else if (name !== undefined) {
+      setProductCategory(decodeURIComponent(location.pathname.split("/")[2]));
       filteredProductList = productList?.filter(
         (product) =>
           product.subCategory == name.split("/")[1] &&
@@ -222,7 +225,7 @@ function ProductListPage() {
         );
       });
       setTempArr(resultByFilter);
-      console.log("filter", resultByFilter);
+      // console.log("filter", resultByFilter);
     }
   }, [selectedFilters]);
   let wishListResultdemo = useSelector(
@@ -231,9 +234,9 @@ function ProductListPage() {
 
   // console.log("wishListResult", wishListResult);
   // console.log("wishListResultdemo", wishListResultdemo);
-  // console.log("Pc", productCategory);
+  console.log("Pc", productCategory);
   let isMobile = screenSize < 768;
-  console.log("ismob",isMobile);
+  // console.log("ismob",isMobile);
   console.log("tempArr",tempArr);
   return (
     <>
@@ -248,7 +251,7 @@ function ProductListPage() {
               <div className="my-[30px] pl-[10px] flex flex-col justify-left max-[768px]:pl-0 max-[768px]:justify-center max-[768px]:items-center max-[768px]:no-scrollbar">
                 {/* heading wrapper */}
 
-                <div className="text-[24px] text-[#2d2d2d] flex font-[900] max-[768px]:justify-center">
+                <div className="text-[24px]  w-full text-[#2d2d2d] flex font-[900] max-[768px]:justify-center">
                   <p className="underline w-10/12 decoration-[#fdd835] justify-center items-center decoration-[2px] underline-offset-[12px]">
                     {productCategory.toUpperCase()}
                   

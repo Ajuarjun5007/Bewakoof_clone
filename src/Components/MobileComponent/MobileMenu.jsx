@@ -27,8 +27,8 @@ function MobileMenu(){
     useEffect(()=>{
         setLocationName(location.pathname);
     },[location])
-    console.log("loc",location);
-    console.log("locationName",locationName);
+    // console.log("loc",location);
+    // console.log("locationName",locationName);
     return(
         <>
          <div className="footerMenuWrapper fixed bottom-0 left-0 right-0 drop-shadow-2xl py-2 bg-white flex justify-evenly z-50 lg:hidden">
