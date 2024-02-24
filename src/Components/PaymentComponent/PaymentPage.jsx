@@ -21,9 +21,7 @@ function PaymentPage() {
   const user = JSON.parse(userDetails)?.[1]?.name;
   const [cartItems, setCartItems] = useState([]);
   let userInfo = JSON.parse(localStorage.getItem("user"));
-  // console.log("user", userInfo);
   let token  = JSON.parse(localStorage.getItem("userInfo"))[0];
-  // console.log("tol",token);
   let addressInfo = JSON.parse(localStorage.getItem("addressInfo"))?.[0];
   console.log("adres",addressInfo);
   let streetValue,cityValue,stateValue,zipCodeValue;
@@ -57,8 +55,6 @@ function PaymentPage() {
     function cartToOrderHandler(){
       console.log("rrr");
       cartListItems?.map((item)=>{
-          // console.log("Id",item.product._id);
-          // console.log("qty",item.quantity);
           if(addressInfo){
             dispatch(
               getOrderList({

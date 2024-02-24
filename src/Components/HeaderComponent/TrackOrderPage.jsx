@@ -9,7 +9,6 @@ function TrackOrderPage() {
   const orderListResult = useSelector(
     (state) => state.productReducer.orderList?.data
   );
-  console.log("order",orderListResult);
   let orderedItems =
     orderListResult &&
     orderListResult?.map((stock) => {
@@ -29,12 +28,7 @@ function TrackOrderPage() {
   let orderedItemsSpecs = orderedItemsDescription?.map((item) => {
     return item[0].product.name;
   });
-  console.log("orderListResult", orderListResult);
-  //    console.log("OrderedItems",orderedItems);
-  //     console.log("OrderedItems1",orderedItems1);
-  //     console.log("orderedItemsDescription",orderedItemsDescription);
-  //     console.log("orderedItemsSpecs",orderedItemsSpecs);
-  //     console.log("orderedItemsAddress",orderedItemsAddress);
+
 
   return (
     <>

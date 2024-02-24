@@ -11,7 +11,6 @@ function ProfilePage() {
   let userName = JSON.parse(localStorage.getItem("userInfo"))[1].name;
   let userMail = JSON.parse(localStorage.getItem("userInfo"))[1].email;
   let userPassword = JSON.parse(localStorage.getItem("userInfo"))[1].password;
-  console.log(userPassword);
   return (
     <>
       <div className="flex justify-center">

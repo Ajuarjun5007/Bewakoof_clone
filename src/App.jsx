@@ -104,7 +104,8 @@ function App() {
         
       </Routes>
       {mobileMenuDisplay && isMobile && <MobileMenu/>}
-      {footerDisplay && <FooterComponent />}
+      {/* {footerDisplay && <FooterComponent />} */}
+      { <FooterComponent />}
     </>
   );
 }

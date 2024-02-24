@@ -23,11 +23,9 @@ function FooterComponent() {
   const [bewakoofDetailsShow, setBewakoofDetailsShow] = useState(false);
 
   useEffect(() => {
-    // Check if the current location.pathname is '/'
     if (location.pathname === '/') {
       setBewakoofDetailsShow(true);
     } else {
-      // If the location.pathname is not '/', hide the content
       setBewakoofDetailsShow(false);
     }
   }, [location.pathname]);

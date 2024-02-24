@@ -60,7 +60,6 @@ import {
   getCartOperations,
   getOrderList,
 } from "../ProductComponent/Slices/FilterSlice";
-// import { dressList } from "../ApiFetch";
 
 function HomePage() {
  
@@ -83,10 +82,6 @@ function HomePage() {
   };
   const [userLoggedIn, setUserLoggedIn] = useState(false);
   let updateMe = useSelector((state) => state.productReducer.updateMeInfo);
-//   let orderListResult = useSelector((state) =>
-//   state.productReducer.orderList?.data
-// );
-//     console.log("orderList",orderListResult);
   let addressInfo;
   let address;
   let {wishList} = useSelector(
@@ -142,16 +137,13 @@ function HomePage() {
    callProduct();
    let user = JSON.parse(localStorage.getItem("user"));
    if(localStorage.getItem("user")&& !addressInfo){
-      console.log("user",user.address);
       localStorage.setItem("addressInfo",JSON.stringify(user.address));
       count=1;
    }
    window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
    window.scrollTo(0,0);
-  // console.log("user",user);
+  
   }, []);
-  // console.log("count",count);
-  // console.log("loc",location);
   return (
     <>
       <div className="">
@@ -171,8 +163,6 @@ function HomePage() {
             transitionDuration={500}
             containerClass="carousel-container"
             removeArrowOnDeviceType={["tablet", "mobile"]}
-            //   dotListClass="custom-dot-list-style"
-            // itemClass="carousel-item-padding-40-px"
           >
             <div className="w-max-content">
               <Link
