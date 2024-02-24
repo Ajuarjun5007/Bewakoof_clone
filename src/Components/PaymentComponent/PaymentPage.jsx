@@ -53,9 +53,9 @@ function PaymentPage() {
 
    
     function cartToOrderHandler(){
-      console.log("rrr");
       cartListItems?.map((item)=>{
-          if(addressInfo){
+        if(addressInfo){
+            console.log("rrr,testing-1");
             dispatch(
               getOrderList({
                 Id:item.product._id,
