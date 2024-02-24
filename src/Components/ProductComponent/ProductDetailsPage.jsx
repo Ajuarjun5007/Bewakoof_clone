@@ -123,7 +123,7 @@ function ProductDetailsPage() {
      return  item.product._id;
   }) 
 
-
+console.log("cartItems",cartListItems);
 const screenSize = useScreenSize();
   const onClose = (event) => {
     if (event.stopPropagation) {
@@ -205,7 +205,7 @@ const screenSize = useScreenSize();
       navigate("/LoginPage");
     }
   }
-  function cartListHandler(event, Id, selectedSize) {
+  function cartListHandler(Id,event,selectedSize) {
     if (localStorage.getItem("userInfo")) {
       if (cartListId && !cartListId?.includes(Id)) {
         dispatch(
@@ -225,14 +225,15 @@ const screenSize = useScreenSize();
       navigate("/LoginPage");
     }
   }
-  const handleAddedToBag = (Id, event, selectedSize) => {
+  const handleAddedToBag = (Id,event,selectedSize) => {
     if (!localStorage.getItem("userInfo")) {
       navigate("/LoginPage");
     }
     if (selectedSize === null) {
       setOpenSizeModal(true);
     } else {
-      cartListHandler(event, Id, selectedSize);
+      console.log("clicked");
+      cartListHandler(Id,event,selectedSize);
     }
   };
 
@@ -257,6 +258,7 @@ const screenSize = useScreenSize();
     }
   }, [params]);
   let isMobile = screenSize < 767;
+  console.log("cart",cartListId);
   return (
     <>
       <div className="relative">
@@ -337,9 +339,7 @@ const screenSize = useScreenSize();
                 <p className="text-[#4f5362] text-lg font-[400]">
                   {productInfo.brand}
                 </p>
-                  {/* <img
-                  className="h-10"
-                   src={wishlist_img} alt="" /> */}
+                 
                    <button 
                    className=""
                    onClick={(event) => {

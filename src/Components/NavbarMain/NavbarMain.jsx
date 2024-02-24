@@ -456,15 +456,15 @@ function NavbarMain() {
             >
               <RxDividerVertical className="text-[40px] font-light text-[rgba(0,0,0,0.5)] " />
 
-              <div className="user-container  relative" >
+              <div className=" relative" >
                 <div className="">
                 {userLoggedIn ? (
                   <div
-                    className=" user-detail-container relative"
+                    className=" user-detail-container user-container  relative"
                   >
                     <LuUser2 className="text-[27px]" />
                     <div
-                        className=" dropdown-container absolute w-[180px] z-2 mt-[14px] text-14 left-[-60px] cursor-pointer bg-white shadow-2px hover:shadow-md"
+                        className=" dropdown-container absolute top-5 w-[180px] z-2 mt-[14px] text-14 left-[-60px] cursor-pointer bg-white shadow-2px hover:shadow-md"
                       >
                         <p className="bg-[rgba(0,0,0,.05)] text-[rgba(0,0,0,.5)] text-ellipsis overflow-hidden italic  px-[15px] py-[10px]">
                           Hi ,{userName}
