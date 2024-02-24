@@ -260,8 +260,9 @@ const screenSize = useScreenSize();
     setIsLoading(true);
     if (Id !== undefined) {
       productDetail(Id).then((res) => {
-        setProductInfo(res.data);
-        setImages(res.data.images);
+        setProductInfo(res?.data);
+        console.log("mag",res?.data?.images);
+        setImages(res?.data?.images);
         setIsLoading(false);
       });
     }
