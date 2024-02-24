@@ -146,6 +146,8 @@ function HomePage() {
       localStorage.setItem("addressInfo",JSON.stringify(user.address));
       count=1;
    }
+   window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
+   window.scrollTo(0,0);
   // console.log("user",user);
   }, []);
   // console.log("count",count);

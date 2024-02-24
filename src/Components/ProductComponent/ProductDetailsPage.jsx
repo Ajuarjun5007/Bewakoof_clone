@@ -252,6 +252,8 @@ const screenSize = useScreenSize();
       window.localStorage.getItem("bewakoof_pincode_details")
     );
     setPincodeDetails(pincodeDetails);
+    window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
+    window.scrollTo(0,0);
   }, []);
 
   useEffect(() => {
