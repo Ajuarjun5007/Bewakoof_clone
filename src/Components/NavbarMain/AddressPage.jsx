@@ -12,11 +12,11 @@ function AddressPage() {
   let userInfo = userInfoData.length > 1 ? userInfoData[1] : {};
   let userValue = userInfo && userInfo.name ? userInfo.name : "";
 
-  const [pincodeErrorAlert, setPinCodeErrorAlert] = useState(true);
-  const [cityErrorAlert, setCityErrorAlert] = useState(true);
-  const [stateErrorAlert, setStateErrorAlert] = useState(true);
-  const [streetErrorAlert, setStreetErrorAlert] = useState(true);
-  const [errorAlert, setErrorAlert] = useState(true);
+  const [pincodeErrorAlert, setPinCodeErrorAlert] = useState(false);
+  const [cityErrorAlert, setCityErrorAlert] = useState(false);
+  const [stateErrorAlert, setStateErrorAlert] = useState(false);
+  const [streetErrorAlert, setStreetErrorAlert] = useState(false);
+  const [errorAlert, setErrorAlert] = useState(false);
   const [streetValue, setStreetValue] = useState("");
   const [cityValue, setCityValue] = useState("");
   const [stateValue, setStateValue] = useState("");
@@ -29,7 +29,7 @@ function AddressPage() {
   let updateMe = useSelector((state) => state.productReducer.updateMeInfo);
   console.log("updateMe", updateMe);
   let addressInfo = JSON.parse(localStorage.getItem("addressInfo"));
- 
+  
 
   useEffect(() => {
     if (addressInfo?.length>0) {
@@ -46,38 +46,38 @@ function AddressPage() {
       console.log("checked");
     }
   }, [addressInfo]);
+
   useEffect(() => {
     if (
-      !cityErrorAlert &&
-      !stateErrorAlert &&
-      !pincodeErrorAlert &&
-      !streetErrorAlert
+      !cityErrorAlert && !stateErrorAlert && !pincodeErrorAlert && !streetErrorAlert
     ) {
-      setErrorAlert(false);
-    } else {
       setErrorAlert(true);
+      console.log("12");
+    }
+     else {
+      setErrorAlert(false);
     }
   }, [cityErrorAlert, stateErrorAlert, pincodeErrorAlert, streetErrorAlert]);
 
   function handleInputChange(value, type) {
     if (value.trim() !== "" && type == "pincode") {
-      if (value.length == 6 && Number(value)) {
+      if (value.length === 6 && Number(value)) {
         setPinCodeErrorAlert(false);
         setZipcodeValue("" + value);
       } else {
         setPinCodeErrorAlert(true);
       }
+      console.log("pincodevalue",value.length);
     }
     if (value.trim() !== "" && type == "city") {
       if (value.length >= 4) {
         setCityErrorAlert(false);
         setCityValue("" + value);
-      } else if (address.city) {
-        console.log("aciry", address.city);
-        setCityErrorAlert(false);
-      } else {
-        setCityErrorAlert(true); // let userDetails = JSON.parse(localStorage.getItem("user"));
+      }else {
+        setCityErrorAlert(true); 
       }
+      console.log("cityvalue",value.length);
+
     }
     if (value.trim() !== "" && type == "state") {
       if (value.length >= 4) {
@@ -86,6 +86,8 @@ function AddressPage() {
       } else {
         setStateErrorAlert(true);
       }
+      console.log("statevalue",value.length);
+
     }
 
     if (value.trim() !== "" && type == "residence Details") {
@@ -95,14 +97,14 @@ function AddressPage() {
       } else {
         setStreetErrorAlert(true);
       }
-      console.log("se", streetErrorAlert);
+      console.log("resvalue",value.length);
     }
   }
   let user = JSON.parse(localStorage.getItem("user"));
 
   function handleFormSubmit(e) {
     e.preventDefault();
-    if (!errorAlert) {
+    if (errorAlert){
       dispatch(
         getUpdateMe({
           type: "PATCH",
@@ -117,27 +119,30 @@ function AddressPage() {
         })
       );
       navigate("/paymentPage");
+    }else{
+      alert("check address details");
     }
   }
 
   function removeAddress(e) {
     e.stopPropagation();
     e.preventDefault();
-
-    if (addressInfo) {
+    if (addressInfo){
       localStorage.removeItem("addressInfo");
+      console.log("addressremoved");
       setStateFetch("");
       setCityFetch("");
       setStreetFetch("");
       setZipCodeFetch("");
-      setStreetErrorAlert(true);
-      setPinCodeErrorAlert(true);
-      setStateErrorAlert(true);
-      setCityErrorAlert(true);
+      // setStreetErrorAlert(false);
+      // setPinCodeErrorAlert(false);
+      // setStateErrorAlert(false);
+      // setCityErrorAlert(false);
     }
   }
 
-  console.log("fetch", stateFetch, cityFetch, zipCodeFetch, streetFetch);
+  // console.log("fetch", stateFetch, cityFetch, zipCodeFetch, streetFetch,errorAlert);
+  console.log("fetch", stateErrorAlert, cityErrorAlert, pincodeErrorAlert, streetErrorAlert,errorAlert);
   return (
     <>
       <div className="flex justify-center">
@@ -168,9 +173,9 @@ function AddressPage() {
                         type="text"
                         disabled
                         placeholder={userValue}
-                        onChange={(e) =>
-                          handleInputChange(e.target.value, "name")
-                        }
+                        // onChange={(e) =>
+                        //   handleInputChange(e.target.value, "name")
+                        // }
                         className="border text-black h-12 lg:h-14 text-sm lg:text-base font-bold 
     rounded-md  p-1 w-full pl-3 outline-none border-[#979797] opacity-100 cursor-not-allowed"
                       />
@@ -298,7 +303,7 @@ function AddressPage() {
                       cursor-pointer lg:h-14 h-14 lg:text-xl w-[80%] ml-0 pr-30 flex-1 
                       border-none outline-none flex justify-center items-center 
                       md:rounded-md text-white ${
-                        errorAlert ? "bg-[grey]" : "bg-[#42a2a2]"
+                        !errorAlert ? "bg-[grey]" : "bg-[#42a2a2]"
                       }`}
                     >
                       SAVE ADDRESS

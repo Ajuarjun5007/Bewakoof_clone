@@ -46,9 +46,9 @@ const CartPagePresent = () => {
   );
  
  
-  console.log("cartaList",cartListItems);
-  let userAddress = JSON.parse(localStorage.getItem("addressInfo")?.length>0);
-   console.log("userAddreess",userAddress);
+  let userAddresscheck = JSON.parse(localStorage.getItem("addressInfo"));
+  let userAddress=userAddresscheck.length>0;
+  //  console.log("userAddreess",userAddress.length>0);
 
   return (
     <>

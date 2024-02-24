@@ -72,6 +72,9 @@ function PaymentPage() {
               })
             );
             navigate("/OrderSuccessPage");
+          }else{
+            console.log("asad");
+            alert("Add Address Details");
           }
       })
      
