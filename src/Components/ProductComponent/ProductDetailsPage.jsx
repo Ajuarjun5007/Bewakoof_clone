@@ -238,6 +238,7 @@ const screenSize = useScreenSize();
     if (selectedSize === null) {
       setOpenSizeModal(true);
     } else {
+      console.log("dddq");
       cartListHandler(event, Id, selectedSize);
     }
 
