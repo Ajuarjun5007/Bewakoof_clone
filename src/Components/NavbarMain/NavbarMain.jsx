@@ -45,7 +45,21 @@ function NavbarMain() {
   );
   // console.log("searchValueRslt",searchValueResult);
   let userInfo = JSON.parse(localStorage.getItem("userInfo")) || "";
+  let { cartList, isLoading: LoadingCheck } = useSelector(
+    (state) => state.productReducer
+  );
   
+  let cartListItems =
+    !LoadingCheck && cartList?.data?.items
+      ? cartList.data.items.map((item) => item)
+      : [];
+      console.log("cartListItems",cartListItems);
+      const[cartCount,setCartCount] = useState(0);
+
+      useEffect(()=>{
+        setCartCount(cartListItems.length);
+      },[cartListItems])
+
   const [searchResultsListHandler, setSearchResultsListHandler] =
     useState(false);
   useEffect(() => {
@@ -54,6 +68,7 @@ function NavbarMain() {
        userInfo = JSON.parse(localStorage.getItem("userInfo")) || "";
       setUserName(JSON.parse(localStorage.getItem("userInfo"))[1]?.name);
       console.log("use",userInfo[1].name);
+      
     }
   }, []);
   const clearStorage = () => {
@@ -452,7 +467,7 @@ function NavbarMain() {
 
             {/* right navbar */}
             <div
-              className="flex justify-between items-center px-2 "
+              className="flex justify-between pt-2 px-2 "
             >
               <RxDividerVertical className="text-[40px] font-light text-[rgba(0,0,0,0.5)] " />
 
@@ -506,37 +521,7 @@ function NavbarMain() {
                   </Link>
                 )}
                 </div>
-                {/* <div className="dropdown-container absolute w-[180px] z-2 mt-[14px] text-14 left-[-30px] cursor-pointer bg-white shadow-2px hover:shadow-md">
-                  <p className="bg-[rgba(0,0,0,.05)] text-[rgba(0,0,0,.5)] text-ellipsis overflow-hidden italic  px-[15px] py-[10px]">
-                    Hi ,{userName}
-                  </p>
-                  <Link to="/AccountPage">
-                    <p className="hover:bg-[rgba(0,0,0,.05)] px-[15px] py-[10px]">
-                      My Account
-                    </p>
-                  </Link>
-                  <Link to="/WishlistPage">
-                    <p className="hover:bg-[rgba(0,0,0,.05)]  px-[15px] py-[10px]">
-                      My Wishlist
-                    </p>
-                  </Link>
-                  <Link to="/TrackOrderPage">
-                    <p className="hover:bg-[rgba(0,0,0,.05)]  px-[15px] py-[10px]">
-                      My Orders
-                    </p>
-                  </Link>
-                  <Link to="/WalletPage">
-                    <p className="hover:bg-[rgba(0,0,0,.05)]  px-[15px] py-[10px]">
-                      My Wallet
-                    </p>
-                  </Link>
-                  <p
-                    onClick={() => clearStorage()}
-                    className="hover:bg-[rgba(0,0,0,.05)] px-[15px] py-[10px]"
-                  >
-                    Logout
-                  </p>
-                </div> */}
+             
               </div>
 
               <span className="px-2 text-[30px] ">
@@ -544,9 +529,18 @@ function NavbarMain() {
                   <CiHeart />
                 </Link>
               </span>
-              <span className="px-2 text-[22px] ">
+              <span className="px-2 text-[23px] ">
                 <Link to={`${userLoggedIn ? "/CartPage" : "LoginPage"}`}>
+                  <div className="relative inline-block">
+                  { cartCount>0 && (
+                  <p className="absolute top-0 right-0 font-medium transform translate-x-1/2 -translate-y-1/2 flex items-center justify-center bg-[#fdd855] rounded-full h-5 w-5 
+                    text-black text-xs ">
+                    {cartCount>0 ? cartCount: " "}
+                </p>
+                  )
+                  }
                   <BsBag />
+                  </div>
                 </Link>
               </span>
               <span className="pl-1 ">

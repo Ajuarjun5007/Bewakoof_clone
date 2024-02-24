@@ -8,7 +8,7 @@ function OrderSuccessPage(){
     }
     return(
         <>
-            <div className="emptyCart flex flex-col mt-[70px]">
+            <div className="emptyCart flex flex-col mt-[100px]">
             <div className=" md:m-auto md:pt-8 text-center">
                 <img className='m-auto w-80 md:w-96' src={success_img} alt="" />
                 <h2 className="font-bold md:text-2xl text-[#000c] mt-6 m-auto ">Thank you for shopping!</h2>

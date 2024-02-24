@@ -171,7 +171,7 @@ const CartPagePresent = () => {
                     userAddress ? (
                       <Link to="/PaymentPage">
                         <button
-                          className="cursor-pointer  h-10 w-[260px] sticky z-50 font-medium 
+                          className="cursor-pointer  h-10 w-[260px] sticky z-0 font-medium 
 border-none outline-none flex justify-center items-center rounded-md text-white bg-[#42a2a2] hover:bg-opacity-80"
                         >
                           CONTINUE
@@ -230,7 +230,7 @@ border-none outline-none flex justify-center items-center rounded-md text-white 
           <div className="flex justify-center py-[20px] font-[600] text-[#333] mt-[10px]">
             YOU MAY ALSO LIKE
           </div>
-          {/* <SuggestionCarousel/> */}
+          <SuggestionCarousel/>
         </div>
         <div className="py-[40px]">
           <img src={payment_img} alt="" />
