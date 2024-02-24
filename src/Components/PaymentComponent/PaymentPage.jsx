@@ -55,6 +55,7 @@ function PaymentPage() {
 
    
     function cartToOrderHandler(){
+      console.log("rrr");
       cartListItems?.map((item)=>{
           // console.log("Id",item.product._id);
           // console.log("qty",item.quantity);

@@ -204,7 +204,7 @@ function AddressPage() {
                       <input
                         type="text"
                         // value={zipCodeFetch}
-                        disabled={addressInfo.length>0}
+                        disabled={addressInfo?.length>0}
                         onChange={(e) =>
                           handleInputChange(e.target.value, "pincode")
                         }
@@ -226,7 +226,7 @@ function AddressPage() {
                       <div className="">
                         <input
                           // value={cityFetch}
-                          disabled={addressInfo.length>0}
+                          disabled={addressInfo?.length>0}
                           type="text"
                           onChange={(e) =>
                             handleInputChange(e.target.value, "city")
@@ -246,7 +246,7 @@ function AddressPage() {
                       <div className="">
                         <input
                           type="text"
-                          disabled={addressInfo.length>0}
+                          disabled={addressInfo?.length>0}
                           // value={stateFetch}
                           onChange={(e) =>
                             handleInputChange(e.target.value, "state")

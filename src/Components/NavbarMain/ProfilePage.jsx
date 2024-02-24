@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { GoChevronLeft } from "react-icons/go";
 import { Link } from "react-router-dom";
+import ComingSoon from "../../Components/ComingSoon.jsx"
 function ProfilePage() {
   const [selectedGender, setSelectedGender] = useState(null);
 
@@ -14,7 +15,7 @@ function ProfilePage() {
   return (
     <>
       <div className="flex justify-center">
-        <div className="mt-[120px] w-85">
+        {/* <div className="mt-[120px] w-85">
           <Link to="/AccountPage">
             <div className="my-5 text-[#51cccc] flex items-center text-sm gap-2">
               <GoChevronLeft className="text-[19px] font-[400]" />
@@ -131,7 +132,8 @@ function ProfilePage() {
               flex justify-center items-center text-sm font-semibold bg-[#989898]">SAVE CHANGES</button>
             </form>
           </div>
-        </div>
+        </div> */}
+        <ComingSoon/>
       </div>
     </>
   );

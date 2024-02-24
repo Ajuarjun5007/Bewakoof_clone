@@ -59,6 +59,7 @@ function NavbarMain() {
   const clearStorage = () => {
     localStorage.removeItem("userInfo");
     localStorage.removeItem("user");
+    localStorage.removeItem("addressInfo");
     window.location.reload(false);
     console.log("clear");
   };
