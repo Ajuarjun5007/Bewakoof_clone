@@ -44,10 +44,30 @@ function ProductListPage() {
   const [loading, setLoading] = useState(false);
   const [activeSortTag, setActiveSortTag] = useState("");
   const [sortContainerDisplay, setSortContainerDisplay] = useState(false);
+  const callProduct=()=>{
+    if(localStorage.getItem("userInfo")){
+      dispatch(
+        getWishListOperations({
+          id: "",
+          type: "GET",
+          tokenValue: JSON.parse(localStorage.getItem("userInfo"))[0],
+          suffix: "",
+        })
+      );
+    }
+    dispatch(
+      getProductList({
+        id: "",
+        type: "GET",
+        // tokenValue: JSON.parse(localStorage.getItem("userInfo"))[0],
+        suffix: "?limit=1200",
+      })
+    );
+  }
   useEffect(()=>{
     window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
     window.scrollTo(0,0);
-    
+    callProduct();
   },[])
   const productListResult = useSelector(
     (state) => state.productReducer.dressList
