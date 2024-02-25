@@ -26,7 +26,9 @@ function MobileMenu(){
     let location =  useLocation();
     useEffect(()=>{
         setLocationName(location.pathname);
+        // locationHandler(location.pathname);
     },[location])
+    
     // console.log("loc",location);
     // console.log("locationName",locationName);
     return(

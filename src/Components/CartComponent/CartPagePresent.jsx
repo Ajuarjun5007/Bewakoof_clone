@@ -159,7 +159,7 @@ const CartPagePresent = () => {
                       <p className="font-bold text-[15px]">₹ {total}</p>
                     </div>
                   </div>
-                  <div className="mt-4 flex items-center justify-between max-[767px]:fixed bg-white bottom-0 max-[768px]:justify-center max-[768px]:flex-col max-[768px]:w-full">
+                  <div className="mt-4 flex items-center justify-between max-[767px]:z-20 max-[767px]:fixed bg-white bottom-0 max-[767px]:justify-center max-[767px]:flex-col max-[767px]:w-full">
                     <div className="p-4 text-[18px] flex items-center gap-2 ">
                       <span className="font-[450]  text-[#333]">Total</span>
                       <div className="font-bold text-[#333]">

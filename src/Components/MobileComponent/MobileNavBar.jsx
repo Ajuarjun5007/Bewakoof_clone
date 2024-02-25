@@ -21,7 +21,20 @@ function MobileNavBar() {
   const [isOpenSidebar, setIsOpenSidebar] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  let { cartList, isLoading: LoadingCheck } = useSelector(
+    (state) => state.productReducer
+  );
+  
+  let cartListItems =
+    !LoadingCheck && cartList?.data?.items
+      ? cartList.data.items.map((item) => item)
+      : [];
+      console.log("cartListItems",cartListItems);
+      const[cartCount,setCartCount] = useState(0);
 
+      useEffect(()=>{
+        setCartCount(cartListItems.length);
+      },[cartListItems])
   const openSideNavbar = (e) => {
     if (e.stopProgation) e.stopProgation();
     document.body.style.overflowY = "hidden";
@@ -65,7 +78,17 @@ function MobileNavBar() {
             <AiOutlineHeart className="w-7 h-7 ml-1 mr-2 cursor-pointer" />
               </Link>
               <Link to={`${userInfo?"/CartPage":"/LoginPage"}`}>
+                <div className="relative inline-block">
+              { cartCount>0 && (
+                    <p className="absolute top-0 right-0 font-medium transform translate-x-1/2 -translate-y-1/2 flex items-center justify-center bg-red-500 rounded-full h-5 w-5 
+                    text-black text-xs ">
+                    {cartCount>0 ? cartCount: " "}
+                </p>
+                  )
+                  }
             <BsBag className="h-7 w-6 cursor-pointer ml-1 mr-0 " />
+                </div>
+                
               </Link>
           </div>
         </div>

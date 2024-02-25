@@ -32,14 +32,13 @@ import ComingSoon from "./Components/ComingSoon";
 import OrderSuccessPage from "./Components/ProductComponent/OrderSuccessPage";
 function App() {
   const location = useLocation();
+  const [currentLocation,setCurrentLocation] = useState('');
   const [footerDisplay, setFooterDisplay] = useState(true);
   const [mobileMenuDisplay,setMobileMenuDisplay] = useState(false);
   const screenSize = useScreenSize();
   const MobileMenuShow = [
     "/",
     "AccountPage",
-    "WishlistPage",
-    "TribeMembershipPage",
   ];
   const footerHidePage = [
     "LoginPage",
@@ -53,13 +52,19 @@ function App() {
   useEffect(() => {
     if (footerHidePage.includes(location.pathname.split("/")[1])) {
       setFooterDisplay(false);
+    }else{
+      setFooterDisplay(true);
     }
     if (MobileMenuShow.includes(location.pathname)) {
       setMobileMenuDisplay(true);
+    }else{
+      setMobileMenuDisplay(false);
     }
   }, [location]);
-  // console.log("mobileMenuDisplay",mobileMenuDisplay);
+  console.log("mobileMenuDisplay",mobileMenuDisplay);
+    console.log("location",location.pathname);
   let isMobile = screenSize < 1000;
+
   return (
     <>
       {!isMobile && (
@@ -103,9 +108,11 @@ function App() {
         <Route path="/OrderSuccessPage" element={<OrderSuccessPage/>} />
         
       </Routes>
-      {mobileMenuDisplay && isMobile && <MobileMenu/>}
-      {/* {footerDisplay && <FooterComponent />} */}
-      { <FooterComponent />}
+      {mobileMenuDisplay && isMobile && <MobileMenu
+      //  locationHandler={locationHandler}
+       />}
+      {footerDisplay && <FooterComponent />}
+      {/* { <FooterComponent />} */}
     </>
   );
 }

@@ -34,7 +34,7 @@ function ProductListPage() {
   // const history = useHistory();
   const screenSize = useScreenSize();
     const {state} =  location;
-    console.log("loca",location);
+    console.log("loca",location.pathname.split("/"));
   // const { state } = location;
   const { name, brand, MenuContent, searchResults } = state || {};
   const dispatch = useDispatch();
@@ -253,8 +253,6 @@ function ProductListPage() {
     (state) => state.productReducer.wishList?.data
   );
 
-  // console.log("wishListResult", wishListResult);
-  // console.log("wishListResultdemo", wishListResultdemo);
   console.log("Pc", productCategory);
   let isMobile = screenSize < 768;
   // console.log("ismob",isMobile);
