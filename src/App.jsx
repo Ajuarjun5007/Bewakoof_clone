@@ -61,8 +61,8 @@ function App() {
       setMobileMenuDisplay(false);
     }
   }, [location]);
-  console.log("mobileMenuDisplay",mobileMenuDisplay);
-    console.log("location",location.pathname);
+  // console.log("mobileMenuDisplay",mobileMenuDisplay);
+  //   console.log("location",location.pathname);
   let isMobile = screenSize < 1000;
 
   return (

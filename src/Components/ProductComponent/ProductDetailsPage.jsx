@@ -220,7 +220,7 @@ const screenSize = useScreenSize();
           })
         );
       }else{
-        // alert("Item already added to cart");
+    
         navigate("/CartPage");
       }
     }

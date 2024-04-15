@@ -116,7 +116,7 @@ export const getProductList = createAsyncThunk(
   "movieList/getProductList",
   async (
     {
-      id,
+      // id,
       type,
       // tokenValue,
       suffix,
@@ -128,7 +128,7 @@ export const getProductList = createAsyncThunk(
     // myHeaders.append("Authorization", `Bearer ${tokenValue}`);
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("accept", "application/json");
-
+    console.log("myHeaders",myHeaders);
     let requestOptions = {
       method: type,
       headers: myHeaders,
@@ -259,7 +259,6 @@ export const getOrderList = createAsyncThunk(
     countryName,
     zipCodeName,
     tokenValue,
-    phoneNumber,
     }, { rejectWithValue }) => {
     let myHeaders = new Headers();
     myHeaders.append("projectID", "gams07bkd3di");
@@ -327,7 +326,7 @@ export const getOrderList = createAsyncThunk(
 export const productSlice = createSlice({
   name: "productReducer",
   initialState,
-  reducers: {},
+  // reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(applyFilters.pending, (state, action) => {
@@ -407,6 +406,7 @@ export const productSlice = createSlice({
       })
       .addCase(getProductList.fulfilled, (state, action) => {
         state.isLoading = false;
+        console.log("action",action);
         state.dressList = action.payload;
         state.error = "";
       })

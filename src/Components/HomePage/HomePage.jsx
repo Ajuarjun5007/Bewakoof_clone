@@ -109,15 +109,7 @@ function HomePage() {
       );
       dispatch(
         getOrderList({
-          Id:"",
           type:"GET",
-          qty:'',
-          streetName:'',
-          cityName:'',
-          stateName:'',
-          countryName:'',
-          zipcodeName:'',
-          phoneNumber:'',
           tokenValue: JSON.parse(localStorage.getItem("userInfo"))[0],
         })
       );

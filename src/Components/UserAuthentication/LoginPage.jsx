@@ -25,12 +25,6 @@ function LoginPage() {
   const loginHandler = (event) => {
     event.preventDefault();
     console.log("event",event);
-    // if(event.target[0].value != "" && event.target[1].value != "") {
-    //   setEmail(event.target[0].value);
-    //   setPassword(event.target[1].value);
-    // } else {
-    //   setErrorMessage("enter valid id or password");
-    // }
 
     login(email,password)
       .then((response) => {
@@ -158,16 +152,21 @@ function LoginPage() {
               </button>
             </div>
           </div>
-                </Link>
-          <div className="flex w-[360px] max-[281px]:w-[250px] gap-[5px] mt-2">
-            <button className="flex w-[50%]  text-[16px] py-[4px] rounded text-[#5c5c5c] font-[900] justify-evenly items-center border-[1px] border-[#aeaeae] solid">
+            </Link>
+          <div className="flex w-[360px] border-2 max-[281px]:w-[250px] gap-[5px] mt-2">
+            <Link  className="w-[50%] flex justify-evenly" to="/ComingSoonPage">
+            <button className=" w-[100%]   flex text-[16px]  rounded text-[#5c5c5c] font-[900] justify-evenly  items-center border-[1px] border-[#aeaeae] solid">
               <img className="w-[18px]" src={google_img} alt="" />
               <span>GOOGLE</span>
             </button>
-            <button className="flex w-[50%] py-[4px] rounded  text-[16px] text-[#5c5c5c] font-[900] justify-evenly items-center border-[1px] border-[#aeaeae] solid">
+            </Link>
+            <Link  className="w-[50%] flex justify-evenly" to="/ComingSoonPage">
+            <button className="flex w-[100%] py-[4px] rounded  text-[16px] text-[#5c5c5c] font-[900] justify-evenly items-center border-[1px] border-[#aeaeae] solid">
               <img className="w-[18px]" src={fb_img} alt="" />
               <span>FACEBOOK</span>
             </button>
+            </Link>
+
           </div>
           <div className="w-[400px] max-[281px]:w-[260px] text-[12px] text-[#a0a0a0] mt-[30px]">
             <p>

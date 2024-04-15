@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect} from "react";
 import empty_bag_img from "../../assets/cart_page/empty-cart-page-doodle.png";
 import CartPagePresent from "../CartComponent/CartPagePresent";
 import { useSelector, useDispatch } from "react-redux";
@@ -13,7 +13,10 @@ function CartPage() {
       ? cartList.data.items.map((item) => item)
       : [];
 
-  
+      useEffect(()=>{
+        window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
+        window.scrollTo(0,0);
+      },[])
 
   return (
     <>

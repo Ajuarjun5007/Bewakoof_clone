@@ -3,34 +3,47 @@ import img_1 from "../../assets/no-orders.png";
 import { IoChevronBackOutline } from "react-icons/io5";
 import { useSelector, useDispatch } from "react-redux";
 import { useDeferredValue, useEffect, useState } from "react";
-import truck_img from  "../../assets/red-truck.webp"
+import { getOrderList } from "../ProductComponent/Slices/FilterSlice";
 function TrackOrderPage() {
+  const dispatch = useDispatch();
+  const callOrder=()=>{
+    if(localStorage.getItem("userInfo")){
+      dispatch(
+        getOrderList({
+          type:"GET",
+          tokenValue: JSON.parse(localStorage.getItem("userInfo"))[0],
+        })
+      );
+    }
+  }
   const [orderedProducts, setOrderedProducts] = useState([]);
+
+  
   const orderListResult = useSelector(
     (state) => state.productReducer.orderList?.data
   );
-  console.log("order",orderListResult);
   let orderedItems =
-    orderListResult &&
-    orderListResult?.map((stock) => {
+    Array.isArray(orderListResult)&& orderListResult.map((stock) => {
       return stock?.order;
     });
-  let orderedItems1 =
-    orderListResult &&
-    orderListResult?.map((stock) => {
-      return stock?.order.items[0];
-    });
-  let orderedItemsAddress = orderedItems?.map((item) => {
+   
+
+  let orderedItemsAddress =Array.isArray(orderedItems) && orderedItems?.map((item) => {
     return item?.shipmentDetails?.address;
   });
-  let orderedItemsDescription = orderedItems?.map((product) => {
+  let orderedItemsDescription =Array.isArray(orderedItems) &&  orderedItems?.map((product) => {
     return product?.items;
   });
-  let orderedItemsSpecs = orderedItemsDescription?.map((item) => {
+  let orderedItemsSpecs =Array.isArray(orderedItemsDescription) &&  orderedItemsDescription?.map((item) => {
     return item[0].product.name;
   });
 
-
+  useEffect(() => {
+    console.log("eer");
+    callOrder();
+    window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
+    window.scrollTo(0,0);
+   }, []);
   return (
     <>
       <div className="flex justify-center mt-[100px] bg-[#f9f9f9]">
@@ -72,13 +85,11 @@ function TrackOrderPage() {
                       <h3 className="font-semibold min-[768px]:text-[21px]">
                         {item.order.items[0].product.name}
                       </h3>
-                      {/* <p className="text-sm font-medium py-1">Size: S</p> */}
                     </div>
                     <div className="text-[12px] max-[359px]:text-[9px] min-[768px]:text-[18px] font-medium w-max  text-[black] p-1  pl-1 bg-[#f9f9f9]">
                       Paid Amount - ₹{item.order.totalPrice}
                     </div>
                     <div className="text-[12px] max-[359px]:text-[9px] min-[768px]:text-[16px] items-center gap-1 flex font-medium w-max  text-[black] p-1  pl-1 bg-[#f9f9f9]">
-                        {/* <img  className=" max-[678px]:h-0" src={truck_img} alt="" /> */}
                       DELIVERED ON{" "}
                       {new Date(item.createdAt).toLocaleDateString("en-IN", {
                         day: "2-digit",
@@ -90,7 +101,6 @@ function TrackOrderPage() {
 
                     <div className="ml-auto w-max">
                       <button
-                        //    onClick={handleClick}
                         className="border font-bold hover:opacity-80 rounded border-[#42a2a2] bg-[#e7ffeb] text-[#42a2a2] py-2 px-3 md:py-4 md:px-10 text-sm"
                       >
                       CONFIRMED

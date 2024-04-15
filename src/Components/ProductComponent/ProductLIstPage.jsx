@@ -31,11 +31,9 @@ import MobileFilter from "../MobileComponent/MobileFilter";
 function ProductListPage() {
   
   const location = useLocation();
-  // const history = useHistory();
+ 
   const screenSize = useScreenSize();
-    const {state} =  location;
-    console.log("loca",location.pathname.split("/"));
-  // const { state } = location;
+  const {state} =  location; 
   const { name, brand, MenuContent, searchResults } = state || {};
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -84,7 +82,6 @@ function ProductListPage() {
   });
 
   function sortByFilterChange(filterTag) {
-    // console.log("filtettag",filterTag);
     let filteredProducts;
     switch (filterTag) {
       case "top rated":
@@ -108,7 +105,7 @@ function ProductListPage() {
     setActiveSortTag(filterTag);
   }
   const productList = productListResult?.data;
-   console.log("prod",productList);
+  //  console.log("prod",productList);
   const handleFilterChange = (updatedValues) => {
     setSelectedFilters((prevFilters) => ({
       size: updatedValues.size || prevFilters.size,
@@ -253,10 +250,10 @@ function ProductListPage() {
     (state) => state.productReducer.wishList?.data
   );
 
-  console.log("Pc", productCategory);
+  // console.log("Pc", productCategory);
   let isMobile = screenSize < 768;
   // console.log("ismob",isMobile);
-  console.log("tempArr",tempArr);
+  // console.log("tempArr",tempArr);
   return (
     <>
       <div className="flex justify-center">

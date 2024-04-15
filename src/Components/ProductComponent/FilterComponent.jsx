@@ -54,7 +54,7 @@ setFilteredSubCategories([
     switch (filterType) {
       case "size":
         setSizeFilter((prev) => {
-          console.log("value",value);
+          // console.log("value",value);
           const updatedSizes = prev.includes(value)
             ? prev.filter((item) => item !== value)
             : [...prev, value];
@@ -100,8 +100,8 @@ setFilteredSubCategories([
     onFilterChange(updatedValues);
   },[updatedValues])
 
-  console.log("filtered",filteredBrands,filteredColors,filteredSizes,filteredSubCategories);
-  console.log("updatedvalues",updatedValues);
+  // console.log("filtered",filteredBrands,filteredColors,filteredSizes,filteredSubCategories);
+  // console.log("updatedvalues",updatedValues);
 
   return (
     <>

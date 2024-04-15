@@ -28,8 +28,6 @@ import { useDispatch } from "react-redux";
 import SearchResultsList from "././SearchResultsList";
 function NavbarMain() {
   const [userLoggedIn, setUserLoggedIn] = useState(false);
-  const [userDetailsDisplay, setUserDetailsDisplay] = useState(false);
-  const [dressList, setDressList] = useState([]);
   const [userName, setUserName] = useState("");
   const location = useLocation();
   const [isVisible, setIsVisible] = useState(false);
@@ -43,7 +41,6 @@ function NavbarMain() {
   const searchValueResult = useSelector(
     (state) => state.productReducer.searchValueList
   );
-  // console.log("searchValueRslt",searchValueResult);
   let userInfo = JSON.parse(localStorage.getItem("userInfo")) || "";
   let { cartList, isLoading: LoadingCheck } = useSelector(
     (state) => state.productReducer
@@ -53,7 +50,7 @@ function NavbarMain() {
     !LoadingCheck && cartList?.data?.items
       ? cartList.data.items.map((item) => item)
       : [];
-      console.log("cartListItems",cartListItems);
+      // console.log("cartListItems",cartListItems);
       const[cartCount,setCartCount] = useState(0);
 
       useEffect(()=>{
@@ -67,7 +64,7 @@ function NavbarMain() {
       setUserLoggedIn(true);
        userInfo = JSON.parse(localStorage.getItem("userInfo")) || "";
       setUserName(JSON.parse(localStorage.getItem("userInfo"))[1]?.name);
-      console.log("use",userInfo[1].name);
+      // console.log("use",userInfo[1].name);
       
     }
   }, []);
@@ -76,7 +73,7 @@ function NavbarMain() {
     localStorage.removeItem("user");
     localStorage.removeItem("addressInfo");
     window.location.reload(false);
-    console.log("clear");
+    // console.log("clear");
   };
 
   useEffect(() => {

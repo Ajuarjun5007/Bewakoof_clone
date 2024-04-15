@@ -23,13 +23,11 @@ function PaymentPage() {
   let userInfo = JSON.parse(localStorage.getItem("user"));
   let token  = JSON.parse(localStorage.getItem("userInfo"))[0];
   let addressInfo = JSON.parse(localStorage.getItem("addressInfo"))?.[0];
-  console.log("adres",addressInfo);
   let streetValue,cityValue,stateValue,zipCodeValue;
     streetValue=addressInfo?.street;
     cityValue=addressInfo?.city;
     stateValue=addressInfo?.state;
     zipCodeValue=addressInfo?.zipCode;
-  console.log("value",streetValue,cityValue,stateValue,zipCodeValue);
   const [activeTab, setActiveTab] = useState(4);
   let { cartList, isLoading: LoadingCheck } = useSelector(
     (state) => state.productReducer
