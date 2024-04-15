@@ -128,7 +128,7 @@ export const getProductList = createAsyncThunk(
     // myHeaders.append("Authorization", `Bearer ${tokenValue}`);
     myHeaders.append("Content-Type", "application/json");
     myHeaders.append("accept", "application/json");
-    console.log("myHeaders",myHeaders);
+    // console.log("myHeaders",myHeaders);
     let requestOptions = {
       method: type,
       headers: myHeaders,
@@ -207,7 +207,7 @@ export const getUpdateMe = createAsyncThunk(
     myHeaders.append("accept", "application/json");
 
     let requestOptions;
-      console.log("name",streetName,cityName,stateName,countryName,zipcodeName,tokenValue,phoneNumber);
+      // console.log("name",streetName,cityName,stateName,countryName,zipcodeName,tokenValue,phoneNumber);
       let raw = JSON.stringify({
         name:userName,
         address:{
@@ -406,7 +406,6 @@ export const productSlice = createSlice({
       })
       .addCase(getProductList.fulfilled, (state, action) => {
         state.isLoading = false;
-        console.log("action",action);
         state.dressList = action.payload;
         state.error = "";
       })

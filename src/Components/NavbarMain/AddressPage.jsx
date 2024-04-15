@@ -11,11 +11,11 @@ function AddressPage() {
   let token = userInfoData.length > 0 ? userInfoData[0] : [];
   let userInfo = userInfoData.length > 1 ? userInfoData[1] : {};
   let userValue = userInfo && userInfo.name ? userInfo.name : "";
-
-  const [pincodeErrorAlert, setPinCodeErrorAlert] = useState(false);
-  const [cityErrorAlert, setCityErrorAlert] = useState(false);
-  const [stateErrorAlert, setStateErrorAlert] = useState(false);
-  const [streetErrorAlert, setStreetErrorAlert] = useState(false);
+  
+  const [pincodeErrorAlert, setPinCodeErrorAlert] = useState(true);
+  const [cityErrorAlert, setCityErrorAlert] = useState(true);
+  const [stateErrorAlert, setStateErrorAlert] = useState(true);
+  const [streetErrorAlert, setStreetErrorAlert] = useState(true);
   const [errorAlert, setErrorAlert] = useState(false);
   const [streetValue, setStreetValue] = useState("");
   const [cityValue, setCityValue] = useState("");
@@ -27,14 +27,17 @@ function AddressPage() {
   const [zipCodeFetch, setZipCodeFetch] = useState(null);
 
   let updateMe = useSelector((state) => state.productReducer.updateMeInfo);
-  console.log("updateMe", updateMe);
+  // console.log("updateMe", updateMe);
   let addressInfo = JSON.parse(localStorage.getItem("addressInfo"));
-  
+  // console.log("streetvalue",streetValue);
+  // console.log("cityvalue",cityValue);
+  // console.log("statevalue",stateValue);
+  // console.log("zipcodevalue",zipcodeValue);
 
   useEffect(() => {
     if (addressInfo?.length>0) {
       let address = addressInfo[0];
-      console.log("addr", address);
+      // console.log("addr", address);
       setStateFetch(address?.state);
       setCityFetch(address?.city);
       setStreetFetch(address?.street);
@@ -43,11 +46,20 @@ function AddressPage() {
       setCityErrorAlert(false);
       setStateErrorAlert(false);
       setStreetErrorAlert(false);
-      console.log("checked");
+      setErrorAlert(true);
+      console.log("lenth!=0");
+    }else{
+      // setErrorAlert(false);
+      // setPinCodeErrorAlert(true);
+      // setCityErrorAlert(true);
+      // setStateErrorAlert(true);
+      // setStreetErrorAlert(true);
     }
+    console.log("checkd")
   }, [addressInfo]);
 
   useEffect(() => {
+    console.log("Alerts",cityErrorAlert);
     if (
       !cityErrorAlert && !stateErrorAlert && !pincodeErrorAlert && !streetErrorAlert
     ) {
@@ -57,9 +69,11 @@ function AddressPage() {
      else {
       setErrorAlert(false);
     }
+    console.log("rendered");
   }, [cityErrorAlert, stateErrorAlert, pincodeErrorAlert, streetErrorAlert]);
 
   function handleInputChange(value, type) {
+    console.log("value",value,type);
     if (value.trim() !== "" && type == "pincode") {
       if (value.length === 6 && Number(value)) {
         setPinCodeErrorAlert(false);
@@ -67,7 +81,7 @@ function AddressPage() {
       } else {
         setPinCodeErrorAlert(true);
       }
-      console.log("pincodevalue",value.length);
+      // console.log("pincodevalue",value.length);
     }
     if (value.trim() !== "" && type == "city") {
       if (value.length >= 4) {
@@ -76,7 +90,7 @@ function AddressPage() {
       }else {
         setCityErrorAlert(true); 
       }
-      console.log("cityvalue",value.length);
+      // console.log("cityvalue",value.length);
 
     }
     if (value.trim() !== "" && type == "state") {
@@ -86,24 +100,27 @@ function AddressPage() {
       } else {
         setStateErrorAlert(true);
       }
-      console.log("statevalue",value.length);
+      // console.log("statevalue",value.length);
 
     }
 
     if (value.trim() !== "" && type == "residence Details") {
       if (value.length >= 4) {
+        console.log("resvalue",value.length);
         setStreetErrorAlert(false);
         setStreetValue("" + value);
       } else {
         setStreetErrorAlert(true);
       }
-      console.log("resvalue",value.length);
+      // console.log("resvalue",value.length);
     }
+    // console.log("st",streetErrorAlert);
   }
   let user = JSON.parse(localStorage.getItem("user"));
 
   function handleFormSubmit(e) {
     e.preventDefault();
+    console.log("errorAlert",errorAlert);
     if (errorAlert){
       dispatch(
         getUpdateMe({
@@ -118,7 +135,7 @@ function AddressPage() {
           phoneNumber: "",
         })
       );
-      navigate("/paymentPage");
+      // navigate("/paymentPage");
     }else{
       alert("check address details");
     }
@@ -134,15 +151,15 @@ function AddressPage() {
       setCityFetch("");
       setStreetFetch("");
       setZipCodeFetch("");
-      // setStreetErrorAlert(false);
-      // setPinCodeErrorAlert(false);
-      // setStateErrorAlert(false);
-      // setCityErrorAlert(false);
+      setStreetErrorAlert(false);
+      setPinCodeErrorAlert(false);
+      setStateErrorAlert(false);
+      setCityErrorAlert(false);
     }
   }
-
+  console.log("errorAlert",errorAlert);
   // console.log("fetch", stateFetch, cityFetch, zipCodeFetch, streetFetch,errorAlert);
-  console.log("fetch", stateErrorAlert, cityErrorAlert, pincodeErrorAlert, streetErrorAlert,errorAlert);
+  // console.log("fetch", stateErrorAlert, cityErrorAlert, pincodeErrorAlert, streetErrorAlert,errorAlert);
   return (
     <>
       <div className="flex justify-center">
@@ -303,7 +320,7 @@ function AddressPage() {
                       cursor-pointer lg:h-14 h-14 lg:text-xl w-[80%] ml-0 pr-30 flex-1 
                       border-none outline-none flex justify-center items-center 
                       md:rounded-md text-white ${
-                        !errorAlert ? "bg-[grey]" : "bg-[#42a2a2]"
+                        errorAlert ? "bg-[#42a2a2]" : "bg-[grey]"
                       }`}
                     >
                       SAVE ADDRESS
