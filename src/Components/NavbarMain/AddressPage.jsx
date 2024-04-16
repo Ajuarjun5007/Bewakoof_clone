@@ -135,7 +135,7 @@ function AddressPage() {
           phoneNumber: "",
         })
       );
-      // navigate("/paymentPage");
+      navigate("/paymentPage");
     }else{
       alert("check address details");
     }

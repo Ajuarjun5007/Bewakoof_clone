@@ -2,7 +2,7 @@ import { useState,useEffect} from "react";
 import empty_bag_img from "../../assets/cart_page/empty-cart-page-doodle.png";
 import CartPagePresent from "../CartComponent/CartPagePresent";
 import { useSelector, useDispatch } from "react-redux";
-
+import { Link } from "react-router-dom";
 function CartPage() {
   let { cartList, isLoading: LoadingCheck } = useSelector(
     (state) => state.productReducer
@@ -30,12 +30,14 @@ function CartPage() {
           <p className="text-[#000c] text-lg font-[400] mt-[20px] tracking-wider">
             Nothing in the bag
           </p>
+          <Link to='/'>
           <button
             className="cursor-pointer h-10 w-52 my-5 m-auto font-medium outline-none flex justify-center
             items-center rounded-md border-[#51cccc] border-2 text-lg text-[#51cccc] hover:bg-opacity-80"
           >
             Continue Shopping
           </button>
+          </Link>
         </div>
       )}
 

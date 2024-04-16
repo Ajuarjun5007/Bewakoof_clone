@@ -121,12 +121,14 @@ function TrackOrderPage() {
                 <img className="w-[138px] h-[203px]" src={img_1} alt="" />
               </div>
               <div className=" flex justify-center py-[40px] mb-[50px]">
+                <Link to='/'>
                 <button
                   className="text-[#51cccc] border-[1px]
                          border-[#51cccc] solid px-[10px] py-[5px] rounded-[2px]"
                 >
                   Continue Shopping
                 </button>
+                </Link>
               </div>
             </div>
           )}
