@@ -47,18 +47,27 @@ function FooterComponent() {
                 CUSTOMER SERVICE
               </span>
               <div className="mt-[20px]">
+                <Link to='ComingSoonPage'>
                 <p className="text-[hsla(0,0%,100%,.9)] tracking-[1px]">
                   Contact us
                 </p>
+                </Link>
+                <Link to='ComingSoonPage'>
                 <p className="text-[hsla(0,0%,100%,.9)] tracking-[1px]">
                   Track Order
                 </p>
+                </Link>
+                <Link to='ComingSoonPage'>
                 <p className="text-[hsla(0,0%,100%,.9)] tracking-[1px]">
                   Return Order
                 </p>
+                </Link>
+                <Link to='ComingSoonPage'>
                 <p className="text-[hsla(0,0%,100%,.9)] tracking-[1px]">
                   Cancel Order
                 </p>
+                </Link>
+
               </div>
             </div>
             {/* company */}
@@ -67,20 +76,34 @@ function FooterComponent() {
                 COMPANY
               </span>
               <div className="mt-[20px]">
+              <Link to='ComingSoonPage'>
                 <p className="text-[hsla(0,0%,100%,.9)] tracking-[1px]">
                   About us
                 </p>
+                </Link>
+              <Link to='ComingSoonPage'>
                 <p className="text-[hsla(0,0%,100%,.9)] tracking-[1px]">
                   We're Hiring
                 </p>
+                </Link>
+                <Link to='ComingSoonPage'>
                 <p className="text-[hsla(0,0%,100%,.9)] tracking-[1px]">
                   Terms & Conditions
                 </p>
+                </Link>
+                <Link to='ComingSoonPage'>
+
                 <p className="text-[hsla(0,0%,100%,.9)] tracking-[1px]">
                   Privacy Policy
                 </p>
+                </Link>
+
+                <Link to='ComingSoonPage'>
                 <p className="text-[hsla(0,0%,100%,.9)] tracking-[1px]">Blog</p>
+                </Link>
+
               </div>
+
             </div>
             {/* connect with us */}
             <div className="py-[10px]">
@@ -261,8 +284,12 @@ function FooterComponent() {
           
             {/* FANMAP */}
             <div className="w-[255px] px-[10px] pr-[40px] ">
+              <Link to='FanbookPage'>
                 <p className="text-[#51cccc] font-[900] text-[17px] tracking-[1px] pb-[15px]">FAN BOOK</p>
+              </Link>
+              <Link to='OfferPage'>
                 <p className="text-[#51cccc] font-[900] text-[17px] tracking-[1px] pb-[15px]">OFFERS</p>
+              </Link>
                 <p className="text-[#51cccc] font-[900] text-[17px] tracking-[1px] pb-[15px]">SITEMAP</p>
                 
                 
