@@ -151,10 +151,10 @@ function AddressPage() {
       setCityFetch("");
       setStreetFetch("");
       setZipCodeFetch("");
-      setStreetErrorAlert(false);
-      setPinCodeErrorAlert(false);
-      setStateErrorAlert(false);
-      setCityErrorAlert(false);
+      setStreetErrorAlert(true);
+      setPinCodeErrorAlert(true);
+      setStateErrorAlert(true);
+      setCityErrorAlert(true);
     }
   }
   console.log("errorAlert",errorAlert);
