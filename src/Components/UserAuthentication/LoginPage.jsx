@@ -30,10 +30,10 @@ function LoginPage() {
       .then((response) => {
         idInfo.push(response.data.token);
         idInfo.push(response.data.data);
+        console.log("res",response.data.data);
         localStorage.setItem("userInfo", JSON.stringify(idInfo));
         localStorage.setItem("user", JSON.stringify(response.data.data));
         navigate("/");
-        console.log("navi");
         navigate(0);
       })
       .catch((error) => {

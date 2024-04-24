@@ -63,7 +63,7 @@ function NavbarMain() {
     if (localStorage.getItem("userInfo")) {
       setUserLoggedIn(true);
        userInfo = JSON.parse(localStorage.getItem("userInfo")) || "";
-      setUserName(JSON.parse(localStorage.getItem("userInfo"))[1]?.name);
+      setUserName(JSON.parse(localStorage.getItem("userInfo"))[1]?.user?.name);
       // console.log("use",userInfo[1].name);
       
     }

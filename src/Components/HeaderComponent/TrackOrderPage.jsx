@@ -22,6 +22,7 @@ function TrackOrderPage() {
   const orderListResult = useSelector(
     (state) => state.productReducer.orderList?.data
   );
+  console.log("orderedList",orderListResult);
   let orderedItems =
     Array.isArray(orderListResult)&& orderListResult.map((stock) => {
       return stock?.order;

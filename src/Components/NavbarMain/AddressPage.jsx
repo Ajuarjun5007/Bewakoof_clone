@@ -6,12 +6,12 @@ import { useDispatch, useSelector } from "react-redux";
 function AddressPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  
   let userInfoData = JSON.parse(localStorage.getItem("userInfo")) || [];
   let token = userInfoData.length > 0 ? userInfoData[0] : [];
   let userInfo = userInfoData.length > 1 ? userInfoData[1] : {};
-  let userValue = userInfo && userInfo.name ? userInfo.name : "";
-  
+  let userValue = userInfo && userInfoData[1].user.name ? userInfoData[1].user.name : "";
+    console.log("userInfo",userValue);
   const [pincodeErrorAlert, setPinCodeErrorAlert] = useState(true);
   const [cityErrorAlert, setCityErrorAlert] = useState(true);
   const [stateErrorAlert, setStateErrorAlert] = useState(true);
@@ -27,8 +27,8 @@ function AddressPage() {
   const [zipCodeFetch, setZipCodeFetch] = useState(null);
 
   let updateMe = useSelector((state) => state.productReducer.updateMeInfo);
-  // console.log("updateMe", updateMe);
-  let addressInfo = JSON.parse(localStorage.getItem("addressInfo"));
+  console.log("updateMe", updateMe);
+  let addressInfo = JSON.parse(localStorage.getItem("addressInfo"))|| [];
   // console.log("streetvalue",streetValue);
   // console.log("cityvalue",cityValue);
   // console.log("statevalue",stateValue);

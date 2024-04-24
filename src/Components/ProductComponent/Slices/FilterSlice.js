@@ -207,7 +207,6 @@ export const getUpdateMe = createAsyncThunk(
     myHeaders.append("accept", "application/json");
 
     let requestOptions;
-      // console.log("name",streetName,cityName,stateName,countryName,zipcodeName,tokenValue,phoneNumber);
       let raw = JSON.stringify({
         name:userName,
         address:{
@@ -218,7 +217,6 @@ export const getUpdateMe = createAsyncThunk(
           country:countryName,
        
         },
-        // phone:"9789313131",
       });
       
       requestOptions = {
@@ -378,6 +376,7 @@ export const productSlice = createSlice({
         state.isLoading = false;
         state.updateMeInfo= action.payload;
         state.error = "";
+        console.log("updateme");
         window.localStorage.setItem('addressInfo', JSON.stringify(state.updateMeInfo.data.user.address));
       })
 

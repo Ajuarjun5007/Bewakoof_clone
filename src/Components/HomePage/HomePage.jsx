@@ -82,6 +82,7 @@ function HomePage() {
   };
   const [userLoggedIn, setUserLoggedIn] = useState(false);
   let updateMe = useSelector((state) => state.productReducer.updateMeInfo);
+  console.log("updateme",updateMe);
   let addressInfo;
   let address;
   let {wishList} = useSelector(
@@ -127,15 +128,17 @@ function HomePage() {
    addressInfo = localStorage.getItem("addressInfo");
   useEffect(() => {
    callProduct();
-   let user = JSON.parse(localStorage.getItem("user"));
-   if(localStorage.getItem("user")&& !addressInfo){
-      localStorage.setItem("addressInfo",JSON.stringify(user.address));
-      count=1;
-   }
+  //  let user = JSON.parse(localStorage.getItem("user"));
+  //  if(localStorage.getItem("user")&& !addressInfo){
+  //     localStorage.setItem("addressInfo",JSON.stringify(user.address));
+  //     count=1;
+  //     console.log("count",count);
+  //  }
    window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
    window.scrollTo(0,0);
   
   }, []);
+  
   return (
     <>
       <div className="">
